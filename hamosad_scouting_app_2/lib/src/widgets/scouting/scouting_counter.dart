@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/json/cubit.dart';
 
 class ScoutingCounter extends StatefulWidget {
-  final Cubit<num> valueCubit;
+  final Cubit<num> cubit;
   final double size;
   final String title;
   final num min, max, step;
-  final num? score, initial;
+  final num? initial;
 
   ScoutingCounter({
     Key? key,
-    required this.valueCubit,
+    required this.cubit,
     required this.min,
     required this.max,
     required this.step,
     this.size = 1.0,
     this.title = '',
     this.initial,
-    this.score,
   }) : super(key: key) {
     assert(max <= 999);
     assert(step > 0);
@@ -26,7 +25,7 @@ class ScoutingCounter extends StatefulWidget {
 
   static ScoutingCounter fromJSON({
     required Map<String, dynamic> json,
-    required Cubit<num> valueCubit,
+    required Cubit<num> cubit,
     double size = 1.0,
   }) {
     assert(json.containsKey('min'));
@@ -34,13 +33,12 @@ class ScoutingCounter extends StatefulWidget {
     assert(json.containsKey('step'));
 
     return ScoutingCounter(
-      valueCubit: valueCubit,
+      cubit: cubit,
       size: size,
       title: json['title'] ?? '',
       min: json['min']!,
       max: json['max']!,
       step: json['step']!,
-      score: json['score'],
       initial: json['initial'],
     );
   }
@@ -52,7 +50,7 @@ class ScoutingCounter extends StatefulWidget {
 class _ScoutingCounterState extends State<ScoutingCounter> {
   @override
   void initState() {
-    widget.valueCubit.data = (widget.initial) ??
+    widget.cubit.data = (widget.initial) ??
         (widget.step is int
             ? (widget.min + widget.max) ~/ 2.0
             : (widget.min + widget.max) / 2.0);
@@ -60,17 +58,17 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
   }
 
   void _increment() {
-    if (widget.valueCubit.data + widget.step <= widget.max) {
+    if (widget.cubit.data + widget.step <= widget.max) {
       setState(() {
-        widget.valueCubit.data += widget.step;
+        widget.cubit.data += widget.step;
       });
     }
   }
 
   void _decrement() {
-    if (widget.valueCubit.data - widget.step >= widget.min) {
+    if (widget.cubit.data - widget.step >= widget.min) {
       setState(() {
-        widget.valueCubit.data -= widget.step;
+        widget.cubit.data -= widget.step;
       });
     }
   }
@@ -115,10 +113,10 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
             return FadeTransition(opacity: animation, child: child);
           },
           child: Text(
-            widget.valueCubit.data.toString(),
+            widget.cubit.data.toString(),
             style: Theme.of(context).textTheme.labelMedium,
             key: ValueKey<String>(
-              widget.valueCubit.data.toString(),
+              widget.cubit.data.toString(),
             ),
           ),
         ),
