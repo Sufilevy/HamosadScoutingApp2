@@ -1,0 +1,22 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "The home page of the app.",
+	"type": "object",
+	"required": [
+		"title"
+	],
+	"properties": {
+		"title": {
+			"type": "string",
+			"description": "The title of the page."
+		},
+		"logo": {
+			"description": "The URL of an image to display in the top left corner of the screen.",
+			"type": "string"
+		},
+		"widgets": {
+			"$ref": "widgets.schema.json"
+		}
+	},
+	"additionalProperties": false
+}
