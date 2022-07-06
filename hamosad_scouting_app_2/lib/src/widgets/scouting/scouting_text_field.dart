@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/json/cubit.dart';
 
 class ScoutingTextField extends StatefulWidget {
-  final Cubit<String> textCubit;
+  final Cubit<String> cubit;
   final double size;
   final String hint;
   final bool onlyNumbers;
 
   const ScoutingTextField({
     Key? key,
-    required this.textCubit,
+    required this.cubit,
     this.size = 1.0,
     this.hint = '',
     this.onlyNumbers = false,
@@ -21,7 +21,7 @@ class ScoutingTextField extends StatefulWidget {
     required double size,
   }) {
     return ScoutingTextField(
-      textCubit: textCubit,
+      cubit: textCubit,
       size: size,
       hint: json['hint'] ?? '',
       onlyNumbers: json['onlyNumbers'] ?? false,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/json/cubit.dart';
+import 'package:hamosad_scouting_app_2/src/widgets/widgets.dart';
 
 class ScoutingApp extends StatefulWidget {
   final Color? textColor, lightTextColor;
@@ -37,6 +39,7 @@ class _ScoutingAppState extends State<ScoutingApp> {
   ThemeData get _themeData => ThemeData(
         brightness: Brightness.dark,
         textTheme: _textTheme,
+        toggleableActiveColor: Colors.blueAccent.shade700,
       );
 
   @override
@@ -51,11 +54,14 @@ class _ScoutingAppState extends State<ScoutingApp> {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Scouting App'),
+            centerTitle: true,
+            title: const ScoutingText(text: 'Scouting App'),
           ),
           body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [],
+            children: [
+              
+            ],
           ),
         ),
       ),
