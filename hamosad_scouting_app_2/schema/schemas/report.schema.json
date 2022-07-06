@@ -1,0 +1,25 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "A report type.",
+	"type": "object",
+	"required": [
+		"description",
+		"pages"
+	],
+	"properties": {
+		"description": {
+			"description": "The desctiprion of the report type.\nWill be displayed when selecting a report type.",
+			"type": "string"
+		},
+		"pages": {
+			"description": "The pages of the report.\n\nThe pages will be displayed in the order they appear on the list.",
+			"type": "object",
+			"patternProperties": {
+				"^[a-z]+([a-z][A-Z])*": {
+					"$ref": "page.schema.json"
+				}
+			}
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,23 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "A page in the app.",
+	"type": "object",
+	"required": [
+		"title",
+		"icon"
+	],
+	"properties": {
+		"title": {
+			"description": "The title of the page.",
+			"type": "string"
+		},
+		"icon": {
+			"description": "The icon of the page.\nWill be used to navigate to the page.",
+			"type": "string"
+		},
+		"widgets": {
+			"$ref": "widgets.schema.json"
+		}
+	},
+	"additionalProperties": false
+}
