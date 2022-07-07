@@ -36,7 +36,7 @@
 				"madeFor": {
 					"type": "image",
 					"title": "This app was made for",
-					"image": "assets/images/hamosadLogo.png"
+					"path": "assets/images/hamosadLogo.png"
 				}
 			}
 		}

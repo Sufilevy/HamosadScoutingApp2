@@ -43,8 +43,8 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
             scale: 1.35 * widget.size,
             child: Checkbox(
               value: widget.cubit.data,
-              onChanged: (_) => setState(
-                () => widget.cubit.data = !widget.cubit.data,
+              onChanged: (value) => setState(
+                () => widget.cubit.data = value ?? !widget.cubit.data,
               ),
               side: BorderSide(
                 color: Theme.of(context).textTheme.bodyLarge?.color ??
