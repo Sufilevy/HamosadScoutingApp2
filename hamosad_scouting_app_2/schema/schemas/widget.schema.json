@@ -219,13 +219,36 @@
 					"description": "The title to display above the image.",
 					"type": "string"
 				},
-				"image": {
+				"path": {
 					"description": "The path of the image to display.\nStarts from the project's root.",
+					"type": "string"
+				},
+				"url": {
+					"description": "The url of the image to display.",
 					"type": "string"
 				}
 			},
-			"required": [
-				"image"
+			"oneOf": [
+				{
+					"required": [
+						"path"
+					],
+					"not": {
+						"required": [
+							"url"
+						]
+					}
+				},
+				{
+					"required": [
+						"url"
+					],
+					"not": {
+						"required": [
+							"path"
+						]
+					}
+				}
 			],
 			"additionalProperties": false
 		},

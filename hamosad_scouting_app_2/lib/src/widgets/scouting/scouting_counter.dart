@@ -8,7 +8,7 @@ class ScoutingCounter extends StatefulWidget {
   final num min, max, step;
   final num? initial;
 
-  ScoutingCounter({
+  const ScoutingCounter({
     Key? key,
     required this.cubit,
     required this.min,
@@ -17,11 +17,10 @@ class ScoutingCounter extends StatefulWidget {
     this.size = 1.0,
     this.title = '',
     this.initial,
-  }) : super(key: key) {
-    assert(max <= 999);
-    assert(step > 0);
-    assert(max > min + step);
-  }
+  })  : assert(max <= 999),
+        assert(step > 0),
+        assert(max > min + step),
+        super(key: key);
 
   static ScoutingCounter fromJSON({
     required Map<String, dynamic> json,
@@ -124,25 +123,30 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
     );
   }
 
+  Widget get _counter => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _iconButton(context, _decrement, Icons.remove),
+          _counterText(context),
+          _iconButton(context, _increment, Icons.add),
+        ],
+      );
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        if (widget.title.isNotEmpty)
+    if (widget.title.isNotEmpty) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
           Text(
             widget.title,
             style: Theme.of(context).textTheme.labelSmall,
           ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _iconButton(context, _decrement, Icons.remove_rounded),
-            _counterText(context),
-            _iconButton(context, _increment, Icons.add_rounded),
-          ],
-        )
-      ],
-    );
+          _counter,
+        ],
+      );
+    } else {
+      return _counter;
+    }
   }
 }
