@@ -30,6 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
   material_icons_named: ^2.0.0
+  xcontext: ^1.0.0
 
 
 dev_dependencies:

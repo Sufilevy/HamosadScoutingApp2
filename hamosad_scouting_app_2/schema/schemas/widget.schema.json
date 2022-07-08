@@ -12,7 +12,7 @@
 			"enum": [
 				"text",
 				"textInput",
-				"bar",
+				"slider",
 				"gameNumber",
 				"teamNumber",
 				"toggleButton",
@@ -84,31 +84,42 @@
 				"type": {
 					"type": "string",
 					"enum": [
-						"bar"
+						"slider"
 					]
 				},
 				"title": {
-					"description": "The title to display above the bar.",
+					"description": "The title to display above the slider.",
 					"type": "string"
 				},
 				"subtitle": {
-					"description": "The subtitle to display below the bar.",
+					"description": "The subtitle to display below the slider.",
 					"type": "string"
 				},
 				"min": {
-					"description": "The minimum value of the bar (inclusive).",
-					"type": "number",
-					"default": 1
+					"description": "The minimum value of the slider (inclusive).",
+					"type": "integer",
+					"default": 1,
+					"minimum": -100
 				},
 				"max": {
-					"description": "The maximum value of the bar (inclusive).",
-					"type": "number",
-					"default": 5
+					"description": "The maximum value of the slider (inclusive).",
+					"type": "integer",
+					"default": 5,
+					"maximum": 100
 				},
 				"step": {
-					"description": "The step size of the bar.\nThe final number of steps in the bar will be ('max' - 'min' + 1) / 'step'.",
-					"type": "number",
-					"default": 1
+					"description": "The step size of the slider.\nThe final number of steps in the slider will be ('max' - 'min' + 1) / 'step'.",
+					"type": "integer",
+					"default": 1,
+					"minimum": 0,
+					"exclusiveMinimum": true
+				},
+				"initial": {
+					"description": "The initial value of the slider. Needs to be in the range [min, max].",
+					"type": "integer",
+					"default": 1,
+					"minimum": -100,
+					"maximum": 100
 				},
 				"score": {
 					"description": "The scores to give for each step.\nMust be the same length as the final number of steps (('max' - 'min' + 1) / 'step').",
@@ -267,7 +278,8 @@
 				"min": {
 					"description": "The minimum value of the counter.",
 					"type": "number",
-					"default": 0
+					"default": 0,
+					"minimum": -99
 				},
 				"max": {
 					"description": "The maximum value of the counter.\nMust be greater than 'min' + 'step'.",

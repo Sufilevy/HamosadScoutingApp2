@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/json/cubit.dart';
 import 'package:hamosad_scouting_app_2/src/widgets/widgets.dart';
 
 class ScoutingApp extends StatefulWidget {
@@ -27,7 +26,7 @@ class _ScoutingAppState extends State<ScoutingApp> {
     super.initState();
   }
 
-  TextTheme get _textTheme => TextTheme(
+  TextTheme _textTheme() => TextTheme(
         labelSmall: TextStyle(fontSize: 24 * size, color: textColor),
         labelMedium: TextStyle(fontSize: 30 * size, color: textColor),
         labelLarge: TextStyle(fontSize: 36 * size, color: textColor),
@@ -36,9 +35,9 @@ class _ScoutingAppState extends State<ScoutingApp> {
         bodyLarge: TextStyle(fontSize: 20 * size, color: lightTextColor),
       );
 
-  ThemeData get _themeData => ThemeData(
+  ThemeData _themeData() => ThemeData(
         brightness: Brightness.dark,
-        textTheme: _textTheme,
+        textTheme: _textTheme(),
         toggleableActiveColor: Colors.blueAccent.shade700,
       );
 
@@ -49,7 +48,7 @@ class _ScoutingAppState extends State<ScoutingApp> {
     size = screenSize.height / 1200.0 * 1.125;
     return MaterialApp(
       title: 'Scouting App',
-      darkTheme: _themeData,
+      darkTheme: _themeData(),
       home: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
@@ -59,9 +58,7 @@ class _ScoutingAppState extends State<ScoutingApp> {
           ),
           body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              
-            ],
+            children: const <Widget>[],
           ),
         ),
       ),

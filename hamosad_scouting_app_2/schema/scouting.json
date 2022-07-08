@@ -172,9 +172,9 @@
 					"title": "Endgame",
 					"icon": "",
 					"widgets": {
-						"barClimbed": {
-							"type": "bar",
-							"title": "Robot has climbed to bar...",
+						"sliderClimbed": {
+							"type": "slider",
+							"title": "Robot has climbed to slider...",
 							"min": 0,
 							"max": 4,
 							"step": 1,
@@ -201,7 +201,7 @@
 					"icon": "",
 					"widgets": {
 						"robotFocus": {
-							"type": "bar",
+							"type": "slider",
 							"title": "Robot's main focus",
 							"subtitle": "< Scoring        Defending >",
 							"min": 1,
