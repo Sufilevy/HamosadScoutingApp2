@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:xcontext/material.dart';
 
 class ScoutingImage extends StatelessWidget {
   final String path, url, title;
@@ -12,23 +13,23 @@ class ScoutingImage extends StatelessWidget {
         assert(path.isEmpty || url.isEmpty),
         super(key: key);
 
-  Widget get _image => path.isNotEmpty ? Image.asset(path) : Image.network(url);
+  Widget _image() => path.isNotEmpty ? Image.asset(path) : Image.network(url);
 
   @override
   Widget build(BuildContext context) {
     if (title.isNotEmpty) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.labelMedium,
+            style: context.theme.textTheme.labelMedium,
           ),
-          _image,
+          _image(),
         ],
       );
     } else {
-      return _image;
+      return _image();
     }
   }
 }

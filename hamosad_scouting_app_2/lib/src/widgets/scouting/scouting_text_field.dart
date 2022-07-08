@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/json/cubit.dart';
+import 'package:xcontext/material.dart';
 
 class ScoutingTextField extends StatefulWidget {
   final Cubit<String> cubit;
@@ -58,7 +59,7 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
               widget.onlyNumbers ? TextInputType.number : TextInputType.text,
           validator: validateInput,
           onChanged: (value) => _formKey.currentState!.validate(),
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: context.theme.textTheme.bodyLarge,
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
             labelText: widget.hint,

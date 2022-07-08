@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/json/cubit.dart';
+import 'package:xcontext/material.dart';
 
 class ScoutingCounter extends StatefulWidget {
   final Cubit<num> cubit;
@@ -17,7 +18,8 @@ class ScoutingCounter extends StatefulWidget {
     this.size = 1.0,
     this.title = '',
     this.initial,
-  })  : assert(max <= 999),
+  })  : assert(min >= -99),
+        assert(max <= 999),
         assert(step > 0),
         assert(max > min + step),
         super(key: key);
@@ -78,12 +80,12 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
     IconData icon,
   ) {
     return CircleAvatar(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: context.theme.primaryColor,
       radius: 20.0 * widget.size,
       child: IconButton(
         onPressed: onPressed,
         icon: Icon(icon),
-        color: Theme.of(context).backgroundColor,
+        color: context.theme.backgroundColor,
         iconSize: 24.0 * widget.size,
         splashRadius: 24.0 * widget.size,
       ),
@@ -101,7 +103,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(8.0 * widget.size),
           border: Border.all(
-            color: Theme.of(context).primaryColor,
+            color: context.theme.primaryColor,
             width: 3.0,
           ),
         ),
@@ -113,7 +115,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
           },
           child: Text(
             widget.cubit.data.toString(),
-            style: Theme.of(context).textTheme.labelMedium,
+            style: context.theme.textTheme.labelMedium,
             key: ValueKey<String>(
               widget.cubit.data.toString(),
             ),
@@ -123,9 +125,9 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
     );
   }
 
-  Widget get _counter => Row(
+  Widget _counter() => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+        children: <Widget>[
           _iconButton(context, _decrement, Icons.remove),
           _counterText(context),
           _iconButton(context, _increment, Icons.add),
@@ -140,13 +142,13 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
         children: <Widget>[
           Text(
             widget.title,
-            style: Theme.of(context).textTheme.labelSmall,
+            style: context.theme.textTheme.labelSmall,
           ),
-          _counter,
+          _counter(),
         ],
       );
     } else {
-      return _counter;
+      return _counter();
     }
   }
 }
