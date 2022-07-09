@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/json/cubit.dart';
+import 'package:hamosad_scouting_app_2/src/other/cubit.dart';
 import 'package:xcontext/material.dart';
 
 class ScoutingTextField extends StatefulWidget {
@@ -11,7 +11,7 @@ class ScoutingTextField extends StatefulWidget {
   const ScoutingTextField({
     Key? key,
     required this.cubit,
-    this.size = 1.0,
+    this.size = 1,
     this.hint = '',
     this.onlyNumbers = false,
   }) : super(key: key);
@@ -50,7 +50,7 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0 * widget.size),
+      padding: EdgeInsets.symmetric(horizontal: 16 * widget.size),
       child: Form(
         key: _formKey,
         child: TextFormField(

@@ -45,7 +45,7 @@ class _ScoutingAppState extends State<ScoutingApp> {
   Widget build(BuildContext context) {
     final screenSize =
         MediaQueryData.fromWindow(WidgetsBinding.instance.window).size;
-    size = screenSize.height / 1200.0 * 1.125;
+    size = screenSize.height / 1200 * 1.125;
     return MaterialApp(
       title: 'Scouting App',
       darkTheme: _themeData(),

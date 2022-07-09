@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/json/cubit.dart';
+import 'package:hamosad_scouting_app_2/src/other/cubit.dart';
 import 'package:xcontext/material.dart';
 
 class ScoutingToggleButton extends StatefulWidget {
@@ -11,13 +11,13 @@ class ScoutingToggleButton extends StatefulWidget {
     Key? key,
     required this.cubit,
     required this.title,
-    this.size = 1.0,
+    this.size = 1,
   }) : super(key: key);
 
   static ScoutingToggleButton fromJSON({
     required Map<String, dynamic> json,
     required Cubit<bool> cubit,
-    double size = 1.0,
+    double size = 1,
   }) {
     assert(json.containsKey('title'));
 
@@ -36,7 +36,7 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 48.0 * widget.size),
+      padding: EdgeInsets.symmetric(horizontal: 48 * widget.size),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -49,10 +49,10 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
               ),
               side: BorderSide(
                 color: context.theme.textTheme.bodyLarge?.color ?? Colors.black,
-                width: 2.0,
+                width: 2,
               ),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(2.0),
+                borderRadius: BorderRadius.circular(2),
               ),
               activeColor: context.theme.toggleableActiveColor,
               checkColor: context.theme.textTheme.bodyLarge?.color,
@@ -60,19 +60,19 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
           ),
           Flexible(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.0 * widget.size),
+              padding: EdgeInsets.symmetric(horizontal: 12 * widget.size),
               child: TextButton(
                 onPressed: () => setState(
                   () => widget.cubit.data = !widget.cubit.data,
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(8.0 * widget.size),
+                  padding: EdgeInsets.all(8 * widget.size),
                   child: Text(
                     widget.title,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: context.theme.textTheme.bodyLarge?.color,
-                      fontSize: 24.0 * widget.size,
+                      fontSize: 24 * widget.size,
                     ),
                   ),
                 ),

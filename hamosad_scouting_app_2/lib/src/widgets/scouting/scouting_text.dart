@@ -9,8 +9,8 @@ class ScoutingText extends StatelessWidget {
   const ScoutingText({
     Key? key,
     required this.text,
-    this.size = 1.0,
-    this.fontSize = 24.0,
+    this.size = 1,
+    this.fontSize = 24,
   }) : super(key: key);
 
   static ScoutingText fromJSON({
@@ -20,14 +20,14 @@ class ScoutingText extends StatelessWidget {
 
     return ScoutingText(
       text: json['text'],
-      size: json['size'] ?? 24.0,
+      size: json['size'] ?? 24,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0 * size),
+      padding: EdgeInsets.symmetric(horizontal: 16 * size),
       child: Text(
         text,
         style: TextStyle(
