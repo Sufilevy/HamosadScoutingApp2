@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/json/cubit.dart';
+import 'package:hamosad_scouting_app_2/src/other/cubit.dart';
+import 'package:hamosad_scouting_app_2/src/other/extensions.dart';
 import 'package:xcontext/material.dart';
 
 class ScoutingCounter extends StatefulWidget {
@@ -15,7 +16,7 @@ class ScoutingCounter extends StatefulWidget {
     required this.min,
     required this.max,
     required this.step,
-    this.size = 1.0,
+    this.size = 1,
     this.title = '',
     this.initial,
   })  : assert(min >= -99),
@@ -27,7 +28,7 @@ class ScoutingCounter extends StatefulWidget {
   static ScoutingCounter fromJSON({
     required Map<String, dynamic> json,
     required Cubit<num> cubit,
-    double size = 1.0,
+    double size = 1,
   }) {
     assert(json.containsKey('min'));
     assert(json.containsKey('max'));
@@ -37,9 +38,9 @@ class ScoutingCounter extends StatefulWidget {
       cubit: cubit,
       size: size,
       title: json['title'] ?? '',
-      min: json['min']!,
-      max: json['max']!,
-      step: json['step']!,
+      min: json['min'],
+      max: json['max'],
+      step: json['step'],
       initial: json['initial'],
     );
   }
@@ -53,8 +54,8 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
   void initState() {
     widget.cubit.data = (widget.initial) ??
         (widget.step is int
-            ? (widget.min + widget.max) ~/ 2.0
-            : (widget.min + widget.max) / 2.0);
+            ? (widget.min + widget.max) ~/ 2
+            : (widget.min + widget.max) / 2);
     super.initState();
   }
 
@@ -81,35 +82,35 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
   ) {
     return CircleAvatar(
       backgroundColor: context.theme.primaryColor,
-      radius: 20.0 * widget.size,
+      radius: 20 * widget.size,
       child: IconButton(
         onPressed: onPressed,
         icon: Icon(icon),
         color: context.theme.backgroundColor,
-        iconSize: 24.0 * widget.size,
-        splashRadius: 24.0 * widget.size,
+        iconSize: 24 * widget.size,
+        splashRadius: 24 * widget.size,
       ),
     );
   }
 
   Widget _counterText(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0 * widget.size),
+      padding: EdgeInsets.symmetric(horizontal: 16 * widget.size),
       child: Container(
-        width: 90.0 * widget.size,
-        height: 70.0 * widget.size,
+        width: 90 * widget.size,
+        height: 70 * widget.size,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(8.0 * widget.size),
+          borderRadius: BorderRadius.circular(8 * widget.size),
           border: Border.all(
             color: context.theme.primaryColor,
-            width: 3.0,
+            width: 3,
           ),
         ),
-        padding: EdgeInsets.all(12.0 * widget.size),
+        padding: EdgeInsets.all(12 * widget.size),
         child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 150),
+          duration: 150.ms,
           transitionBuilder: (Widget child, Animation<double> animation) {
             return FadeTransition(opacity: animation, child: child);
           },

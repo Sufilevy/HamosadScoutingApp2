@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/json/cubit.dart';
+import 'package:hamosad_scouting_app_2/src/other/cubit.dart';
 import 'package:xcontext/material.dart';
 
 class ScoutingSlider extends StatefulWidget {
@@ -15,7 +15,7 @@ class ScoutingSlider extends StatefulWidget {
     required this.min,
     required this.max,
     required this.step,
-    this.size = 1.0,
+    this.size = 1,
     this.title = '',
     this.subtitle = '',
     this.initial,
@@ -29,7 +29,7 @@ class ScoutingSlider extends StatefulWidget {
   static ScoutingSlider fromJSON({
     required Map<String, dynamic> json,
     required Cubit<int> cubit,
-    double size = 1.0,
+    double size = 1,
   }) {
     assert(json.containsKey('min'));
     assert(json.containsKey('max'));
@@ -63,7 +63,7 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
   }
 
   Widget _slider() => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0 * widget.size),
+        padding: EdgeInsets.symmetric(horizontal: 16 * widget.size),
         child: Slider(
           value: widget.cubit.data.toDouble(),
           onChanged: (value) => setState(() {
