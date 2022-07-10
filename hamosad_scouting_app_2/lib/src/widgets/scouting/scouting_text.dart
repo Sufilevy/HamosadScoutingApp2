@@ -20,7 +20,7 @@ class ScoutingText extends StatelessWidget {
 
     return ScoutingText(
       text: json['text'],
-      size: json['size'] ?? 24,
+      fontSize: json['size'] ?? 24,
     );
   }
 
@@ -31,7 +31,7 @@ class ScoutingText extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          color: context.theme.textTheme.bodyLarge?.color ?? Colors.black,
+          color: context.theme.textTheme.labelSmall?.color ?? Colors.black,
           fontFamily: context.theme.textTheme.bodyLarge?.fontFamily ?? 'Roboto',
           fontSize: fontSize * size,
         ),

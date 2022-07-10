@@ -109,16 +109,18 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
           ),
         ),
         padding: EdgeInsets.all(12 * widget.size),
-        child: AnimatedSwitcher(
-          duration: 150.ms,
-          transitionBuilder: (Widget child, Animation<double> animation) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-          child: Text(
-            widget.cubit.data.toString(),
-            style: context.theme.textTheme.labelMedium,
-            key: ValueKey<String>(
+        child: RepaintBoundary(
+          child: AnimatedSwitcher(
+            duration: 150.ms,
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+            child: Text(
               widget.cubit.data.toString(),
+              style: context.theme.textTheme.labelMedium,
+              key: ValueKey<String>(
+                widget.cubit.data.toString(),
+              ),
             ),
           ),
         ),
@@ -127,7 +129,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
   }
 
   Widget _counter() => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           _iconButton(context, _decrement, Icons.remove),
           _counterText(context),
@@ -138,15 +140,21 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
   @override
   Widget build(BuildContext context) {
     if (widget.title.isNotEmpty) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Text(
-            widget.title,
-            style: context.theme.textTheme.labelSmall,
-          ),
-          _counter(),
-        ],
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 32 * widget.size),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Flexible(
+              child: Text(
+                widget.title,
+                style: context.theme.textTheme.labelSmall,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            _counter(),
+          ],
+        ),
       );
     } else {
       return _counter();
