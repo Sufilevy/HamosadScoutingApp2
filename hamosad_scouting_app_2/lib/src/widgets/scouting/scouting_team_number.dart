@@ -12,7 +12,8 @@ class ScoutingTeamNumber extends StatefulWidget {
     required this.cubit,
     required this.teams,
     this.size = 1,
-  }) : super(key: key);
+  })  : assert(teams.length == 6),
+        super(key: key);
 
   @override
   State<ScoutingTeamNumber> createState() => _ScoutingTeamNumberState();
@@ -35,57 +36,64 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
         width: _width * widget.size,
         height: _height * widget.size,
         color: backgroundColor,
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: AnimatedContainer(
-                duration: _duration,
-                curve: Curves.easeOutQuart,
-                width: isSelected ? _width * widget.size : 0,
-                height: isSelected ? _height * widget.size : 0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  color: teamColor,
-                  borderRadius: BorderRadius.circular(_radius),
+        child: RepaintBoundary(
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: AnimatedContainer(
+                  duration: _duration,
+                  curve: Curves.easeOutQuart,
+                  width: isSelected ? _width * widget.size : 0,
+                  height: isSelected ? _height * widget.size : 0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    color: teamColor,
+                    borderRadius: BorderRadius.circular(_radius),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: _width * widget.size,
-              height: _height * widget.size,
-              child: TextButton(
-                onPressed: () {
-                  setState(() {
-                    _currentTeamIndex = index;
-                    widget.cubit.data = widget.teams[index];
-                  });
-                },
-                style: ButtonStyle(
-                  side: MaterialStateProperty.all(
-                    BorderSide(
-                      color: teamColor,
-                      width: 2 * widget.size,
+              SizedBox(
+                width: _width * widget.size,
+                height: _height * widget.size,
+                child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      if (isSelected) {
+                        _currentTeamIndex = -1;
+                        widget.cubit.data = '';
+                      } else {
+                        _currentTeamIndex = index;
+                        widget.cubit.data = widget.teams[index];
+                      }
+                    });
+                  },
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all(
+                      BorderSide(
+                        color: teamColor,
+                        width: 2 * widget.size,
+                      ),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(_radius),
+                      ),
                     ),
                   ),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(_radius),
+                  child: AnimatedDefaultTextStyle(
+                    duration: _duration * 1.5,
+                    curve: Curves.decelerate,
+                    style: TextStyle(
+                      fontSize: 28 * widget.size,
+                      color: isSelected ? backgroundColor : teamColor,
                     ),
+                    child: Text(widget.teams[index]),
                   ),
-                ),
-                child: AnimatedDefaultTextStyle(
-                  duration: _duration * 1.5,
-                  curve: Curves.decelerate,
-                  style: TextStyle(
-                    fontSize: 28 * widget.size,
-                    color: isSelected ? backgroundColor : teamColor,
-                  ),
-                  child: Text(widget.teams[index]),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

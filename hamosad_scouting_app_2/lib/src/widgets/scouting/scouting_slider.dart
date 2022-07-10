@@ -62,19 +62,31 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
     super.initState();
   }
 
+  Color _sliderColor() {
+    HSVColor hsv = HSVColor.fromColor(context.theme.toggleableActiveColor);
+    return Color.lerp(
+          hsv.withValue((hsv.value - 0.4).clamp(0, 1)).toColor(),
+          context.theme.toggleableActiveColor,
+          widget.cubit.data / (widget.max - widget.min),
+        ) ??
+        context.theme.toggleableActiveColor;
+  }
+
   Widget _slider() => Padding(
         padding: EdgeInsets.symmetric(horizontal: 16 * widget.size),
-        child: Slider(
-          value: widget.cubit.data.toDouble(),
-          onChanged: (value) => setState(() {
-            widget.cubit.data = value.toInt();
-          }),
-          thumbColor: context.theme.toggleableActiveColor,
-          activeColor: context.theme.toggleableActiveColor,
-          divisions: (widget.max - widget.min) ~/ widget.step,
-          label: widget.cubit.data.toString(),
-          min: widget.min.toDouble(),
-          max: widget.max.toDouble(),
+        child: RepaintBoundary(
+          child: Slider(
+            value: widget.cubit.data.toDouble(),
+            onChanged: (value) => setState(() {
+              widget.cubit.data = value.toInt();
+            }),
+            thumbColor: _sliderColor(),
+            activeColor: _sliderColor(),
+            divisions: (widget.max - widget.min) ~/ widget.step,
+            label: widget.cubit.data.toString(),
+            min: widget.min.toDouble(),
+            max: widget.max.toDouble(),
+          ),
         ),
       );
 
@@ -85,15 +97,26 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (widget.title.isNotEmpty)
-            Text(
-              widget.title,
-              style: context.theme.textTheme.bodyLarge,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 32 * widget.size),
+              child: Text(
+                widget.title,
+                style: context.theme.textTheme.labelSmall,
+                textAlign: TextAlign.center,
+              ),
             ),
           _slider(),
           if (widget.subtitle.isNotEmpty)
-            Text(
-              widget.subtitle,
-              style: context.theme.textTheme.bodyMedium,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 32 * widget.size),
+              child: Text(
+                widget.subtitle,
+                style: TextStyle(
+                  fontSize: context.theme.textTheme.bodyLarge?.fontSize,
+                  color: context.theme.textTheme.labelSmall?.color,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
         ],
       );

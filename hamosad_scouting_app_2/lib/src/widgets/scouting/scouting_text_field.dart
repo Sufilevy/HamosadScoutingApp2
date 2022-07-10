@@ -7,6 +7,7 @@ class ScoutingTextField extends StatefulWidget {
   final double size;
   final String hint;
   final bool onlyNumbers;
+  final String? errorHint;
 
   const ScoutingTextField({
     Key? key,
@@ -14,6 +15,7 @@ class ScoutingTextField extends StatefulWidget {
     this.size = 1,
     this.hint = '',
     this.onlyNumbers = false,
+    this.errorHint,
   }) : super(key: key);
 
   static ScoutingTextField fromJSON({
@@ -36,10 +38,19 @@ class ScoutingTextField extends StatefulWidget {
 class _ScoutingTextFieldState extends State<ScoutingTextField> {
   final TextEditingController _controller = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    _focusNode.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
 
   String? validateInput(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please ${widget.hint.toLowerCase()}.';
+      return widget.errorHint ?? 'Please ${widget.hint.toLowerCase()}.';
     }
     if (widget.onlyNumbers) {
       if (int.tryParse(value) == null) return 'Only numbers allowed.';
@@ -50,19 +61,28 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16 * widget.size),
+      padding: EdgeInsets.symmetric(horizontal: 32 * widget.size),
       child: Form(
         key: _formKey,
         child: TextFormField(
           controller: _controller,
+          focusNode: _focusNode,
           keyboardType:
               widget.onlyNumbers ? TextInputType.number : TextInputType.text,
           validator: validateInput,
           onChanged: (value) => _formKey.currentState!.validate(),
-          style: context.theme.textTheme.bodyLarge,
+          style: TextStyle(
+            fontSize: context.theme.textTheme.bodyLarge?.fontSize,
+            color: context.theme.textTheme.labelSmall?.color,
+          ),
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
             labelText: widget.hint,
+            labelStyle: TextStyle(
+              color: _focusNode.hasFocus
+                  ? context.theme.textTheme.bodyLarge?.color
+                  : context.theme.textTheme.labelSmall?.color,
+            ),
           ),
         ),
       ),

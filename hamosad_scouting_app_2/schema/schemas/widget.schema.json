@@ -20,7 +20,7 @@
 				"image",
 				"counter",
 				"notes",
-				"timer",
+				"stopwatch",
 				"pointsSummary",
 				"specialText"
 			]
@@ -330,11 +330,11 @@
 				"type": {
 					"type": "string",
 					"enum": [
-						"timer"
+						"stopwatch"
 					]
 				},
 				"title": {
-					"description": "The title to display above the timer.",
+					"description": "The title to display above the stopwatch.",
 					"type": "string"
 				},
 				"score": {
