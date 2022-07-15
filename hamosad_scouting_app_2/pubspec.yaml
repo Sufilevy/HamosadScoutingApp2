@@ -29,6 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.17.0
   material_icons_named: ^2.0.0
   xcontext: ^1.0.0
 

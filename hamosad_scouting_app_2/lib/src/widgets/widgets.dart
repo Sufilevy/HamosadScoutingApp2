@@ -1,5 +1,6 @@
 export 'other/circle_painter.dart';
 export 'scouting/scouting_counter.dart';
+export 'scouting/scouting_notes.dart';
 export 'scouting/scouting_page_body.dart';
 export 'scouting/scouting_slider.dart';
 export 'scouting/scouting_team_number.dart';

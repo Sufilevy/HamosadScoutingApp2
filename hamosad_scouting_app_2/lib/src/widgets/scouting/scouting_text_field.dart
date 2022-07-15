@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/other/cubit.dart';
+import 'package:intl/intl.dart' as intl;
 import 'package:xcontext/material.dart';
 
 class ScoutingTextField extends StatefulWidget {
@@ -36,7 +37,6 @@ class ScoutingTextField extends StatefulWidget {
 }
 
 class _ScoutingTextFieldState extends State<ScoutingTextField> {
-  final TextEditingController _controller = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FocusNode _focusNode = FocusNode();
 
@@ -50,7 +50,8 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
 
   String? validateInput(String? value) {
     if (value == null || value.isEmpty) {
-      return widget.errorHint ?? 'Please ${widget.hint.toLowerCase()}.';
+      return widget.errorHint ??
+          'Please ${widget.hint.isNotEmpty ? widget.hint.toLowerCase() : 'enter some text'}.';
     }
     if (widget.onlyNumbers) {
       if (int.tryParse(value) == null) return 'Only numbers allowed.';
@@ -65,18 +66,29 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
       child: Form(
         key: _formKey,
         child: TextFormField(
-          controller: _controller,
           focusNode: _focusNode,
           keyboardType:
               widget.onlyNumbers ? TextInputType.number : TextInputType.text,
           validator: validateInput,
-          onChanged: (value) => _formKey.currentState!.validate(),
+          onChanged: (value) => setState(
+            () {
+              _formKey.currentState!.validate();
+              widget.cubit.data = value;
+            },
+          ),
           style: TextStyle(
             fontSize: context.theme.textTheme.bodyLarge?.fontSize,
             color: context.theme.textTheme.labelSmall?.color,
           ),
+          textDirection: intl.Bidi.estimateDirectionOfText(widget.cubit.data) ==
+                  intl.TextDirection.RTL
+              ? TextDirection.rtl
+              : TextDirection.ltr,
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
+            errorStyle: TextStyle(
+              fontSize: context.theme.textTheme.bodyMedium?.fontSize,
+            ),
             labelText: widget.hint,
             labelStyle: TextStyle(
               color: _focusNode.hasFocus
