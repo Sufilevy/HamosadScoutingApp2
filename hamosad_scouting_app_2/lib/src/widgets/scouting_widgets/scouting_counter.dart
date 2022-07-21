@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/other/cubit.dart';
-import 'package:hamosad_scouting_app_2/src/other/extensions.dart';
+import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:xcontext/material.dart';
 
 class ScoutingCounter extends StatefulWidget {
@@ -82,12 +81,12 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
   ) {
     return CircleAvatar(
       backgroundColor: context.theme.primaryColor,
-      radius: 20 * widget.size,
+      radius: 24 * widget.size,
       child: IconButton(
         onPressed: onPressed,
         icon: Icon(icon),
-        color: context.theme.backgroundColor,
-        iconSize: 24 * widget.size,
+        color: context.theme.textTheme.bodySmall?.color,
+        iconSize: 28 * widget.size,
         splashRadius: 24 * widget.size,
       ),
     );
