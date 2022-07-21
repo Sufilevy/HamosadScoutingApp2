@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/other/cubit.dart';
+import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:xcontext/material.dart';
 
@@ -7,6 +7,7 @@ class ScoutingTextField extends StatefulWidget {
   final Cubit<String> cubit;
   final double size;
   final String hint;
+  final String title;
   final bool onlyNumbers;
   final String? errorHint;
 
@@ -15,22 +16,10 @@ class ScoutingTextField extends StatefulWidget {
     required this.cubit,
     this.size = 1,
     this.hint = '',
+    this.title = '',
     this.onlyNumbers = false,
     this.errorHint,
   }) : super(key: key);
-
-  static ScoutingTextField fromJSON({
-    required Map<String, dynamic> json,
-    required Cubit<String> textCubit,
-    required double size,
-  }) {
-    return ScoutingTextField(
-      cubit: textCubit,
-      size: size,
-      hint: json['hint'] ?? '',
-      onlyNumbers: json['onlyNumbers'] ?? false,
-    );
-  }
 
   @override
   State<ScoutingTextField> createState() => _ScoutingTextFieldState();
@@ -50,11 +39,15 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
 
   String? validateInput(String? value) {
     if (value == null || value.isEmpty) {
-      return widget.errorHint ??
-          'Please ${widget.hint.isNotEmpty ? widget.hint.toLowerCase() : 'enter some text'}.';
+      String hint = widget.hint.isNotEmpty
+          ? (widget.hint.endsWith('...')
+              ? widget.hint.toLowerCase().substring(0, widget.hint.length - 3)
+              : widget.hint.toLowerCase())
+          : 'enter some text';
+      return widget.errorHint ?? 'Please $hint.';
     }
     if (widget.onlyNumbers) {
-      if (int.tryParse(value) == null) return 'Only numbers allowed.';
+      if (int.tryParse(value) == null) return 'Only numbers are allowed.';
     }
     return null;
   }
@@ -85,11 +78,19 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
               ? TextDirection.rtl
               : TextDirection.ltr,
           decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: context.theme.primaryColor,
+                width: 2 * widget.size,
+              ),
+            ),
             border: const OutlineInputBorder(),
             errorStyle: TextStyle(
               fontSize: context.theme.textTheme.bodyMedium?.fontSize,
             ),
-            labelText: widget.hint,
+            labelText: _focusNode.hasFocus || widget.cubit.data.isNotEmpty
+                ? widget.title
+                : widget.hint,
             labelStyle: TextStyle(
               color: _focusNode.hasFocus
                   ? context.theme.textTheme.bodyLarge?.color

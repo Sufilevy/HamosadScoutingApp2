@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/other/cubit.dart';
-import 'package:hamosad_scouting_app_2/src/other/extensions.dart';
+import 'package:hamosad_scouting_app_2/src/services.dart';
 
 class ScoutingTeamNumber extends StatefulWidget {
   final Cubit<String> cubit;

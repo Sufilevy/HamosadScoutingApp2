@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/other/cubit.dart';
-import 'package:hamosad_scouting_app_2/src/other/extensions.dart';
-import 'package:hamosad_scouting_app_2/src/widgets/widgets.dart';
+import 'package:hamosad_scouting_app_2/src/services.dart';
+import 'package:hamosad_scouting_app_2/src/widgets.dart';
 import 'package:xcontext/material.dart';
 
 class ScoutingStopwatch extends StatefulWidget {

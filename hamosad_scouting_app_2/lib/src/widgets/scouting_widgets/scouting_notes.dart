@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/other/cubit.dart';
+import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:xcontext/material.dart';
 
