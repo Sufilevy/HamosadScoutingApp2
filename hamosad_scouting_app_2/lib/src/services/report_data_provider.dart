@@ -9,9 +9,9 @@ class ReportDataProvider {
 
   Map<String, dynamic> get data {
     return {
-        'reporterName': reporterName.data,
-        'reporterTeamNumber': reporterTeamNumber.data,
-        'teamNumber': teamNumber.data,
+      'reporterName': reporterName.data,
+      'reporterTeamNumber': reporterTeamNumber.data,
+      'teamNumber': teamNumber.data,
     };
   }
 }

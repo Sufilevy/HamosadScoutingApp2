@@ -124,11 +124,8 @@ class _ScoutingAppState extends State<ScoutingApp> {
     final screenSize =
         MediaQueryData.fromWindow(WidgetsBinding.instance.window).size;
     size = screenSize.height / 1200;
-    return MultiProvider(
-      providers: [
-        Provider<DatabaseProvider>(create: (_) => DatabaseProvider()),
-        Provider<ReportDataProvider>(create: (_) => ReportDataProvider()),
-      ],
+    return Provider<ReportDataProvider>(
+      create: (_) => ReportDataProvider(),
       child: MaterialApp(
         title: 'Scouting App',
         darkTheme: _themeData(),
