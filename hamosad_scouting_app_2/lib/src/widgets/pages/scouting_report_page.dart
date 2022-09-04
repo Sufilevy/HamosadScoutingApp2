@@ -30,7 +30,7 @@ class ScoutingReportPage extends StatelessWidget {
             actions: [
               ScoutingIconButton(
                 icon: Icons.send_rounded,
-                onPressed: () => databaseProvider(context).sendReport(
+                onPressed: () => ScoutingDatabase.sendReport(
                   reportDataProvider(context).data,
                 ),
               ),

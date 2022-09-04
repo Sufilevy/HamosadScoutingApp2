@@ -6,7 +6,7 @@ extension IntToDurations on int {
   Duration get min => Duration(minutes: this);
 }
 
-extension BrightenColor on Color {
+extension ShadeColor on Color {
   Color lighten() => Color.fromARGB(
         255,
         (red * 1.2).round(),
