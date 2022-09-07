@@ -1,9 +1,10 @@
-// ignore_for_file: avoid_print
-
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
+
+enum ReportType { game, pit }
 
 class ScoutingDatabase {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -11,13 +12,17 @@ class ScoutingDatabase {
   static const _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   static final Random _random = Random();
+  static final DocumentReference _informationRef =
+      _db.doc('/matches/information');
+  static late final DocumentReference _gameReportsRef, _pitReportsRef;
 
   ScoutingDatabase();
 
   static Future<void> initialize() async {
     await FirebaseAuth.instance.signInAnonymously();
-    final informationRef = _db.doc('/matches/information');
-    _districtName = (await informationRef.get()).get('currentDistrict');
+    _districtName = (await _informationRef.get()).get('currentDistrict');
+    _gameReportsRef = _db.doc('/gameReports/$_districtName');
+    _pitReportsRef = _db.doc('/pitReports/$_districtName');
   }
 
   static Future<void> finalize() async {
@@ -29,10 +34,32 @@ class ScoutingDatabase {
         .join();
   }
 
-  static void sendReport(Map<String, Object?> data) async {
-    await FirebaseAuth.instance.signInAnonymously();
-    await _db
-        .doc('/reports/$_districtName')
-        .update({_generateReportId(): data});
+  static Map<String, dynamic> _getDateTime() {
+    DateTime now = DateTime.now();
+
+    return {
+      "day": now.day,
+      "month": now.month,
+      "year": now.year,
+      "time": DateFormat('HH:mm:ss').format(now),
+      "timeValue": now.hour * 60 * 60 +
+          now.minute * 60 +
+          now.second +
+          now.millisecond / 1000,
+    };
+  }
+
+  static void sendReport(
+    Map<String, dynamic> data, {
+    ReportType reportType = ReportType.game,
+    String? id,
+  }) async {
+    data.addAll({'dateTime': _getDateTime()});
+
+    if (reportType == ReportType.game) {
+      await _gameReportsRef.update({id ?? _generateReportId(): data});
+    } else {
+      await _pitReportsRef.update({id ?? _generateReportId(): data});
+    }
   }
 }
