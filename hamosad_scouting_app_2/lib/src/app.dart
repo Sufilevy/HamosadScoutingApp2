@@ -34,11 +34,11 @@ class _ScoutingAppState extends State<ScoutingApp> {
           title: 'Info',
           children: <Widget>[
             ScoutingCounter(
-              cubit: Cubit(0),
+              cubit: reportDataProvider(context).gameReport.teleopHubMissed,
               min: 0,
               max: 100,
               step: 1,
-              title: 'This is a looooong counter',
+              title: 'Teleop Hub Missed',
               initial: 0,
               size: size,
             ),

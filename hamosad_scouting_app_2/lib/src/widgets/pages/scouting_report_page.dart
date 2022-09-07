@@ -19,6 +19,12 @@ class ScoutingReportPage extends StatelessWidget {
     Navigator.pop(context);
   }
 
+  void _onSendButtonPressed(BuildContext context) {
+    ScoutingDatabase.sendReport(
+      reportDataProvider(context).data,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -30,9 +36,7 @@ class ScoutingReportPage extends StatelessWidget {
             actions: [
               ScoutingIconButton(
                 icon: Icons.send_rounded,
-                onPressed: () => ScoutingDatabase.sendReport(
-                  reportDataProvider(context).data,
-                ),
+                onPressed: () => _onSendButtonPressed(context),
               ),
             ],
             leading: CloseButton(

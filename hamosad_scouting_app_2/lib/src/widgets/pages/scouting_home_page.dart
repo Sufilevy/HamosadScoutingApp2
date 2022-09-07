@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 import 'package:xcontext/material.dart';
 
 class ScoutingHomePage extends StatelessWidget {
@@ -43,6 +44,53 @@ class ScoutingHomePage extends StatelessWidget {
               fontSize: 24 * size,
               color: context.theme.textTheme.bodySmall?.color,
             ),
+          ),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                child: ScoutingImage(
+                  path: 'assets/images/hamosad_logo.png',
+                ),
+              ),
+              const Spacer(flex: 1),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ScoutingText(text: 'Report type:'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ToggleSwitch(
+                      cornerRadius: 10.0,
+                      inactiveBgColor:
+                          context.theme.backgroundColor.darken().darken(),
+                      inactiveFgColor: context.theme.backgroundColor.lighten(),
+                      activeBgColors: const [
+                        [Color(0xFF394DA7)],
+                        [Color(0xFFEE4266)],
+                      ],
+                      activeFgColor: const Color.fromARGB(255, 213, 231, 226),
+                      initialLabelIndex: 0,
+                      totalSwitches: 2,
+                      labels: const ['Game', 'Pit'],
+                      animate: true,
+                      curve: Curves.easeOutQuint,
+                      onToggle: (index) {
+                        reportDataProvider(context).reportType.data =
+                            ReportType.values[index ?? 0];
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const Divider(),
+              const Spacer(flex: 1),
+            ],
           ),
         ),
         body: ScoutingReportTab(

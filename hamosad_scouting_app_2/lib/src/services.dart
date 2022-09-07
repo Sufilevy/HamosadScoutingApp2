@@ -1,3 +1,4 @@
+export 'services/app_lifecycle_observer.dart';
 export 'services/cubit.dart';
 export 'services/extensions.dart';
 export 'services/firebase_options.dart';
