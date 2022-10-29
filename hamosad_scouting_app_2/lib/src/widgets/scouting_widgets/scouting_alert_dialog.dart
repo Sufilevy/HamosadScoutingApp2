@@ -32,18 +32,22 @@ class ScoutingAlertDialog extends StatelessWidget {
               size: 48 * size,
               color: iconColor ?? context.theme.textTheme.labelMedium?.color,
             ),
-          if (title.isNotEmpty)
+          if (title.isNotEmpty) ...[
+            const Spacer(flex: 2),
             Text(
               title,
               style: context.theme.textTheme.labelMedium?.copyWith(
                 color: context.theme.textTheme.bodySmall?.color,
               ),
             ),
+            const Spacer(flex: 3),
+          ],
         ],
       ),
       content: Text(
         content,
         style: context.theme.textTheme.bodyLarge,
+        textAlign: TextAlign.center,
       ),
       actionsAlignment: MainAxisAlignment.center,
       actions: <Widget>[

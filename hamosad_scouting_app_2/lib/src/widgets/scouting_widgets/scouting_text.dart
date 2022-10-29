@@ -5,12 +5,16 @@ class ScoutingText extends StatelessWidget {
   final double size;
   final String text;
   final double fontSize;
+  final bool bold;
+  final Color? color;
 
   const ScoutingText({
     Key? key,
     required this.text,
     this.size = 1,
     this.fontSize = 24,
+    this.bold = false,
+    this.color,
   }) : super(key: key);
 
   static ScoutingText fromJSON({
@@ -31,9 +35,12 @@ class ScoutingText extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          color: context.theme.textTheme.labelSmall?.color ?? Colors.black,
+          color: color ??
+              context.theme.textTheme.labelSmall?.color ??
+              Colors.black,
           fontFamily: context.theme.textTheme.bodyLarge?.fontFamily ?? 'Roboto',
           fontSize: fontSize * size,
+          fontWeight: bold ? FontWeight.bold : FontWeight.normal,
         ),
       ),
     );

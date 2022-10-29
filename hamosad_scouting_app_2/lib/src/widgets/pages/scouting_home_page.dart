@@ -27,8 +27,48 @@ class ScoutingHomePage extends StatelessWidget {
         ),
       );
     } else {
-      Navigator.pushNamed(context, '/game-report');
+      Navigator.pushNamed(context,
+          '/${reportDataProvider(context).reportType.data.name}-report');
     }
+  }
+
+  Widget _reportTypeSwitch(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: EdgeInsets.all(8.0 * size),
+          child: const ScoutingText(text: 'Report type:'),
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+            top: 8.0 * size,
+            bottom: 8.0 * size,
+          ),
+          child: ToggleSwitch(
+            cornerRadius: 10.0 * size,
+            inactiveBgColor: context.theme.backgroundColor.lighten(),
+            inactiveFgColor: context.theme.textTheme.bodySmall?.color?.darken(),
+            activeBgColors: [
+              [const Color(0xFF1E88E5).darken()],
+              [const Color(0xFFC62828).darken()],
+            ],
+            activeFgColor: const Color.fromARGB(255, 213, 231, 226),
+            initialLabelIndex: 0,
+            totalSwitches: 2,
+            labels: const ['Game', 'Pit'],
+            fontSize: 22 * size,
+            minWidth: 100 * size,
+            animate: true,
+            curve: Curves.easeOutQuint,
+            onToggle: (index) {
+              reportDataProvider(context).reportType.data =
+                  ReportType.values[index ?? 0];
+            },
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -36,7 +76,9 @@ class ScoutingHomePage extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+        backgroundColor: context.theme.backgroundColor,
         appBar: AppBar(
+          backgroundColor: context.theme.scaffoldBackgroundColor,
           centerTitle: true,
           title: Text(
             title,
@@ -47,49 +89,20 @@ class ScoutingHomePage extends StatelessWidget {
           ),
         ),
         drawer: Drawer(
+          backgroundColor: context.theme.backgroundColor,
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
-                child: ScoutingImage(
-                  path: 'assets/images/hamosad_logo.png',
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 8.0 * size),
+                  child: ScoutingImage(
+                    path: 'assets/images/hamosad_logo.png',
+                  ),
                 ),
               ),
-              const Spacer(flex: 1),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: ScoutingText(text: 'Report type:'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ToggleSwitch(
-                      cornerRadius: 10.0,
-                      inactiveBgColor:
-                          context.theme.backgroundColor.darken().darken(),
-                      inactiveFgColor: context.theme.backgroundColor.lighten(),
-                      activeBgColors: const [
-                        [Color(0xFF394DA7)],
-                        [Color(0xFFEE4266)],
-                      ],
-                      activeFgColor: const Color.fromARGB(255, 213, 231, 226),
-                      initialLabelIndex: 0,
-                      totalSwitches: 2,
-                      labels: const ['Game', 'Pit'],
-                      animate: true,
-                      curve: Curves.easeOutQuint,
-                      onToggle: (index) {
-                        reportDataProvider(context).reportType.data =
-                            ReportType.values[index ?? 0];
-                      },
-                    ),
-                  ),
-                ],
-              ),
+              _reportTypeSwitch(context),
               const Divider(),
-              const Spacer(flex: 1),
             ],
           ),
         ),
@@ -114,7 +127,7 @@ class ScoutingHomePage extends StatelessWidget {
               child: ScoutingIconButton(
                 size: size,
                 icon: Icons.add_box_outlined,
-                iconSize: 200,
+                iconSize: 200 * size,
                 tooltip: 'Create a new report',
                 onPressed: () => _createReport(context),
               ),

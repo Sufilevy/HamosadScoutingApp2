@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
+import 'package:xcontext/material.dart';
 
 class ScoutingTeamNumber extends StatefulWidget {
   final Cubit<String> cubit;
@@ -25,8 +26,7 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
 
   Widget _teamButton(BuildContext context, int index) {
     final Color teamColor =
-        index <= 2 ? Colors.red.shade800 : Colors.blue.shade600;
-    const Color backgroundColor = Color.fromARGB(255, 49, 49, 49);
+        index <= 2 ? const Color(0xFFC62828) : const Color(0xFF1E88E5);
     final bool isSelected = _currentTeamIndex == index;
 
     return Padding(
@@ -34,7 +34,7 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
       child: Container(
         width: _width * widget.size,
         height: _height * widget.size,
-        color: backgroundColor,
+        color: context.theme.backgroundColor,
         child: RepaintBoundary(
           child: Stack(
             children: [
@@ -85,7 +85,9 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
                     curve: Curves.decelerate,
                     style: TextStyle(
                       fontSize: 28 * widget.size,
-                      color: isSelected ? backgroundColor : teamColor,
+                      color: isSelected
+                          ? context.theme.backgroundColor
+                          : teamColor,
                     ),
                     child: Text(widget.teams[index]),
                   ),
