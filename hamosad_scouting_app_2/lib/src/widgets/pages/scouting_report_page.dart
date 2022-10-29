@@ -15,13 +15,102 @@ class ScoutingReportPage extends StatelessWidget {
     this.size = 1.0,
   }) : super(key: key);
 
-  void _onCloseButtonPressed(BuildContext context) {
-    Navigator.pop(context);
+  void _onCloseButtonPressed(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => ScoutingAlertDialog(
+        content:
+            'Closing the report will delete all of the information entered.',
+        title: 'Warning!',
+        titleIcon: Icons.dangerous_rounded,
+        iconColor: const Color(0xFFC62828),
+        okButton: false,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton(
+              onPressed: () {
+                Navigator.popUntil(
+                  context,
+                  (route) => route.isFirst,
+                );
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(4.0),
+                child: ScoutingText(
+                  text: 'Delete',
+                  color: Color(0xFFC62828),
+                  bold: true,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(4.0),
+                child: ScoutingText(text: 'Cancel'),
+              ),
+            ),
+          ),
+        ],
+        size: size,
+      ),
+    );
   }
 
   void _onSendButtonPressed(BuildContext context) {
-    ScoutingDatabase.sendReport(
-      reportDataProvider(context).data,
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => ScoutingAlertDialog(
+        content:
+            'Sending the report will upload it to the database and bring you back to the home screen.',
+        title: 'Send Report?',
+        titleIcon: Icons.send_rounded,
+        iconColor: const Color(0xFF1E88E5),
+        okButton: false,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(4.0),
+                child: ScoutingText(text: 'Cancel'),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton(
+              onPressed: () {
+                ScoutingDatabase.sendReport(
+                  reportDataProvider(context).data,
+                );
+                Navigator.popUntil(
+                  context,
+                  (route) => route.isFirst,
+                );
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(4.0),
+                child: ScoutingText(
+                  text: 'Send',
+                  color: Color(0xFF1E88E5),
+                  bold: true,
+                ),
+              ),
+            ),
+          ),
+        ],
+        size: size,
+      ),
     );
   }
 
@@ -32,7 +121,9 @@ class ScoutingReportPage extends StatelessWidget {
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
+          backgroundColor: context.theme.backgroundColor,
           appBar: AppBar(
+            backgroundColor: context.theme.scaffoldBackgroundColor,
             actions: [
               ScoutingIconButton(
                 icon: Icons.send_rounded,

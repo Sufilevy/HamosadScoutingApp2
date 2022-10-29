@@ -85,7 +85,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
       child: IconButton(
         onPressed: onPressed,
         icon: Icon(icon),
-        color: context.theme.textTheme.bodySmall?.color,
+        color: context.theme.backgroundColor,
         iconSize: 28 * widget.size,
         splashRadius: 24 * widget.size,
       ),
