@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/pages/compare_teams_page.dart';
 import 'package:hamosad_scouting_app_2/pages/team_details_page.dart';
 import 'package:hamosad_scouting_app_2/pages/team_list_page.dart';
 
@@ -49,7 +50,8 @@ class NavDrawer extends StatelessWidget {
           children: [
             menuCategoryHeader('Teams'),
             pageNavItem(const TeamDetailsPage(),'Team Details', Icons.info_outline),
-            pageNavItem(const TeamListPage(), 'Team List', Icons.list)
+            pageNavItem(const TeamListPage(), 'Team List', Icons.list),
+            pageNavItem(const CompareTeamsPage(), 'Compare Teams', Icons.compare_arrows),
           ],
         ),
       )

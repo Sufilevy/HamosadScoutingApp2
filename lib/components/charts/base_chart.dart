@@ -11,13 +11,15 @@ class BaseChart extends StatelessWidget {
     required this.maxY,
     required this.minX,
     required this.minY,
+    required this.fillBelowBar,
     this.yAxisTitles,
     this.getToolipItems
-  });
+  }); 
 
   final List<Graph> graphs;
   final SideTitles? yAxisTitles;
   final List<LineTooltipItem?> Function(List<LineBarSpot>)? getToolipItems;
+  final bool fillBelowBar;
   final double maxX;
   final double minX;
   final double maxY;
@@ -50,7 +52,7 @@ class BaseChart extends StatelessWidget {
             ),
             belowBarData: BarAreaData(
               show: true,
-              color: graphs[graphIndx].color.withOpacity(0.3),// ???
+              color: graphs[graphIndx].color.withOpacity((fillBelowBar) ? 0.3:0),
             ),
             spots: List<FlSpot>.generate(
               graphs[graphIndx].points.length,

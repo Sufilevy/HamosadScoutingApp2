@@ -64,7 +64,7 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
           fontSize: 24
         ),
       ),
-      Expanded(child: BaseChart(graphs: [Graph(color: Colors.red, points: [[0,0], [1, 3], [2, 7], [3, 4]])], maxX: 3, maxY: 7, minX: 0, minY: 0))
+      Expanded(child: BaseChart(graphs: [Graph(color: Colors.red, points: [[0,0], [1, 3], [2, 7], [3, 4]])], maxX: 3, maxY: 7, minX: 0, minY: 0, fillBelowBar: true,))
     ],
   );
 
