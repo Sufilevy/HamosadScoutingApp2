@@ -38,6 +38,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^3.0.1
   flutter_typeahead: ^4.1.1
+  carousel_slider: ^4.1.1
+  fl_chart: ^0.55.2
 
   
 

@@ -11,10 +11,7 @@ class RoundedSection extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(Consts.defultBorderRadiusSize),
-        topRight: Radius.circular(Consts.defultBorderRadiusSize)
-      ),
+      borderRadius: const BorderRadius.all(Radius.circular(Consts.defultBorderRadiusSize)),
       child: Container(
         color: Consts.sectionDefultColor,
         child: child,
