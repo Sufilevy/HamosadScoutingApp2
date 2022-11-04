@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/components/carousel_with_indicators.dart';
-import 'package:hamosad_scouting_app_2/components/charts/chart.dart';
+import 'package:hamosad_scouting_app_2/components/chart.dart';
 import 'package:hamosad_scouting_app_2/components/rounded_section.dart';
 import 'package:hamosad_scouting_app_2/models/team.dart';
 

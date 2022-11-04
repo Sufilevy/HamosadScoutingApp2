@@ -30,29 +30,24 @@ class _TeamListPageState extends State<TeamListPage> {
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: teamListWidget(),
           ),
-          Column(
-            children: [
-              const Divider(color: Colors.black, thickness: 0.1),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Sorting filter:',
-                      style: TextStyle(
-                        color: Consts.secondaryDisplayColor,
-                        fontSize: 14,
-                        fontFamily: Consts.defaultFontFamily
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    filterSelector(),
-                    const SizedBox(height: 10)
-                  ],
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Sorting filter:',
+                  style: TextStyle(
+                    color: Consts.secondaryDisplayColor,
+                    fontSize: 14,
+                    fontFamily: Consts.defaultFontFamily
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 3),
+                filterSelector(),
+                const SizedBox(height: 10)
+              ],
+            ),
           ),
         ],
       ),

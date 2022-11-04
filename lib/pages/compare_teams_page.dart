@@ -1,13 +1,17 @@
 
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/components/carousel_with_indicators.dart';
-import 'package:hamosad_scouting_app_2/components/charts/chart.dart';
+import 'package:hamosad_scouting_app_2/components/chart.dart';
 import 'package:hamosad_scouting_app_2/components/rounded_section.dart';
 import 'package:hamosad_scouting_app_2/models/team.dart';
 
 import '../components/app_page.dart';
 import '../components/team_search_box.dart';
 import '../constants.dart';
+
+final List<Color> compareColors = [Colors.red, Colors.blue, Colors.orange, Colors.pink, Colors.green, Colors.purple]; 
 
 class CompareTeamsPage extends StatefulWidget {
   const CompareTeamsPage({ Key? key }) : super(key: key);
@@ -19,9 +23,11 @@ class CompareTeamsPage extends StatefulWidget {
 class _CompareTeamsPageState extends State<CompareTeamsPage> {
   List<Team> selectedTeams = [];
   TextEditingController teamSelectionCntroller = TextEditingController();
+  Map<Team, Color> teamsColors = {};
 
   @override
   Widget build(BuildContext context) {
+    print(Colors.primaries.length);
 
     return AppPage(
       appBar: AppBar(title: const Text('Compare Teams')),
@@ -33,8 +39,9 @@ class _CompareTeamsPageState extends State<CompareTeamsPage> {
               teams: [Team(number: 6740, name: 'Glue Gun & Glitter'), Team(number: 3071, name: 'HaMosad')], 
               onChange: (Team team){
                 setState(() {
-                  if (!List<String>.generate(selectedTeams.length, (index) => selectedTeams[index].name).contains(team.name)) {
+                  if (!List<String>.generate(selectedTeams.length, (index) => selectedTeams[index].name).contains(team.name) && selectedTeams.length < 6) {
                     selectedTeams.add(team);
+                    teamsColors[team] =compareColors[selectedTeams.length];
                   }
                 });
               }, 
@@ -103,8 +110,8 @@ class _CompareTeamsPageState extends State<CompareTeamsPage> {
             ),
             Text(
               team.number.toString(),
-              style: const TextStyle(
-                color: Consts.secondaryDisplayColor,
+              style: TextStyle(
+                color: teamsColors[team],
                 fontSize: 20
               ),
             )

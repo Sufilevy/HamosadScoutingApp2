@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 
 class Team {
-  const Team({
+  Team({
     required this.number,
     required this.name
   });
