@@ -1,0 +1,59 @@
+
+import 'dart:math';
+
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/material.dart';
+
+import '../Constants.dart';
+
+class Selector<T> extends StatelessWidget {
+  const Selector({
+    required this.items,
+    required this.selectedValue,
+    required this.onChange,
+    required this.textStyle,
+    this.hint,
+  });
+
+  final Map<Widget, T> items;
+  final Function(T?) onChange;
+  final Widget? hint;
+  final T? selectedValue;
+  final TextStyle textStyle;
+
+  @override
+  Widget build(BuildContext context) {
+
+    List<DropdownMenuItem<T>> dropdownItems = [];
+    items.forEach((Widget title, T value) {
+      dropdownItems.add(
+        DropdownMenuItem(
+          value: value, 
+          child: title
+        )
+      );
+    });
+
+    return DecoratedBox(
+      decoration: BoxDecoration( 
+        color:Consts.sectionDefultColor,
+        border: Border.all(color: Colors.transparent, width:2),
+        borderRadius: BorderRadius.circular(Consts.defaultBorderRadiusSize),
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(left: 5),
+        child: DropdownButton<T>(
+          style: textStyle,
+          hint: hint,
+          dropdownColor: Consts.sectionDefultColor,
+          value: selectedValue,
+          onChanged: onChange,
+          items: dropdownItems,
+          isExpanded: true,
+          underline: Container(),
+          alignment: Alignment.centerLeft,
+        ),
+      ),
+    );
+  }
+}
