@@ -1,13 +1,14 @@
-import "package:carousel_slider/carousel_slider.dart";
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class CarouselWithIndicator extends StatefulWidget {
-  CarouselWithIndicator({
+  const CarouselWithIndicator({
+    Key? key,
     required this.widgets,
     this.direction = Axis.horizontal,
     this.initialPage = 0,
     this.enableInfininteScroll = true,
-  });
+  }) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _CarouselWithIndicatorState();
@@ -59,11 +60,12 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
               child: Container(
                 width: 12.0,
                 height: 12.0,
-                margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: (Colors.white)
-                      .withOpacity(_current == index ? 0.9 : 0.4),
+                  color:
+                      (Colors.white).withOpacity(_current == index ? 0.9 : 0.4),
                 ),
               ),
             ),

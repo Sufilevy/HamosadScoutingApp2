@@ -1,19 +1,16 @@
-
-import 'dart:math';
-
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 import '../Constants.dart';
 
 class Selector<T> extends StatelessWidget {
   const Selector({
+    Key? key,
     required this.items,
     required this.selectedValue,
     required this.onChange,
     required this.textStyle,
     this.hint,
-  });
+  }) : super(key: key);
 
   final Map<Widget, T> items;
   final Function(T?) onChange;
@@ -23,25 +20,19 @@ class Selector<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     List<DropdownMenuItem<T>> dropdownItems = [];
     items.forEach((Widget title, T value) {
-      dropdownItems.add(
-        DropdownMenuItem(
-          value: value, 
-          child: title
-        )
-      );
+      dropdownItems.add(DropdownMenuItem(value: value, child: title));
     });
 
     return DecoratedBox(
-      decoration: BoxDecoration( 
-        color:Consts.sectionDefultColor,
-        border: Border.all(color: Colors.transparent, width:2),
+      decoration: BoxDecoration(
+        color: Consts.sectionDefultColor,
+        border: Border.all(color: Colors.transparent, width: 2),
         borderRadius: BorderRadius.circular(Consts.defaultBorderRadiusSize),
       ),
       child: Padding(
-        padding: EdgeInsets.only(left: 5),
+        padding: const EdgeInsets.only(left: 5),
         child: DropdownButton<T>(
           style: textStyle,
           hint: hint,

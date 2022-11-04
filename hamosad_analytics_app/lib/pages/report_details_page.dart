@@ -5,10 +5,10 @@ import '../components/report_search_box.dart';
 import '../models/report.dart';
 
 class ReportDetailsPage extends StatefulWidget {
-  const ReportDetailsPage({ Key? key }) : super(key: key);
+  const ReportDetailsPage({Key? key}) : super(key: key);
 
   @override
-  _ReportDetailsPageState createState() => _ReportDetailsPageState();
+  State<ReportDetailsPage> createState() => _ReportDetailsPageState();
 }
 
 class _ReportDetailsPageState extends State<ReportDetailsPage> {
@@ -20,16 +20,19 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
     return AppPage(
       appBar: AppBar(title: const Text('Report Details')),
       body: Padding(
-        padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+        padding:
+            const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
         child: Column(
           children: [
             ReportSearchBox(
-              reports: [Report(teamNumber: 6740, scouter: 'liad inon', match: '1'), Report(teamNumber: 6740, scouter: 'amir', match: '1')], 
-              onChange: (Report newTeam){
-                selectedReport = newTeam;
-              }, 
-              inputController: teamSelectionCntroller
-            ),
+                reports: const [
+                  Report(teamNumber: 6740, scouter: 'liad inon', match: '1'),
+                  Report(teamNumber: 6740, scouter: 'amir', match: '1')
+                ],
+                onChange: (Report newTeam) {
+                  selectedReport = newTeam;
+                },
+                inputController: teamSelectionCntroller),
             const SizedBox(height: 5),
           ],
         ),
