@@ -1,11 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/models/graph.dart';
 
 import '../../Constants.dart';
 
-class BaseChart extends StatelessWidget {
-  const BaseChart({
+class Chart extends StatelessWidget {
+  const Chart({
     required this.graphs,
     required this.maxX,
     required this.maxY,
@@ -118,4 +117,14 @@ class BaseChart extends StatelessWidget {
       )
     );
   }
+}
+
+class Graph {
+  const Graph({
+    required this.points,
+    required this.color
+  });
+
+  final List<List<double>> points;
+  final Color color;
 }

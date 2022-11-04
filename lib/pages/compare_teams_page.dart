@@ -1,14 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/components/carousel_with_indicators.dart';
-import 'package:hamosad_scouting_app_2/components/charts/base_chart.dart';
+import 'package:hamosad_scouting_app_2/components/charts/chart.dart';
 import 'package:hamosad_scouting_app_2/components/rounded_section.dart';
-import 'package:hamosad_scouting_app_2/components/team_selector.dart';
 import 'package:hamosad_scouting_app_2/models/team.dart';
 
 import '../components/app_page.dart';
+import '../components/team_search_box.dart';
 import '../constants.dart';
-import '../models/graph.dart';
 
 class CompareTeamsPage extends StatefulWidget {
   const CompareTeamsPage({ Key? key }) : super(key: key);
@@ -23,17 +22,20 @@ class _CompareTeamsPageState extends State<CompareTeamsPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return AppPage(
       appBar: AppBar(title: const Text('Compare Teams')),
       body: Padding(
-        padding: const EdgeInsets.only(top: 10, bottom: 5, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
         child: Column(
           children: [
-            TeamsSelector(
+            TeamSearchBox(
               teams: [Team(number: 6740, name: 'Glue Gun & Glitter'), Team(number: 3071, name: 'HaMosad')], 
               onChange: (Team team){
                 setState(() {
-                  selectedTeams.add(team);
+                  if (!List<String>.generate(selectedTeams.length, (index) => selectedTeams[index].name).contains(team.name)) {
+                    selectedTeams.add(team);
+                  }
                 });
               }, 
               inputController: teamSelectionCntroller
@@ -121,7 +123,7 @@ class _CompareTeamsPageState extends State<CompareTeamsPage> {
           fontSize: 24
         ),
       ),
-      Expanded(child: BaseChart(graphs: [Graph(color: Colors.red, points: [[0,0], [1, 3], [2, 7], [3, 4]])], maxX: 3, maxY: 7, minX: 0, minY: 0, fillBelowBar: false,))
+      Expanded(child: Chart(graphs: [Graph(color: Colors.red, points: [[0,0], [1, 3], [2, 7], [3, 4]])], maxX: 3, maxY: 7, minX: 0, minY: 0, fillBelowBar: false,))
     ],
   );
 

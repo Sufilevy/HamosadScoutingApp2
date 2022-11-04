@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/components/carousel_with_indicators.dart';
 import 'package:hamosad_scouting_app_2/components/charts/chart.dart';
 import 'package:hamosad_scouting_app_2/components/rounded_section.dart';
-import 'package:hamosad_scouting_app_2/components/search_box.dart';
 import 'package:hamosad_scouting_app_2/models/team.dart';
 
 import '../components/app_page.dart';
+import '../components/team_search_box.dart';
 import '../constants.dart';
 
 class TeamDetailsPage extends StatefulWidget {
@@ -36,9 +36,9 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
         padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
         child: Column(
           children: [
-            SearchBox(
-              items: [Team(number: 6740, name: 'Glue Gun & Glitter'), Team(number: 3071, name: 'HaMosad')], 
-              onSearch: (Team newTeam){
+            TeamSearchBox(
+              teams: [Team(number: 6740, name: 'Glue Gun & Glitter'), Team(number: 3071, name: 'HaMosad')], 
+              onChange: (Team newTeam){
                 team = newTeam;
               }, 
               inputController: teamSelectionCntroller

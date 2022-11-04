@@ -5,6 +5,7 @@ import 'package:hamosad_scouting_app_2/pages/team_details_page.dart';
 import 'package:hamosad_scouting_app_2/pages/team_list_page.dart';
 
 import '../constants.dart';
+import '../pages/report_details_page.dart';
 
 class NavDrawer extends StatelessWidget {
   const NavDrawer({required this.onChange ,super.key});
@@ -38,8 +39,8 @@ class NavDrawer extends StatelessWidget {
 
   Widget navMenu() => Expanded(child: ClipRRect(
     borderRadius: const BorderRadius.only(
-      topLeft: Radius.circular(Consts.defultBorderRadiusSize),
-      topRight: Radius.circular(Consts.defultBorderRadiusSize)
+      topLeft: Radius.circular(Consts.defaultBorderRadiusSize),
+      topRight: Radius.circular(Consts.defaultBorderRadiusSize)
     ),
     child: Container(
       color: const Color.fromARGB(255, 27, 33, 48),
@@ -49,9 +50,12 @@ class NavDrawer extends StatelessWidget {
           shrinkWrap: true,
           children: [
             menuCategoryHeader('Teams'),
-            pageNavItem(const TeamDetailsPage(),'Team Details', Icons.info_outline),
+            pageNavItem(TeamDetailsPage(),'Team Details', Icons.info_outline),
             pageNavItem(const TeamListPage(), 'Team List', Icons.list),
             pageNavItem(const CompareTeamsPage(), 'Compare Teams', Icons.compare_arrows),
+            menuCategoryHeader('Reports'),
+            //pageNavItem(const CompareTeamsPage(), 'Reports Status', Icons.info_outline),
+            pageNavItem(const ReportDetailsPage(), 'Report Details', Icons.info_outline),
           ],
         ),
       )

@@ -4,41 +4,34 @@ import 'package:hamosad_scouting_app_2/constants.dart';
 
 import '../models/team.dart';
 
-class TeamsSelector extends StatelessWidget {
-  const TeamsSelector({super.key, 
-    required this.teams,
+class SearchBox<T> extends StatelessWidget {
+  const SearchBox({super.key, 
+    required this.items,
+    required this.itemDisplay,
     required this.onChange,
     required this.inputController,
+    required this.hintText,
+    required this.suggestionsFilter
   });
 
-  final List<Team> teams;
-  final void Function(Team) onChange;
+  final List<T> items;
+  final String Function(T) itemDisplay;
+  final void Function(T) onChange;
   final TextEditingController inputController;
+  final String hintText;
+  final List<T> Function(String) suggestionsFilter;
+
   @override
   Widget build(final BuildContext context) {
-    return TypeAheadFormField<Team>(
+    return TypeAheadFormField<T>(
       suggestionsBoxDecoration: SuggestionsBoxDecoration(
-        borderRadius: BorderRadius.circular(Consts.defultBorderRadiusSize),
+        borderRadius: BorderRadius.circular(Consts.defaultBorderRadiusSize),
         color: Consts.sectionDefultColor
       ),
-      validator: (final String? value) {
-        if (value == "") {
-          return "Please pick a team";
-        }
-        return null;
-      },
       textFieldConfiguration: TextFieldConfiguration(
-        onSubmitted: (final String number) {
-          try {
-            final Team team = teams.firstWhere(
-              (final Team team) => team.number.toString() == number,
-            );
-            onChange(team);
-            inputController.text = "${team.number} ${team.name}";
-          } on StateError catch (_) {
-            //ignored
-          }
-        },
+        onSubmitted: ((String suggestion) {
+          onChange(items.where((item) => itemDisplay(item) == suggestion).first);
+        }),
         onTap: inputController.clear,
         controller: inputController,
         style: const TextStyle(
@@ -48,7 +41,7 @@ class TeamsSelector extends StatelessWidget {
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Consts.defultBorderRadiusSize),
+            borderRadius: BorderRadius.circular(Consts.defaultBorderRadiusSize),
           ),
           contentPadding: EdgeInsets.zero,
           enabledBorder: const OutlineInputBorder(
@@ -65,25 +58,17 @@ class TeamsSelector extends StatelessWidget {
             color: Consts.secondaryDisplayColor,
             size: 27,
           ),
-          hintText: "Search Team",
+          hintText: hintText,
           hintStyle: const TextStyle(
             color: Consts.secondaryDisplayColor,
             fontSize: 24
           )
         ),
       ),
-      suggestionsCallback: (final String pattern) => teams.where(
-        (final Team element) {
-          return ('${element.number.toString()} ${element.name.toLowerCase()}').contains(pattern.toLowerCase());
-        },
-      ).toList()
-        ..sort(
-          (final Team a, Team b) =>
-              a.number.compareTo(b.number),
-        ),
-      itemBuilder: (final BuildContext context, final Team suggestion) =>
+      suggestionsCallback: suggestionsFilter,
+      itemBuilder: (final BuildContext context, final T suggestion) =>
           ListTile(title: Text(
-            "${suggestion.number} ${suggestion.name}",
+            itemDisplay(suggestion),
             style: const TextStyle(color: Consts.secondaryDisplayColor),
           )),
       transitionBuilder: (
@@ -92,29 +77,30 @@ class TeamsSelector extends StatelessWidget {
         final AnimationController? controller,
       ) {
         return FadeTransition(
-          child: suggestionsBox,
           opacity: CurvedAnimation(
             parent: controller!,
             curve: Curves.fastOutSlowIn,
           ),
+          child: suggestionsBox,
         );
       },
       noItemsFoundBuilder: (final BuildContext context) => Container(
         height: 60,
         child: const Center(
           child: Text(
-            "No Teams Found",
-            style: TextStyle(fontSize: 16),
+            "No items found",
+            style: TextStyle(
+              fontSize: 16,
+              color: Consts.secondaryDisplayColor
+            ),
             textAlign: TextAlign.start,
           ),
         ),
       ),
-      onSuggestionSelected: (final Team suggestion) {
-        inputController.text = "${suggestion.number} ${suggestion.name}";
+      onSuggestionSelected: (final T suggestion) {
+        inputController.text = itemDisplay(suggestion);
         onChange(
-          teams[teams.indexWhere(
-            (final Team team) => team.number == suggestion.number,
-          )],
+          suggestion
         );
       },
     );
