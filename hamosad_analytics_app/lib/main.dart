@@ -20,20 +20,22 @@ class _AppState extends State<App> {
     return MaterialApp(
       title: 'Scouting Analytics',
       theme: theme(),
-      home: const TeamDetailsPage(),
+      home: TeamDetailsPage()
     );
   }
 
   ThemeData theme() => ThemeData(
+    fontFamily: Consts.defaultFontFamily,
+    scaffoldBackgroundColor: Consts.backgroundColor,
+    appBarTheme: const AppBarTheme(
+      centerTitle: true,
+      backgroundColor: Consts.backgroundColor,
+      iconTheme: IconThemeData(color: Consts.secondaryDisplayColor),
+      titleTextStyle: TextStyle(
         fontFamily: Consts.defaultFontFamily,
-        scaffoldBackgroundColor: Consts.backgroundColor,
-        appBarTheme: const AppBarTheme(
-            centerTitle: true,
-            backgroundColor: Consts.backgroundColor,
-            titleTextStyle: TextStyle(
-              fontFamily: Consts.defaultFontFamily,
-              color: Consts.secondaryDisplayColor,
-              fontSize: 32,
-            )),
-      );
+        color: Consts.secondaryDisplayColor,
+        fontSize: 32,
+      )
+    )
+  );
 }

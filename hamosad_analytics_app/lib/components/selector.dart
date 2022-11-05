@@ -9,6 +9,7 @@ class Selector<T> extends StatelessWidget {
     required this.selectedValue,
     required this.onChange,
     required this.textStyle,
+    this.borderRadius,
     this.hint,
   }) : super(key: key);
 
@@ -17,6 +18,7 @@ class Selector<T> extends StatelessWidget {
   final Widget? hint;
   final T? selectedValue;
   final TextStyle textStyle;
+  final double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +28,10 @@ class Selector<T> extends StatelessWidget {
     });
 
     return DecoratedBox(
-      decoration: BoxDecoration(
-        color: Consts.sectionDefultColor,
-        border: Border.all(color: Colors.transparent, width: 2),
-        borderRadius: BorderRadius.circular(Consts.defaultBorderRadiusSize),
+      decoration: BoxDecoration( 
+        color:Consts.sectionDefultColor,
+        border: Border.all(color: Colors.transparent, width:2),
+        borderRadius: BorderRadius.circular((borderRadius != null) ? borderRadius!:Consts.defaultBorderRadiusSize),
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 5),
