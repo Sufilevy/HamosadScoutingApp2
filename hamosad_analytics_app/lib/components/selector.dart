@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../Constants.dart';
+import 'package:hamosad_analytics_app/constants.dart';
 
 class Selector<T> extends StatelessWidget {
   const Selector({
@@ -28,10 +27,12 @@ class Selector<T> extends StatelessWidget {
     });
 
     return DecoratedBox(
-      decoration: BoxDecoration( 
-        color:Consts.sectionDefultColor,
-        border: Border.all(color: Colors.transparent, width:2),
-        borderRadius: BorderRadius.circular((borderRadius != null) ? borderRadius!:Consts.defaultBorderRadiusSize),
+      decoration: BoxDecoration(
+        color: Consts.sectionDefultColor,
+        border: Border.all(color: Colors.transparent, width: 2),
+        borderRadius: BorderRadius.circular(
+          borderRadius ?? Consts.defaultBorderRadiusSize,
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 5),

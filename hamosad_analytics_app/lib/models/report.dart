@@ -1,4 +1,3 @@
-
 class Report {
   const Report({
     required this.match,

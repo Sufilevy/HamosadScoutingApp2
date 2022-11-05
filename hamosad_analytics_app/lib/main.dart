@@ -19,23 +19,23 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Scouting Analytics',
-      theme: theme(),
-      home: TeamDetailsPage()
+      theme: _theme(),
+      home: const TeamDetailsPage(),
     );
   }
 
-  ThemeData theme() => ThemeData(
-    fontFamily: Consts.defaultFontFamily,
-    scaffoldBackgroundColor: Consts.backgroundColor,
-    appBarTheme: const AppBarTheme(
-      centerTitle: true,
-      backgroundColor: Consts.backgroundColor,
-      iconTheme: IconThemeData(color: Consts.secondaryDisplayColor),
-      titleTextStyle: TextStyle(
+  ThemeData _theme() => ThemeData(
         fontFamily: Consts.defaultFontFamily,
-        color: Consts.secondaryDisplayColor,
-        fontSize: 32,
-      )
-    )
-  );
+        scaffoldBackgroundColor: Consts.backgroundColor,
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          backgroundColor: Consts.backgroundColor,
+          iconTheme: IconThemeData(color: Consts.secondaryDisplayColor),
+          titleTextStyle: TextStyle(
+            fontFamily: Consts.defaultFontFamily,
+            color: Consts.secondaryDisplayColor,
+            fontSize: 32,
+          ),
+        ),
+      );
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'nav_drawer.dart';
+import 'package:hamosad_analytics_app/components.dart';
 
 class AppPage extends StatefulWidget {
-  const AppPage({required this.appBar, required this.body,super.key});
+  const AppPage({required this.appBar, required this.body, super.key});
 
   final AppBar appBar;
   final Widget body;
@@ -13,21 +13,22 @@ class AppPage extends StatefulWidget {
 
 class _AppPageState extends State<AppPage> {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       drawerScrimColor: Colors.transparent,
-      drawer: NavDrawer(  
+      drawer: NavDrawer(
         onChange: (Widget page) {
-          setState(() {
-            Navigator.pop(context);
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => page
-            ));
-          });
-        }
+          setState(
+            () {
+              Navigator.pop(context);
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => page));
+            },
+          );
+        },
       ),
       appBar: widget.appBar,
-      body: widget.body
+      body: widget.body,
     );
   }
 }

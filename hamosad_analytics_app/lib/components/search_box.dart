@@ -3,14 +3,15 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:hamosad_analytics_app/constants.dart';
 
 class SearchBox<T> extends StatelessWidget {
-  const SearchBox(
-      {super.key,
-      required this.items,
-      required this.itemDisplay,
-      required this.onChange,
-      required this.inputController,
-      required this.hintText,
-      required this.suggestionsFilter});
+  const SearchBox({
+    super.key,
+    required this.items,
+    required this.itemDisplay,
+    required this.onChange,
+    required this.inputController,
+    required this.hintText,
+    required this.suggestionsFilter,
+  });
 
   final List<T> items;
   final String Function(T) itemDisplay;
@@ -36,33 +37,36 @@ class SearchBox<T> extends StatelessWidget {
             const TextStyle(color: Consts.secondaryDisplayColor, fontSize: 24),
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius:
-                  BorderRadius.circular(Consts.defaultBorderRadiusSize),
-            ),
-            contentPadding: EdgeInsets.zero,
-            enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent, width: 0.0)),
-            focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent, width: 0.0)),
-            filled: true,
-            fillColor: Consts.sectionDefultColor,
-            focusColor: Consts.secondaryDisplayColor,
-            prefixIcon: const Icon(
-              Icons.search,
-              color: Consts.secondaryDisplayColor,
-              size: 27,
-            ),
-            hintText: hintText,
-            hintStyle: const TextStyle(
-                color: Consts.secondaryDisplayColor, fontSize: 24)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(Consts.defaultBorderRadiusSize),
+          ),
+          contentPadding: EdgeInsets.zero,
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+          ),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+          ),
+          filled: true,
+          fillColor: Consts.sectionDefultColor,
+          focusColor: Consts.secondaryDisplayColor,
+          prefixIcon: const Icon(
+            Icons.search,
+            color: Consts.secondaryDisplayColor,
+            size: 27,
+          ),
+          hintText: hintText,
+          hintStyle: const TextStyle(
+              color: Consts.secondaryDisplayColor, fontSize: 24),
+        ),
       ),
       suggestionsCallback: suggestionsFilter,
       itemBuilder: (final BuildContext context, final T suggestion) => ListTile(
-          title: Text(
-        itemDisplay(suggestion),
-        style: const TextStyle(color: Consts.secondaryDisplayColor),
-      )),
+        title: Text(
+          itemDisplay(suggestion),
+          style: const TextStyle(color: Consts.secondaryDisplayColor),
+        ),
+      ),
       transitionBuilder: (
         final BuildContext context,
         final Widget suggestionsBox,
