@@ -9,7 +9,8 @@ import '../components/team_search_box.dart';
 import '../constants.dart';
 
 class TeamDetailsPage extends StatefulWidget {
-  TeamDetailsPage({
+  const TeamDetailsPage({
+    super.key, 
     this.initTeam
   });
 
@@ -127,7 +128,7 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
       SingleChildScrollView(
         child: Column(
           children: [
-            Divider(color: Consts.primaryDisplayColor, thickness: 1,),
+            const Divider(color: Consts.primaryDisplayColor, thickness: 1,),
             Text(
               'Carriage quitting securing be appetite it declared. High eyes kept so busy feel call in. Would day nor ask walls known. But preserved advantage are but and certainty earnestly enjoyment. Passage weather as up am exposed. And natural related man subject. Eagerness get situation his was delighted.',
               style: TextStyle(color: Consts.primaryDisplayColor),

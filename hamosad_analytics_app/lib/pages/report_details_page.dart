@@ -6,6 +6,7 @@ import '../models/report.dart';
 
 class ReportDetailsPage extends StatefulWidget {
   const ReportDetailsPage({
+    super.key, 
     this.initReport
   });
 

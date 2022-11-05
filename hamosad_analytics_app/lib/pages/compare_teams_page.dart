@@ -24,8 +24,6 @@ class _CompareTeamsPageState extends State<CompareTeamsPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(Colors.primaries.length);
-
     return AppPage(
       appBar: AppBar(
         title: const Text('Compare Teams'),
