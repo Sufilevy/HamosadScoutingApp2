@@ -21,16 +21,10 @@ class _TeamListPageState extends State<TeamListPage> {
   @override
   Widget build(BuildContext context) {
     return AppPage(
-      appBar: AppBar(title: const Text('Team List'), actions: [
-        InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.arrow_back_ios,
-          ),
-        )
-      ]),
+      appBar: AppBar(
+        title: const Text('Team List'), 
+        actions: const [AppbarBackButton()]
+      ),
       body: Column(children: [
         filterSelector(),
         const SizedBox(

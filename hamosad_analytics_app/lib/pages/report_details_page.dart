@@ -25,14 +25,7 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
     return AppPage(
       appBar: AppBar(
         title: const Text('Report Details'),
-        actions: [
-          IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(
-              Icons.arrow_back_ios_new_rounded,
-            ),
-          ),
-        ],
+        actions: const [AppbarBackButton()],
       ),
       body: Padding(
         padding: const EdgeInsets.only(

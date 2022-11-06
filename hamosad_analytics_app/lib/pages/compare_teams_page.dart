@@ -29,16 +29,7 @@ class _CompareTeamsPageState extends State<CompareTeamsPage> {
     return AppPage(
       appBar: AppBar(
         title: const Text('Compare Teams'),
-        actions: [
-          InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(
-              Icons.arrow_back_ios,
-            ),
-          )
-        ],
+        actions: const [AppbarBackButton()],
       ),
       body: Padding(
         padding:

@@ -7,3 +7,4 @@ export 'components/rounded_section.dart';
 export 'components/search_box.dart';
 export 'components/selector.dart';
 export 'components/team_search_box.dart';
+export 'components/appbar_back_button.dart';

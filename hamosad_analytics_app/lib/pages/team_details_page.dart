@@ -23,18 +23,10 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
     }
 
     return AppPage(
-      appBar: AppBar(title: const Text('Team Details'), actions: [
-        InkWell(
-          onTap: () {
-            if (Navigator.canPop(context)) {
-              Navigator.pop(context);
-            }
-          },
-          child: const Icon(
-            Icons.arrow_back_ios,
-          ),
-        )
-      ]),
+      appBar: AppBar(
+        title: const Text('Team Details'),
+        actions: const [AppbarBackButton()]
+      ),
       body: Padding(
         padding:
             const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
