@@ -5,6 +5,6 @@ export 'components/nav_drawer.dart';
 export 'components/report_search_box.dart';
 export 'components/rounded_section.dart';
 export 'components/search_box.dart';
-export 'components/selector.dart';
+export 'components/selectionButton.dart';
 export 'components/team_search_box.dart';
 export 'components/appbar_back_button.dart';

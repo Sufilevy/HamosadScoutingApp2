@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_analytics_app/constants.dart';
 
-class Selector<T> extends StatelessWidget {
-  const Selector({
+class SelectionButton<T> extends StatelessWidget {
+  const SelectionButton({
     Key? key,
     required this.items,
     required this.selectedValue,

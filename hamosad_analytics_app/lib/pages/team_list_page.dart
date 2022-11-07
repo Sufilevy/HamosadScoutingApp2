@@ -22,9 +22,7 @@ class _TeamListPageState extends State<TeamListPage> {
   Widget build(BuildContext context) {
     return AppPage(
       appBar: AppBar(
-        title: const Text('Team List'), 
-        actions: const [AppbarBackButton()]
-      ),
+          title: const Text('Team List'), actions: const [AppbarBackButton()]),
       body: Column(children: [
         filterSelector(),
         const SizedBox(
@@ -38,7 +36,7 @@ class _TeamListPageState extends State<TeamListPage> {
     );
   }
 
-  Widget filterSelector() => Selector<int Function(Team a, Team b)>(
+  Widget filterSelector() => SelectionButton<int Function(Team a, Team b)>(
         hint: const Text('Choose sorting filter',
             style: TextStyle(
                 color: Consts.secondaryDisplayColor,
