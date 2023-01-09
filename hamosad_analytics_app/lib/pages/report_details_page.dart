@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_analytics_app/components.dart';
+import 'package:hamosad_analytics_app/components/appbar_back_button.dart';
 import 'package:hamosad_analytics_app/models.dart';
 
 class ReportDetailsPage extends StatefulWidget {
