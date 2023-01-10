@@ -15,16 +15,9 @@ class _ReportStatusPageState extends State<ReportStatusPage> {
   @override
   Widget build(BuildContext context) {
     return AppPage(
-      appBar: AppBar(title: const Text('Report Status'), actions: [
-        InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.arrow_back_ios,
-          ),
-        )
-      ]),
+        appBar: AppBar(title: const Text('Report Status'), 
+        actions: const [AppbarBackButton()]
+      ),
       body: Padding(
         padding:
             const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
