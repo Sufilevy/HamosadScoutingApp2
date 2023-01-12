@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
-import 'package:xcontext/material.dart';
 
 class ScoutingReportPage extends StatelessWidget {
   final String title;
@@ -121,9 +120,9 @@ class ScoutingReportPage extends StatelessWidget {
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
-          backgroundColor: context.theme.backgroundColor,
+          backgroundColor: Theme.of(context).backgroundColor,
           appBar: AppBar(
-            backgroundColor: context.theme.scaffoldBackgroundColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             actions: [
               ScoutingIconButton(
                 icon: Icons.send_rounded,
@@ -131,26 +130,26 @@ class ScoutingReportPage extends StatelessWidget {
               ),
             ],
             leading: CloseButton(
-              color: context.theme.textTheme.bodySmall?.color,
+              color: Theme.of(context).textTheme.bodySmall?.color,
               onPressed: () => _onCloseButtonPressed(context),
             ),
             title: Text(
               title,
               style: TextStyle(
                 fontSize: 24 * size,
-                color: context.theme.textTheme.bodySmall?.color,
+                color: Theme.of(context).textTheme.bodySmall?.color,
               ),
             ),
             centerTitle: true,
             bottom: TabBar(
               isScrollable: true,
               indicatorWeight: 2.5 * size,
-              indicatorColor: context.theme.primaryColor,
+              indicatorColor: Theme.of(context).primaryColor,
               labelPadding: EdgeInsets.symmetric(horizontal: 24 * size),
-              labelColor: context.theme.textTheme.bodySmall?.color,
+              labelColor: Theme.of(context).textTheme.bodySmall?.color,
               unselectedLabelColor:
-                  context.theme.textTheme.labelSmall?.color?.lighten(),
-              labelStyle: context.theme.textTheme.bodyLarge,
+                  Theme.of(context).textTheme.labelSmall?.color?.lighten(),
+              labelStyle: Theme.of(context).textTheme.bodyLarge,
               tabs: [
                 for (final tab in tabs) Tab(text: tab.title),
               ],

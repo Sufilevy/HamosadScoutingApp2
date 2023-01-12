@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:xcontext/material.dart';
 
 class ScoutingAlertDialog extends StatelessWidget {
   final String content, title;
@@ -30,15 +29,16 @@ class ScoutingAlertDialog extends StatelessWidget {
             Icon(
               titleIcon!,
               size: 48 * size,
-              color: iconColor ?? context.theme.textTheme.labelMedium?.color,
+              color:
+                  iconColor ?? Theme.of(context).textTheme.labelMedium?.color,
             ),
           if (title.isNotEmpty) ...[
             const Spacer(flex: 2),
             Text(
               title,
-              style: context.theme.textTheme.labelMedium?.copyWith(
-                color: context.theme.textTheme.bodySmall?.color,
-              ),
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: Theme.of(context).textTheme.bodySmall?.color,
+                  ),
             ),
             const Spacer(flex: 3),
           ],
@@ -46,7 +46,7 @@ class ScoutingAlertDialog extends StatelessWidget {
       ),
       content: Text(
         content,
-        style: context.theme.textTheme.bodyLarge,
+        style: Theme.of(context).textTheme.bodyLarge,
         textAlign: TextAlign.center,
       ),
       actionsAlignment: MainAxisAlignment.center,
@@ -56,16 +56,16 @@ class ScoutingAlertDialog extends StatelessWidget {
           TextButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
-                context.theme.primaryColor,
+                Theme.of(context).primaryColor,
               ),
             ),
             child: Padding(
               padding: EdgeInsets.all(6 * size),
               child: Text(
                 'OK',
-                style: context.theme.textTheme.labelSmall?.copyWith(
-                  color: context.theme.textTheme.bodySmall?.color,
-                ),
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: Theme.of(context).textTheme.bodySmall?.color,
+                    ),
               ),
             ),
             onPressed: () => Navigator.pop(context),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
-import 'package:xcontext/material.dart';
 
 class ScoutingSlider extends StatefulWidget {
   final Cubit<int> cubit;
@@ -63,13 +62,13 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
   }
 
   Color _sliderColor() {
-    HSVColor hsv = HSVColor.fromColor(context.theme.toggleableActiveColor);
+    HSVColor hsv = HSVColor.fromColor(Theme.of(context).toggleableActiveColor);
     return Color.lerp(
           hsv.withValue((hsv.value - 0.4).clamp(0, 1)).toColor(),
-          context.theme.toggleableActiveColor,
+          Theme.of(context).toggleableActiveColor,
           widget.cubit.data / (widget.max - widget.min),
         ) ??
-        context.theme.toggleableActiveColor;
+        Theme.of(context).toggleableActiveColor;
   }
 
   Widget _slider() => Padding(
@@ -101,7 +100,7 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
               padding: EdgeInsets.symmetric(horizontal: 32 * widget.size),
               child: Text(
                 widget.title,
-                style: context.theme.textTheme.labelSmall,
+                style: Theme.of(context).textTheme.labelSmall,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -112,8 +111,8 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
               child: Text(
                 widget.subtitle,
                 style: TextStyle(
-                  fontSize: context.theme.textTheme.bodyLarge?.fontSize,
-                  color: context.theme.textTheme.labelSmall?.color,
+                  fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                  color: Theme.of(context).textTheme.labelSmall?.color,
                 ),
                 textAlign: TextAlign.center,
               ),

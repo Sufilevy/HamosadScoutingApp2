@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:xcontext/material.dart';
 
 class ScoutingIconButton extends StatelessWidget {
   final IconData icon;
@@ -26,7 +25,7 @@ class ScoutingIconButton extends StatelessWidget {
         child: IconButton(
           onPressed: onPressed,
           iconSize: iconSize * size,
-          color: color ?? context.theme.primaryColor,
+          color: color ?? Theme.of(context).primaryColor,
           tooltip: tooltip,
           splashRadius: iconSize / 1.75 * size,
           icon: Icon(icon),

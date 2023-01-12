@@ -50,8 +50,8 @@ class _ScoutingAppState extends State<ScoutingApp> {
 
   @override
   void initState() {
-    textColor = widget.textColor ?? const Color(0xFFC7C7C7);
-    lightTextColor = widget.lightTextColor ?? const Color(0xFFCCCCCC);
+    textColor = widget.textColor ?? const Color(0xFFADADB1);
+    lightTextColor = widget.lightTextColor ?? const Color(0xFFFFFFFF);
     super.initState();
   }
 
@@ -66,7 +66,7 @@ class _ScoutingAppState extends State<ScoutingApp> {
 
   TooltipThemeData _tooltipTheme() => TooltipThemeData(
         decoration: const BoxDecoration(
-          color: Color(0xFF1F1F1F),
+          color: Color(0xFF1F1E24),
           borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
         textStyle: TextStyle(
@@ -79,10 +79,10 @@ class _ScoutingAppState extends State<ScoutingApp> {
   ThemeData _themeData() => ThemeData(
         brightness: Brightness.dark,
         textTheme: _textTheme(),
-        backgroundColor: const Color(0xFF26292F),
-        scaffoldBackgroundColor: const Color(0xFF2A2D36),
-        toggleableActiveColor: const Color(0xFFA9CEF4),
-        primaryColor: const Color(0xFFA9CEF4),
+        backgroundColor: const Color(0xFF1F1E24),
+        scaffoldBackgroundColor: const Color(0xFF24232A),
+        toggleableActiveColor: const Color(0xFF0DBF78),
+        primaryColor: const Color(0xFF3591DA),
         tooltipTheme: _tooltipTheme(),
       );
 }

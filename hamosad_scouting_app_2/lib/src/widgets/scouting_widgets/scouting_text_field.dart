@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:xcontext/material.dart';
 
 class ScoutingTextField extends StatefulWidget {
   final Cubit<String> cubit;
@@ -70,8 +69,8 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
             },
           ),
           style: TextStyle(
-            fontSize: context.theme.textTheme.bodyLarge?.fontSize,
-            color: context.theme.textTheme.labelSmall?.color,
+            fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+            color: Theme.of(context).textTheme.labelSmall?.color,
           ),
           textDirection: intl.Bidi.estimateDirectionOfText(widget.cubit.data) ==
                   intl.TextDirection.RTL
@@ -80,21 +79,21 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                color: context.theme.primaryColor,
+                color: Theme.of(context).primaryColor,
                 width: 2 * widget.size,
               ),
             ),
             border: const OutlineInputBorder(),
             errorStyle: TextStyle(
-              fontSize: context.theme.textTheme.bodyMedium?.fontSize,
+              fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
             ),
             labelText: _focusNode.hasFocus || widget.cubit.data.isNotEmpty
                 ? widget.title
                 : widget.hint,
             labelStyle: TextStyle(
               color: _focusNode.hasFocus
-                  ? context.theme.textTheme.bodyLarge?.color
-                  : context.theme.textTheme.labelSmall?.color,
+                  ? Theme.of(context).textTheme.bodyLarge?.color
+                  : Theme.of(context).textTheme.labelSmall?.color,
             ),
           ),
         ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:xcontext/material.dart';
 
 class ScoutingImage extends StatelessWidget {
   final String path, url, title;
@@ -28,7 +27,7 @@ class ScoutingImage extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: context.theme.textTheme.labelMedium,
+            style: Theme.of(context).textTheme.labelMedium,
           ),
           _image(),
         ],

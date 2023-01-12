@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
-import 'package:xcontext/material.dart';
 
 class ScoutingTeamNumber extends StatefulWidget {
   final Cubit<String> cubit;
@@ -34,7 +33,7 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
       child: Container(
         width: _width * widget.size,
         height: _height * widget.size,
-        color: context.theme.backgroundColor,
+        color: Theme.of(context).backgroundColor,
         child: RepaintBoundary(
           child: Stack(
             children: [
@@ -86,7 +85,7 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
                     style: TextStyle(
                       fontSize: 28 * widget.size,
                       color: isSelected
-                          ? context.theme.backgroundColor
+                          ? Theme.of(context).backgroundColor
                           : teamColor,
                     ),
                     child: Text(widget.teams[index]),
