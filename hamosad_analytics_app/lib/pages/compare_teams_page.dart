@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_analytics_app/components.dart';
+import 'package:hamosad_analytics_app/components/appbar_back_button.dart';
 import 'package:hamosad_analytics_app/constants.dart';
 import 'package:hamosad_analytics_app/models.dart';
 
@@ -29,16 +30,7 @@ class _CompareTeamsPageState extends State<CompareTeamsPage> {
     return AppPage(
       appBar: AppBar(
         title: const Text('Compare Teams'),
-        actions: [
-          InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(
-              Icons.arrow_back_ios,
-            ),
-          )
-        ],
+        actions: const [AppbarBackButton()],
       ),
       body: Padding(
         padding:
