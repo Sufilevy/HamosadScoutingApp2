@@ -21,13 +21,14 @@ class ReportSearchBox extends StatelessWidget {
       onChange: onChange,
       hintText: 'Choose Report',
       itemDisplay: (Report report) =>
-          '${report.teamNumber} - ${report.match} - ${report.scouter}',
+          '${report.info.teamNumber} - ${report.info.match} - ${report.info.scouter}',
       inputController: inputController,
       suggestionsFilter: (String search) => reports
           .where(
-            (report) => '${report.teamNumber} ${report.match} ${report.scouter}'
-                .toLowerCase()
-                .contains(search.toLowerCase()),
+            (report) =>
+                '${report.info.teamNumber} ${report.info.match} ${report.info.scouter}'
+                    .toLowerCase()
+                    .contains(search.toLowerCase()),
           )
           .toList(),
     );

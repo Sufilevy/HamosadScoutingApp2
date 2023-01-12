@@ -82,7 +82,8 @@ class _TeamListPageState extends State<TeamListPage> {
                     color: Consts.primaryDisplayColor,
                     width: double.maxFinite,
                     alignment: Alignment.center,
-                    child: Text('${team.number.toString()} ${team.name}',
+                    child: Text(
+                        '${team.info.number.toString()} ${team.info.name}',
                         style: const TextStyle(
                             color: Consts.sectionDefultColor, fontSize: 20)),
                   ),
@@ -95,7 +96,7 @@ class _TeamListPageState extends State<TeamListPage> {
                         Padding(
                           padding: const EdgeInsets.all(3.0),
                           child: Text(
-                            'number: ${team.number.toString()}',
+                            'number: ${team.info.number.toString()}',
                             style: const TextStyle(
                                 color: Consts.primaryDisplayColor,
                                 fontSize: 18),
@@ -104,7 +105,7 @@ class _TeamListPageState extends State<TeamListPage> {
                         Padding(
                           padding: const EdgeInsets.all(3),
                           child: Text(
-                            'name: ${team.name.toString()}',
+                            'name: ${team.info.name.toString()}',
                             style: const TextStyle(
                                 color: Consts.primaryDisplayColor,
                                 fontSize: 18),
@@ -121,13 +122,13 @@ class _TeamListPageState extends State<TeamListPage> {
       );
 
   int nameFilter(Team a, Team b) {
-    return a.name.compareTo(b.name);
+    return a.info.name.compareTo(b.info.name);
   }
 
   int numberFilter(Team a, Team b) {
-    if (a.number < b.number) {
+    if (a.info.number < b.info.number) {
       return -1;
-    } else if (a.number > b.number) {
+    } else if (a.info.number > b.info.number) {
       return 1;
     } else {
       return 0;

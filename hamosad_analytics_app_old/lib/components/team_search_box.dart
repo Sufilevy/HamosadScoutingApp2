@@ -20,11 +20,11 @@ class TeamSearchBox extends StatelessWidget {
       items: teams,
       onChange: onChange,
       hintText: 'Choose team',
-      itemDisplay: (Team team) => '${team.number} ${team.name}',
+      itemDisplay: (Team team) => '${team.info.number} ${team.info.name}',
       inputController: inputController,
       suggestionsFilter: (String search) => teams
           .where(
-            (team) => '${team.number} ${team.name}'
+            (team) => '${team.info.number} ${team.info.name}'
                 .toLowerCase()
                 .contains(search.toLowerCase()),
           )
