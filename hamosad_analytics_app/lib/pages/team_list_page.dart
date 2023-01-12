@@ -12,10 +12,7 @@ class TeamListPage extends StatefulWidget {
 }
 
 class _TeamListPageState extends State<TeamListPage> {
-  List<Team> teamList = [
-    Team(number: 6740, name: 'Glue Gun & Glitter'),
-    Team(number: 3071, name: 'HaMosad')
-  ];
+  List<Team> teamList = [];
   int Function(Team a, Team b)? selectedFilter;
 
   @override

@@ -15,9 +15,9 @@ class _ReportStatusPageState extends State<ReportStatusPage> {
   @override
   Widget build(BuildContext context) {
     return AppPage(
-        appBar: AppBar(title: const Text('Report Status'), 
-        actions: const [AppbarBackButton()]
-      ),
+      appBar: AppBar(
+          title: const Text('Report Status'),
+          actions: const [AppbarBackButton()]),
       body: Padding(
         padding:
             const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
@@ -25,13 +25,7 @@ class _ReportStatusPageState extends State<ReportStatusPage> {
           children: [
             match(
               name: 'Match 7',
-              reports: [
-                const Report(match: '7', scouter: 'liad inon', teamNumber: 5),
-                const Report(match: '7', scouter: 'liad inon', teamNumber: 5),
-                const Report(match: '7', scouter: 'liad inon', teamNumber: 5),
-                const Report(match: '7', scouter: 'liad inon', teamNumber: 5),
-                const Report(match: '7', scouter: 'liad inon', teamNumber: 5),
-              ],
+              reports: [],
             )
           ],
         ),
@@ -65,7 +59,7 @@ class _ReportStatusPageState extends State<ReportStatusPage> {
                           backgroundColor: MaterialStateColor.resolveWith(
                               (states) => Consts.primaryDisplayColor)),
                       child: Text(
-                          '${reports[index].teamNumber} - ${reports[index].scouter}',
+                          '${reports[index].info.teamNumber} - ${reports[index].info.scouter}',
                           style: const TextStyle(
                               color: Consts.sectionDefultColor, fontSize: 18)),
                       onPressed: () {

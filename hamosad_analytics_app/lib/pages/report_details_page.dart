@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_analytics_app/components.dart';
-import 'package:hamosad_analytics_app/components/appbar_back_button.dart';
 import 'package:hamosad_analytics_app/models.dart';
 
 class ReportDetailsPage extends StatefulWidget {
@@ -20,7 +19,7 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
     Report? selectedReport = widget.initReport;
     if (selectedReport != null) {
       reportSelectionController.text =
-          '${selectedReport.teamNumber} - ${selectedReport.match} - ${selectedReport.scouter}';
+          '${selectedReport.info.teamNumber} - ${selectedReport.info.match} - ${selectedReport.info.scouter}';
     }
 
     return AppPage(
@@ -38,10 +37,7 @@ class _ReportDetailsPageState extends State<ReportDetailsPage> {
         child: Column(
           children: [
             ReportSearchBox(
-              reports: const [
-                Report(teamNumber: 6740, scouter: 'liad inon', match: '1'),
-                Report(teamNumber: 6740, scouter: 'amir', match: '1')
-              ],
+              reports: const [],
               onChange: (Report newTeam) {
                 selectedReport = newTeam;
               },
