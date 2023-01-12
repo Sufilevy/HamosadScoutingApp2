@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_analytics_app/constants.dart';
 import 'package:hamosad_analytics_app/pages/team_details_page.dart';
-
-import 'constants.dart';
 
 void main() {
   runApp(const App());

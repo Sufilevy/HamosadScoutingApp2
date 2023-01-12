@@ -19,24 +19,20 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
   Widget build(BuildContext context) {
     Team? team = widget.initTeam;
     if (team != null) {
-      teamSelectionCntroller.text = '${team.number} ${team.name}';
+      teamSelectionCntroller.text = '${team.info.number} ${team.info.name}';
     }
 
     return AppPage(
       appBar: AppBar(
-        title: const Text('Team Details'),
-        actions: const [AppbarBackButton()]
-      ),
+          title: const Text('Team Details'),
+          actions: const [AppbarBackButton()]),
       body: Padding(
         padding:
             const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
         child: Column(
           children: [
             TeamSearchBox(
-                teams: [
-                  Team(number: 6740, name: 'Glue Gun & Glitter'),
-                  Team(number: 3071, name: 'HaMosad')
-                ],
+                teams: const [],
                 onChange: (Team newTeam) {
                   team = newTeam;
                 },

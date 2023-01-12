@@ -1,6 +1,18 @@
 import 'package:hamosad_analytics_app/models.dart';
 
-class Team {}
+class Team {
+  final TeamInfo info;
+  final TeamAutonomus autonomus;
+  final TeamTeleop teleop;
+  final TeamEndgame endgame;
+
+  Team({
+    required this.info,
+    required this.autonomus,
+    required this.teleop,
+    required this.endgame,
+  });
+}
 
 class TeamInfo {
   final int number;

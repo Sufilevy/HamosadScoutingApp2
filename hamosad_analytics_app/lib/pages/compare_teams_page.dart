@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_analytics_app/components.dart';
-import 'package:hamosad_analytics_app/components/appbar_back_button.dart';
 import 'package:hamosad_analytics_app/constants.dart';
 import 'package:hamosad_analytics_app/models.dart';
 
@@ -21,72 +20,10 @@ class CompareTeamsPage extends StatefulWidget {
 }
 
 class _CompareTeamsPageState extends State<CompareTeamsPage> {
-  List<Team> selectedTeams = [];
-  TextEditingController teamSelectionCntroller = TextEditingController();
-  Map<Team, Color> teamsColors = {};
-
-  @override
-  Widget build(BuildContext context) {
-    return AppPage(
-      appBar: AppBar(
-        title: const Text('Compare Teams'),
-        actions: const [AppbarBackButton()],
-      ),
-      body: Padding(
-        padding:
-            const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
-        child: Column(
-          children: [
-            TeamSearchBox(
-              teams: [
-                Team(number: 6740, name: 'Glue Gun & Glitter'),
-                Team(number: 3071, name: 'HaMosad')
-              ],
-              onChange: (Team team) {
-                setState(
-                  () {
-                    if (!selectedTeams.map((t) => t.name).contains(team.name) &&
-                        selectedTeams.length < 6) {
-                      selectedTeams.add(team);
-                      teamsColors[team] = compareColors[selectedTeams.length];
-                    }
-                  },
-                );
-              },
-              inputController: teamSelectionCntroller,
-            ),
-            const SizedBox(height: 5),
-            Wrap(
-              direction: Axis.horizontal,
-              children: selectedTeams
-                  .map(
-                    (t) => Padding(
-                      padding: const EdgeInsets.only(left: 4),
-                      child: selectedTeam(t),
-                    ),
-                  )
-                  .toList(),
-            ),
-            const SizedBox(height: 5),
-            Expanded(
-              child: RoundedSection(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CarouselWithIndicator(
-                    widgets: [
-                      pointsView(),
-                      pointAutoView(),
-                      pointsTeleopView(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  final List<Team> _selectedTeams = [];
+  final TextEditingController _teamSelectionController =
+      TextEditingController();
+  final Map<Team, Color> _teamsColors = {};
 
   Widget selectedTeam(Team team) => FittedBox(
         child: Container(
@@ -106,12 +43,13 @@ class _CompareTeamsPageState extends State<CompareTeamsPage> {
                     iconSize: 25,
                     color: Consts.secondaryDisplayColor,
                     icon: const Icon(Icons.close),
-                    onPressed: () => setState(() => selectedTeams.remove(team)),
+                    onPressed: () =>
+                        setState(() => _selectedTeams.remove(team)),
                   ),
                 ),
                 Text(
-                  team.number.toString(),
-                  style: TextStyle(color: teamsColors[team], fontSize: 20),
+                  team.info.number.toString(),
+                  style: TextStyle(color: _teamsColors[team], fontSize: 20),
                 ),
               ],
             ),
@@ -168,4 +106,66 @@ class _CompareTeamsPageState extends State<CompareTeamsPage> {
           ),
         ],
       );
+
+  @override
+  Widget build(BuildContext context) {
+    return AppPage(
+      appBar: AppBar(
+        title: const Text('Compare Teams'),
+        actions: const [AppbarBackButton()],
+      ),
+      body: Padding(
+        padding:
+            const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+        child: Column(
+          children: [
+            TeamSearchBox(
+              teams: const [],
+              onChange: (Team team) {
+                setState(
+                  () {
+                    if (!_selectedTeams
+                            .map((t) => t.info.name)
+                            .contains(team.info.name) &&
+                        _selectedTeams.length < 6) {
+                      _selectedTeams.add(team);
+                      _teamsColors[team] = compareColors[_selectedTeams.length];
+                    }
+                  },
+                );
+              },
+              inputController: _teamSelectionController,
+            ),
+            const SizedBox(height: 5),
+            Wrap(
+              direction: Axis.horizontal,
+              children: _selectedTeams
+                  .map(
+                    (t) => Padding(
+                      padding: const EdgeInsets.only(left: 4),
+                      child: selectedTeam(t),
+                    ),
+                  )
+                  .toList(),
+            ),
+            const SizedBox(height: 5),
+            Expanded(
+              child: RoundedSection(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CarouselWithIndicator(
+                    widgets: [
+                      pointsView(),
+                      pointAutoView(),
+                      pointsTeleopView(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
