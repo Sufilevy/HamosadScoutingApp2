@@ -49,7 +49,7 @@ class _AnalyticsTabsSelectorState extends State<AnalyticsTabsSelector> {
   Widget _tabButton(AnalyticsTab tab) {
     bool isSelected = widget.currentTabCubit.data == tab;
     Color color =
-        isSelected ? AnalyticsTheme.secondary : AnalyticsTheme.foreground1;
+        isSelected ? AnalyticsTheme.primary : AnalyticsTheme.foreground1;
 
     return Expanded(
       flex: 16,

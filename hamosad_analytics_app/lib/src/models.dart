@@ -1,3 +1,6 @@
+export 'models/report.dart';
+export 'models/team.dart';
+
 typedef Json = Map<String, dynamic>;
 
 class Cubit<T> {

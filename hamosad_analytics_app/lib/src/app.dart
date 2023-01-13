@@ -21,7 +21,7 @@ class _AnalyticsAppState extends State<AnalyticsApp> {
       ][index];
 
   final SidebarXController _sidebarController =
-      SidebarXController(selectedIndex: 0, extended: true);
+      SidebarXController(selectedIndex: 1, extended: true);
 
   @override
   void initState() {

@@ -50,3 +50,46 @@ class AnalyticsText {
     );
   }
 }
+
+class AnalyticsPageTitle extends StatelessWidget {
+  const AnalyticsPageTitle({
+    Key? key,
+    required this.title,
+    required this.subtitle,
+  }) : super(key: key);
+
+  final String title, subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 120,
+          height: 30,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: AnalyticsText.dataTitle(title),
+          ),
+        ),
+        const SizedBox(
+          width: 20,
+          height: 30,
+          child: VerticalDivider(
+            color: AnalyticsTheme.foreground1,
+            thickness: 1.5,
+            width: 30,
+          ),
+        ),
+        SizedBox(
+          width: 450,
+          height: 30,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: AnalyticsText.dataSubtitle(subtitle),
+          ),
+        ),
+      ],
+    );
+  }
+}

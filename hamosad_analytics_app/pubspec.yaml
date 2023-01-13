@@ -1,5 +1,5 @@
 name: hamosad_analytics_app
-description: A new Flutter project.
+description: A scouting analytics app for the FRC team Hamosad 1657.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -35,7 +35,6 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
   sidebarx: ^0.14.0
   flutter_svg: ^1.1.6
   loading_animation_widget: ^1.2.0+4
@@ -95,3 +94,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Fira Code
+      fonts:
+        - asset: assets/fonts/FiraCode-VariableFont.ttf
+    - family: Varela Round
+      fonts:
+        - asset: assets/fonts/VarelaRound-Regular.ttf

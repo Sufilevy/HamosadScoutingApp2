@@ -47,7 +47,11 @@ class _SidebarState extends State<Sidebar> {
               left: 9.0,
               right: 12.0,
             ),
-            child: SvgPicture.asset('assets/svg/logo.svg'),
+            child: SizedBox(
+              width: 50.0,
+              height: 50.0,
+              child: SvgPicture.asset('assets/svg/logo.svg'),
+            ),
           ),
           const Padding(
             padding: EdgeInsets.only(top: 9.0),
@@ -64,7 +68,7 @@ class _SidebarState extends State<Sidebar> {
         width: 114,
         foregroundDecoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(0.5)),
-          color: AnalyticsTheme.secondary,
+          color: AnalyticsTheme.primary,
         ),
         margin: const EdgeInsets.only(left: 34.0, top: 3.0, bottom: 15.0),
       );
@@ -94,12 +98,6 @@ class _SidebarState extends State<Sidebar> {
         selectedItemDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
           color: AnalyticsTheme.background3,
-          // border: const BorderDirectional(
-          //   end: BorderSide(
-          //     color: AnalyticsTheme.secondaryVariant,
-          //     width: 5.0,
-          //   ),
-          // ),
         ),
         iconTheme: const IconThemeData(
           color: AnalyticsTheme.foreground1,
