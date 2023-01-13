@@ -5,7 +5,7 @@ class Constants {}
 class AnalyticsTheme {
   static const Color background1 = Color(0xFF1F1E24);
   static const Color background2 = Color(0xFF29272F);
-  static const Color background3 = Color(0xFF333238);
+  static const Color background3 = Color(0xFF363442);
   static const Color foreground1 = Color(0xFFFFFFFF);
   static const Color foreground2 = Color(0xFFADADB1);
   static const Color primary = Color(0xFF3591DA);
@@ -31,13 +31,13 @@ class AnalyticsTheme {
   static const TextStyle dataTitleTextStyle = TextStyle(
     fontFamily: 'Open Sans',
     fontWeight: FontWeight.w600,
-    fontSize: 18.0,
+    fontSize: 19.0,
     color: foreground1,
   );
   static const TextStyle dataSubtitleTextStyle = TextStyle(
     fontFamily: 'Open Sans',
     fontWeight: FontWeight.normal,
-    fontSize: 16.0,
+    fontSize: 17.0,
     color: foreground1,
   );
   static const TextStyle dataTextStyle = TextStyle(
