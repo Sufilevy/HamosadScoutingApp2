@@ -1,3 +1,5 @@
+typedef Json = Map<String, dynamic>;
+
 class Cubit<T> {
   T data;
   Cubit(this.data);
