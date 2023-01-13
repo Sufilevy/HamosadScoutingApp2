@@ -41,11 +41,7 @@ class ScoutingDatabase {
       "day": now.day,
       "month": now.month,
       "year": now.year,
-      "time": DateFormat('HH:mm:ss').format(now),
-      "timeValue": now.hour * 60 * 60 +
-          now.minute * 60 +
-          now.second +
-          now.millisecond / 1000,
+      "time": DateFormat('dd/MM HH:mm:ss').format(now),
     };
   }
 
