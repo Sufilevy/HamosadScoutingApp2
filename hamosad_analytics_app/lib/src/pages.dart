@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_analytics_app/src/constants.dart';
+import 'package:hamosad_analytics_app/src/widgets.dart';
 
 export 'pages/alliances_page.dart';
 export 'pages/report_details_page.dart';
@@ -8,19 +8,28 @@ export 'pages/team_details_page.dart';
 export 'pages/teams_page.dart';
 
 class AnalyticsPage extends StatelessWidget {
-  const AnalyticsPage({Key? key, required this.title, required this.body})
-      : super(key: key);
+  const AnalyticsPage({
+    Key? key,
+    required this.title,
+    required this.body,
+    this.spacing = 20.0,
+    this.verticalPadding = 30.0,
+  }) : super(key: key);
 
   final Widget title, body;
+  final double spacing, verticalPadding;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.0,
+        vertical: verticalPadding,
+      ),
       child: Column(
         children: [
           title,
-          const SizedBox(height: 20.0),
+          SizedBox(height: spacing),
           _body(body),
         ],
       ),
@@ -31,11 +40,7 @@ class AnalyticsPage extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: AnalyticsTheme.background2,
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                ),
+              child: AnalyticsContainer(
                 child: child,
               ),
             ),

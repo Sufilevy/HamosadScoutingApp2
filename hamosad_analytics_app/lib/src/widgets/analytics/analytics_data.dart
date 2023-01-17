@@ -2,6 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 
+class AnalyticsContainer extends StatelessWidget {
+  const AnalyticsContainer({
+    Key? key,
+    required this.child,
+    this.width,
+    this.height,
+    this.alignment,
+    this.color = AnalyticsTheme.background2,
+  }) : super(key: key);
+
+  final Widget child;
+  final double? width, height;
+  final Color color;
+  final AlignmentGeometry? alignment;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      alignment: alignment,
+      child: child,
+    );
+  }
+}
+
 class AnalyticsDataDivider extends StatelessWidget {
   const AnalyticsDataDivider({Key? key}) : super(key: key);
 
@@ -28,13 +58,10 @@ class AnalyticsDataChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnalyticsContainer(
       width: 220,
       height: 70,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        color: AnalyticsTheme.background1,
-      ),
+      color: AnalyticsTheme.background1,
       child: Row(
         children: [
           Expanded(
@@ -71,13 +98,10 @@ class AnalyticsStatChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnalyticsContainer(
       width: 330,
       height: 70,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        color: AnalyticsTheme.background1,
-      ),
+      color: AnalyticsTheme.background1,
       child: Row(
         children: [
           Expanded(
@@ -170,13 +194,10 @@ class AnalyticsDataWinRate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnalyticsContainer(
       width: 220,
       height: 70,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        color: AnalyticsTheme.background1,
-      ),
+      color: AnalyticsTheme.background1,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

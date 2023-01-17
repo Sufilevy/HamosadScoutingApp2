@@ -7,7 +7,7 @@ class AnalyticsTheme {
   static const Color foreground1 = Color(0xFFFFFFFF);
   static const Color foreground2 = Color(0xFFADADB1);
   static const Color primary = Color(0xFF0DBF78);
-  static const Color primaryVariant = Color(0xFF096942);
+  static const Color primaryVariant = Color(0xFF075F3C);
   static const Color error = Color(0xFFD4353A);
   static const Color warning = Color(0xFFF5C400);
   static const Color hamosad = Color(0xFF165700);

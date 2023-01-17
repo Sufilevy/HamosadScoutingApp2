@@ -66,8 +66,8 @@ class _SidebarState extends State<Sidebar> {
   Widget get _headerDivider => Container(
         height: 1.5,
         width: 114,
-        foregroundDecoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(0.5)),
+        foregroundDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(0.5),
           color: AnalyticsTheme.primary,
         ),
         margin: const EdgeInsets.only(left: 34.0, top: 3.0, bottom: 15.0),
