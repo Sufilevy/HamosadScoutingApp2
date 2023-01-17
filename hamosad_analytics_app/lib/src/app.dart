@@ -78,3 +78,8 @@ class _AnalyticsAppState extends State<AnalyticsApp> {
     );
   }
 }
+
+T debug<T>(T object) {
+  print(object);
+  return object;
+}

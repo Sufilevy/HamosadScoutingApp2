@@ -12,6 +12,12 @@ class Team {
     required this.teleop,
     required this.endgame,
   });
+
+  Team.defaults({int number = 1657, String name = 'Hamosad'})
+      : info = TeamInfo.defaults(number: number, name: name),
+        autonomus = TeamAutonomus.defaults(),
+        teleop = TeamTeleop.defaults(),
+        endgame = TeamEndgame.defaults();
 }
 
 class TeamInfo {
@@ -28,6 +34,12 @@ class TeamInfo {
     required this.score,
     required this.focus,
   });
+
+  TeamInfo.defaults({required this.number, required this.name})
+      : won = 0,
+        lost = 0,
+        score = Stat.zero(),
+        focus = Stat.zero();
 }
 
 class TeamAutonomus {
@@ -38,6 +50,10 @@ class TeamAutonomus {
     required this.score,
     required this.notes,
   });
+
+  TeamAutonomus.defaults()
+      : score = Stat.zero(),
+        notes = [];
 }
 
 class TeamTeleop {
@@ -48,6 +64,10 @@ class TeamTeleop {
     required this.score,
     required this.notes,
   });
+
+  TeamTeleop.defaults()
+      : score = Stat.zero(),
+        notes = [];
 }
 
 class TeamEndgame {
@@ -58,4 +78,8 @@ class TeamEndgame {
     required this.score,
     required this.notes,
   });
+
+  TeamEndgame.defaults()
+      : score = Stat.zero(),
+        notes = [];
 }

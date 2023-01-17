@@ -117,19 +117,19 @@ class AnalyticsStatChip extends StatelessWidget {
           const AnalyticsDataDivider(),
           Expanded(
             flex: 3,
-            child: _average,
+            child: _average(),
           ),
           const AnalyticsDataDivider(),
           Expanded(
             flex: 3,
-            child: _minMax,
+            child: _minMax(),
           ),
         ],
       ),
     );
   }
 
-  Widget get _average => Row(
+  Widget _average() => Row(
         children: [
           Expanded(
             flex: 5,
@@ -145,7 +145,7 @@ class AnalyticsStatChip extends StatelessWidget {
         ],
       );
 
-  Widget get _minMax => Column(
+  Widget _minMax() => Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Row(

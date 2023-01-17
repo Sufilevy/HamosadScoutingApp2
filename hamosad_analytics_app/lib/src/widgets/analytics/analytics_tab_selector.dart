@@ -36,11 +36,11 @@ class _AnalyticsTabsSelectorState extends State<AnalyticsTabsSelector> {
     return Row(
       children: [
         _tabButton(AnalyticsTab.general),
-        _seperator,
+        _seperator(),
         _tabButton(AnalyticsTab.autonomous),
-        _seperator,
+        _seperator(),
         _tabButton(AnalyticsTab.teleop),
-        _seperator,
+        _seperator(),
         _tabButton(AnalyticsTab.endgame),
       ],
     );
@@ -78,5 +78,5 @@ class _AnalyticsTabsSelectorState extends State<AnalyticsTabsSelector> {
     );
   }
 
-  Widget get _seperator => Expanded(flex: 1, child: Container());
+  Widget _seperator() => Expanded(flex: 1, child: Container());
 }

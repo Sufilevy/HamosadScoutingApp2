@@ -27,10 +27,10 @@ class _SidebarState extends State<Sidebar> {
     return SidebarX(
       controller: widget.sidebarController,
       showToggleButton: false,
-      headerBuilder: (context, extended) => _sidebarLogo,
-      headerDivider: _headerDivider,
-      footerBuilder: (context, extended) => _refreshDataButton,
-      theme: _theme,
+      headerBuilder: (context, extended) => _sidebarLogo(),
+      headerDivider: _headerDivider(),
+      footerBuilder: (context, extended) => _refreshDataButton(),
+      theme: _theme(),
       extendedTheme: const SidebarXTheme(
         width: 200.0,
         decoration: BoxDecoration(color: AnalyticsTheme.background2),
@@ -39,7 +39,7 @@ class _SidebarState extends State<Sidebar> {
     );
   }
 
-  Widget get _sidebarLogo => Row(
+  Widget _sidebarLogo() => Row(
         children: [
           Padding(
             padding: const EdgeInsets.only(
@@ -63,7 +63,7 @@ class _SidebarState extends State<Sidebar> {
         ],
       );
 
-  Widget get _headerDivider => Container(
+  Widget _headerDivider() => Container(
         height: 1.5,
         width: 114,
         foregroundDecoration: BoxDecoration(
@@ -73,12 +73,12 @@ class _SidebarState extends State<Sidebar> {
         margin: const EdgeInsets.only(left: 34.0, top: 3.0, bottom: 15.0),
       );
 
-  Widget get _refreshDataButton => const Padding(
+  Widget _refreshDataButton() => const Padding(
         padding: EdgeInsets.all(40.0),
         child: RefreshDataButton(),
       );
 
-  SidebarXTheme get _theme => SidebarXTheme(
+  SidebarXTheme _theme() => SidebarXTheme(
         width: 68.0,
         decoration: const BoxDecoration(color: AnalyticsTheme.background2),
         hoverColor: AnalyticsTheme.background2,
@@ -136,12 +136,12 @@ class _RefreshDataButtonState extends State<RefreshDataButton>
       child: Container(
         key: ValueKey<bool>(_loading),
         alignment: Alignment.center,
-        child: _loading ? _loadingIndicator : _refreshButton,
+        child: _loading ? _loadingIndicator() : _refreshButton(),
       ),
     );
   }
 
-  Widget get _loadingIndicator => Padding(
+  Widget _loadingIndicator() => Padding(
         padding: const EdgeInsets.all(8.0),
         child: LoadingAnimationWidget.staggeredDotsWave(
           color: AnalyticsTheme.primary,
@@ -149,7 +149,7 @@ class _RefreshDataButtonState extends State<RefreshDataButton>
         ),
       );
 
-  Widget get _refreshButton => IconButton(
+  Widget _refreshButton() => IconButton(
         iconSize: 70.0,
         icon: const Icon(
           Icons.refresh_rounded,

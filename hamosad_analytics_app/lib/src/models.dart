@@ -8,9 +8,8 @@ class Cubit<T> {
   Cubit(this.data);
 }
 
-class Stat<T> {
-  final T min;
-  final T max;
+class Stat<T extends num> {
+  final T min, max;
   final double average;
 
   Stat({
@@ -18,4 +17,6 @@ class Stat<T> {
     required this.max,
     required this.average,
   });
+
+  static Stat<int> zero() => Stat(min: 0, max: 0, average: 0.0);
 }

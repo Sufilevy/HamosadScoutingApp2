@@ -11,7 +11,6 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnalyticsContainer(
-      alignment: Alignment.center,
       child: TextField(
         controller: _controller,
         cursorColor: AnalyticsTheme.primary,
@@ -19,7 +18,10 @@ class SearchBar extends StatelessWidget {
         style: AnalyticsTheme.dataTitleTextStyle.copyWith(
           color: AnalyticsTheme.foreground2,
         ),
+        autocorrect: false,
+        strutStyle: StrutStyle.fromTextStyle(AnalyticsTheme.dataTitleTextStyle),
         decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(8.0),
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(
               color: AnalyticsTheme.primaryVariant,
