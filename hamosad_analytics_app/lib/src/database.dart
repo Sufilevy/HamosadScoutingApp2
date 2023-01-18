@@ -1,7 +1,7 @@
 import 'package:hamosad_analytics_app/src/models.dart';
 
 Future<void> getData() {
-  return Future.delayed(const Duration(milliseconds: 500));
+  return Future.delayed(const Duration(milliseconds: 1000));
 }
 
 List<Team> getTeams() {

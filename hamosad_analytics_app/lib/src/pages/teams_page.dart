@@ -38,21 +38,15 @@ class TeamsPage extends StatefulWidget {
 }
 
 class _TeamsPageState extends State<TeamsPage> {
-  late final LinkedScrollControllerGroup _horizontalScrollController =
-      LinkedScrollControllerGroup();
+  final LinkedScrollControllerGroup _horizontalScrollController =
+          LinkedScrollControllerGroup(),
+      _verticalScrollController = LinkedScrollControllerGroup();
   late final ScrollController _columnsTitlesScrollController =
           _horizontalScrollController.addAndGet(),
-      _tableScrollController = _horizontalScrollController.addAndGet();
-  late final LinkedScrollControllerGroup _verticalScrollController =
-      LinkedScrollControllerGroup();
-  late final ScrollController _rowsTitlesScrollController =
-      _verticalScrollController.addAndGet();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+      _tableScrollController = _horizontalScrollController.addAndGet(),
+      _rowsTitlesScrollController = _verticalScrollController.addAndGet();
+  late final List<ScrollController> _tableEntriesControllers;
+  late final List<Team> _teamsData;
 
   String _searchQuery = '';
   String _sortByKey = _defaultSortKey;
@@ -67,8 +61,7 @@ class _TeamsPageState extends State<TeamsPage> {
       });
 
   List<TeamEntry> _getTeamsEntries() {
-    return db
-        .getTeams()
+    return _teamsData
         .where((team) {
           String query = _searchQuery.toLowerCase();
           return team.info.name.toLowerCase().contains(query) ||
@@ -76,6 +69,16 @@ class _TeamsPageState extends State<TeamsPage> {
         })
         .map((team) => TeamEntry(team))
         .toList();
+  }
+
+  @override
+  void initState() {
+    _teamsData = db.getTeams();
+    _tableEntriesControllers = List.generate(
+      _teamsData.length,
+      (index) => _verticalScrollController.addAndGet(),
+    );
+    super.initState();
   }
 
   @override
@@ -102,6 +105,7 @@ class _TeamsPageState extends State<TeamsPage> {
                 onSubmitted: (query) => setState(() {
                   _searchQuery = query;
                 }),
+                text: _searchQuery,
               ),
             ),
           ),
@@ -129,7 +133,7 @@ class _TeamsPageState extends State<TeamsPage> {
               icon: RotatedBox(
                 quarterTurns: 3,
                 child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200),
+                  duration: const Duration(milliseconds: 250),
                   switchInCurve: Curves.easeInOutCirc,
                   switchOutCurve: Curves.easeInOutCirc,
                   transitionBuilder: (child, animation) => FadeTransition(
@@ -391,7 +395,7 @@ class _TeamsPageState extends State<TeamsPage> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5.0),
                   child: ListView.separated(
-                    controller: _verticalScrollController.addAndGet(),
+                    controller: _tableEntriesControllers[teamIndex],
                     itemCount: _dataRows.length,
                     itemBuilder: (context, entryIndex) {
                       DataEntry entry = _dataEntries[_dataRows[entryIndex]]!;

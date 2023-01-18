@@ -160,7 +160,7 @@ class _RefreshDataButtonState extends State<RefreshDataButton>
           setState(() {});
           _loading = true;
           await Future.wait([
-            Future.delayed(const Duration(milliseconds: 1000)),
+            Future.delayed(const Duration(milliseconds: 1500)),
             getData(),
           ]);
           _loading = false;

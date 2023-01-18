@@ -10,9 +10,9 @@ class AnalyticsFadeSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 125),
-      switchInCurve: Curves.easeIn,
-      switchOutCurve: Curves.easeIn,
+      duration: const Duration(milliseconds: 250),
+      switchInCurve: Curves.easeInOut,
+      switchOutCurve: Curves.easeInOut,
       transitionBuilder: (child, animation) => FadeTransition(
         opacity: animation,
         child: child,

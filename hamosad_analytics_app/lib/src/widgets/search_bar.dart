@@ -3,16 +3,19 @@ import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 
 class SearchBar extends StatelessWidget {
-  SearchBar({Key? key, required this.onSubmitted}) : super(key: key);
+  SearchBar({Key? key, required this.onSubmitted, required String text})
+      : _controller = TextEditingController(text: text),
+        super(key: key);
 
   final void Function(String) onSubmitted;
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller;
 
   @override
   Widget build(BuildContext context) {
     return AnalyticsContainer(
       child: TextField(
         controller: _controller,
+        onSubmitted: onSubmitted,
         cursorColor: AnalyticsTheme.primary,
         maxLines: 1,
         style: AnalyticsTheme.dataTitleTextStyle.copyWith(
@@ -21,7 +24,7 @@ class SearchBar extends StatelessWidget {
         autocorrect: false,
         strutStyle: StrutStyle.fromTextStyle(AnalyticsTheme.dataTitleTextStyle),
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(8.0),
+          contentPadding: const EdgeInsets.all(16.0),
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(
               color: AnalyticsTheme.primaryVariant,
@@ -31,7 +34,6 @@ class SearchBar extends StatelessWidget {
           suffixIcon: IconButton(
             onPressed: () {
               onSubmitted(_controller.text);
-              _controller.clear();
             },
             icon: const Icon(Icons.search_rounded),
             iconSize: 32.0,
@@ -54,7 +56,6 @@ class SearchBar extends StatelessWidget {
             borderSide: const BorderSide(width: 2.0),
           ),
         ),
-        onSubmitted: onSubmitted,
       ),
     );
   }
