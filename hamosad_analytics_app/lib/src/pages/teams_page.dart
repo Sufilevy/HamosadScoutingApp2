@@ -304,6 +304,9 @@ class _TeamsPageState extends State<TeamsPage> {
                 width: 500.0,
                 onConfirm: (selectedData) => setState(() {
                   _dataRows = selectedData;
+                  if (!_dataRows.contains(_sortByKey)) {
+                    _sortByKey = _defaultSortKey;
+                  }
                 }),
                 items: _defaultTeamEntreis
                     .map((data) => MultiSelectItem(data, data))
