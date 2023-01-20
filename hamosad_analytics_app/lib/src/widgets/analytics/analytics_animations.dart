@@ -7,6 +7,7 @@ class AnalyticsFadeSwitcher extends StatelessWidget {
   }) : super(key: key);
 
   final Widget child;
+
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(

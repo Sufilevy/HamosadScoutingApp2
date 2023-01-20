@@ -9,27 +9,6 @@ import 'package:hamosad_analytics_app/src/widgets.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-final Map<String, DataEntry> _dataEntries = {
-  'Name':
-      DataEntry(height: 30.0, builder: (team) => AnalyticsText.data('Name')),
-  'Rank':
-      DataEntry(height: 30.0, builder: (team) => AnalyticsText.data('Rank')),
-  'Win Rate': DataEntry(
-      height: 35.0, builder: (team) => AnalyticsText.data('Win Rate')),
-  'Avg. Score': DataEntry(
-      height: 30.0, builder: (team) => AnalyticsText.data('Avg. Score')),
-  'Avg. Auto. Cones': DataEntry(
-      height: 30.0, builder: (team) => AnalyticsText.data('Avg. Auto. Cones')),
-  'Avg. Tele. Cones': DataEntry(
-      height: 30.0, builder: (team) => AnalyticsText.data('Avg. Tele. Cones')),
-  'Avg. Total Cones': DataEntry(
-      height: 30.0, builder: (team) => AnalyticsText.data('Avg. Total Cones')),
-  'Avg. Endg. Score': DataEntry(
-      height: 30.0, builder: (team) => AnalyticsText.data('Avg. Endg. Score')),
-};
-final List<String> _defaultTeamEntreis = _dataEntries.keys.toList();
-const String _defaultSortKey = 'Rank';
-
 class TeamsPage extends StatefulWidget {
   const TeamsPage({Key? key}) : super(key: key);
 
@@ -61,7 +40,7 @@ class _TeamsPageState extends State<TeamsPage> {
       });
 
   List<TeamEntry> _getTeamsEntries() {
-    return _teamsData
+    List<TeamEntry> teams = _teamsData
         .where((team) {
           String query = _searchQuery.toLowerCase();
           return team.info.name.toLowerCase().contains(query) ||
@@ -69,6 +48,18 @@ class _TeamsPageState extends State<TeamsPage> {
         })
         .map((team) => TeamEntry(team))
         .toList();
+
+    getDataFromTeam(team) => _dataEntries[_sortByKey]!.getData(team);
+    teams.sort((a, b) {
+      dynamic dataA = getDataFromTeam(a.team), dataB = getDataFromTeam(b.team);
+      if (_isSortingDescending) {
+        return Comparable.compare(dataA, dataB);
+      } else {
+        return Comparable.compare(dataB, dataA);
+      }
+    });
+
+    return teams;
   }
 
   @override
@@ -429,9 +420,57 @@ class TeamEntry {
   }
 }
 
-class DataEntry {
-  DataEntry({required this.builder, required this.height});
+class DataEntry<T> {
+  DataEntry({
+    required this.height,
+    required this.getData,
+    Widget Function(Team)? builder,
+  }) : builder =
+            builder ?? ((team) => AnalyticsText.data(getData(team).toString()));
 
-  final Widget Function(Team) builder;
   final double height;
+  final T Function(Team) getData;
+  final Widget Function(Team) builder;
 }
+
+const String _defaultSortKey = 'Rank';
+final List<String> _defaultTeamEntreis = _dataEntries.keys.toList();
+final Map<String, DataEntry> _dataEntries = {
+  'Name': DataEntry<String>(
+    height: 30.0,
+    getData: (team) => team.info.name,
+  ),
+  'Rank': DataEntry<int>(
+    height: 30.0,
+    getData: (team) => db.getRanks().indexOf(team.info.number) + 1,
+  ),
+  'Win Rate': DataEntry<double>(
+    height: 35.0,
+    getData: (team) => team.info.winRate,
+    builder: (team) => AnalyticsDataWinRate(
+      won: team.info.won,
+      lost: team.info.lost,
+      inContainer: false,
+    ),
+  ),
+  'Avg. Score': DataEntry<double>(
+    height: 30.0,
+    getData: (team) => team.info.score.average,
+  ),
+  'Avg. Auto. Cones': DataEntry<double>(
+    height: 30.0,
+    getData: (team) => team.autonomus.cones.average,
+  ),
+  'Avg. Tele. Cones': DataEntry<double>(
+    height: 30.0,
+    getData: (team) => team.teleop.cones.average,
+  ),
+  'Avg. Total Cones': DataEntry<double>(
+    height: 30.0,
+    getData: (team) => team.info.cones.average,
+  ),
+  'Avg. Endg. Score': DataEntry<double>(
+    height: 30.0,
+    getData: (team) => team.endgame.score.average,
+  ),
+};

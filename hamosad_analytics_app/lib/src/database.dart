@@ -14,3 +14,14 @@ List<Team> getTeams() {
     Team.defaults(number: 1574, name: 'MisCar'),
   ];
 }
+
+List<int> getRanks() {
+  return [
+    1580,
+    5951,
+    1574,
+    1690,
+    1657,
+    3075,
+  ];
+}

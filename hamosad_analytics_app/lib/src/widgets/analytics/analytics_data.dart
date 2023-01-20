@@ -187,18 +187,29 @@ class AnalyticsStatChip extends StatelessWidget {
 }
 
 class AnalyticsDataWinRate extends StatelessWidget {
-  const AnalyticsDataWinRate({Key? key, required this.won, required this.lost})
-      : super(key: key);
+  const AnalyticsDataWinRate({
+    Key? key,
+    required this.won,
+    required this.lost,
+    this.inContainer = true,
+  }) : super(key: key);
 
   final int won, lost;
+  final bool inContainer;
 
   @override
   Widget build(BuildContext context) {
-    return AnalyticsContainer(
-      width: 220,
-      height: 70,
-      color: AnalyticsTheme.background1,
-      child: Column(
+    return inContainer
+        ? AnalyticsContainer(
+            width: 220,
+            height: 70,
+            color: AnalyticsTheme.background1,
+            child: _winRate(8.0, 4.0),
+          )
+        : _winRate(3.0, 2.5);
+  }
+
+  Widget _winRate(double gap, double barHeight) => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
@@ -230,40 +241,49 @@ class AnalyticsDataWinRate extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: won,
-                  child: Container(
-                    height: 4.0,
+            padding: EdgeInsets.only(left: 10.0, right: 10.0, top: gap),
+            child: (won == 0 && lost == 0)
+                ? Container(
+                    height: barHeight,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(2.0),
                         bottomLeft: Radius.circular(2.0),
                       ),
-                      color: AnalyticsTheme.primary,
+                      color: AnalyticsTheme.background3,
                     ),
-                  ),
-                ),
-                Expanded(
-                  flex: lost,
-                  child: Container(
-                    height: 4.0,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(2.0),
-                        bottomRight: Radius.circular(2.0),
+                  )
+                : Row(
+                    children: [
+                      Expanded(
+                        flex: won,
+                        child: Container(
+                          height: barHeight,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(2.0),
+                              bottomLeft: Radius.circular(2.0),
+                            ),
+                            color: AnalyticsTheme.primary,
+                          ),
+                        ),
                       ),
-                      color: AnalyticsTheme.error,
-                    ),
+                      Expanded(
+                        flex: lost,
+                        child: Container(
+                          height: barHeight,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(2.0),
+                              bottomRight: Radius.circular(2.0),
+                            ),
+                            color: AnalyticsTheme.error,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           )
         ],
-      ),
-    );
-  }
+      );
 }
