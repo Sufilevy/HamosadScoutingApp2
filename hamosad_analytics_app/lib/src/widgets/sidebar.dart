@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/database.dart';
+import 'package:hamosad_analytics_app/src/widgets.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:sidebarx/sidebarx.dart';
 
@@ -53,12 +54,9 @@ class _SidebarState extends State<Sidebar> {
               child: SvgPicture.asset('assets/svg/logo.svg'),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: 9.0),
-            child: Text(
-              'Hamosad\nAnalytics',
-              style: AnalyticsTheme.logoTextStyle,
-            ),
+          Padding(
+            padding: const EdgeInsets.only(top: 9.0),
+            child: AnalyticsText.logo('Hamosad\nAnalytics'),
           ),
         ],
       );

@@ -350,12 +350,25 @@ class AnalyticsText {
     );
   }
 
-  static Text data(String data,
-      {Color? color, TextAlign textAlign = TextAlign.center}) {
+  static Text data(
+    String data, {
+    Color? color,
+    TextAlign textAlign = TextAlign.center,
+  }) {
     return Text(
       data,
       style: AnalyticsTheme.dataTextStyle.copyWith(color: color),
       textAlign: textAlign,
+    );
+  }
+
+  static Text logo(
+    String data, {
+    Color? color,
+  }) {
+    return Text(
+      data,
+      style: AnalyticsTheme.logoTextStyle.copyWith(color: color),
     );
   }
 }
