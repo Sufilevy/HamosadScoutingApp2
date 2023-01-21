@@ -347,7 +347,12 @@ class _TeamsPageState extends State<TeamsPage> {
                 onConfirm: (selectedData) => setState(() {
                   _dataRows = selectedData;
                   if (!_dataRows.contains(_sortByKey)) {
-                    _sortByKey = TeamsPage.defaultSortKey;
+                    if (_dataRows.contains(TeamsPage.defaultSortKey) ||
+                        _dataRows.isEmpty) {
+                      _sortByKey = TeamsPage.defaultSortKey;
+                    } else {
+                      _sortByKey = _dataRows.first;
+                    }
                   }
                 }),
                 items: TeamsPage.defaultTeamEntreis
