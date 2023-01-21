@@ -12,6 +12,48 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 class TeamsPage extends StatefulWidget {
   const TeamsPage({Key? key}) : super(key: key);
 
+  static const String defaultSortKey = 'Rank';
+  static final List<String> defaultTeamEntreis = dataEntries.keys.toList();
+  static final Map<String, DataEntry> dataEntries = {
+    'Name': DataEntry<String>(
+      height: 30.0,
+      getData: (team) => team.info.name,
+    ),
+    'Rank': DataEntry<int>(
+      height: 30.0,
+      getData: (team) => db.getRanks().indexOf(team.info.number) + 1,
+    ),
+    'Win Rate': DataEntry<double>(
+      height: 35.0,
+      getData: (team) => team.info.winRate,
+      builder: (team) => AnalyticsDataWinRate(
+        won: team.info.won,
+        lost: team.info.lost,
+        inContainer: false,
+      ),
+    ),
+    'Avg. Score': DataEntry<double>(
+      height: 30.0,
+      getData: (team) => team.info.score.average,
+    ),
+    'Avg. Auto. Cones': DataEntry<double>(
+      height: 30.0,
+      getData: (team) => team.autonomus.cones.average,
+    ),
+    'Avg. Tele. Cones': DataEntry<double>(
+      height: 30.0,
+      getData: (team) => team.teleop.cones.average,
+    ),
+    'Avg. Total Cones': DataEntry<double>(
+      height: 30.0,
+      getData: (team) => team.info.cones.average,
+    ),
+    'Avg. Endg. Score': DataEntry<double>(
+      height: 30.0,
+      getData: (team) => team.endgame.score.average,
+    ),
+  };
+
   @override
   State<TeamsPage> createState() => _TeamsPageState();
 }
@@ -28,15 +70,15 @@ class _TeamsPageState extends State<TeamsPage> {
   late final List<Team> _teamsData;
 
   String _searchQuery = '';
-  String _sortByKey = _defaultSortKey;
+  String _sortByKey = TeamsPage.defaultSortKey;
   bool _isSortingDescending = true;
-  List<String> _dataRows = _defaultTeamEntreis;
+  List<String> _dataRows = TeamsPage.defaultTeamEntreis;
 
   void _clearFilters() => setState(() {
         _searchQuery = '';
-        _sortByKey = _defaultSortKey;
+        _sortByKey = TeamsPage.defaultSortKey;
         _isSortingDescending = true;
-        _dataRows = _defaultTeamEntreis;
+        _dataRows = TeamsPage.defaultTeamEntreis;
       });
 
   List<TeamEntry> _getTeamsEntries() {
@@ -49,7 +91,7 @@ class _TeamsPageState extends State<TeamsPage> {
         .map((team) => TeamEntry(team))
         .toList();
 
-    getDataFromTeam(team) => _dataEntries[_sortByKey]!.getData(team);
+    getDataFromTeam(team) => TeamsPage.dataEntries[_sortByKey]!.getData(team);
     teams.sort((a, b) {
       dynamic dataA = getDataFromTeam(a.team), dataB = getDataFromTeam(b.team);
       if (_isSortingDescending) {
@@ -305,10 +347,10 @@ class _TeamsPageState extends State<TeamsPage> {
                 onConfirm: (selectedData) => setState(() {
                   _dataRows = selectedData;
                   if (!_dataRows.contains(_sortByKey)) {
-                    _sortByKey = _defaultSortKey;
+                    _sortByKey = TeamsPage.defaultSortKey;
                   }
                 }),
-                items: _defaultTeamEntreis
+                items: TeamsPage.defaultTeamEntreis
                     .map((data) => MultiSelectItem(data, data))
                     .toList(),
                 initialValue: _dataRows,
@@ -364,7 +406,7 @@ class _TeamsPageState extends State<TeamsPage> {
             controller: _rowsTitlesScrollController,
             itemCount: _dataRows.length,
             itemBuilder: (context, index) => Container(
-              height: _dataEntries[_dataRows[index]]!.height + 14.0,
+              height: TeamsPage.dataEntries[_dataRows[index]]!.height + 14.0,
               alignment: Alignment.center,
               child: AnalyticsText.dataTitle(_dataRows[index]),
             ),
@@ -392,7 +434,8 @@ class _TeamsPageState extends State<TeamsPage> {
                     controller: _tableEntriesControllers[teamIndex],
                     itemCount: _dataRows.length,
                     itemBuilder: (context, entryIndex) {
-                      DataEntry entry = _dataEntries[_dataRows[entryIndex]]!;
+                      DataEntry entry =
+                          TeamsPage.dataEntries[_dataRows[entryIndex]]!;
                       return Container(
                         height: entry.height + 1.0,
                         alignment: Alignment.center,
@@ -435,45 +478,3 @@ class DataEntry<T> {
   final T Function(Team) getData;
   final Widget Function(Team) builder;
 }
-
-const String _defaultSortKey = 'Rank';
-final List<String> _defaultTeamEntreis = _dataEntries.keys.toList();
-final Map<String, DataEntry> _dataEntries = {
-  'Name': DataEntry<String>(
-    height: 30.0,
-    getData: (team) => team.info.name,
-  ),
-  'Rank': DataEntry<int>(
-    height: 30.0,
-    getData: (team) => db.getRanks().indexOf(team.info.number) + 1,
-  ),
-  'Win Rate': DataEntry<double>(
-    height: 35.0,
-    getData: (team) => team.info.winRate,
-    builder: (team) => AnalyticsDataWinRate(
-      won: team.info.won,
-      lost: team.info.lost,
-      inContainer: false,
-    ),
-  ),
-  'Avg. Score': DataEntry<double>(
-    height: 30.0,
-    getData: (team) => team.info.score.average,
-  ),
-  'Avg. Auto. Cones': DataEntry<double>(
-    height: 30.0,
-    getData: (team) => team.autonomus.cones.average,
-  ),
-  'Avg. Tele. Cones': DataEntry<double>(
-    height: 30.0,
-    getData: (team) => team.teleop.cones.average,
-  ),
-  'Avg. Total Cones': DataEntry<double>(
-    height: 30.0,
-    getData: (team) => team.info.cones.average,
-  ),
-  'Avg. Endg. Score': DataEntry<double>(
-    height: 30.0,
-    getData: (team) => team.endgame.score.average,
-  ),
-};

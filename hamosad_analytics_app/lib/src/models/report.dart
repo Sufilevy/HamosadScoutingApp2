@@ -79,7 +79,8 @@ class ReportEndgame {
 
 class ReportSummary {
   bool won;
-  int focus, autonomusScore, teleopScore, endgameScore, totalScore;
+  int focus;
+  int autonomusScore, teleopScore, endgameScore, totalScore;
 
   ReportSummary({
     this.won = false,

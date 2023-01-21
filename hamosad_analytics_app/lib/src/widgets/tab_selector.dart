@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
-import 'package:hamosad_analytics_app/src/widgets/analytics/analytics_text.dart';
+import 'package:hamosad_analytics_app/src/widgets.dart';
 
 enum AnalyticsTab {
   general(Icons.assessment_outlined, Icons.assessment_rounded, 'General'),
