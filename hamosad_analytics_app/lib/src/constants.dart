@@ -11,6 +11,8 @@ class AnalyticsTheme {
   static const Color error = Color(0xFFD4353A);
   static const Color warning = Color(0xFFF5C400);
   static const Color hamosad = Color(0xFF165700);
+  static const Color blueAlliance = Color(0xFF1E88E5);
+  static const Color redAlliance = Color(0xFFC62828);
 
   static const TextStyle logoTextStyle = TextStyle(
     fontFamily: 'Fira Code',
