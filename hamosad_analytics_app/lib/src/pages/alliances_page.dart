@@ -2,10 +2,18 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
+import 'package:hamosad_analytics_app/src/models/team.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 
 class AlliancesPage extends StatefulWidget {
   const AlliancesPage({Key? key}) : super(key: key);
+
+  static final Map<String, double Function(Team)> tableEntries = {
+    'Win Rate': (team) => team.info.winRate,
+    'Min. Auto. Cones': (team) => team.autonomus.cones.min.toDouble(),
+    'Avg. Tele. Score': (team) => team.teleop.score.average,
+    'Avg. Endg. Cubes': (team) => team.endgame.cubes.average,
+  };
 
   @override
   State<AlliancesPage> createState() => _AlliancesPageState();
@@ -29,7 +37,7 @@ class _AlliancesPageState extends State<AlliancesPage> {
   }
 
   Widget _selectAlliancesBar() => AnalyticsContainer(
-        height: 60,
+        height: 60.0,
         child: Row(
           children: [
             _allianceList(_blueAlliance),
@@ -42,10 +50,12 @@ class _AlliancesPageState extends State<AlliancesPage> {
       );
 
   Widget _allianceList(Alliance alliance) => Expanded(
-        child: Center(
+        child: SizedBox(
+          height: 45.0,
           child: AnimatedList(
             key: alliance.listKey,
             scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.only(left: alliance.chipsPadding),
             itemBuilder: (context, index, animation) => ScaleTransition(
               scale: animation,
               child: _teamChip(index, alliance),
@@ -56,48 +66,63 @@ class _AlliancesPageState extends State<AlliancesPage> {
 
   Widget _teamChip(int index, Alliance alliance) {
     String title = alliance.teams[index].toString();
-    Color color = alliance.color;
 
     Widget chip([VoidCallback? onDeleted]) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Chip(
-            backgroundColor: color,
-            padding: const EdgeInsets.symmetric(
-              vertical: 10.0,
-              horizontal: 9.0,
-            ),
-            label: Padding(
-              padding: const EdgeInsets.only(
-                left: 18.0,
-                right: 13.0,
+          child: Container(
+              decoration: BoxDecoration(
+                color: alliance.color,
+                borderRadius: BorderRadius.circular(25.0),
               ),
-              child: AnalyticsText.logo(
-                title,
-                color: AnalyticsTheme.foreground1,
-              ),
-            ),
-            onDeleted: onDeleted,
-            deleteIcon: const Icon(
-              Icons.cancel_rounded,
-              color: AnalyticsTheme.foreground1,
-              size: 28.0,
-            ),
-          ),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 29, right: 14),
+                    child: SizedBox(
+                      child: AnalyticsText.logo(
+                        title,
+                        color: AnalyticsTheme.foreground1,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 9.0),
+                    child: IconButton(
+                      onPressed: onDeleted,
+                      color: AnalyticsTheme.foreground1,
+                      disabledColor: AnalyticsTheme.foreground1,
+                      splashRadius: 1.0,
+                      iconSize: 28.0,
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(
+                        Icons.cancel_rounded,
+                      ),
+                    ),
+                  ),
+                ],
+              )),
         );
 
-    return chip(
-      () => setState(() {
+    return chip(() {
+      setState(() {
         alliance.listKey.currentState?.removeItem(
           index,
           (context, animation) => ScaleTransition(
             scale: animation,
             child: chip(),
           ),
-          duration: const Duration(milliseconds: 100),
+          duration: const Duration(milliseconds: 125),
         );
-        alliance.teams.removeAt(index);
-      }),
-    );
+        Future.delayed(
+          const Duration(milliseconds: 125),
+          () => setState(
+            () {
+              alliance.teams.removeAt(index);
+            },
+          ),
+        );
+      });
+    });
   }
 
   Widget _addTeamsButton(Alliance alliance) => Padding(
@@ -107,8 +132,8 @@ class _AlliancesPageState extends State<AlliancesPage> {
           height: 40.0,
           child: AnimatedCrossFade(
             duration: const Duration(milliseconds: 250),
-            firstCurve: Curves.linearToEaseOut,
-            secondCurve: Curves.linearToEaseOut,
+            firstCurve: Curves.easeOut,
+            secondCurve: Curves.easeIn,
             crossFadeState: alliance.teams.length < 3
                 ? CrossFadeState.showFirst
                 : CrossFadeState.showSecond,
@@ -116,7 +141,7 @@ class _AlliancesPageState extends State<AlliancesPage> {
               onPressed: () => setState(() {
                 alliance.listKey.currentState?.insertItem(
                   alliance.teams.length,
-                  duration: const Duration(milliseconds: 100),
+                  duration: const Duration(milliseconds: 125),
                 );
                 alliance.teams.add(1657);
               }),
@@ -149,9 +174,19 @@ class _AlliancesPageState extends State<AlliancesPage> {
         ),
       );
 
-  Widget _alliancesTable() => const AnalyticsContainer(
-        child: Text('body'),
-      );
+  Widget _alliancesTable() {
+    final entries =
+        AlliancesPage.tableEntries.entries.map(_tableEntry).toList();
+    return AnalyticsContainer(
+      child: ListView.builder(
+        itemCount: AlliancesPage.tableEntries.length,
+        itemBuilder: (context, index) => entries[index],
+      ),
+    );
+  }
+
+  Widget _tableEntry(MapEntry<String, double Function(Team)> entry) =>
+      Text('${entry.key}:  ${entry.value}');
 }
 
 class Alliance {
@@ -167,4 +202,17 @@ class Alliance {
   Color color;
   List<int> teams;
   GlobalKey<AnimatedListState> listKey;
+
+  double get chipsPadding {
+    switch (teams.length) {
+      case 1:
+        return 310.0;
+      case 2:
+        return 220.5;
+      case 3:
+        return 131.0;
+      default:
+        return 310.0;
+    }
+  }
 }
