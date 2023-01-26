@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
@@ -122,7 +123,7 @@ class _RefreshDataButtonState extends State<RefreshDataButton>
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 250),
+      duration: 250.milliseconds,
       transitionBuilder: (child, animation) => RotationTransition(
         turns: Tween(begin: -0.4, end: -1.0).animate(animation),
         child: ScaleTransition(
@@ -158,7 +159,7 @@ class _RefreshDataButtonState extends State<RefreshDataButton>
           setState(() {});
           _loading = true;
           await Future.wait([
-            Future.delayed(const Duration(milliseconds: 1500)),
+            Future.delayed(1500.milliseconds),
             getData(),
           ]);
           _loading = false;

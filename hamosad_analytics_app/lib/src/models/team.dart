@@ -18,6 +18,18 @@ class Team {
         autonomus = TeamAutonomus.defaults(),
         teleop = TeamTeleop.defaults(),
         endgame = TeamEndgame.defaults();
+
+  Team.only({
+    int number = 1657,
+    String name = 'Hamosad',
+    TeamInfo? info,
+    TeamAutonomus? autonomus,
+    TeamTeleop? teleop,
+    TeamEndgame? endgame,
+  })  : info = info ?? TeamInfo.defaults(number: number, name: name),
+        autonomus = autonomus ?? TeamAutonomus.defaults(),
+        teleop = teleop ?? TeamTeleop.defaults(),
+        endgame = endgame ?? TeamEndgame.defaults();
 }
 
 class TeamInfo {
@@ -45,6 +57,22 @@ class TeamInfo {
         focus = Stat.zero(),
         cones = Stat.zero(),
         cubes = Stat.zero();
+
+  TeamInfo.only({
+    required this.number,
+    required this.name,
+    int? won,
+    int? lost,
+    Stat<int>? score,
+    Stat<int>? focus,
+    Stat<int>? cones,
+    Stat<int>? cubes,
+  })  : won = won ?? 0,
+        lost = lost ?? 0,
+        score = score ?? Stat.zero(),
+        focus = focus ?? Stat.zero(),
+        cones = cones ?? Stat.zero(),
+        cubes = cubes ?? Stat.zero();
 
   double get winRate {
     if (won == 0) {
@@ -77,6 +105,18 @@ class TeamAutonomus {
         cubes = Stat.zero(),
         climbRate = 0.0,
         notes = [];
+
+  TeamAutonomus.only({
+    Stat<int>? score,
+    Stat<int>? cones,
+    Stat<int>? cubes,
+    double? climbRate,
+    List<String>? notes,
+  })  : score = score ?? Stat.zero(),
+        cones = cones ?? Stat.zero(),
+        cubes = cubes ?? Stat.zero(),
+        climbRate = climbRate ?? 0.0,
+        notes = notes ?? [];
 }
 
 class TeamTeleop {
@@ -96,6 +136,17 @@ class TeamTeleop {
         cones = Stat.zero(),
         cubes = Stat.zero(),
         notes = [];
+
+  TeamTeleop.only({
+    Stat<int>? score,
+    Stat<int>? cones,
+    Stat<int>? cubes,
+    double? climbRate,
+    List<String>? notes,
+  })  : score = score ?? Stat.zero(),
+        cones = cones ?? Stat.zero(),
+        cubes = cubes ?? Stat.zero(),
+        notes = notes ?? [];
 }
 
 class TeamEndgame {
@@ -118,4 +169,16 @@ class TeamEndgame {
         cubes = Stat.zero(),
         climbRate = 0.0,
         notes = [];
+
+  TeamEndgame.only({
+    Stat<int>? score,
+    Stat<int>? cones,
+    Stat<int>? cubes,
+    double? climbRate,
+    List<String>? notes,
+  })  : score = score ?? Stat.zero(),
+        cones = cones ?? Stat.zero(),
+        cubes = cubes ?? Stat.zero(),
+        climbRate = climbRate ?? 0.0,
+        notes = notes ?? [];
 }

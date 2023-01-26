@@ -1,18 +1,47 @@
+import 'package:dartx/dartx.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
 
 Future<void> getData() {
-  return Future.delayed(const Duration(milliseconds: 1000));
+  return Future.delayed(1000.milliseconds);
 }
 
+final _teams = [
+  Team.only(
+    info: TeamInfo.only(number: 1657, name: 'Hamosad', won: 4, lost: 1),
+    autonomus: TeamAutonomus.only(cones: Stat.only(min: 1)),
+  ),
+  Team.only(
+    info: TeamInfo.only(number: 3075, name: 'Ha-Dream', won: 1, lost: 6),
+    autonomus: TeamAutonomus.only(cones: Stat.only(min: 3)),
+  ),
+  Team.only(
+    info: TeamInfo.only(number: 5951, name: 'MA', won: 2, lost: 3),
+    autonomus: TeamAutonomus.only(cones: Stat.only(min: 1)),
+  ),
+  Team.only(
+    info: TeamInfo.only(number: 1580, name: 'Blue Monkeys', won: 4, lost: 6),
+    autonomus: TeamAutonomus.only(cones: Stat.only(min: 8)),
+  ),
+  Team.only(
+    info: TeamInfo.only(number: 1690, name: 'Orbit', won: 7, lost: 9),
+    autonomus: TeamAutonomus.only(cones: Stat.only(min: 10)),
+  ),
+  Team.only(
+    info: TeamInfo.only(number: 1574, name: 'MisCar', won: 2, lost: 3),
+    autonomus: TeamAutonomus.only(cones: Stat.only(min: 150)),
+  ),
+];
+
 List<Team> getTeams() {
-  return [
-    Team.defaults(number: 1657, name: 'Hamosad'),
-    Team.defaults(number: 3075, name: 'Ha-Dream'),
-    Team.defaults(number: 5951, name: 'MA'),
-    Team.defaults(number: 1580, name: 'Blue Monkeys'),
-    Team.defaults(number: 1690, name: 'Orbit'),
-    Team.defaults(number: 1574, name: 'MisCar'),
-  ];
+  return _teams;
+}
+
+Map<int, Team> getTeamsMap() {
+  return Map.fromEntries(
+    _teams.map(
+      (team) => MapEntry(team.info.number, team),
+    ),
+  );
 }
 
 List<int> getRanks() {

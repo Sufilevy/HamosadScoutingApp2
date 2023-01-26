@@ -1,7 +1,7 @@
-import 'dart:math' as math;
-
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
+import 'package:hamosad_analytics_app/src/database.dart' as db;
 import 'package:hamosad_analytics_app/src/models/team.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 
@@ -21,6 +21,10 @@ class AlliancesPage extends StatefulWidget {
 
 class _AlliancesPageState extends State<AlliancesPage> {
   final _blueAlliance = Alliance.blue(), _redAlliance = Alliance.red();
+
+  List<Team> get _teams {
+    return _blueAlliance.teams.followedBy(_redAlliance.teams).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,77 +56,79 @@ class _AlliancesPageState extends State<AlliancesPage> {
   Widget _allianceList(Alliance alliance) => Expanded(
         child: SizedBox(
           height: 45.0,
-          child: AnimatedList(
-            key: alliance.listKey,
-            scrollDirection: Axis.horizontal,
+          child: AnimatedPadding(
             padding: EdgeInsets.only(left: alliance.chipsPadding),
-            itemBuilder: (context, index, animation) => ScaleTransition(
-              scale: animation,
-              child: _teamChip(index, alliance),
+            duration: 200.milliseconds,
+            child: AnimatedList(
+              key: alliance.listKey,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index, animation) => ScaleTransition(
+                scale: animation,
+                child: _teamChipButton(index, alliance),
+              ),
             ),
           ),
         ),
       );
 
-  Widget _teamChip(int index, Alliance alliance) {
-    String title = alliance.teams[index].toString();
-
-    Widget chip([VoidCallback? onDeleted]) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Container(
-              decoration: BoxDecoration(
-                color: alliance.color,
-                borderRadius: BorderRadius.circular(25.0),
-              ),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 29, right: 14),
-                    child: SizedBox(
-                      child: AnalyticsText.logo(
-                        title,
-                        color: AnalyticsTheme.foreground1,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 9.0),
-                    child: IconButton(
-                      onPressed: onDeleted,
-                      color: AnalyticsTheme.foreground1,
-                      disabledColor: AnalyticsTheme.foreground1,
-                      splashRadius: 1.0,
-                      iconSize: 28.0,
-                      padding: EdgeInsets.zero,
-                      icon: const Icon(
-                        Icons.cancel_rounded,
-                      ),
-                    ),
-                  ),
-                ],
-              )),
-        );
-
-    return chip(() {
+  Widget _teamChipButton(int index, Alliance alliance) {
+    return _teamChip(index, alliance, onDeleted: () {
       setState(() {
+        Future.delayed(
+          175.milliseconds,
+          () => setState(() {
+            alliance.teams.removeAt(index);
+          }),
+        );
         alliance.listKey.currentState?.removeItem(
           index,
           (context, animation) => ScaleTransition(
             scale: animation,
-            child: chip(),
+            child: _teamChip(index, alliance),
           ),
-          duration: const Duration(milliseconds: 125),
-        );
-        Future.delayed(
-          const Duration(milliseconds: 125),
-          () => setState(
-            () {
-              alliance.teams.removeAt(index);
-            },
-          ),
+          duration: 125.milliseconds,
         );
       });
     });
+  }
+
+  Widget _teamChip(int index, Alliance alliance, {VoidCallback? onDeleted}) {
+    String title = alliance.teams[index].info.number.toString();
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Container(
+          decoration: BoxDecoration(
+            color: alliance.color,
+            borderRadius: BorderRadius.circular(25.0),
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 29, right: 14),
+                child: SizedBox(
+                  child: AnalyticsText.logo(
+                    title,
+                    color: AnalyticsTheme.foreground1,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 9.0),
+                child: IconButton(
+                  onPressed: onDeleted,
+                  color: AnalyticsTheme.foreground1,
+                  disabledColor: AnalyticsTheme.foreground1,
+                  splashRadius: 1.0,
+                  iconSize: 28.0,
+                  padding: EdgeInsets.zero,
+                  icon: const Icon(
+                    Icons.cancel_rounded,
+                  ),
+                ),
+              ),
+            ],
+          )),
+    );
   }
 
   Widget _addTeamsButton(Alliance alliance) => Padding(
@@ -130,35 +136,48 @@ class _AlliancesPageState extends State<AlliancesPage> {
         child: SizedBox(
           width: 40.0,
           height: 40.0,
-          child: AnimatedCrossFade(
+          child: AnimatedRotation(
             duration: const Duration(milliseconds: 250),
-            firstCurve: Curves.easeOut,
-            secondCurve: Curves.easeIn,
-            crossFadeState: alliance.teams.length < 3
-                ? CrossFadeState.showFirst
-                : CrossFadeState.showSecond,
-            firstChild: IconButton(
-              onPressed: () => setState(() {
-                alliance.listKey.currentState?.insertItem(
-                  alliance.teams.length,
-                  duration: const Duration(milliseconds: 125),
-                );
-                alliance.teams.add(1657);
-              }),
+            turns: alliance.teams.length < 3 ? 0.0 : 0.125,
+            curve: Curves.easeOut,
+            child: IconButton(
+              onPressed: () => setState(
+                alliance.teams.length < 3
+                    ? () {
+                        alliance.listKey.currentState?.insertItem(
+                          alliance.teams.length,
+                          duration: const Duration(milliseconds: 125),
+                        );
+                        alliance.teams.add(db
+                            .getTeams()
+                            .firstWhere((team) => !_teams.contains(team)));
+                      }
+                    : () {
+                        Future.delayed(
+                          175.milliseconds,
+                          () => setState(() {
+                            alliance.teams.clear();
+                          }),
+                        );
+                        for (var i = 0; i < 3; i++) {
+                          alliance.listKey.currentState?.removeItem(
+                            0,
+                            (context, animation) => ScaleTransition(
+                              scale: animation,
+                              child: _teamChip(0, alliance),
+                            ),
+                            duration: 125.milliseconds,
+                          );
+                        }
+                      },
+              ),
               iconSize: 40.0,
               padding: EdgeInsets.zero,
               splashRadius: 1.0,
               icon: Icon(
                 Icons.add_circle_rounded,
-                color: alliance.color,
-              ),
-            ),
-            secondChild: Transform.rotate(
-              angle: -math.pi / 4,
-              child: const Icon(
-                Icons.add_circle_rounded,
-                color: AnalyticsTheme.background3,
-                size: 40.0,
+                color: alliance.color
+                    .withOpacity(alliance.teams.length < 3 ? 1.0 : 0.7),
               ),
             ),
           ),
@@ -175,18 +194,87 @@ class _AlliancesPageState extends State<AlliancesPage> {
       );
 
   Widget _alliancesTable() {
-    final entries =
-        AlliancesPage.tableEntries.entries.map(_tableEntry).toList();
+    final entries = AlliancesPage.tableEntries.entries
+        .map((entry) => _tableEntry(entry))
+        .toList();
     return AnalyticsContainer(
       child: ListView.builder(
         itemCount: AlliancesPage.tableEntries.length,
         itemBuilder: (context, index) => entries[index],
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
       ),
     );
   }
 
-  Widget _tableEntry(MapEntry<String, double Function(Team)> entry) =>
-      Text('${entry.key}:  ${entry.value}');
+  Widget _tableEntry(
+    MapEntry<String, double Function(Team)> entry,
+  ) {
+    final teams = _teams
+        .map((team) => Pair(team.info.number, entry.value(team)))
+        .sortedByDescending((team) => team.second);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15.0),
+      child: AnalyticsContainer(
+        height: 60.0,
+        color: AnalyticsTheme.background1,
+        padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 10.0),
+        child: Row(
+          children: [
+            Container(
+              width: 300.0,
+              alignment: Alignment.center,
+              child: AnalyticsText.dataTitle(entry.key),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: _divider(),
+            ),
+            Expanded(
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: teams.length,
+                itemBuilder: (context, index) => _teamEntry(teams[index]),
+                separatorBuilder: (context, index) => _divider(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _teamEntry(Pair<int, double> team) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Row(
+          children: [
+            AnalyticsText.dataTitle(
+              team.first.toString(),
+              color: _teamColor(
+                team.first,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 7.0, right: 8.0),
+              child: Container(
+                width: 4.0,
+                height: 4.0,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AnalyticsTheme.foreground2,
+                ),
+              ),
+            ),
+            AnalyticsText.dataSubtitle(
+              team.second.toStringAsPrecision(4).slice(0, 3),
+            ),
+          ],
+        ),
+      );
+
+  Color _teamColor(int teamNumber) => _blueAlliance.contains(teamNumber)
+      ? _blueAlliance.color
+      : _redAlliance.color;
 }
 
 class Alliance {
@@ -200,19 +288,22 @@ class Alliance {
         listKey = GlobalKey();
 
   Color color;
-  List<int> teams;
+  List<Team> teams;
   GlobalKey<AnimatedListState> listKey;
 
   double get chipsPadding {
     switch (teams.length) {
       case 1:
-        return 310.0;
+        return 320.0;
       case 2:
-        return 220.5;
+        return 230.5;
       case 3:
-        return 131.0;
+        return 140.0;
       default:
-        return 310.0;
+        return 320.0;
     }
   }
+
+  bool contains(int teamNumber) =>
+      teams.any((team) => team.info.number == teamNumber);
 }

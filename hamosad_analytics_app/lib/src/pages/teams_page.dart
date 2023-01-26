@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
@@ -166,7 +167,7 @@ class _TeamsPageState extends State<TeamsPage> {
               icon: RotatedBox(
                 quarterTurns: 3,
                 child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
+                  duration: 250.milliseconds,
                   switchInCurve: Curves.easeInOutCirc,
                   switchOutCurve: Curves.easeInOutCirc,
                   transitionBuilder: (child, animation) => FadeTransition(
