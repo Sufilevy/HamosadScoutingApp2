@@ -139,7 +139,8 @@ class _TeamsPageState extends State<TeamsPage> {
                 onSubmitted: (query) => setState(() {
                   _searchQuery = query;
                 }),
-                text: _searchQuery,
+                currentQuery: _searchQuery,
+                hintText: 'Search for a team...',
               ),
             ),
           ),
@@ -227,7 +228,7 @@ class _TeamsPageState extends State<TeamsPage> {
                 borderRadius: BorderRadius.circular(10.0),
                 focusColor: AnalyticsTheme.background2,
                 isExpanded: true,
-                underline: Container(),
+                underline: const SizedBox.shrink(),
                 value: _sortByKey,
                 iconSize: 32.0,
                 iconEnabledColor: AnalyticsTheme.foreground2,

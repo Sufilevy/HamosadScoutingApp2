@@ -78,5 +78,5 @@ class _AnalyticsTabsSelectorState extends State<AnalyticsTabsSelector> {
     );
   }
 
-  Widget _seperator() => Expanded(flex: 1, child: Container());
+  Widget _seperator() => const EmptyExpanded(flex: 1);
 }

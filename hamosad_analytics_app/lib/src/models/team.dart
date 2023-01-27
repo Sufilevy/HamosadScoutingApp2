@@ -30,6 +30,18 @@ class Team {
         autonomus = autonomus ?? TeamAutonomus.defaults(),
         teleop = teleop ?? TeamTeleop.defaults(),
         endgame = endgame ?? TeamEndgame.defaults();
+
+  @override
+  bool operator ==(Object other) {
+    if (other is Team) {
+      return info.number == other.info.number;
+    } else {
+      return false;
+    }
+  }
+
+  @override
+  int get hashCode => info.number.hashCode;
 }
 
 class TeamInfo {

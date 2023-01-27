@@ -30,6 +30,10 @@ final _teams = [
     info: TeamInfo.only(number: 1574, name: 'MisCar', won: 2, lost: 3),
     autonomus: TeamAutonomus.only(cones: Stat.only(min: 150)),
   ),
+  Team.only(
+    info: TeamInfo.only(number: 2212, name: 'Spikes', won: 0, lost: 0),
+    autonomus: TeamAutonomus.only(cones: Stat.only(min: 0)),
+  ),
 ];
 
 List<Team> getTeams() {
@@ -51,6 +55,7 @@ List<int> getRanks() {
     1574,
     1690,
     1657,
+    2212,
     3075,
   ];
 }

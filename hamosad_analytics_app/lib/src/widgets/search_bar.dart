@@ -3,11 +3,22 @@ import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 
 class SearchBar extends StatelessWidget {
-  SearchBar({Key? key, required this.onSubmitted, required String text})
-      : _controller = TextEditingController(text: text),
+  SearchBar({
+    Key? key,
+    this.onSubmitted,
+    this.hintText,
+    this.borderColor,
+    this.cursorColor,
+    this.underlineBorder = false,
+    TextEditingController? controller,
+    String currentQuery = '',
+  })  : _controller = controller ?? TextEditingController(text: currentQuery),
         super(key: key);
 
-  final void Function(String) onSubmitted;
+  final void Function(String)? onSubmitted;
+  final String? hintText;
+  final Color? borderColor, cursorColor;
+  final bool underlineBorder;
   final TextEditingController _controller;
 
   @override
@@ -16,7 +27,7 @@ class SearchBar extends StatelessWidget {
       child: TextField(
         controller: _controller,
         onSubmitted: onSubmitted,
-        cursorColor: AnalyticsTheme.primary,
+        cursorColor: cursorColor ?? AnalyticsTheme.primary,
         maxLines: 1,
         style: AnalyticsTheme.dataTitleTextStyle.copyWith(
           color: AnalyticsTheme.foreground2,
@@ -25,36 +36,42 @@ class SearchBar extends StatelessWidget {
         strutStyle: StrutStyle.fromTextStyle(AnalyticsTheme.dataTitleTextStyle),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(16.0),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AnalyticsTheme.primaryVariant,
-              width: 2.0,
-            ),
-          ),
+          focusedBorder: underlineBorder
+              ? UnderlineInputBorder(
+                  borderRadius: BorderRadius.circular(1.5),
+                  borderSide: BorderSide(
+                    width: 3.0,
+                    color: borderColor ?? AnalyticsTheme.foreground2,
+                  ),
+                )
+              : OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: borderColor ?? AnalyticsTheme.primaryVariant,
+                    width: 2.0,
+                  ),
+                ),
           suffixIcon: IconButton(
             onPressed: () {
-              onSubmitted(_controller.text);
+              if (onSubmitted != null) onSubmitted!(_controller.text);
             },
             icon: const Icon(Icons.search_rounded),
             iconSize: 32.0,
             color: AnalyticsTheme.foreground2,
             splashRadius: 1.0,
           ),
-          hintText: 'Search for a team...',
+          hintText: hintText,
           hintStyle: AnalyticsTheme.dataTitleTextStyle.copyWith(
             color: AnalyticsTheme.foreground2,
           ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0),
-            borderSide: const BorderSide(
-              color: AnalyticsTheme.background2,
-              width: 1.0,
-            ),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0),
-            borderSide: const BorderSide(width: 2.0),
-          ),
+          enabledBorder: underlineBorder
+              ? UnderlineInputBorder(
+                  borderRadius: BorderRadius.circular(1.5),
+                  borderSide: const BorderSide(
+                    width: 3.0,
+                    color: AnalyticsTheme.foreground2,
+                  ),
+                )
+              : null,
         ),
       ),
     );

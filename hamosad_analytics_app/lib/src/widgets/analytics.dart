@@ -1,6 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
+import 'package:hamosad_analytics_app/src/widgets.dart';
 
 class AnalyticsFadeSwitcher extends StatelessWidget {
   const AnalyticsFadeSwitcher({
@@ -33,6 +34,7 @@ class AnalyticsContainer extends StatelessWidget {
     this.height,
     this.alignment,
     this.padding,
+    this.border,
     this.color = AnalyticsTheme.background2,
   }) : super(key: key);
 
@@ -40,6 +42,7 @@ class AnalyticsContainer extends StatelessWidget {
   final double? width, height;
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
+  final BoxBorder? border;
   final Color color;
 
   @override
@@ -51,6 +54,7 @@ class AnalyticsContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(5.0),
+        border: border,
       ),
       alignment: alignment,
       child: child,
@@ -184,7 +188,7 @@ class AnalyticsStatChip extends StatelessWidget {
                   color: AnalyticsTheme.foreground1,
                 ),
               ),
-              Expanded(flex: 1, child: Container()),
+              const EmptyExpanded(flex: 1),
               Expanded(
                 flex: 8,
                 child: AnalyticsText.dataSubtitle(max),
@@ -201,7 +205,7 @@ class AnalyticsStatChip extends StatelessWidget {
                   color: AnalyticsTheme.foreground1,
                 ),
               ),
-              Expanded(flex: 1, child: Container()),
+              const EmptyExpanded(flex: 1),
               Expanded(
                 flex: 8,
                 child: AnalyticsText.dataSubtitle(min),

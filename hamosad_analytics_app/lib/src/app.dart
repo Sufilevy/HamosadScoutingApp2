@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/pages.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
@@ -31,48 +32,50 @@ class _AnalyticsAppState extends State<AnalyticsApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Scouting Analytics',
-      themeMode: ThemeMode.dark,
-      home: Scaffold(
-        backgroundColor: AnalyticsTheme.background1,
-        body: Row(
-          children: [
-            Sidebar(
-              _sidebarController,
-              onRefreshData: () => setState(() {}),
-              items: const [
-                SidebarXItem(
-                  icon: Icons.people_outline_rounded,
-                  label: 'Team Details',
-                ),
-                SidebarXItem(
-                  icon: Icons.groups_outlined,
-                  label: 'Teams',
-                ),
-                SidebarXItem(
-                  icon: Icons.assignment_outlined,
-                  label: 'Report Details',
-                ),
-                SidebarXItem(
-                  icon: Icons.source_outlined,
-                  label: 'Reports',
-                ),
-                SidebarXItem(
-                  icon: Icons.assessment_outlined,
-                  label: 'Alliances',
-                ),
-              ],
-            ),
-            Expanded(
-              child: AnalyticsFadeSwitcher(
-                child: Container(
-                  key: ValueKey<int>(_sidebarController.selectedIndex),
-                  child: pages(_sidebarController.selectedIndex),
+    return Portal(
+      child: MaterialApp(
+        title: 'Scouting Analytics',
+        themeMode: ThemeMode.dark,
+        home: Scaffold(
+          backgroundColor: AnalyticsTheme.background1,
+          body: Row(
+            children: [
+              Sidebar(
+                _sidebarController,
+                onRefreshData: () => setState(() {}),
+                items: const [
+                  SidebarXItem(
+                    icon: Icons.people_outline_rounded,
+                    label: 'Team Details',
+                  ),
+                  SidebarXItem(
+                    icon: Icons.groups_outlined,
+                    label: 'Teams',
+                  ),
+                  SidebarXItem(
+                    icon: Icons.assignment_outlined,
+                    label: 'Report Details',
+                  ),
+                  SidebarXItem(
+                    icon: Icons.source_outlined,
+                    label: 'Reports',
+                  ),
+                  SidebarXItem(
+                    icon: Icons.assessment_outlined,
+                    label: 'Alliances',
+                  ),
+                ],
+              ),
+              Expanded(
+                child: AnalyticsFadeSwitcher(
+                  child: Container(
+                    key: ValueKey<int>(_sidebarController.selectedIndex),
+                    child: pages(_sidebarController.selectedIndex),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
