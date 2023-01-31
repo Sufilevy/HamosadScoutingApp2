@@ -5,84 +5,92 @@ class Report {
   final int teamNumber;
   final String match, scouter;
   final DateTime time;
-  final ReportAutonomus autonomus;
+  final ReportAuto auto;
   final ReportTeleop teleop;
   final ReportEndgame endgame;
   final ReportSummary summary;
 
-  Report({
-    required this.teamNumber,
-    required this.match,
-    required this.scouter,
-    required this.time,
-  })  : autonomus = ReportAutonomus(),
-        teleop = ReportTeleop(),
-        endgame = ReportEndgame(),
-        summary = ReportSummary();
-
   Report.fromJson(Json json)
-      : teamNumber = (json['info'] ?? {})['teamNumber'] ?? 0,
-        match = (json['info'] ?? {})['match'] ?? '',
-        scouter = (json['info'] ?? {})['scouter'] ?? '',
-        time = DateFormat('dd/MM HH:mm:ss')
-            .parse((json['info'] ?? {})['time'] ?? '01/01 00:00:00'),
-        autonomus = ReportAutonomus.fromJson(json['autonomus'] ?? {}),
-        teleop = ReportTeleop.fromJson(json['teleop'] ?? {}),
-        endgame = ReportEndgame.fromJson(json['endgame'] ?? {}),
-        summary = ReportSummary.fromJson(json['summary'] ?? {});
+      : teamNumber = json['info']['teamNumber'],
+        match = json['info']['match'],
+        scouter = json['info']['scouter'],
+        time = DateFormat('dd/MM HH:mm:ss').parse(json['info']['time']),
+        auto = ReportAuto.fromJson(json['auto']),
+        teleop = ReportTeleop.fromJson(json['teleop']),
+        endgame = ReportEndgame.fromJson(json['endgame']),
+        summary = ReportSummary.fromJson(json['summary']);
 }
 
-class ReportAutonomus {
+class ReportAuto {
+  StartPosition startPosition;
+  List<GamePiecePickup> pickups;
+  List<GamePieceDropoff> dropoffs;
+  List<CommunityPass> communityPasses;
+  List<ChargeStationPass> chargeStationPasses;
+  AutoClimb climb;
   String notes;
 
-  ReportAutonomus({
-    this.notes = '',
-  });
-
-  ReportAutonomus.fromJson(Json json) : notes = json['notes'] ?? '';
+  ReportAuto.fromJson(Json json)
+      : startPosition = StartPosition.fromString(json['startPosition'])!,
+        pickups = GamePiecePickup.list(json['pickups']),
+        dropoffs = GamePieceDropoff.list(json['dropoffs']),
+        communityPasses = CommunityPass.list(json['communityPasses']),
+        chargeStationPasses =
+            ChargeStationPass.list(json['chargeStationPasses']),
+        climb = AutoClimb.fromJson(json['climb'])!,
+        notes = json['notes'];
 }
 
 class ReportTeleop {
+  List<GamePiecePickup> pickups;
+  List<GamePieceDropoff> dropoffs;
+  List<CommunityPass> communityPasses;
+  List<LoadingZonePass> loadingZonePasses;
+  List<ChargeStationPass> chargeStationPasses;
   String notes;
 
-  ReportTeleop({
-    this.notes = '',
-  });
-
-  ReportTeleop.fromJson(Json json) : notes = json['notes'] ?? '';
+  ReportTeleop.fromJson(Json json)
+      : pickups = GamePiecePickup.list(json['pickups']),
+        dropoffs = GamePieceDropoff.list(json['dropoffs']),
+        communityPasses = CommunityPass.list(json['communityPasses']),
+        loadingZonePasses = LoadingZonePass.list(json['loadingZonePasses']),
+        chargeStationPasses =
+            ChargeStationPass.list(json['chargeStationPasses']),
+        notes = json['notes'];
 }
 
 class ReportEndgame {
+  List<GamePiecePickup> pickups;
+  List<GamePieceDropoff> dropoffs;
+  List<CommunityPass> communityPasses;
+  List<ChargeStationPass> chargeStationPasses;
+  EndgameClimb climb;
   String notes;
 
-  ReportEndgame({
-    this.notes = '',
-  });
-
-  ReportEndgame.fromJson(Json json) : notes = json['notes'] ?? '';
+  ReportEndgame.fromJson(Json json)
+      : pickups = GamePiecePickup.list(json['pickups']),
+        dropoffs = GamePieceDropoff.list(json['dropoffs']),
+        communityPasses = CommunityPass.list(json['communityPasses']),
+        chargeStationPasses =
+            ChargeStationPass.list(json['chargeStationPasses']),
+        climb = EndgameClimb.fromJson(json['climb'])!,
+        notes = json['notes'];
 }
 
 class ReportSummary {
   bool won;
-  int focus;
-  int autonomusScore, teleopScore, endgameScore, totalScore;
-
-  ReportSummary({
-    this.won = false,
-    this.focus = 0,
-    this.autonomusScore = 0,
-    this.teleopScore = 0,
-    this.endgameScore = 0,
-    this.totalScore = 0,
-  });
+  RobotIndex defenceRobotIndex;
+  String fouls, notes;
+  int autoDropoffsCount, teleopDropoffsCount, endgameDropoffsCount;
 
   ReportSummary.fromJson(Json json)
-      : won = json['won'] ?? false,
-        focus = json['focus'] ?? 0,
-        autonomusScore = json['autonomusScore'] ?? 0,
-        teleopScore = json['teleopScore'] ?? 0,
-        endgameScore = json['endgameScore'] ?? 0,
-        totalScore = json['totalScore'] ?? 0;
+      : won = json['won'],
+        defenceRobotIndex = RobotIndex.fromString(json['defenceRobotIndex'])!,
+        fouls = json['fouls'],
+        notes = json['notes'],
+        autoDropoffsCount = json['autoDropoffsCount'],
+        teleopDropoffsCount = json['teleopDropoffsCount'],
+        endgameDropoffsCount = json['endgameDropoffsCount'];
 }
 
 enum ActionDuration {
@@ -110,6 +118,57 @@ enum ActionDuration {
         return twoToFive;
       case '5+':
         return fivePlus;
+    }
+    return null;
+  }
+}
+
+enum GamePiece {
+  cone,
+  cube;
+
+  static GamePiece? fromString(String value) {
+    switch (value) {
+      case 'cone':
+        return cone;
+      case 'cube':
+        return cube;
+    }
+    return null;
+  }
+}
+
+enum RobotIndex {
+  first,
+  second,
+  third;
+
+  static RobotIndex? fromString(String value) {
+    switch (value) {
+      case 'first':
+        return first;
+      case 'second':
+        return second;
+      case 'third':
+        return third;
+    }
+    return null;
+  }
+}
+
+enum StartPosition {
+  arenaWall,
+  middle,
+  loadingZone;
+
+  static StartPosition? fromString(String value) {
+    switch (value) {
+      case 'arenaWall':
+        return arenaWall;
+      case 'middle':
+        return middle;
+      case 'loadingZone':
+        return loadingZone;
     }
     return null;
   }
@@ -145,21 +204,6 @@ enum GamePiecePickupPosition {
   }
 }
 
-enum GamePiece {
-  cone,
-  cube;
-
-  static GamePiece? fromString(String value) {
-    switch (value) {
-      case 'cone':
-        return cone;
-      case 'cube':
-        return cube;
-    }
-    return null;
-  }
-}
-
 class GamePiecePickup {
   const GamePiecePickup({
     required this.duration,
@@ -172,9 +216,9 @@ class GamePiecePickup {
   final GamePiece gamePiece;
 
   static GamePiecePickup? fromJson(Json json) {
-    final duration = ActionDuration.fromString(json['duration'] ?? '');
-    final position = GamePiecePickupPosition.fromString(json['position'] ?? '');
-    final gamePiece = GamePiece.fromString(json['gamePiece'] ?? '');
+    final duration = ActionDuration.fromString(json['duration']);
+    final position = GamePiecePickupPosition.fromString(json['position']);
+    final gamePiece = GamePiece.fromString(json['gamePiece']);
 
     if (duration == null || position == null || gamePiece == null) {
       return null;
@@ -185,6 +229,10 @@ class GamePiecePickup {
       position: position,
       gamePiece: gamePiece,
     );
+  }
+
+  static List<GamePiecePickup> list(List<Json> list) {
+    return list.map((pickup) => fromJson(pickup)!).toList();
   }
 }
 
@@ -201,10 +249,10 @@ class GamePieceDropoff {
   final GamePiece gamePiece;
 
   static GamePieceDropoff? fromJson(Json json) {
-    final duration = ActionDuration.fromString(json['duration'] ?? '');
+    final duration = ActionDuration.fromString(json['duration']);
     final row = json['row'];
     final column = json['column'];
-    final gamePiece = GamePiece.fromString(json['gamePiece'] ?? '');
+    final gamePiece = GamePiece.fromString(json['gamePiece']);
 
     if (duration == null ||
         row == null ||
@@ -219,6 +267,10 @@ class GamePieceDropoff {
       column: column,
       gamePiece: gamePiece,
     );
+  }
+
+  static List<GamePieceDropoff> list(List<Json> list) {
+    return list.map((dropoff) => fromJson(dropoff)!).toList();
   }
 }
 
@@ -235,6 +287,10 @@ enum CommunityPass {
     }
     return null;
   }
+
+  static List<CommunityPass> list(List<String> list) {
+    return list.map((pass) => fromString(pass)!).toList();
+  }
 }
 
 enum LoadingZonePass {
@@ -249,5 +305,97 @@ enum LoadingZonePass {
         return end;
     }
     return null;
+  }
+
+  static List<LoadingZonePass> list(List<String> list) {
+    return list.map((pass) => fromString(pass)!).toList();
+  }
+}
+
+enum ChargeStationPass {
+  entered,
+  exited;
+
+  static ChargeStationPass? fromString(String value) {
+    switch (value) {
+      case 'entered':
+        return entered;
+      case 'exited':
+        return exited;
+    }
+    return null;
+  }
+
+  static List<ChargeStationPass> list(List<String> list) {
+    return list.map((pass) => fromString(pass)!).toList();
+  }
+}
+
+enum ClimbingState {
+  none,
+  docked,
+  dockedByOther,
+  engaged;
+
+  static ClimbingState? fromString(String value) {
+    switch (value) {
+      case 'none':
+        return none;
+      case 'docked':
+        return docked;
+      case 'dockedByOther':
+        return dockedByOther;
+      case 'engaged':
+        return engaged;
+    }
+    return null;
+  }
+}
+
+class AutoClimb {
+  const AutoClimb({
+    required this.state,
+  });
+
+  final ClimbingState state;
+
+  static AutoClimb? fromJson(Json json) {
+    final state = ClimbingState.fromString(json['state']);
+
+    if (state == null) {
+      return null;
+    }
+
+    return AutoClimb(
+      state: state,
+    );
+  }
+}
+
+class EndgameClimb {
+  const EndgameClimb({
+    required this.duration,
+    required this.state,
+    required this.robotIndex,
+  });
+
+  final ActionDuration duration;
+  final ClimbingState state;
+  final RobotIndex robotIndex;
+
+  static EndgameClimb? fromJson(Json json) {
+    final duration = ActionDuration.fromString(json['duration']);
+    final state = ClimbingState.fromString(json['state']);
+    final robotIndex = RobotIndex.fromString(json['robotIndex']);
+
+    if (duration == null || state == null || robotIndex == null) {
+      return null;
+    }
+
+    return EndgameClimb(
+      duration: duration,
+      state: state,
+      robotIndex: robotIndex,
+    );
   }
 }
