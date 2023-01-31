@@ -13,13 +13,13 @@ class AnalyticsApp extends StatefulWidget {
 }
 
 class _AnalyticsAppState extends State<AnalyticsApp> {
-  Widget pages(int index) => [
-        const TeamDetailsPage(),
-        const TeamsPage(),
-        const ReportDetailsPage(),
-        const ReportsPage(),
-        const AlliancesPage()
-      ][index];
+  final List<Widget> _pages = [
+    const TeamDetailsPage(),
+    const TeamsPage(),
+    const ReportDetailsPage(),
+    const ReportsPage(),
+    const AlliancesPage()
+  ];
 
   final SidebarXController _sidebarController =
       SidebarXController(selectedIndex: 4, extended: true);
@@ -27,7 +27,7 @@ class _AnalyticsAppState extends State<AnalyticsApp> {
   @override
   void initState() {
     super.initState();
-    _sidebarController.addListener((() => setState(() {})));
+    _sidebarController.addListener(() => setState(() {}));
   }
 
   @override
@@ -70,7 +70,7 @@ class _AnalyticsAppState extends State<AnalyticsApp> {
                 child: AnalyticsFadeSwitcher(
                   child: Container(
                     key: ValueKey<int>(_sidebarController.selectedIndex),
-                    child: pages(_sidebarController.selectedIndex),
+                    child: _pages[_sidebarController.selectedIndex],
                   ),
                 ),
               ),
