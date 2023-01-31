@@ -39,7 +39,7 @@ class TeamsPage extends StatefulWidget {
     ),
     'Avg. Auto. Cones': DataEntry<double>(
       height: 30.0,
-      getData: (team) => team.autonomus.cones.average,
+      getData: (team) => team.auto.cones.average,
     ),
     'Avg. Tele. Cones': DataEntry<double>(
       height: 30.0,

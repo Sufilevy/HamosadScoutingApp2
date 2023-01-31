@@ -19,8 +19,8 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
       const AnalyticsStatChip(
           title: 'Autunomous Score', average: '100', max: '20', min: '103'),
     ],
-    AnalyticsTab.autonomous: [
-      const Text('Autonomous'),
+    AnalyticsTab.auto: [
+      const Text('Auto'),
     ],
     AnalyticsTab.teleop: [
       const Text('Teleop'),

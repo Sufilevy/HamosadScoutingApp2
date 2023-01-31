@@ -5,7 +5,7 @@ import 'package:hamosad_analytics_app/src/widgets.dart';
 
 enum AnalyticsTab {
   general(Icons.assessment_outlined, Icons.assessment_rounded, 'General'),
-  autonomous(Icons.code_rounded, Icons.code_outlined, 'Autonomous'),
+  auto(Icons.code_rounded, Icons.code_outlined, 'Auto'),
   teleop(Icons.person_outline_rounded, Icons.person_rounded, 'Teleop'),
   endgame(Icons.timer_outlined, Icons.timer_rounded, 'Endgame');
 
@@ -37,7 +37,7 @@ class _AnalyticsTabsSelectorState extends State<AnalyticsTabsSelector> {
       children: [
         _tabButton(AnalyticsTab.general),
         _seperator(),
-        _tabButton(AnalyticsTab.autonomous),
+        _tabButton(AnalyticsTab.auto),
         _seperator(),
         _tabButton(AnalyticsTab.teleop),
         _seperator(),

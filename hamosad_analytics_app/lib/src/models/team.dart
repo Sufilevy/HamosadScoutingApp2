@@ -2,20 +2,20 @@ import 'package:hamosad_analytics_app/src/models.dart';
 
 class Team {
   final TeamInfo info;
-  final TeamAutonomus autonomus;
+  final TeamAuto auto;
   final TeamTeleop teleop;
   final TeamEndgame endgame;
 
   Team({
     required this.info,
-    required this.autonomus,
+    required this.auto,
     required this.teleop,
     required this.endgame,
   });
 
   Team.defaults({int number = 1657, String name = 'Hamosad'})
       : info = TeamInfo.defaults(number: number, name: name),
-        autonomus = TeamAutonomus.defaults(),
+        auto = TeamAuto.defaults(),
         teleop = TeamTeleop.defaults(),
         endgame = TeamEndgame.defaults();
 
@@ -23,11 +23,11 @@ class Team {
     int number = 1657,
     String name = 'Hamosad',
     TeamInfo? info,
-    TeamAutonomus? autonomus,
+    TeamAuto? auto,
     TeamTeleop? teleop,
     TeamEndgame? endgame,
   })  : info = info ?? TeamInfo.defaults(number: number, name: name),
-        autonomus = autonomus ?? TeamAutonomus.defaults(),
+        auto = auto ?? TeamAuto.defaults(),
         teleop = teleop ?? TeamTeleop.defaults(),
         endgame = endgame ?? TeamEndgame.defaults();
 
@@ -97,13 +97,13 @@ class TeamInfo {
   }
 }
 
-class TeamAutonomus {
+class TeamAuto {
   final Stat<int> score;
   final Stat<int> cones, cubes;
   final double climbRate;
   final List<String> notes;
 
-  TeamAutonomus({
+  TeamAuto({
     required this.score,
     required this.cones,
     required this.cubes,
@@ -111,14 +111,14 @@ class TeamAutonomus {
     required this.notes,
   });
 
-  TeamAutonomus.defaults()
+  TeamAuto.defaults()
       : score = Stat.zero(),
         cones = Stat.zero(),
         cubes = Stat.zero(),
         climbRate = 0.0,
         notes = [];
 
-  TeamAutonomus.only({
+  TeamAuto.only({
     Stat<int>? score,
     Stat<int>? cones,
     Stat<int>? cubes,
