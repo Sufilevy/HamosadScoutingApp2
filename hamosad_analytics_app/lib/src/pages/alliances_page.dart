@@ -460,7 +460,7 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
                 ),
               ),
               const EmptyExpanded(flex: 1),
-              const Expanded(flex: 1, child: AnalyticsDataDivider()),
+              const AnalyticsDataDivider(),
               const EmptyExpanded(flex: 3),
               Expanded(
                 flex: 50,

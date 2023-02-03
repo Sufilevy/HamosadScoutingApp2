@@ -72,9 +72,9 @@ class _SidebarState extends State<Sidebar> {
         margin: const EdgeInsets.only(left: 34.0, top: 3.0, bottom: 15.0),
       );
 
-  Widget _buildRefreshDataButton() => const Padding(
-        padding: EdgeInsets.all(40.0),
-        child: RefreshDataButton(),
+  Widget _buildRefreshDataButton() => Padding(
+        padding: const EdgeInsets.all(40.0),
+        child: RefreshDataButton(onPressed: widget.onRefreshData),
       );
 
   SidebarXTheme _theme() => SidebarXTheme(
@@ -110,7 +110,12 @@ class _SidebarState extends State<Sidebar> {
 }
 
 class RefreshDataButton extends StatefulWidget {
-  const RefreshDataButton({Key? key}) : super(key: key);
+  const RefreshDataButton({
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
+
+  final VoidCallback? onPressed;
 
   @override
   State<RefreshDataButton> createState() => _RefreshDataButtonState();
@@ -162,6 +167,7 @@ class _RefreshDataButtonState extends State<RefreshDataButton>
             Future.delayed(1500.milliseconds),
             getData(),
           ]);
+          if (widget.onPressed != null) widget.onPressed!();
           _loading = false;
           setState(() {});
         },
