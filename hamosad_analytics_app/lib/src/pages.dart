@@ -30,13 +30,13 @@ class AnalyticsPage extends StatelessWidget {
         children: [
           title,
           SizedBox(height: spacing),
-          _body(body),
+          _buildBody(body),
         ],
       ),
     );
   }
 
-  Widget _body(Widget child) => Expanded(
+  Widget _buildBody(Widget child) => Expanded(
         child: Row(
           children: [
             Expanded(

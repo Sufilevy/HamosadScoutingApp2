@@ -33,10 +33,10 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AnalyticsPage(title: _title(), body: _body());
+    return AnalyticsPage(title: _buildTitle(), body: _buildBody());
   }
 
-  Widget _title() => Column(
+  Widget _buildTitle() => Column(
         children: [
           const AnalyticsPageTitle(
             title: 'Team 3075',
@@ -50,7 +50,7 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
         ],
       );
 
-  Widget _body() => Column(
+  Widget _buildBody() => Column(
         key: ValueKey<AnalyticsTab>(_currentTab.data),
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,

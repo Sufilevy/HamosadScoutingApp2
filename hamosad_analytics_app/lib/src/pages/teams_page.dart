@@ -121,15 +121,15 @@ class _TeamsPageState extends State<TeamsPage> {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          _title(),
+          _buildTitle(),
           const SizedBox(height: 10.0),
-          Expanded(child: _body(context)),
+          Expanded(child: _buildBody(context)),
         ],
       ),
     );
   }
 
-  Widget _title() => Row(
+  Widget _buildTitle() => Row(
         children: [
           Expanded(
             flex: 30,
@@ -153,7 +153,7 @@ class _TeamsPageState extends State<TeamsPage> {
                 color: AnalyticsTheme.background2,
                 borderRadius: BorderRadius.circular(5.0),
               ),
-              child: _sortByMenu(),
+              child: _buildSortByMenu(),
             ),
           ),
           const SizedBox(width: 10.0),
@@ -207,7 +207,7 @@ class _TeamsPageState extends State<TeamsPage> {
         ],
       );
 
-  Widget _sortByMenu() => Row(
+  Widget _buildSortByMenu() => Row(
         children: [
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.0),
@@ -247,7 +247,7 @@ class _TeamsPageState extends State<TeamsPage> {
         ],
       );
 
-  Widget _body(BuildContext context) {
+  Widget _buildBody(BuildContext context) {
     List<TeamEntry> teamsEntries = _getTeamsEntries();
     return Column(
       children: [
@@ -255,7 +255,7 @@ class _TeamsPageState extends State<TeamsPage> {
           height: 50.0,
           child: Row(
             children: [
-              _selectRowsButton(context),
+              _buildSelectRowsButton(context),
               const SizedBox(width: 10.0),
               AnalyticsContainer(
                 alignment: Alignment.center,
@@ -264,7 +264,7 @@ class _TeamsPageState extends State<TeamsPage> {
                 child: AnalyticsText.data('Team'),
               ),
               const SizedBox(width: 10.0),
-              Expanded(child: _columnTitles(teamsEntries)),
+              Expanded(child: _buildColumnTitles(teamsEntries)),
             ],
           ),
         ),
@@ -272,9 +272,9 @@ class _TeamsPageState extends State<TeamsPage> {
         Expanded(
           child: Row(
             children: [
-              _rowTitles(teamsEntries),
+              _buildRowTitles(teamsEntries),
               const SizedBox(width: 10.0),
-              Expanded(child: _table(teamsEntries)),
+              Expanded(child: _buildTable(teamsEntries)),
             ],
           ),
         ),
@@ -282,7 +282,7 @@ class _TeamsPageState extends State<TeamsPage> {
     );
   }
 
-  Widget _selectRowsButton(BuildContext context) => AnalyticsContainer(
+  Widget _buildSelectRowsButton(BuildContext context) => AnalyticsContainer(
         child: AnalyticsContainer(
           width: 50.0,
           height: 50.0,
@@ -367,7 +367,7 @@ class _TeamsPageState extends State<TeamsPage> {
         ),
       );
 
-  Widget _columnTitles(List<TeamEntry> teamsEntries) => AnalyticsContainer(
+  Widget _buildColumnTitles(List<TeamEntry> teamsEntries) => AnalyticsContainer(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 5.0),
           child: ListView.separated(
@@ -396,7 +396,7 @@ class _TeamsPageState extends State<TeamsPage> {
         ),
       );
 
-  Widget _horizontalSeperator() => Container(
+  Widget _buildHorizontalSeperator() => Container(
         height: 2.0,
         decoration: BoxDecoration(
           color: AnalyticsTheme.foreground2,
@@ -405,7 +405,7 @@ class _TeamsPageState extends State<TeamsPage> {
         margin: const EdgeInsets.symmetric(horizontal: 10.0),
       );
 
-  Widget _rowTitles(List<TeamEntry> teamsEntries) => AnalyticsContainer(
+  Widget _buildRowTitles(List<TeamEntry> teamsEntries) => AnalyticsContainer(
         width: 170.0,
         child: Padding(
           padding: const EdgeInsets.only(top: 1.0),
@@ -417,12 +417,12 @@ class _TeamsPageState extends State<TeamsPage> {
               alignment: Alignment.center,
               child: AnalyticsText.dataTitle(_dataRows[index]),
             ),
-            separatorBuilder: (context, index) => _horizontalSeperator(),
+            separatorBuilder: (context, index) => _buildHorizontalSeperator(),
           ),
         ),
       );
 
-  Widget _table(List<TeamEntry> teamsEntries) => AnalyticsContainer(
+  Widget _buildTable(List<TeamEntry> teamsEntries) => AnalyticsContainer(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2.5, vertical: 5.0),
           child: ListView.builder(
@@ -451,7 +451,7 @@ class _TeamsPageState extends State<TeamsPage> {
                     },
                     separatorBuilder: (context, index) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6.0),
-                      child: _horizontalSeperator(),
+                      child: _buildHorizontalSeperator(),
                     ),
                   ),
                 ),

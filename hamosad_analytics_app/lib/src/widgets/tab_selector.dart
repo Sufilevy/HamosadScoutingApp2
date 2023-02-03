@@ -35,18 +35,18 @@ class _AnalyticsTabsSelectorState extends State<AnalyticsTabsSelector> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _tabButton(AnalyticsTab.general),
-        _seperator(),
-        _tabButton(AnalyticsTab.auto),
-        _seperator(),
-        _tabButton(AnalyticsTab.teleop),
-        _seperator(),
-        _tabButton(AnalyticsTab.endgame),
+        _buildTabButton(AnalyticsTab.general),
+        _buildSeperator(),
+        _buildTabButton(AnalyticsTab.auto),
+        _buildSeperator(),
+        _buildTabButton(AnalyticsTab.teleop),
+        _buildSeperator(),
+        _buildTabButton(AnalyticsTab.endgame),
       ],
     );
   }
 
-  Widget _tabButton(AnalyticsTab tab) {
+  Widget _buildTabButton(AnalyticsTab tab) {
     bool isSelected = widget.currentTabCubit.data == tab;
     Color color =
         isSelected ? AnalyticsTheme.primary : AnalyticsTheme.foreground1;
@@ -78,5 +78,5 @@ class _AnalyticsTabsSelectorState extends State<AnalyticsTabsSelector> {
     );
   }
 
-  Widget _seperator() => const EmptyExpanded(flex: 1);
+  Widget _buildSeperator() => const EmptyExpanded(flex: 1);
 }

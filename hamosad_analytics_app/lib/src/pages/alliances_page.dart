@@ -35,33 +35,33 @@ class _AlliancesPageState extends State<AlliancesPage> {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          _selectAlliancesBar(),
+          _buildSelectAlliancesBar(),
           const SizedBox(height: 10.0),
-          Expanded(child: _alliancesTable()),
+          Expanded(child: _buildAlliancesTable()),
         ],
       ),
     );
   }
 
-  Widget _selectAlliancesBar() => AnalyticsContainer(
+  Widget _buildSelectAlliancesBar() => AnalyticsContainer(
         height: 60.0,
         child: Row(
           children: [
-            _allianceList(_blueAlliance),
+            _buildAllianceList(_blueAlliance),
             AddTeamsButton(
               alliance: _blueAlliance,
               otherAlliance: _redAlliance,
               addTeam: _addTeamToAlliance,
               clearTeams: _clearAllianceTeams,
             ),
-            _divider(),
+            _buildDivider(),
             AddTeamsButton(
               alliance: _redAlliance,
               otherAlliance: _blueAlliance,
               addTeam: _addTeamToAlliance,
               clearTeams: _clearAllianceTeams,
             ),
-            _allianceList(_redAlliance),
+            _buildAllianceList(_redAlliance),
           ],
         ),
       );
@@ -88,14 +88,14 @@ class _AlliancesPageState extends State<AlliancesPage> {
             0,
             (context, animation) => ScaleTransition(
               scale: animation,
-              child: _teamChip(0, alliance),
+              child: _buildTeamChip(0, alliance),
             ),
             duration: 125.milliseconds,
           );
         }
       });
 
-  Widget _allianceList(Alliance alliance) => Expanded(
+  Widget _buildAllianceList(Alliance alliance) => Expanded(
         child: SizedBox(
           height: 45.0,
           child: AnimatedPadding(
@@ -106,15 +106,15 @@ class _AlliancesPageState extends State<AlliancesPage> {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index, animation) => ScaleTransition(
                 scale: animation,
-                child: _teamChipButton(index, alliance),
+                child: _buildTeamChipButton(index, alliance),
               ),
             ),
           ),
         ),
       );
 
-  Widget _teamChipButton(int index, Alliance alliance) {
-    return _teamChip(index, alliance, onDeleted: () {
+  Widget _buildTeamChipButton(int index, Alliance alliance) {
+    return _buildTeamChip(index, alliance, onDeleted: () {
       setState(() {
         Future.delayed(
           175.milliseconds,
@@ -127,7 +127,7 @@ class _AlliancesPageState extends State<AlliancesPage> {
           index,
           (context, animation) => ScaleTransition(
             scale: animation,
-            child: _teamChip(index, alliance),
+            child: _buildTeamChip(index, alliance),
           ),
           duration: 125.milliseconds,
         );
@@ -135,7 +135,8 @@ class _AlliancesPageState extends State<AlliancesPage> {
     });
   }
 
-  Widget _teamChip(int index, Alliance alliance, {VoidCallback? onDeleted}) {
+  Widget _buildTeamChip(int index, Alliance alliance,
+      {VoidCallback? onDeleted}) {
     String title = alliance.teams[index].info.number.toString();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -174,7 +175,7 @@ class _AlliancesPageState extends State<AlliancesPage> {
     );
   }
 
-  Widget _divider() => Container(
+  Widget _buildDivider() => Container(
         height: 45.0,
         width: 2,
         decoration: BoxDecoration(
@@ -183,9 +184,9 @@ class _AlliancesPageState extends State<AlliancesPage> {
         ),
       );
 
-  Widget _alliancesTable() {
+  Widget _buildAlliancesTable() {
     final entries = AlliancesPage.tableEntries.entries
-        .map((entry) => _tableEntry(entry))
+        .map((entry) => _buildTableEntry(entry))
         .toList();
     return AnalyticsContainer(
       child: ListView.builder(
@@ -196,9 +197,7 @@ class _AlliancesPageState extends State<AlliancesPage> {
     );
   }
 
-  Widget _tableEntry(
-    MapEntry<String, double Function(Team)> entry,
-  ) {
+  Widget _buildTableEntry(MapEntry<String, double Function(Team)> entry) {
     final teams = _teams
         .map((team) => Pair(team.info.number, entry.value(team)))
         .sortedByDescending((team) => team.second);
@@ -218,14 +217,14 @@ class _AlliancesPageState extends State<AlliancesPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 5.0),
-              child: _divider(),
+              child: _buildDivider(),
             ),
             Expanded(
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: teams.length,
-                itemBuilder: (context, index) => _teamEntry(teams[index]),
-                separatorBuilder: (context, index) => _divider(),
+                itemBuilder: (context, index) => _buildTeamEntry(teams[index]),
+                separatorBuilder: (context, index) => _buildDivider(),
               ),
             ),
           ],
@@ -234,7 +233,7 @@ class _AlliancesPageState extends State<AlliancesPage> {
     );
   }
 
-  Widget _teamEntry(Pair<int, double> team) => Padding(
+  Widget _buildTeamEntry(Pair<int, double> team) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Row(
           children: [
@@ -375,13 +374,13 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
           follower: Alignment.topCenter,
           target: Alignment.bottomCenter,
         ),
-        portalFollower: _addTeamsPopup(),
-        child: _button(),
+        portalFollower: _buildAddTeamsPopup(),
+        child: _buildButton(),
       ),
     );
   }
 
-  Widget _button() => Padding(
+  Widget _buildButton() => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: SizedBox(
           width: 40.0,
@@ -416,7 +415,7 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
         ),
       );
 
-  Widget _addTeamsPopup() {
+  Widget _buildAddTeamsPopup() {
     final currentTeams = widget.alliance.teamsWith(widget.otherAlliance);
     final teams = db.getTeams().where((team) {
       return !currentTeams.contains(team);
@@ -437,14 +436,14 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 3.0),
           child: ListView.builder(
             itemCount: teams.length,
-            itemBuilder: (context, index) => _addTeamButton(teams[index]),
+            itemBuilder: (context, index) => _buildAddTeamButton(teams[index]),
           ),
         ),
       ),
     );
   }
 
-  Widget _addTeamButton(Team team) => Padding(
+  Widget _buildAddTeamButton(Team team) => Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: AnalyticsContainer(
           height: 60.0,

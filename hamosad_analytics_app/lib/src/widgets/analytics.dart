@@ -147,19 +147,19 @@ class AnalyticsStatChip extends StatelessWidget {
           const AnalyticsDataDivider(),
           Expanded(
             flex: 3,
-            child: _average(),
+            child: _buildAverage(),
           ),
           const AnalyticsDataDivider(),
           Expanded(
             flex: 3,
-            child: _minMax(),
+            child: _buildMinMax(),
           ),
         ],
       ),
     );
   }
 
-  Widget _average() => Row(
+  Widget _buildAverage() => Row(
         children: [
           Expanded(
             flex: 5,
@@ -175,7 +175,7 @@ class AnalyticsStatChip extends StatelessWidget {
         ],
       );
 
-  Widget _minMax() => Column(
+  Widget _buildMinMax() => Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Row(
@@ -234,12 +234,12 @@ class AnalyticsDataWinRate extends StatelessWidget {
             width: 220,
             height: 70,
             color: AnalyticsTheme.background1,
-            child: _winRate(8.0, 4.0),
+            child: _buildWinRate(8.0, 4.0),
           )
-        : _winRate(3.0, 2.5);
+        : _buildWinRate(3.0, 2.5);
   }
 
-  Widget _winRate(double gap, double barHeight) => Column(
+  Widget _buildWinRate(double gap, double barHeight) => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
