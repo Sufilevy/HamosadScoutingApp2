@@ -2,7 +2,7 @@ import 'package:hamosad_analytics_app/src/models.dart';
 import 'package:intl/intl.dart';
 
 class Report {
-  final int teamNumber;
+  final int teamNumber, scouterTeamNumber;
   final String match, scouter;
   final DateTime time;
   final ReportAuto auto;
@@ -12,6 +12,7 @@ class Report {
 
   Report.fromJson(Json json)
       : teamNumber = json['info']['teamNumber'],
+        scouterTeamNumber = json['info']['scouterTeamNumber'],
         match = json['info']['match'],
         scouter = json['info']['scouter'],
         time = DateFormat('dd/MM HH:mm:ss').parse(json['info']['time']),
@@ -23,8 +24,8 @@ class Report {
 
 class ReportAuto {
   StartPosition startPosition;
-  List<GamePiecePickup> pickups;
-  List<GamePieceDropoff> dropoffs;
+  List<PiecePickup> pickups;
+  List<PieceDropoff> dropoffs;
   List<CommunityPass> communityPasses;
   List<ChargeStationPass> chargeStationPasses;
   AutoClimb climb;
@@ -32,8 +33,8 @@ class ReportAuto {
 
   ReportAuto.fromJson(Json json)
       : startPosition = StartPosition.fromString(json['startPosition'])!,
-        pickups = GamePiecePickup.list(json['pickups']),
-        dropoffs = GamePieceDropoff.list(json['dropoffs']),
+        pickups = PiecePickup.list(json['pickups']),
+        dropoffs = PieceDropoff.list(json['dropoffs']),
         communityPasses = CommunityPass.list(json['communityPasses']),
         chargeStationPasses =
             ChargeStationPass.list(json['chargeStationPasses']),
@@ -42,16 +43,16 @@ class ReportAuto {
 }
 
 class ReportTeleop {
-  List<GamePiecePickup> pickups;
-  List<GamePieceDropoff> dropoffs;
+  List<PiecePickup> pickups;
+  List<PieceDropoff> dropoffs;
   List<CommunityPass> communityPasses;
   List<LoadingZonePass> loadingZonePasses;
   List<ChargeStationPass> chargeStationPasses;
   String notes;
 
   ReportTeleop.fromJson(Json json)
-      : pickups = GamePiecePickup.list(json['pickups']),
-        dropoffs = GamePieceDropoff.list(json['dropoffs']),
+      : pickups = PiecePickup.list(json['pickups']),
+        dropoffs = PieceDropoff.list(json['dropoffs']),
         communityPasses = CommunityPass.list(json['communityPasses']),
         loadingZonePasses = LoadingZonePass.list(json['loadingZonePasses']),
         chargeStationPasses =
@@ -60,16 +61,16 @@ class ReportTeleop {
 }
 
 class ReportEndgame {
-  List<GamePiecePickup> pickups;
-  List<GamePieceDropoff> dropoffs;
+  List<PiecePickup> pickups;
+  List<PieceDropoff> dropoffs;
   List<CommunityPass> communityPasses;
   List<ChargeStationPass> chargeStationPasses;
   EndgameClimb climb;
   String notes;
 
   ReportEndgame.fromJson(Json json)
-      : pickups = GamePiecePickup.list(json['pickups']),
-        dropoffs = GamePieceDropoff.list(json['dropoffs']),
+      : pickups = PiecePickup.list(json['pickups']),
+        dropoffs = PieceDropoff.list(json['dropoffs']),
         communityPasses = CommunityPass.list(json['communityPasses']),
         chargeStationPasses =
             ChargeStationPass.list(json['chargeStationPasses']),
@@ -123,11 +124,11 @@ enum ActionDuration {
   }
 }
 
-enum GamePiece {
+enum Piece {
   cone,
   cube;
 
-  static GamePiece? fromString(String value) {
+  static Piece? fromString(String value) {
     switch (value) {
       case 'cone':
         return cone;
@@ -174,7 +175,7 @@ enum StartPosition {
   }
 }
 
-enum GamePiecePickupPosition {
+enum PiecePickupPosition {
   doubleLeftShelf,
   doubleRightShelf,
   doubleLeftFloor,
@@ -183,7 +184,7 @@ enum GamePiecePickupPosition {
   floorStanding,
   floorLaying;
 
-  static GamePiecePickupPosition? fromString(String value) {
+  static PiecePickupPosition? fromString(String value) {
     switch (value) {
       case 'doubleLeftShelf':
         return doubleLeftShelf;
@@ -204,40 +205,40 @@ enum GamePiecePickupPosition {
   }
 }
 
-class GamePiecePickup {
-  const GamePiecePickup({
+class PiecePickup {
+  const PiecePickup({
     required this.duration,
     required this.position,
     required this.gamePiece,
   });
 
   final ActionDuration duration;
-  final GamePiecePickupPosition position;
-  final GamePiece gamePiece;
+  final PiecePickupPosition position;
+  final Piece gamePiece;
 
-  static GamePiecePickup? fromJson(Json json) {
+  static PiecePickup? fromJson(Json json) {
     final duration = ActionDuration.fromString(json['duration']);
-    final position = GamePiecePickupPosition.fromString(json['position']);
-    final gamePiece = GamePiece.fromString(json['gamePiece']);
+    final position = PiecePickupPosition.fromString(json['position']);
+    final gamePiece = Piece.fromString(json['gamePiece']);
 
     if (duration == null || position == null || gamePiece == null) {
       return null;
     }
 
-    return GamePiecePickup(
+    return PiecePickup(
       duration: duration,
       position: position,
       gamePiece: gamePiece,
     );
   }
 
-  static List<GamePiecePickup> list(List<Json> list) {
+  static List<PiecePickup> list(List<Json> list) {
     return list.map((pickup) => fromJson(pickup)!).toList();
   }
 }
 
-class GamePieceDropoff {
-  const GamePieceDropoff({
+class PieceDropoff {
+  const PieceDropoff({
     required this.duration,
     required this.row,
     required this.column,
@@ -246,13 +247,13 @@ class GamePieceDropoff {
 
   final ActionDuration duration;
   final int row, column;
-  final GamePiece gamePiece;
+  final Piece gamePiece;
 
-  static GamePieceDropoff? fromJson(Json json) {
+  static PieceDropoff? fromJson(Json json) {
     final duration = ActionDuration.fromString(json['duration']);
     final row = json['row'];
     final column = json['column'];
-    final gamePiece = GamePiece.fromString(json['gamePiece']);
+    final gamePiece = Piece.fromString(json['gamePiece']);
 
     if (duration == null ||
         row == null ||
@@ -261,7 +262,7 @@ class GamePieceDropoff {
       return null;
     }
 
-    return GamePieceDropoff(
+    return PieceDropoff(
       duration: duration,
       row: row,
       column: column,
@@ -269,7 +270,7 @@ class GamePieceDropoff {
     );
   }
 
-  static List<GamePieceDropoff> list(List<Json> list) {
+  static List<PieceDropoff> list(List<Json> list) {
     return list.map((dropoff) => fromJson(dropoff)!).toList();
   }
 }

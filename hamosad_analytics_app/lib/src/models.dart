@@ -19,6 +19,7 @@ class Stat<T extends num> {
   });
 
   static Stat<int> zero() => Stat(min: 0, max: 0, average: 0.0);
+  static Stat<double> zeroDoube() => Stat(min: 0.0, max: 0.0, average: 0.0);
   static Stat<int> only({int? min, int? max, double? average}) =>
       Stat(min: min ?? 0, max: max ?? 0, average: average ?? 0.0);
 }

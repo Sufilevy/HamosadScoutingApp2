@@ -194,3 +194,94 @@ class TeamEndgame {
         climbRate = climbRate ?? 0.0,
         notes = notes ?? [];
 }
+
+class StartPositionStat {
+  StartPositionStat({
+    required this.arenaWallRate,
+    required this.middleRate,
+    required this.loadingZoneRate,
+  });
+
+  double arenaWallRate, middleRate, loadingZoneRate;
+
+  StartPositionStat.defaults()
+      : arenaWallRate = 0.0,
+        middleRate = 0.0,
+        loadingZoneRate = 0.0;
+}
+
+class ActionDurationStat {
+  ActionDurationStat({
+    required this.zeroToTwoRate,
+    required this.twoToFiveRate,
+    required this.fivePlusRate,
+  });
+
+  double zeroToTwoRate, twoToFiveRate, fivePlusRate;
+
+  ActionDurationStat.defaults()
+      : zeroToTwoRate = 0.0,
+        twoToFiveRate = 0.0,
+        fivePlusRate = 0.0;
+}
+
+class SubstationsPiecePickupStat {
+  SubstationsPiecePickupStat({
+    required this.doubleLeftShelfAverage,
+    required this.doubleRightShelfAverage,
+    required this.doubleLeftFloorAverage,
+    required this.doubleRightFloorAverage,
+    required this.singleAverage,
+    required this.duration,
+  });
+
+  double doubleLeftShelfAverage,
+      doubleRightShelfAverage,
+      doubleLeftFloorAverage,
+      doubleRightFloorAverage,
+      singleAverage;
+  ActionDurationStat duration;
+
+  SubstationsPiecePickupStat.defaults()
+      : doubleLeftShelfAverage = 0.0,
+        doubleRightShelfAverage = 0.0,
+        doubleLeftFloorAverage = 0.0,
+        doubleRightFloorAverage = 0.0,
+        singleAverage = 0.0,
+        duration = ActionDurationStat.defaults();
+}
+
+class FloorPiecePickupStat {
+  FloorPiecePickupStat({
+    required this.standing,
+    required this.laying,
+    required this.duration,
+  });
+
+  double standing, laying;
+  ActionDurationStat duration;
+
+  FloorPiecePickupStat.defaults()
+      : standing = 0.0,
+        laying = 0.0,
+        duration = ActionDurationStat.defaults();
+}
+
+class PiecesPickupStat {
+  PiecesPickupStat({
+    required this.substationsPickups,
+    required this.floorPickups,
+    required this.conesRate,
+    required this.cubesRate,
+  });
+
+  SubstationsPiecePickupStat substationsPickups;
+  FloorPiecePickupStat floorPickups;
+  double conesRate, cubesRate;
+
+  PiecesPickupStat.defaults()
+      : substationsPickups = SubstationsPiecePickupStat.defaults(),
+        floorPickups = FloorPiecePickupStat.defaults(),
+        conesRate = 0.0,
+        cubesRate = 0.0;
+}
