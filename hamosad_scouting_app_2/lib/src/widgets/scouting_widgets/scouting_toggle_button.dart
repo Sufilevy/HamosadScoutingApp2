@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
-import 'package:xcontext/material.dart';
 
 class ScoutingToggleButton extends StatefulWidget {
   final Cubit<bool> cubit;
@@ -48,15 +47,15 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
                 () => widget.cubit.data = value ?? !widget.cubit.data,
               ),
               side: BorderSide(
-                color:
-                    context.theme.textTheme.labelSmall?.color ?? Colors.black,
+                color: Theme.of(context).textTheme.labelSmall?.color ??
+                    Colors.black,
                 width: 2,
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(2),
               ),
-              activeColor: context.theme.toggleableActiveColor,
-              checkColor: context.theme.textTheme.bodySmall?.color,
+              activeColor: Theme.of(context).toggleableActiveColor,
+              checkColor: Theme.of(context).textTheme.bodySmall?.color,
             ),
           ),
           Flexible(
@@ -72,7 +71,7 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
                     widget.title,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: context.theme.textTheme.labelSmall?.color,
+                      color: Theme.of(context).textTheme.labelSmall?.color,
                       fontSize: 24 * widget.size,
                     ),
                   ),

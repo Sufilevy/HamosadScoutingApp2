@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
-import 'package:xcontext/material.dart';
 
 class ScoutingStopwatch extends StatefulWidget {
   final Cubit<double> cubit;
@@ -100,9 +99,12 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch>
                     IconButton(
                       icon: const Icon(Icons.stop),
                       color: _stopwatch.isRunning
-                          ? context.theme.textTheme.labelMedium?.color
+                          ? Theme.of(context)
+                              .textTheme
+                              .labelMedium
+                              ?.color
                               ?.withOpacity(0.5)
-                          : context.theme.textTheme.labelMedium?.color,
+                          : Theme.of(context).textTheme.labelMedium?.color,
                       iconSize: 24 * widget.size,
                       onPressed: () => _stopwatch.isRunning ? null : _reset(),
                       splashColor: Colors.transparent,
@@ -114,7 +116,7 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch>
                       child: AnimatedIcon(
                         icon: AnimatedIcons.play_pause,
                         progress: _controller,
-                        color: context.theme.textTheme.labelMedium?.color,
+                        color: Theme.of(context).textTheme.labelMedium?.color,
                         size: 24 * widget.size,
                       ),
                     ),

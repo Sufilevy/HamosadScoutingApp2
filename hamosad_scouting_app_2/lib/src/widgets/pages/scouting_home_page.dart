@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import 'package:xcontext/material.dart';
 
 class ScoutingHomePage extends StatelessWidget {
   final String title;
@@ -17,7 +16,7 @@ class ScoutingHomePage extends StatelessWidget {
   void _createReport(BuildContext context) {
     ReportDataProvider reportData = reportDataProvider(context);
     if (reportData.reporterName.data.isEmpty ||
-        reportData.reporterName.data.isEmpty) {
+        reportData.reporterTeamNumber.data.isEmpty) {
       showDialog(
         context: context,
         builder: (context) => const ScoutingAlertDialog(
@@ -47,8 +46,9 @@ class ScoutingHomePage extends StatelessWidget {
           ),
           child: ToggleSwitch(
             cornerRadius: 10.0 * size,
-            inactiveBgColor: context.theme.backgroundColor.lighten(),
-            inactiveFgColor: context.theme.textTheme.bodySmall?.color?.darken(),
+            inactiveBgColor: Theme.of(context).backgroundColor.lighten(),
+            inactiveFgColor:
+                Theme.of(context).textTheme.bodySmall?.color?.darken(),
             activeBgColors: [
               [const Color(0xFF1E88E5).darken()],
               [const Color(0xFFC62828).darken()],
@@ -76,20 +76,20 @@ class ScoutingHomePage extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        backgroundColor: context.theme.backgroundColor,
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          backgroundColor: context.theme.scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           centerTitle: true,
           title: Text(
             title,
             style: TextStyle(
               fontSize: 24 * size,
-              color: context.theme.textTheme.bodySmall?.color,
+              color: Theme.of(context).textTheme.bodySmall?.color,
             ),
           ),
         ),
         drawer: Drawer(
-          backgroundColor: context.theme.backgroundColor,
+          backgroundColor: Theme.of(context).backgroundColor,
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
@@ -117,7 +117,7 @@ class ScoutingHomePage extends StatelessWidget {
             ),
             ScoutingTextField(
               size: size,
-              cubit: reportDataProvider(context).teamNumber,
+              cubit: reportDataProvider(context).reporterTeamNumber,
               hint: 'Enter your team number...',
               title: 'Team Number',
               onlyNumbers: true,

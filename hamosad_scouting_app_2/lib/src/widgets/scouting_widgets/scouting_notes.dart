@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:xcontext/material.dart';
 
 class ScoutingNotes extends StatefulWidget {
   final Cubit<String> cubit;
@@ -25,8 +24,8 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
         minLines: 3,
         maxLines: null,
         style: TextStyle(
-          fontSize: context.theme.textTheme.bodyMedium?.fontSize,
-          color: context.theme.textTheme.labelSmall?.color,
+          fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
+          color: Theme.of(context).textTheme.labelSmall?.color,
         ),
         textDirection: intl.Bidi.estimateDirectionOfText(widget.cubit.data) ==
                 intl.TextDirection.RTL
@@ -46,7 +45,7 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
           children: [
             Text(
               widget.title,
-              style: context.theme.textTheme.labelSmall,
+              style: Theme.of(context).textTheme.labelSmall,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 8 * widget.size),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:xcontext/material.dart';
 
 class ScoutingText extends StatelessWidget {
   final double size;
@@ -36,9 +35,10 @@ class ScoutingText extends StatelessWidget {
         text,
         style: TextStyle(
           color: color ??
-              context.theme.textTheme.labelSmall?.color ??
+              Theme.of(context).textTheme.labelSmall?.color ??
               Colors.black,
-          fontFamily: context.theme.textTheme.bodyLarge?.fontFamily ?? 'Roboto',
+          fontFamily:
+              Theme.of(context).textTheme.bodyLarge?.fontFamily ?? 'Roboto',
           fontSize: fontSize * size,
           fontWeight: bold ? FontWeight.bold : FontWeight.normal,
         ),
