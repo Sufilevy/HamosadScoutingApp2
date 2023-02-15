@@ -13,9 +13,10 @@ class AlliancesPage extends StatefulWidget {
 
   static final Map<String, double Function(Team)> tableEntries = {
     'Win Rate': (team) => team.info.winRate,
-    'Min. Auto. Cones': (team) => team.auto.cones.min.toDouble(),
-    'Avg. Tele. Score': (team) => team.teleop.score.average,
-    'Avg. Endg. Cubes': (team) => team.endgame.cubes.average,
+    'Min Auto Cones Drop': (team) =>
+        team.auto.dropoffs.pieces.cones.min.toDouble(),
+    'Avg Tele Score': (team) => team.teleop.score.average,
+    'Avg Endg Cubes Pick': (team) => team.endgame.pickups.pieces.cubes.average,
   };
 
   @override

@@ -33,23 +33,23 @@ class TeamsPage extends StatefulWidget {
         inContainer: false,
       ),
     ),
-    'Avg. Score': DataEntry<double>(
+    'Avg Score': DataEntry<double>(
       height: 30.0,
       getData: (team) => team.info.score.average,
     ),
-    'Avg. Auto. Cones': DataEntry<double>(
+    'Avg Auto Cones Drop': DataEntry<double>(
       height: 30.0,
-      getData: (team) => team.auto.cones.average,
+      getData: (team) => team.auto.dropoffs.pieces.cones.average,
     ),
-    'Avg. Tele. Cones': DataEntry<double>(
+    'Avg Tele Cones Pick': DataEntry<double>(
       height: 30.0,
-      getData: (team) => team.teleop.cones.average,
+      getData: (team) => team.teleop.pickups.pieces.cones.average,
     ),
-    'Avg. Total Cones': DataEntry<double>(
+    'Avg Total Cones Pick': DataEntry<double>(
       height: 30.0,
-      getData: (team) => team.info.cones.average,
+      getData: (team) => team.summary.pickups.pieces.cones.average,
     ),
-    'Avg. Endg. Score': DataEntry<double>(
+    'Avg Endg Score': DataEntry<double>(
       height: 30.0,
       getData: (team) => team.endgame.score.average,
     ),
