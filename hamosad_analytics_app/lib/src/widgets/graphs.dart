@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
@@ -38,66 +39,168 @@ class _TeamDropoffsChartState extends State<TeamDropoffsChart> {
               ? Icons.arrow_back_ios_rounded
               : Icons.arrow_forward_ios_rounded,
         ),
-        iconSize: 14.0,
+        iconSize: 24.0,
+        padding: EdgeInsets.zero,
         color: AnalyticsTheme.foreground2,
-        splashRadius: 1.0,
       );
 
   Widget _buildPiecePercentage({
     required Piece piece,
-    required double percentage,
+    required PiecesStat percentages,
+  }) {
+    double percentage =
+        (piece == Piece.cone) ? percentages.conesRate : percentages.cubesRate;
+    return AnalyticsContainer(
+      width: 90.0,
+      height: 90.0,
+      borderRadius: 2.0,
+      child: Center(
+        child: AnalyticsText.data(
+          '${percentage.toStringAsPrecision(3)}%',
+          color: piece.color,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTwoPiecesPercentage({
+    required PiecesStat percentages,
   }) =>
-      Container();
+      AnalyticsContainer(
+        width: 90.0,
+        height: 90.0,
+        borderRadius: 2.0,
+        child: Column(
+          children: [
+            Expanded(
+              flex: 21,
+              child: Center(
+                child: AnalyticsText.data(
+                  '${percentages.conesRate.toStringAsPrecision(3)}%',
+                  color: AnalyticsTheme.cones,
+                ),
+              ),
+            ),
+            const AnalyticsDataDivider(
+              width: 75.0,
+              height: 1.5,
+            ),
+            Expanded(
+              flex: 21,
+              child: Center(
+                child: AnalyticsText.data(
+                  '${percentages.cubesRate.toStringAsPrecision(3)}%',
+                  color: AnalyticsTheme.cubes,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
 
-  Widget _buildTwoPiecesPercentage() => Container();
-
-  Widget _buildDropoffsGrid(GridDropoffsStat gridDropoffs) => Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0),
+  Widget _buildDropoffsGrid(GridDropoffsStat gridDropoffs) =>
+      AnalyticsContainer(
+        borderRadius: 5.0,
+        height: 268.0,
+        width: 268.0,
+        color: AnalyticsTheme.foreground2,
+        border: Border.all(
           color: AnalyticsTheme.foreground2,
+          width: 2.0,
         ),
         child: GridView.count(
           crossAxisCount: 3,
           mainAxisSpacing: 1.5,
           crossAxisSpacing: 1.5,
+          children: [
+            _buildPiecePercentage(
+              piece: Piece.cone,
+              percentages: gridDropoffs.dropoffs[0][0],
+            ),
+            _buildPiecePercentage(
+              piece: Piece.cube,
+              percentages: gridDropoffs.dropoffs[0][1],
+            ),
+            _buildPiecePercentage(
+              piece: Piece.cone,
+              percentages: gridDropoffs.dropoffs[0][2],
+            ),
+            _buildPiecePercentage(
+              piece: Piece.cone,
+              percentages: gridDropoffs.dropoffs[1][0],
+            ),
+            _buildPiecePercentage(
+              piece: Piece.cube,
+              percentages: gridDropoffs.dropoffs[1][1],
+            ),
+            _buildPiecePercentage(
+              piece: Piece.cone,
+              percentages: gridDropoffs.dropoffs[1][2],
+            ),
+            _buildTwoPiecesPercentage(percentages: gridDropoffs.dropoffs[2][0]),
+            _buildTwoPiecesPercentage(percentages: gridDropoffs.dropoffs[2][1]),
+            _buildTwoPiecesPercentage(percentages: gridDropoffs.dropoffs[2][2]),
+          ],
         ),
       );
 
   @override
   Widget build(BuildContext context) {
-    return AnalyticsContainer(
-      color: AnalyticsTheme.background1,
-      width: 320.0,
-      height: 300.0,
-      child: Row(
-        children: [
-          const EmptyExpanded(flex: 10),
-          Expanded(
-            flex: 10,
-            child: (_gridIndex > 0)
-                ? _buildChangeGridButton(
-                    onPressed: () => _gridIndex -= 1,
-                    direction: HorizontalDirection.left,
-                  )
-                : Container(),
-          ),
-          const EmptyExpanded(flex: 10),
-          Expanded(
-            flex: 260,
-            child: _dropoffsGrids[_gridIndex],
-          ),
-          const EmptyExpanded(flex: 10),
-          Expanded(
-            flex: 10,
-            child: (_gridIndex < 2)
-                ? _buildChangeGridButton(
-                    onPressed: () => _gridIndex += 1,
-                    direction: HorizontalDirection.right,
-                  )
-                : Container(),
-          ),
-          const EmptyExpanded(flex: 10),
-        ],
+    return GestureDetector(
+      onHorizontalDragEnd: (details) {
+        if (details.velocity.pixelsPerSecond.dx < 0.0 && _gridIndex < 2) {
+          // Swipe left
+          setState(() {
+            _gridIndex++;
+          });
+        } else if (details.velocity.pixelsPerSecond.dx > 0.0 &&
+            _gridIndex > 0) {
+          // Swipe right
+          setState(() {
+            _gridIndex--;
+          });
+        }
+      },
+      child: AnalyticsContainer(
+        color: AnalyticsTheme.background1,
+        width: 350.0,
+        height: 300.0,
+        child: Row(
+          children: [
+            const EmptyExpanded(flex: 1),
+            Expanded(
+              flex: 2,
+              child: (_gridIndex > 0)
+                  ? _buildChangeGridButton(
+                      onPressed: () => _gridIndex--,
+                      direction: HorizontalDirection.left,
+                    )
+                  : Container(),
+            ),
+            const EmptyExpanded(flex: 1),
+            Expanded(
+              flex: 26,
+              child: AnalyticsFadeSwitcher(
+                duration: 400.milliseconds,
+                child: Container(
+                  key: ValueKey(_gridIndex),
+                  child: _dropoffsGrids[_gridIndex],
+                ),
+              ),
+            ),
+            const EmptyExpanded(flex: 1),
+            Expanded(
+              flex: 2,
+              child: (_gridIndex < 2)
+                  ? _buildChangeGridButton(
+                      onPressed: () => _gridIndex++,
+                      direction: HorizontalDirection.right,
+                    )
+                  : Container(),
+            ),
+            const EmptyExpanded(flex: 1),
+          ],
+        ),
       ),
     );
   }

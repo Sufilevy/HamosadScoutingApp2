@@ -13,6 +13,8 @@ class AnalyticsTheme {
   static const Color hamosad = Color(0xFF165700);
   static const Color blueAlliance = Color(0xFF1E88E5);
   static const Color redAlliance = Color(0xFFC62828);
+  static const Color cones = Color(0xFFE78907);
+  static const Color cubes = Color(0xFF5323C2);
 
   static const TextStyle logoTextStyle = TextStyle(
     fontFamily: 'Fira Code',

@@ -7,14 +7,16 @@ class AnalyticsFadeSwitcher extends StatelessWidget {
   const AnalyticsFadeSwitcher({
     Key? key,
     required this.child,
+    this.duration,
   }) : super(key: key);
 
   final Widget child;
+  final Duration? duration;
 
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: 250.milliseconds,
+      duration: duration ?? 250.milliseconds,
       switchInCurve: Curves.easeInOut,
       switchOutCurve: Curves.easeInOut,
       transitionBuilder: (child, animation) => FadeTransition(
@@ -29,20 +31,22 @@ class AnalyticsFadeSwitcher extends StatelessWidget {
 class AnalyticsContainer extends StatelessWidget {
   const AnalyticsContainer({
     Key? key,
-    required this.child,
+    this.child,
     this.width,
     this.height,
     this.alignment,
     this.padding,
     this.border,
+    this.borderRadius = 5.0,
     this.color = AnalyticsTheme.background2,
   }) : super(key: key);
 
-  final Widget child;
+  final Widget? child;
   final double? width, height;
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
   final BoxBorder? border;
+  final double borderRadius;
   final Color color;
 
   @override
@@ -53,7 +57,7 @@ class AnalyticsContainer extends StatelessWidget {
       padding: padding,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(borderRadius),
         border: border,
       ),
       alignment: alignment,
@@ -63,18 +67,27 @@ class AnalyticsContainer extends StatelessWidget {
 }
 
 class AnalyticsDataDivider extends StatelessWidget {
-  const AnalyticsDataDivider({Key? key}) : super(key: key);
+  const AnalyticsDataDivider({
+    Key? key,
+    this.flex = 1,
+    this.width = 2.0,
+    this.height = 45.0,
+    this.color = AnalyticsTheme.background3,
+  }) : super(key: key);
+
+  final int flex;
+  final double width, height;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(
-      flex: 1,
-      child: SizedBox(
-        height: 45.0,
-        child: VerticalDivider(
-          color: AnalyticsTheme.background3,
-          thickness: 2,
-        ),
+    return Expanded(
+      flex: flex,
+      child: AnalyticsContainer(
+        height: height,
+        width: width,
+        color: AnalyticsTheme.background3,
+        borderRadius: 1.0,
       ),
     );
   }
@@ -95,7 +108,7 @@ class AnalyticsDataChip extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            flex: 10,
+            flex: 60,
             child: Padding(
               padding: const EdgeInsets.only(left: 10.0),
               child: AnalyticsText.dataSubtitle(
@@ -104,9 +117,11 @@ class AnalyticsDataChip extends StatelessWidget {
               ),
             ),
           ),
+          const EmptyExpanded(flex: 1),
           const AnalyticsDataDivider(),
+          const EmptyExpanded(flex: 1),
           Expanded(
-            flex: 6,
+            flex: 30,
             child: AnalyticsText.data(data),
           ),
         ],
@@ -135,7 +150,7 @@ class AnalyticsStatChip extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            flex: 4,
+            flex: 60,
             child: Padding(
               padding: const EdgeInsets.only(left: 10.0),
               child: AnalyticsText.dataSubtitle(
@@ -144,14 +159,18 @@ class AnalyticsStatChip extends StatelessWidget {
               ),
             ),
           ),
+          const EmptyExpanded(flex: 5),
           const AnalyticsDataDivider(),
+          const EmptyExpanded(flex: 5),
           Expanded(
-            flex: 3,
+            flex: 40,
             child: _buildAverage(),
           ),
+          const EmptyExpanded(flex: 5),
           const AnalyticsDataDivider(),
+          const EmptyExpanded(flex: 5),
           Expanded(
-            flex: 3,
+            flex: 40,
             child: _buildMinMax(),
           ),
         ],

@@ -1,4 +1,6 @@
 import 'package:dartx/dartx.dart';
+import 'package:flutter/material.dart';
+import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
 import 'package:intl/intl.dart';
 
@@ -130,8 +132,12 @@ enum ActionDuration {
 }
 
 enum Piece {
-  cone,
-  cube;
+  cone(AnalyticsTheme.cones),
+  cube(AnalyticsTheme.cubes);
+
+  final Color color;
+
+  const Piece(this.color);
 
   static Piece? fromString(String value) {
     switch (value) {
