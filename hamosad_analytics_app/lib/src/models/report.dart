@@ -25,6 +25,7 @@ class Report {
 
 class ReportAuto {
   StartPosition? startPosition;
+  bool leftCommunity;
   List<PiecePickup> pickups;
   List<PieceDropoff> dropoffs;
   List<CommunityPass> communityPasses;
@@ -34,6 +35,7 @@ class ReportAuto {
 
   ReportAuto.fromJson(Json json)
       : startPosition = StartPosition.fromString(json['startPosition']),
+        leftCommunity = false,
         pickups = PiecePickup.list(json['pickups']),
         dropoffs = PieceDropoff.list(json['dropoffs']),
         communityPasses = CommunityPass.list(json['communityPasses']),

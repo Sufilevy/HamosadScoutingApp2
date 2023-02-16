@@ -113,6 +113,7 @@ class TeamInfo {
 class TeamAuto {
   final Stat<int> score;
   final StartPositionStat startPosition;
+  final double leftCommunityRate;
   final PiecesPickupsStat pickups;
   final PiecesDropoffsStat dropoffs;
   final CommunityPassesStat communityPasses;
@@ -123,6 +124,7 @@ class TeamAuto {
   TeamAuto({
     required this.score,
     required this.startPosition,
+    required this.leftCommunityRate,
     required this.pickups,
     required this.dropoffs,
     required this.communityPasses,
@@ -135,6 +137,7 @@ class TeamAuto {
   TeamAuto.defaults()
       : score = Stat.zero(),
         startPosition = StartPositionStat.defaults(),
+        leftCommunityRate = 0.0,
         pickups = PiecesPickupsStat.defaults(),
         dropoffs = PiecesDropoffsStat.defaults(),
         communityPasses = CommunityPassesStat.defaults(),
@@ -145,6 +148,7 @@ class TeamAuto {
   TeamAuto.only({
     Stat<int>? score,
     StartPositionStat? startPosition,
+    double? leftCommunityRate,
     PiecesPickupsStat? pickups,
     PiecesDropoffsStat? dropoffs,
     CommunityPassesStat? communityPasses,
@@ -153,6 +157,7 @@ class TeamAuto {
     List<String>? notes,
   })  : score = score ?? Stat.zero(),
         startPosition = startPosition ?? StartPositionStat.defaults(),
+        leftCommunityRate = leftCommunityRate ?? 0.0,
         pickups = pickups ?? PiecesPickupsStat.defaults(),
         dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
         communityPasses = communityPasses ?? CommunityPassesStat.defaults(),
