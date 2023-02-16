@@ -22,7 +22,7 @@ class _AnalyticsAppState extends State<AnalyticsApp> {
   ];
 
   final SidebarXController _sidebarController =
-      SidebarXController(selectedIndex: 4, extended: true);
+      SidebarXController(selectedIndex: 0, extended: true);
 
   @override
   void initState() {
@@ -82,7 +82,8 @@ class _AnalyticsAppState extends State<AnalyticsApp> {
   }
 }
 
+// TODO: Remove at production.
 T debug<T>(T object) {
-  print(object);
+  debugPrint(object.toString());
   return object;
 }

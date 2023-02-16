@@ -13,6 +13,7 @@ class TeamDetailsPage extends StatefulWidget {
 class _TeamDetailsPageState extends State<TeamDetailsPage> {
   final Map<AnalyticsTab, List<Widget>> _tabs = {
     AnalyticsTab.general: [
+      TeamDropoffsChart(dropoffs: PiecesDropoffsStat.defaults()),
       const AnalyticsDataChip(title: 'Average Score', data: '34'),
       const AnalyticsDataChip(title: 'Average RP', data: '2.33'),
       const AnalyticsDataWinRate(won: 20, lost: 8),
