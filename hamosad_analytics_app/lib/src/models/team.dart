@@ -24,14 +24,12 @@ class Team {
         summary = TeamSummary.defaults();
 
   Team.only({
-    int number = 1657,
-    String name = 'Hamosad',
     TeamInfo? info,
     TeamAuto? auto,
     TeamTeleop? teleop,
     TeamEndgame? endgame,
     TeamSummary? summary,
-  })  : info = info ?? TeamInfo.defaults(number: number, name: name),
+  })  : info = info ?? TeamInfo.defaults(number: 1657, name: 'Hamosad'),
         auto = auto ?? TeamAuto.defaults(),
         teleop = teleop ?? TeamTeleop.defaults(),
         endgame = endgame ?? TeamEndgame.defaults(),
@@ -53,15 +51,18 @@ class Team {
 /// All of the team's general info, stats and averages.
 class TeamInfo {
   final int number;
-  final String name;
+  final String name, location;
+  final int rank;
   final int won, lost;
-  final Stat<int> score, focus;
+  final Stat score, focus;
   final RobotIndexStat defenceIndex;
   final List<String> notes, fouls;
 
   TeamInfo({
     required this.number,
     required this.name,
+    required this.location,
+    required this.rank,
     required this.won,
     required this.lost,
     required this.score,
@@ -72,10 +73,12 @@ class TeamInfo {
   });
 
   TeamInfo.defaults({required this.number, required this.name})
-      : won = 0,
+      : location = '',
+        rank = 1,
+        won = 0,
         lost = 0,
-        score = Stat.zero(),
-        focus = Stat.zero(),
+        score = Stat(),
+        focus = Stat(),
         defenceIndex = RobotIndexStat.defaults(),
         notes = [],
         fouls = [];
@@ -83,17 +86,21 @@ class TeamInfo {
   TeamInfo.only({
     required this.number,
     required this.name,
+    String? location,
+    int? rank,
     int? won,
     int? lost,
-    Stat<int>? score,
-    Stat<int>? focus,
+    Stat? score,
+    Stat? focus,
     RobotIndexStat? defenceIndex,
     List<String>? notes,
     List<String>? fouls,
-  })  : won = won ?? 0,
+  })  : location = location ?? '',
+        rank = rank ?? 1,
+        won = won ?? 0,
         lost = lost ?? 0,
-        score = score ?? Stat.zero(),
-        focus = focus ?? Stat.zero(),
+        score = score ?? Stat(),
+        focus = focus ?? Stat(),
         defenceIndex = defenceIndex ?? RobotIndexStat.defaults(),
         notes = notes ?? [],
         fouls = fouls ?? [];
@@ -111,7 +118,7 @@ class TeamInfo {
 
 /// All of the team's autonomous stats and averages.
 class TeamAuto {
-  final Stat<int> score;
+  final Stat score;
   final StartPositionStat startPosition;
   final double leftCommunityRate;
   final PiecesPickupsStat pickups;
@@ -135,7 +142,7 @@ class TeamAuto {
 
   /// Uses default values for all fields.
   TeamAuto.defaults()
-      : score = Stat.zero(),
+      : score = Stat(),
         startPosition = StartPositionStat.defaults(),
         leftCommunityRate = 0.0,
         pickups = PiecesPickupsStat.defaults(),
@@ -146,7 +153,7 @@ class TeamAuto {
         notes = [];
 
   TeamAuto.only({
-    Stat<int>? score,
+    Stat? score,
     StartPositionStat? startPosition,
     double? leftCommunityRate,
     PiecesPickupsStat? pickups,
@@ -155,7 +162,7 @@ class TeamAuto {
     ChargeStationPassesStat? chargeStationPasses,
     AutoClimbStat? climb,
     List<String>? notes,
-  })  : score = score ?? Stat.zero(),
+  })  : score = score ?? Stat(),
         startPosition = startPosition ?? StartPositionStat.defaults(),
         leftCommunityRate = leftCommunityRate ?? 0.0,
         pickups = pickups ?? PiecesPickupsStat.defaults(),
@@ -168,7 +175,7 @@ class TeamAuto {
 
 /// All of the team's teleop stats and averages.
 class TeamTeleop {
-  final Stat<int> score;
+  final Stat score;
   final PiecesPickupsStat pickups;
   final PiecesDropoffsStat dropoffs;
   final CommunityPassesStat communityPasses;
@@ -188,7 +195,7 @@ class TeamTeleop {
 
   /// Uses default values for all fields.
   TeamTeleop.defaults()
-      : score = Stat.zero(),
+      : score = Stat(),
         pickups = PiecesPickupsStat.defaults(),
         dropoffs = PiecesDropoffsStat.defaults(),
         communityPasses = CommunityPassesStat.defaults(),
@@ -197,14 +204,14 @@ class TeamTeleop {
         notes = [];
 
   TeamTeleop.only({
-    Stat<int>? score,
+    Stat? score,
     PiecesPickupsStat? pickups,
     PiecesDropoffsStat? dropoffs,
     CommunityPassesStat? communityPasses,
     ChargeStationPassesStat? chargeStationPasses,
     LoadingZonePassesStat? loadingZonePasses,
     List<String>? notes,
-  })  : score = score ?? Stat.zero(),
+  })  : score = score ?? Stat(),
         pickups = pickups ?? PiecesPickupsStat.defaults(),
         dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
         communityPasses = communityPasses ?? CommunityPassesStat.defaults(),
@@ -217,7 +224,7 @@ class TeamTeleop {
 
 /// All of the team's endgame stats and averages.
 class TeamEndgame {
-  final Stat<int> score;
+  final Stat score;
   final PiecesPickupsStat pickups;
   final PiecesDropoffsStat dropoffs;
   final CommunityPassesStat communityPasses;
@@ -239,7 +246,7 @@ class TeamEndgame {
 
   /// Uses default values for all fields.
   TeamEndgame.defaults()
-      : score = Stat.zero(),
+      : score = Stat(),
         pickups = PiecesPickupsStat.defaults(),
         dropoffs = PiecesDropoffsStat.defaults(),
         communityPasses = CommunityPassesStat.defaults(),
@@ -249,7 +256,7 @@ class TeamEndgame {
         notes = [];
 
   TeamEndgame.only({
-    Stat<int>? score,
+    Stat? score,
     PiecesPickupsStat? pickups,
     PiecesDropoffsStat? dropoffs,
     CommunityPassesStat? communityPasses,
@@ -257,7 +264,7 @@ class TeamEndgame {
     LoadingZonePassesStat? loadingZonePasses,
     EndgameClimbStat? climb,
     List<String>? notes,
-  })  : score = score ?? Stat.zero(),
+  })  : score = score ?? Stat(),
         pickups = pickups ?? PiecesPickupsStat.defaults(),
         dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
         communityPasses = communityPasses ?? CommunityPassesStat.defaults(),
@@ -387,14 +394,14 @@ class PiecesStat {
   double cubesRate;
 
   /// Per-game average.
-  Stat<int> cones, cubes;
+  Stat cones, cubes;
 
   /// Uses default values for all fields.
   PiecesStat.defaults()
       : conesRate = 0.0,
         cubesRate = 0.0,
-        cones = Stat.zero(),
-        cubes = Stat.zero();
+        cones = Stat(),
+        cubes = Stat();
 }
 
 /// Pickups from the single or double substations.

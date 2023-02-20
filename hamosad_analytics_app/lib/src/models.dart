@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 export 'models/report.dart';
 export 'models/team.dart';
 
@@ -8,32 +10,28 @@ class Cubit<T> {
   Cubit(this.data);
 }
 
-class Stat<T extends num> {
-  final T min, max;
-  final double average;
+class Stat {
+  num _min, _max;
+  double _average;
+  int _count;
+  num _sum;
 
-  const Stat({
-    required this.min,
-    required this.max,
-    required this.average,
-  });
+  num get min => _min;
+  num get max => _max;
+  double get average => _average;
 
-  static Stat<int> zero() => const Stat(
-        min: 0,
-        max: 0,
-        average: 0.0,
-      );
+  Stat({num? min, num? max, double? average})
+      : _min = min ?? double.negativeInfinity,
+        _max = max ?? double.infinity,
+        _average = average ?? 0.0,
+        _count = 0,
+        _sum = 0.0;
 
-  static Stat<double> zeroDoube() => const Stat(
-        min: 0.0,
-        max: 0.0,
-        average: 0.0,
-      );
-
-  static Stat<int> only({
-    int? min,
-    int? max,
-    double? average,
-  }) =>
-      Stat(min: min ?? 0, max: max ?? 0, average: average ?? 0.0);
+  void updateWithValue(num value) {
+    _min = math.min(_min, value);
+    _max = math.max(_max, value);
+    _count++;
+    _sum += value;
+    _average = _sum / _count;
+  }
 }

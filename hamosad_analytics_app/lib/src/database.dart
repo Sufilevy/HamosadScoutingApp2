@@ -1,6 +1,9 @@
 import 'package:dartx/dartx.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
 
+export 'database/analytics_data.dart';
+export 'database/analytics_database.dart';
+
 Future<void> getData() {
   return Future.delayed(1000.milliseconds);
 }
