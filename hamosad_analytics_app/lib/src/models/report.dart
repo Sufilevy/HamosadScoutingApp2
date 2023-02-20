@@ -23,28 +23,36 @@ class Report {
         teleop = ReportTeleop.fromJson(json['teleop']),
         endgame = ReportEndgame.fromJson(json['endgame']),
         summary = ReportSummary.fromJson(json['summary']);
+
+  int get score {
+    return auto.score + teleop.score + endgame.score;
+  }
 }
 
 class ReportAuto {
-  StartPosition? startPosition;
+  StartPosition startPosition;
   bool leftCommunity;
   List<PiecePickup> pickups;
   List<PieceDropoff> dropoffs;
   List<CommunityPass> communityPasses;
   List<ChargeStationPass> chargeStationPasses;
-  AutoClimb? climb;
+  AutoClimb climb;
   String notes;
 
   ReportAuto.fromJson(Json json)
-      : startPosition = StartPosition.fromString(json['startPosition']),
+      : startPosition = StartPosition.fromString(json['startPosition'])!,
         leftCommunity = false,
         pickups = PiecePickup.list(json['pickups']),
         dropoffs = PieceDropoff.list(json['dropoffs']),
         communityPasses = CommunityPass.list(json['communityPasses']),
         chargeStationPasses =
             ChargeStationPass.list(json['chargeStationPasses']),
-        climb = AutoClimb.fromJson(json['climb']),
+        climb = AutoClimb.fromJson(json['climb'])!,
         notes = json['notes'];
+
+  int get score {
+    return (leftCommunity ? 3 : 0) + dropoffs.score(isAuto: true) + climb.score;
+  }
 }
 
 class ReportTeleop {
@@ -63,6 +71,10 @@ class ReportTeleop {
             ChargeStationPass.list(json['chargeStationPasses']),
         loadingZonePasses = LoadingZonePass.list(json['loadingZonePasses']),
         notes = json['notes'];
+
+  int get score {
+    return dropoffs.score(isAuto: false);
+  }
 }
 
 class ReportEndgame {
@@ -71,7 +83,7 @@ class ReportEndgame {
   List<CommunityPass> communityPasses;
   List<ChargeStationPass> chargeStationPasses;
   List<LoadingZonePass> loadingZonePasses;
-  EndgameClimb? climb;
+  EndgameClimb climb;
   String notes;
 
   ReportEndgame.fromJson(Json json)
@@ -80,20 +92,24 @@ class ReportEndgame {
         communityPasses = CommunityPass.list(json['communityPasses']),
         chargeStationPasses =
             ChargeStationPass.list(json['chargeStationPasses']),
-        climb = EndgameClimb.fromJson(json['climb']),
+        climb = EndgameClimb.fromJson(json['climb'])!,
         loadingZonePasses = LoadingZonePass.list(json['loadingZonePasses']),
         notes = json['notes'];
+
+  int get score {
+    return dropoffs.score(isAuto: false) + climb.score;
+  }
 }
 
 class ReportSummary {
   bool won;
-  RobotIndex? defenceRobotIndex;
+  RobotIndex defenceIndex;
   String fouls, notes;
   int autoDropoffsCount, teleopDropoffsCount, endgameDropoffsCount;
 
   ReportSummary.fromJson(Json json)
       : won = json['won'],
-        defenceRobotIndex = RobotIndex.fromString(json['defenceRobotIndex']),
+        defenceIndex = RobotIndex.fromString(json['defenceRobotIndex'])!,
         fouls = json['fouls'],
         notes = json['notes'],
         autoDropoffsCount = json['autoDropoffsCount'],
@@ -232,18 +248,22 @@ enum PiecePickupPosition {
     }
     return null;
   }
+
+  bool get isFromFloor {
+    return this == floorStanding || this == floorLaying;
+  }
 }
 
 class PiecePickup {
   const PiecePickup({
     required this.duration,
     required this.position,
-    required this.gamePiece,
+    required this.piece,
   });
 
   final ActionDuration duration;
   final PiecePickupPosition position;
-  final Piece gamePiece;
+  final Piece piece;
 
   static PiecePickup? fromJson(Json json) {
     final duration = ActionDuration.fromString(json['duration']);
@@ -257,7 +277,7 @@ class PiecePickup {
     return PiecePickup(
       duration: duration,
       position: position,
-      gamePiece: gamePiece,
+      piece: gamePiece,
     );
   }
 
@@ -304,8 +324,26 @@ class PieceDropoff {
     );
   }
 
+  int score({required bool isAuto}) {
+    switch (row) {
+      case 0:
+        return isAuto ? 3 : 2;
+      case 1:
+        return isAuto ? 4 : 3;
+      case 2:
+        return isAuto ? 6 : 5;
+    }
+    return 0;
+  }
+
   static List<PieceDropoff> list(List<Json> list) {
     return list.map((dropoff) => fromJson(dropoff)).filterNotNull().toList();
+  }
+}
+
+extension PiecesDropoffsScoring on List<PieceDropoff> {
+  int score({required bool isAuto}) {
+    return map((dropoff) => dropoff.score(isAuto: isAuto)).sum();
   }
 }
 
@@ -385,6 +423,19 @@ enum ClimbingState {
     }
     return null;
   }
+
+  int score({required bool isAuto}) {
+    switch (this) {
+      case ClimbingState.none:
+        return 0;
+      case ClimbingState.docked:
+        return isAuto ? 8 : 6;
+      case ClimbingState.dockedByOther:
+        return isAuto ? 8 : 6;
+      case ClimbingState.engaged:
+        return isAuto ? 12 : 10;
+    }
+  }
 }
 
 class AutoClimb {
@@ -408,6 +459,10 @@ class AutoClimb {
       duration: duration,
       state: state,
     );
+  }
+
+  int get score {
+    return state.score(isAuto: true);
   }
 }
 
@@ -436,5 +491,9 @@ class EndgameClimb {
       state: state,
       robotIndex: robotIndex,
     );
+  }
+
+  int get score {
+    return state.score(isAuto: false);
   }
 }

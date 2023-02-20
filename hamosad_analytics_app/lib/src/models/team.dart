@@ -54,9 +54,8 @@ class TeamInfo {
   String name, location;
   int rank;
   int won, lost;
-  Stat score, focus;
+  Stat score;
   RobotIndexStat defenceIndex;
-  List<String> notes, fouls;
 
   TeamInfo({
     required this.number,
@@ -66,10 +65,7 @@ class TeamInfo {
     required this.won,
     required this.lost,
     required this.score,
-    required this.focus,
     required this.defenceIndex,
-    required this.notes,
-    required this.fouls,
   });
 
   TeamInfo.defaults({required this.number, required this.name})
@@ -78,10 +74,7 @@ class TeamInfo {
         won = 0,
         lost = 0,
         score = Stat(),
-        focus = Stat(),
-        defenceIndex = RobotIndexStat.defaults(),
-        notes = [],
-        fouls = [];
+        defenceIndex = RobotIndexStat.defaults();
 
   TeamInfo.only({
     required this.number,
@@ -91,7 +84,6 @@ class TeamInfo {
     int? won,
     int? lost,
     Stat? score,
-    Stat? focus,
     RobotIndexStat? defenceIndex,
     List<String>? notes,
     List<String>? fouls,
@@ -100,10 +92,12 @@ class TeamInfo {
         won = won ?? 0,
         lost = lost ?? 0,
         score = score ?? Stat(),
-        focus = focus ?? Stat(),
-        defenceIndex = defenceIndex ?? RobotIndexStat.defaults(),
-        notes = notes ?? [],
-        fouls = fouls ?? [];
+        defenceIndex = defenceIndex ?? RobotIndexStat.defaults();
+
+  void updateWithReport(Report report) {
+    score.updateWithValue(report.score);
+    defenceIndex.updateWithValue(report.summary.defenceIndex);
+  }
 
   double get winRate {
     if (won == 0) {
@@ -171,6 +165,11 @@ class TeamAuto {
         chargeStationPasses = ChargeStationPassesStat.defaults(),
         climb = climb ?? AutoClimbStat.defaults(),
         notes = notes ?? [];
+
+  void updateWithReport(Report report) {
+    score.updateWithValue(report.auto.score);
+    startPosition.updateWithValue(report.auto.startPosition);
+  }
 }
 
 /// All of the team's teleop stats and averages.
@@ -220,6 +219,10 @@ class TeamTeleop {
         loadingZonePasses =
             loadingZonePasses ?? LoadingZonePassesStat.defaults(),
         notes = notes ?? [];
+
+  void updateWithReport(Report report) {
+    score.updateWithValue(report.teleop.score);
+  }
 }
 
 /// All of the team's endgame stats and averages.
@@ -274,6 +277,8 @@ class TeamEndgame {
             loadingZonePasses ?? LoadingZonePassesStat.defaults(),
         climb = climb ?? EndgameClimbStat.defaults(),
         notes = notes ?? [];
+
+  void updateWithReport(Report report) {}
 }
 
 class TeamSummary {
@@ -282,6 +287,7 @@ class TeamSummary {
   CommunityPassesStat communityPasses;
   ChargeStationPassesStat chargeStationPasses;
   LoadingZonePassesStat loadingZonePassesStat;
+  List<String> notes, fouls;
 
   TeamSummary({
     required this.pickups,
@@ -289,6 +295,8 @@ class TeamSummary {
     required this.communityPasses,
     required this.chargeStationPasses,
     required this.loadingZonePassesStat,
+    required this.notes,
+    required this.fouls,
   });
 
   /// Uses default values for all fields.
@@ -297,7 +305,9 @@ class TeamSummary {
         dropoffs = PiecesDropoffsStat.defaults(),
         communityPasses = CommunityPassesStat.defaults(),
         chargeStationPasses = ChargeStationPassesStat.defaults(),
-        loadingZonePassesStat = LoadingZonePassesStat.defaults();
+        loadingZonePassesStat = LoadingZonePassesStat.defaults(),
+        notes = [],
+        fouls = [];
 
   TeamSummary.only({
     PiecesPickupsStat? pickups,
@@ -305,13 +315,19 @@ class TeamSummary {
     CommunityPassesStat? communityPasses,
     ChargeStationPassesStat? chargeStationPasses,
     LoadingZonePassesStat? loadingZonePasses,
+    List<String>? notes,
+    List<String>? fouls,
   })  : pickups = pickups ?? PiecesPickupsStat.defaults(),
         dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
         communityPasses = communityPasses ?? CommunityPassesStat.defaults(),
         chargeStationPasses =
             chargeStationPasses ?? ChargeStationPassesStat.defaults(),
         loadingZonePassesStat =
-            loadingZonePasses ?? LoadingZonePassesStat.defaults();
+            loadingZonePasses ?? LoadingZonePassesStat.defaults(),
+        notes = notes ?? [],
+        fouls = fouls ?? [];
+
+  void updateWithReport(Report report) {}
 }
 
 /// Rates of the robot's starting positions.
@@ -320,7 +336,9 @@ class StartPositionStat {
     required this.arenaWallRate,
     required this.middleRate,
     required this.loadingZoneRate,
-  });
+  })  : _arenaWallCount = 0,
+        _middleCount = 0,
+        _loadingZoneCount = 0;
 
   /// The robot is the closest to the arena wall out of the 3 robots in his alliance.
   ///
@@ -337,11 +355,35 @@ class StartPositionStat {
   /// Together with [arenaWallRate] and [middleRate] represents 100% of the starting positions.
   double loadingZoneRate;
 
+  int _arenaWallCount, _middleCount, _loadingZoneCount;
+
   /// Uses default values for all fields.
   StartPositionStat.defaults()
       : arenaWallRate = 0.0,
         middleRate = 0.0,
-        loadingZoneRate = 0.0;
+        loadingZoneRate = 0.0,
+        _arenaWallCount = 0,
+        _middleCount = 0,
+        _loadingZoneCount = 0;
+
+  void updateWithValue(StartPosition value) {
+    switch (value) {
+      case StartPosition.arenaWall:
+        _arenaWallCount++;
+        break;
+      case StartPosition.middle:
+        _middleCount++;
+        break;
+      case StartPosition.loadingZone:
+        _loadingZoneCount++;
+        break;
+    }
+
+    final count = _arenaWallCount + _middleCount + _loadingZoneCount;
+    arenaWallRate = _arenaWallCount / count;
+    middleRate = _middleCount / count;
+    loadingZoneRate = _loadingZoneCount / count;
+  }
 }
 
 /// Rates of different durations (0-2, 2-5, 5+).
@@ -350,7 +392,9 @@ class ActionDurationStat {
     required this.zeroToTwoRate,
     required this.twoToFiveRate,
     required this.fivePlusRate,
-  });
+  })  : _zeroToTwoCount = 0,
+        _twoToFiveCount = 0,
+        _fivePlusCount = 0;
 
   /// The action was performed in less than two seconds.
   ///
@@ -367,11 +411,35 @@ class ActionDurationStat {
   /// Together with [zeroToTwoRate] and [twoToFiveRate] represents 100% of the durations.
   double fivePlusRate;
 
+  int _zeroToTwoCount, _twoToFiveCount, _fivePlusCount;
+
   /// Uses default values for all fields.
   ActionDurationStat.defaults()
       : zeroToTwoRate = 0.0,
         twoToFiveRate = 0.0,
-        fivePlusRate = 0.0;
+        fivePlusRate = 0.0,
+        _zeroToTwoCount = 0,
+        _twoToFiveCount = 0,
+        _fivePlusCount = 0;
+
+  void updateWithValue(ActionDuration value) {
+    switch (value) {
+      case ActionDuration.zeroToTwo:
+        _zeroToTwoCount++;
+        break;
+      case ActionDuration.twoToFive:
+        _twoToFiveCount++;
+        break;
+      case ActionDuration.fivePlus:
+        _fivePlusCount++;
+        break;
+    }
+
+    final count = _zeroToTwoCount + _twoToFiveCount + _fivePlusCount;
+    zeroToTwoRate = _zeroToTwoCount / count;
+    twoToFiveRate = _twoToFiveCount / count;
+    fivePlusRate = _fivePlusCount / count;
+  }
 }
 
 /// Rates of cones and cubes for a specific action.
@@ -381,7 +449,8 @@ class PiecesStat {
     required this.cubesRate,
     required this.cones,
     required this.cubes,
-  });
+  })  : _conesCount = 0,
+        _cubesCount = 0;
 
   /// The rate of this action performed with cones.
   ///
@@ -396,12 +465,39 @@ class PiecesStat {
   /// Per-game average.
   Stat cones, cubes;
 
+  int _conesCount, _cubesCount;
+
   /// Uses default values for all fields.
   PiecesStat.defaults()
       : conesRate = 0.0,
         cubesRate = 0.0,
         cones = Stat(),
-        cubes = Stat();
+        cubes = Stat(),
+        _conesCount = 0,
+        _cubesCount = 0;
+
+  void updateRatesWithValue(Piece value) {
+    switch (value) {
+      case Piece.cone:
+        _conesCount++;
+        break;
+      case Piece.cube:
+        _cubesCount++;
+        break;
+    }
+
+    final count = _conesCount + _cubesCount;
+    conesRate = _conesCount / count;
+    cubesRate = _cubesCount / count;
+  }
+
+  void updateAveragesWithValues({
+    required int numCones,
+    required int numCubes,
+  }) {
+    cones.updateWithValue(numCones);
+    cubes.updateWithValue(numCubes);
+  }
 }
 
 /// Pickups from the single or double substations.
@@ -438,22 +534,65 @@ class SubstationsPiecePickupsStat {
 /// Pickups from the floor, either laying or standing.
 class FloorPiecePickupsStat {
   FloorPiecePickupsStat({
-    required this.standingAverage,
-    required this.layingAverage,
+    required this.standingConesRate,
+    required this.layingConesRate,
+    required this.cubesRate,
     required this.duration,
-  });
+  })  : _standingConesCount = 0,
+        _layingConesCount = 0,
+        _cubesCount = 0;
 
-  /// Per-game average.
-  PiecesStat standingAverage, layingAverage;
+  /// The rate of standing cones pickes.
+  ///
+  /// Together with [layingConesRate] and [cubesRate] represents 100% of pieces picked up from the floor.
+  double standingConesRate;
+
+  /// The rate of standing cones pickes.
+  ///
+  /// Together with [standingConesRate] and [cubesRate] represents 100% of pieces picked up from the floor.
+  double layingConesRate;
+
+  /// The rate of standing cones pickes.
+  ///
+  /// Together with [standingConesRate] and [layingConesRate] represents 100% of pieces picked up from the floor.
+  double cubesRate;
 
   /// Rates of different pickup durations.
   ActionDurationStat duration;
 
+  int _standingConesCount, _layingConesCount, _cubesCount;
+
   /// Uses default values for all fields.
   FloorPiecePickupsStat.defaults()
-      : standingAverage = PiecesStat.defaults(),
-        layingAverage = PiecesStat.defaults(),
-        duration = ActionDurationStat.defaults();
+      : standingConesRate = 0.0,
+        layingConesRate = 0.0,
+        cubesRate = 0.0,
+        duration = ActionDurationStat.defaults(),
+        _standingConesCount = 0,
+        _layingConesCount = 0,
+        _cubesCount = 0;
+
+  void updateWithValue(PiecePickup value) {
+    switch (value.piece) {
+      case Piece.cone:
+        if (value.position == PiecePickupPosition.floorStanding) {
+          _standingConesCount++;
+        } else {
+          _layingConesCount++;
+        }
+        break;
+      case Piece.cube:
+        _cubesCount++;
+        break;
+    }
+
+    final count = _standingConesCount + _layingConesCount + _cubesCount;
+    standingConesRate = _standingConesCount / count;
+    layingConesRate = _layingConesCount / count;
+    cubesRate = _cubesCount / count;
+
+    duration.updateWithValue(value.duration);
+  }
 }
 
 /// Pickups from all positions.
@@ -483,6 +622,24 @@ class PiecesPickupsStat {
         floorPickups = FloorPiecePickupsStat.defaults(),
         pieces = PiecesStat.defaults(),
         duration = ActionDurationStat.defaults();
+
+  void updateRatesWithValue(PiecePickup value) {
+    if (value.position.isFromFloor) {
+      floorPickups.updateWithValue(value);
+    } else {
+      substationsPickups.updateWithValue(value);
+    }
+
+    pieces.updateRatesWithValue(value.piece);
+    duration.updateWithValue(value.duration);
+  }
+
+  void updateAveragesWithValues({
+    required int numCones,
+    required int numCubes,
+  }) {
+    pieces.updateAveragesWithValues(numCones: numCones, numCubes: numCubes);
+  }
 }
 
 /// Dropoffs made on all nodes in a grid.
@@ -558,7 +715,8 @@ class CommunityPassesStat {
   CommunityPassesStat({
     required this.arenaWallRate,
     required this.loadingZoneRate,
-  });
+  })  : _arenaWallCount = 0,
+        _loadingZoneCount = 0;
 
   /// Rate of passes closest to the arena wall.
   ///
@@ -570,10 +728,29 @@ class CommunityPassesStat {
   /// Together with [arenaWallRate] represents 100% of all community passes.
   double loadingZoneRate;
 
+  int _arenaWallCount, _loadingZoneCount;
+
   /// Uses default values for all fields.
   CommunityPassesStat.defaults()
       : arenaWallRate = 0.0,
-        loadingZoneRate = 0.0;
+        loadingZoneRate = 0.0,
+        _arenaWallCount = 0,
+        _loadingZoneCount = 0;
+
+  void updateWithValue(CommunityPass value) {
+    switch (value) {
+      case CommunityPass.arenaWall:
+        _arenaWallCount++;
+        break;
+      case CommunityPass.loadingZone:
+        _loadingZoneCount++;
+        break;
+    }
+
+    final count = _arenaWallCount + _loadingZoneCount;
+    arenaWallRate = _arenaWallCount / count;
+    loadingZoneRate = _loadingZoneCount / count;
+  }
 }
 
 /// Passes in the alliance's loading zone (start or end of the zone).
@@ -581,7 +758,8 @@ class LoadingZonePassesStat {
   LoadingZonePassesStat({
     required this.startRate,
     required this.endRate,
-  });
+  })  : _startCount = 0,
+        _endCount = 0;
 
   /// Rate of passes at the start of the loading zone.
   ///
@@ -593,10 +771,29 @@ class LoadingZonePassesStat {
   /// Together with [startRate] represents 100% of all community passes.
   double endRate;
 
+  int _startCount, _endCount;
+
   /// Uses default values for all fields.
   LoadingZonePassesStat.defaults()
       : startRate = 0.0,
-        endRate = 0.0;
+        endRate = 0.0,
+        _startCount = 0,
+        _endCount = 0;
+
+  void updateWithValue(LoadingZonePass value) {
+    switch (value) {
+      case LoadingZonePass.start:
+        _startCount++;
+        break;
+      case LoadingZonePass.end:
+        _endCount++;
+        break;
+    }
+
+    final count = _startCount + _endCount;
+    startRate = _startCount / count;
+    endRate = _endCount / count;
+  }
 }
 
 /// Passes in the alliance's charge station (entering or exiting the community).
@@ -604,7 +801,8 @@ class ChargeStationPassesStat {
   ChargeStationPassesStat({
     required this.enteredCommunityRate,
     required this.exitedCommunityRate,
-  });
+  })  : _enteredCommunityCount = 0,
+        _exitedCommunityCount = 0;
 
   /// Rate of passes on the charge station to enter the community.
   ///
@@ -616,10 +814,29 @@ class ChargeStationPassesStat {
   /// Together with [enteredCommunityRate] represents 100% of all community passes.
   double exitedCommunityRate;
 
+  int _enteredCommunityCount, _exitedCommunityCount;
+
   /// Uses default values for all fields.
   ChargeStationPassesStat.defaults()
       : enteredCommunityRate = 0.0,
-        exitedCommunityRate = 0.0;
+        exitedCommunityRate = 0.0,
+        _enteredCommunityCount = 0,
+        _exitedCommunityCount = 0;
+
+  void updateWithValue(ChargeStationPass value) {
+    switch (value) {
+      case ChargeStationPass.enteredCommunity:
+        _enteredCommunityCount++;
+        break;
+      case ChargeStationPass.exitedCommunity:
+        _exitedCommunityCount++;
+        break;
+    }
+
+    final count = _enteredCommunityCount + _exitedCommunityCount;
+    enteredCommunityRate = _enteredCommunityCount / count;
+    exitedCommunityRate = _exitedCommunityCount / count;
+  }
 }
 
 /// Climbings states (not climbed, docked, docked by another robot or engaged).
@@ -629,7 +846,10 @@ class ClimbingStateStat {
     required this.dockedRate,
     required this.dockedByOtherRate,
     required this.engagedRate,
-  });
+  })  : _noneCount = 0,
+        _dockedCount = 0,
+        _dockedByOtherCount = 0,
+        _engagedCount = 0;
 
   /// Rate of not climbed.
   ///
@@ -651,12 +871,41 @@ class ClimbingStateStat {
   /// Together with [noneRate], [dockedRate] and [dockedByOtherRate] represents 100% of all climbing states.
   double engagedRate;
 
+  int _noneCount, _dockedCount, _dockedByOtherCount, _engagedCount;
+
   /// Uses default values for all fields.
   ClimbingStateStat.defaults()
       : noneRate = 0.0,
         dockedRate = 0.0,
         dockedByOtherRate = 0.0,
-        engagedRate = 0.0;
+        engagedRate = 0.0,
+        _noneCount = 0,
+        _dockedCount = 0,
+        _dockedByOtherCount = 0,
+        _engagedCount = 0;
+
+  void updateWithValue(ClimbingState value) {
+    switch (value) {
+      case ClimbingState.none:
+        _noneCount++;
+        break;
+      case ClimbingState.docked:
+        _dockedCount++;
+        break;
+      case ClimbingState.dockedByOther:
+        _dockedByOtherCount++;
+        break;
+      case ClimbingState.engaged:
+        _engagedCount++;
+        break;
+    }
+
+    final count = _noneCount + _dockedCount + _dockedByOtherCount;
+    noneRate = _noneCount / count;
+    dockedRate = _dockedCount / count;
+    dockedByOtherRate = _dockedByOtherCount / count;
+    engagedRate = _engagedCount / count;
+  }
 }
 
 /// Autonomous climbings.
@@ -683,7 +932,9 @@ class RobotIndexStat {
     required this.firstRate,
     required this.secondRate,
     required this.thirdRate,
-  });
+  })  : _firstCount = 0,
+        _secondCount = 0,
+        _thirdCount = 0;
 
   /// The robot climbed first.
   ///
@@ -700,11 +951,31 @@ class RobotIndexStat {
   /// Together with [firstRate] and [secondRate] represents 100% of the climbing indexes.
   double thirdRate;
 
+  int _firstCount, _secondCount, _thirdCount;
+
   /// Uses default values for all fields.
   RobotIndexStat.defaults()
       : firstRate = 0.0,
         secondRate = 0.0,
-        thirdRate = 0.0;
+        thirdRate = 0.0,
+        _firstCount = 0,
+        _secondCount = 0,
+        _thirdCount = 0;
+
+  void updateWithValue(RobotIndex value) {
+    if (value == RobotIndex.first) {
+      _firstCount++;
+    } else if (value == RobotIndex.second) {
+      _secondCount++;
+    } else if (value == RobotIndex.third) {
+      _thirdCount++;
+    }
+
+    final count = _firstCount + _secondCount + _thirdCount;
+    firstRate = _firstCount / count;
+    secondRate = _secondCount / count;
+    thirdRate = _thirdCount / count;
+  }
 }
 
 /// Autonomous climbings.

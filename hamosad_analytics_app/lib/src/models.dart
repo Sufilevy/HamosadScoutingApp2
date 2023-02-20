@@ -27,7 +27,7 @@ class Stat {
         _count = 0,
         _sum = 0.0;
 
-  void updateWithValue(num value) {
+  void update(num value) {
     _min = math.min(_min, value);
     _max = math.max(_max, value);
     _count++;

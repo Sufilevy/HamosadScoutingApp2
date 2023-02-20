@@ -55,6 +55,16 @@ class AnalyticsData {
           ),
         ),
       );
+
+      final team = teamsWithNumber[report.teamNumber]!;
+
+      if (report.summary.won) {
+        team.info.won += 1;
+      } else {
+        team.info.lost += 1;
+      }
+
+      team.info.updateWithReport(report);
     }
 
     return _fromTeamsWithNumber(database.dataStamp, teamsWithNumber);
