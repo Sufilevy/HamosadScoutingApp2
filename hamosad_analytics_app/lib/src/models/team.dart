@@ -50,13 +50,13 @@ class Team {
 
 /// All of the team's general info, stats and averages.
 class TeamInfo {
-  final int number;
-  final String name, location;
-  final int rank;
-  final int won, lost;
-  final Stat score, focus;
-  final RobotIndexStat defenceIndex;
-  final List<String> notes, fouls;
+  int number;
+  String name, location;
+  int rank;
+  int won, lost;
+  Stat score, focus;
+  RobotIndexStat defenceIndex;
+  List<String> notes, fouls;
 
   TeamInfo({
     required this.number,
@@ -118,15 +118,15 @@ class TeamInfo {
 
 /// All of the team's autonomous stats and averages.
 class TeamAuto {
-  final Stat score;
-  final StartPositionStat startPosition;
-  final double leftCommunityRate;
-  final PiecesPickupsStat pickups;
-  final PiecesDropoffsStat dropoffs;
-  final CommunityPassesStat communityPasses;
-  final ChargeStationPassesStat chargeStationPasses;
-  final AutoClimbStat climb;
-  final List<String> notes;
+  Stat score;
+  StartPositionStat startPosition;
+  double leftCommunityRate;
+  PiecesPickupsStat pickups;
+  PiecesDropoffsStat dropoffs;
+  CommunityPassesStat communityPasses;
+  ChargeStationPassesStat chargeStationPasses;
+  AutoClimbStat climb;
+  List<String> notes;
 
   TeamAuto({
     required this.score,
@@ -175,13 +175,13 @@ class TeamAuto {
 
 /// All of the team's teleop stats and averages.
 class TeamTeleop {
-  final Stat score;
-  final PiecesPickupsStat pickups;
-  final PiecesDropoffsStat dropoffs;
-  final CommunityPassesStat communityPasses;
-  final ChargeStationPassesStat chargeStationPasses;
-  final LoadingZonePassesStat loadingZonePasses;
-  final List<String> notes;
+  Stat score;
+  PiecesPickupsStat pickups;
+  PiecesDropoffsStat dropoffs;
+  CommunityPassesStat communityPasses;
+  ChargeStationPassesStat chargeStationPasses;
+  LoadingZonePassesStat loadingZonePasses;
+  List<String> notes;
 
   TeamTeleop({
     required this.score,
@@ -224,14 +224,14 @@ class TeamTeleop {
 
 /// All of the team's endgame stats and averages.
 class TeamEndgame {
-  final Stat score;
-  final PiecesPickupsStat pickups;
-  final PiecesDropoffsStat dropoffs;
-  final CommunityPassesStat communityPasses;
-  final ChargeStationPassesStat chargeStationPasses;
-  final LoadingZonePassesStat loadingZonePassesStat;
-  final EndgameClimbStat climb;
-  final List<String> notes;
+  Stat score;
+  PiecesPickupsStat pickups;
+  PiecesDropoffsStat dropoffs;
+  CommunityPassesStat communityPasses;
+  ChargeStationPassesStat chargeStationPasses;
+  LoadingZonePassesStat loadingZonePassesStat;
+  EndgameClimbStat climb;
+  List<String> notes;
 
   TeamEndgame({
     required this.score,
@@ -277,11 +277,11 @@ class TeamEndgame {
 }
 
 class TeamSummary {
-  final PiecesPickupsStat pickups;
-  final PiecesDropoffsStat dropoffs;
-  final CommunityPassesStat communityPasses;
-  final ChargeStationPassesStat chargeStationPasses;
-  final LoadingZonePassesStat loadingZonePassesStat;
+  PiecesPickupsStat pickups;
+  PiecesDropoffsStat dropoffs;
+  CommunityPassesStat communityPasses;
+  ChargeStationPassesStat chargeStationPasses;
+  LoadingZonePassesStat loadingZonePassesStat;
 
   TeamSummary({
     required this.pickups,
