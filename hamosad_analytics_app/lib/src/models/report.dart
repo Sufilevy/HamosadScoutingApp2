@@ -34,8 +34,7 @@ class ReportAuto {
   bool leftCommunity;
   List<PiecePickup> pickups;
   List<PieceDropoff> dropoffs;
-  List<CommunityPass> communityPasses;
-  List<ChargeStationPass> chargeStationPasses;
+  int chargeStationPasses;
   AutoClimb climb;
   String notes;
 
@@ -44,9 +43,7 @@ class ReportAuto {
         leftCommunity = false,
         pickups = PiecePickup.list(json['pickups']),
         dropoffs = PieceDropoff.list(json['dropoffs']),
-        communityPasses = CommunityPass.list(json['communityPasses']),
-        chargeStationPasses =
-            ChargeStationPass.list(json['chargeStationPasses']),
+        chargeStationPasses = int.parse(json['chargeStationPasses']),
         climb = AutoClimb.fromJson(json['climb'])!,
         notes = json['notes'];
 
@@ -58,18 +55,13 @@ class ReportAuto {
 class ReportTeleop {
   List<PiecePickup> pickups;
   List<PieceDropoff> dropoffs;
-  List<CommunityPass> communityPasses;
-  List<ChargeStationPass> chargeStationPasses;
-  List<LoadingZonePass> loadingZonePasses;
+  int chargeStationPasses;
   String notes;
 
   ReportTeleop.fromJson(Json json)
       : pickups = PiecePickup.list(json['pickups']),
         dropoffs = PieceDropoff.list(json['dropoffs']),
-        communityPasses = CommunityPass.list(json['communityPasses']),
-        chargeStationPasses =
-            ChargeStationPass.list(json['chargeStationPasses']),
-        loadingZonePasses = LoadingZonePass.list(json['loadingZonePasses']),
+        chargeStationPasses = int.parse(json['chargeStationPasses']),
         notes = json['notes'];
 
   int get score {
@@ -80,20 +72,15 @@ class ReportTeleop {
 class ReportEndgame {
   List<PiecePickup> pickups;
   List<PieceDropoff> dropoffs;
-  List<CommunityPass> communityPasses;
-  List<ChargeStationPass> chargeStationPasses;
-  List<LoadingZonePass> loadingZonePasses;
+  int chargeStationPasses;
   EndgameClimb climb;
   String notes;
 
   ReportEndgame.fromJson(Json json)
       : pickups = PiecePickup.list(json['pickups']),
         dropoffs = PieceDropoff.list(json['dropoffs']),
-        communityPasses = CommunityPass.list(json['communityPasses']),
-        chargeStationPasses =
-            ChargeStationPass.list(json['chargeStationPasses']),
+        chargeStationPasses = int.parse(json['chargeStationPasses']),
         climb = EndgameClimb.fromJson(json['climb'])!,
-        loadingZonePasses = LoadingZonePass.list(json['loadingZonePasses']),
         notes = json['notes'];
 
   int get score {
@@ -105,16 +92,12 @@ class ReportSummary {
   bool won;
   RobotIndex defenceIndex;
   String fouls, notes;
-  int autoDropoffsCount, teleopDropoffsCount, endgameDropoffsCount;
 
   ReportSummary.fromJson(Json json)
       : won = json['won'],
         defenceIndex = RobotIndex.fromString(json['defenceRobotIndex'])!,
         fouls = json['fouls'],
-        notes = json['notes'],
-        autoDropoffsCount = json['autoDropoffsCount'],
-        teleopDropoffsCount = json['teleopDropoffsCount'],
-        endgameDropoffsCount = json['endgameDropoffsCount'];
+        notes = json['notes'];
 }
 
 enum ActionDuration {
@@ -221,36 +204,23 @@ enum StartPosition {
 }
 
 enum PiecePickupPosition {
-  doubleLeftShelf,
-  doubleRightShelf,
-  doubleLeftFloor,
-  doubleRightFloor,
+  doubleShelf,
+  doubleFloor,
   single,
-  floorStanding,
-  floorLaying;
+  floor;
 
   static PiecePickupPosition? fromString(String value) {
     switch (value) {
-      case 'doubleLeftShelf':
-        return doubleLeftShelf;
-      case 'doubleRightShelf':
-        return doubleRightShelf;
-      case 'doubleLeftFloor':
-        return doubleLeftFloor;
-      case 'doubleRightFloor':
-        return doubleRightFloor;
+      case 'doubleShelf':
+        return doubleShelf;
+      case 'doubleFloor':
+        return doubleFloor;
       case 'single':
         return single;
-      case 'floorStanding':
-        return floorStanding;
-      case 'floorLaying':
-        return floorLaying;
+      case 'floor':
+        return floor;
     }
     return null;
-  }
-
-  bool get isFromFloor {
-    return this == floorStanding || this == floorLaying;
   }
 }
 
@@ -286,19 +256,29 @@ class PiecePickup {
   }
 }
 
+extension ListPickupCountPieces on List<PiecePickup> {
+  int get numCones {
+    return count((pickup) => pickup.piece == Piece.cone);
+  }
+
+  int get numCubes {
+    return count((pickup) => pickup.piece == Piece.cube);
+  }
+}
+
 class PieceDropoff {
   const PieceDropoff({
     required this.duration,
     required this.grid,
     required this.row,
     required this.column,
-    required this.gamePiece,
+    required this.piece,
   });
 
   final ActionDuration duration;
   final Grid grid;
   final int row, column;
-  final Piece gamePiece;
+  final Piece piece;
 
   static PieceDropoff? fromJson(Json json) {
     final duration = ActionDuration.fromString(json['duration']);
@@ -320,7 +300,7 @@ class PieceDropoff {
       grid: grid,
       row: row,
       column: column,
-      gamePiece: gamePiece,
+      piece: gamePiece,
     );
   }
 
@@ -341,66 +321,19 @@ class PieceDropoff {
   }
 }
 
-extension PiecesDropoffsScoring on List<PieceDropoff> {
+extension _ListDropoffScoring on List<PieceDropoff> {
   int score({required bool isAuto}) {
     return map((dropoff) => dropoff.score(isAuto: isAuto)).sum();
   }
 }
 
-enum CommunityPass {
-  arenaWall,
-  loadingZone;
-
-  static CommunityPass? fromString(String value) {
-    switch (value) {
-      case 'arenaWall':
-        return arenaWall;
-      case 'loadingZone':
-        return loadingZone;
-    }
-    return null;
+extension ListDropoffCountPieces on List<PieceDropoff> {
+  int get numCones {
+    return count((pickup) => pickup.piece == Piece.cone);
   }
 
-  static List<CommunityPass> list(List<String> list) {
-    return list.map((pass) => fromString(pass)).filterNotNull().toList();
-  }
-}
-
-enum LoadingZonePass {
-  start,
-  end;
-
-  static LoadingZonePass? fromString(String value) {
-    switch (value) {
-      case 'start':
-        return start;
-      case 'end':
-        return end;
-    }
-    return null;
-  }
-
-  static List<LoadingZonePass> list(List<String> list) {
-    return list.map((pass) => fromString(pass)).filterNotNull().toList();
-  }
-}
-
-enum ChargeStationPass {
-  enteredCommunity,
-  exitedCommunity;
-
-  static ChargeStationPass? fromString(String value) {
-    switch (value) {
-      case 'enteredCommunity':
-        return enteredCommunity;
-      case 'exitedCommunity':
-        return exitedCommunity;
-    }
-    return null;
-  }
-
-  static List<ChargeStationPass> list(List<String> list) {
-    return list.map((pass) => fromString(pass)).filterNotNull().toList();
+  int get numCubes {
+    return count((pickup) => pickup.piece == Piece.cube);
   }
 }
 
@@ -429,7 +362,6 @@ enum ClimbingState {
       case ClimbingState.none:
         return 0;
       case ClimbingState.docked:
-        return isAuto ? 8 : 6;
       case ClimbingState.dockedByOther:
         return isAuto ? 8 : 6;
       case ClimbingState.engaged:

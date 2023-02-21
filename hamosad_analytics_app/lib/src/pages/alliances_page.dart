@@ -12,7 +12,7 @@ class AlliancesPage extends StatefulWidget {
   const AlliancesPage({Key? key}) : super(key: key);
 
   static final Map<String, double Function(Team)> tableEntries = {
-    'Win Rate': (team) => team.info.winRate,
+    'Win Rate': (team) => team.summary.winRate,
     'Min Auto Cones Drop': (team) =>
         team.auto.dropoffs.pieces.cones.min.toDouble(),
     'Avg Tele Score': (team) => team.teleop.score.average,

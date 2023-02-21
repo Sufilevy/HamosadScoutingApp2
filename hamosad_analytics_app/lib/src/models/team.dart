@@ -53,28 +53,17 @@ class TeamInfo {
   int number;
   String name, location;
   int rank;
-  int won, lost;
-  Stat score;
-  RobotIndexStat defenceIndex;
 
   TeamInfo({
     required this.number,
     required this.name,
     required this.location,
     required this.rank,
-    required this.won,
-    required this.lost,
-    required this.score,
-    required this.defenceIndex,
   });
 
   TeamInfo.defaults({required this.number, required this.name})
       : location = '',
-        rank = 1,
-        won = 0,
-        lost = 0,
-        score = Stat(),
-        defenceIndex = RobotIndexStat.defaults();
+        rank = 1;
 
   TeamInfo.only({
     required this.number,
@@ -85,19 +74,254 @@ class TeamInfo {
     int? lost,
     Stat? score,
     RobotIndexStat? defenceIndex,
+  })  : location = location ?? '',
+        rank = rank ?? 1;
+}
+
+/// All of the team's autonomous stats and averages.
+class TeamAuto {
+  Stat score;
+  StartPositionStat startPosition;
+  Rate leftCommunity;
+  PiecesPickupsStat pickups;
+  PiecesDropoffsStat dropoffs;
+  Stat chargeStationPasses;
+  AutoClimbStat climb;
+  List<String> notes;
+
+  TeamAuto({
+    required this.score,
+    required this.startPosition,
+    required this.leftCommunity,
+    required this.pickups,
+    required this.dropoffs,
+    required this.chargeStationPasses,
+    required this.climb,
+    required this.notes,
+  });
+
+  /// Uses default values for all fields.
+  TeamAuto.defaults()
+      : score = Stat(),
+        startPosition = StartPositionStat.defaults(),
+        leftCommunity = Rate(),
+        pickups = PiecesPickupsStat.defaults(),
+        dropoffs = PiecesDropoffsStat.defaults(),
+        chargeStationPasses = Stat(),
+        climb = AutoClimbStat.defaults(),
+        notes = [];
+
+  TeamAuto.only({
+    Stat? score,
+    StartPositionStat? startPosition,
+    Rate? leftCommunity,
+    PiecesPickupsStat? pickups,
+    PiecesDropoffsStat? dropoffs,
+    Stat? chargeStationPasses,
+    AutoClimbStat? climb,
+    List<String>? notes,
+  })  : score = score ?? Stat(),
+        startPosition = startPosition ?? StartPositionStat.defaults(),
+        leftCommunity = leftCommunity ?? Rate(),
+        pickups = pickups ?? PiecesPickupsStat.defaults(),
+        dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
+        chargeStationPasses = Stat(),
+        climb = climb ?? AutoClimbStat.defaults(),
+        notes = notes ?? [];
+
+  void updateWithReport(ReportAuto report) {
+    score.updateWithValue(report.score);
+    startPosition.updateWithPosition(report.startPosition);
+    leftCommunity.updateWithValue(report.leftCommunity);
+
+    pickups.updateRatesWithPickups(report.pickups);
+    pickups.updateAveragesWithPieces(
+      numCones: report.pickups.numCones,
+      numCubes: report.pickups.numCubes,
+    );
+
+    dropoffs.updateRatesWithDropoffs(report.dropoffs);
+    dropoffs.updateAveragesWithPieces(
+      numCones: report.dropoffs.numCones,
+      numCubes: report.dropoffs.numCubes,
+    );
+
+    chargeStationPasses.updateWithValue(report.chargeStationPasses);
+    climb.updateWithClimb(report.climb);
+    notes.add(report.notes);
+  }
+}
+
+/// All of the team's teleop stats and averages.
+class TeamTeleop {
+  Stat score;
+  PiecesPickupsStat pickups;
+  PiecesDropoffsStat dropoffs;
+  Stat chargeStationPasses;
+  List<String> notes;
+
+  TeamTeleop({
+    required this.score,
+    required this.pickups,
+    required this.dropoffs,
+    required this.chargeStationPasses,
+    required this.notes,
+  });
+
+  /// Uses default values for all fields.
+  TeamTeleop.defaults()
+      : score = Stat(),
+        pickups = PiecesPickupsStat.defaults(),
+        dropoffs = PiecesDropoffsStat.defaults(),
+        chargeStationPasses = Stat(),
+        notes = [];
+
+  TeamTeleop.only({
+    Stat? score,
+    PiecesPickupsStat? pickups,
+    PiecesDropoffsStat? dropoffs,
+    Stat? chargeStationPasses,
+    List<String>? notes,
+  })  : score = score ?? Stat(),
+        pickups = pickups ?? PiecesPickupsStat.defaults(),
+        dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
+        chargeStationPasses = chargeStationPasses ?? Stat(),
+        notes = notes ?? [];
+
+  void updateWithReport(ReportTeleop report) {
+    score.updateWithValue(report.score);
+
+    pickups.updateRatesWithPickups(report.pickups);
+    pickups.updateAveragesWithPieces(
+      numCones: report.pickups.numCones,
+      numCubes: report.pickups.numCubes,
+    );
+
+    dropoffs.updateRatesWithDropoffs(report.dropoffs);
+    dropoffs.updateAveragesWithPieces(
+      numCones: report.dropoffs.numCones,
+      numCubes: report.dropoffs.numCubes,
+    );
+
+    chargeStationPasses.updateWithValue(report.chargeStationPasses);
+    notes.add(report.notes);
+  }
+}
+
+/// All of the team's endgame stats and averages.
+class TeamEndgame {
+  Stat score;
+  PiecesPickupsStat pickups;
+  PiecesDropoffsStat dropoffs;
+  Stat chargeStationPasses;
+  EndgameClimbStat climb;
+  List<String> notes;
+
+  TeamEndgame({
+    required this.score,
+    required this.pickups,
+    required this.dropoffs,
+    required this.chargeStationPasses,
+    required this.climb,
+    required this.notes,
+  });
+
+  /// Uses default values for all fields.
+  TeamEndgame.defaults()
+      : score = Stat(),
+        pickups = PiecesPickupsStat.defaults(),
+        dropoffs = PiecesDropoffsStat.defaults(),
+        chargeStationPasses = Stat(),
+        climb = EndgameClimbStat.defaults(),
+        notes = [];
+
+  TeamEndgame.only({
+    Stat? score,
+    PiecesPickupsStat? pickups,
+    PiecesDropoffsStat? dropoffs,
+    Stat? chargeStationPasses,
+    EndgameClimbStat? climb,
+    List<String>? notes,
+  })  : score = score ?? Stat(),
+        pickups = pickups ?? PiecesPickupsStat.defaults(),
+        dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
+        chargeStationPasses = chargeStationPasses ?? Stat(),
+        climb = climb ?? EndgameClimbStat.defaults(),
+        notes = notes ?? [];
+
+  void updateWithReport(ReportEndgame report) {
+    score.updateWithValue(report.score);
+
+    pickups.updateRatesWithPickups(report.pickups);
+    pickups.updateAveragesWithPieces(
+      numCones: report.pickups.numCones,
+      numCubes: report.pickups.numCubes,
+    );
+
+    dropoffs.updateRatesWithDropoffs(report.dropoffs);
+    dropoffs.updateAveragesWithPieces(
+      numCones: report.dropoffs.numCones,
+      numCubes: report.dropoffs.numCubes,
+    );
+
+    chargeStationPasses.updateWithValue(report.chargeStationPasses);
+    climb.updateWithClimb(report.climb);
+    notes.add(report.notes);
+  }
+}
+
+class TeamSummary {
+  Stat score;
+  int won, lost;
+  RobotIndexStat defenceIndex;
+  PiecesPickupsStat pickups;
+  PiecesDropoffsStat dropoffs;
+  Stat chargeStationPasses;
+  List<String> notes, fouls;
+
+  TeamSummary({
+    required this.score,
+    required this.won,
+    required this.lost,
+    required this.defenceIndex,
+    required this.pickups,
+    required this.dropoffs,
+    required this.chargeStationPasses,
+    required this.notes,
+    required this.fouls,
+  });
+
+  /// Uses default values for all fields.
+  TeamSummary.defaults()
+      : score = Stat(),
+        won = 0,
+        lost = 0,
+        defenceIndex = RobotIndexStat.defaults(),
+        pickups = PiecesPickupsStat.defaults(),
+        dropoffs = PiecesDropoffsStat.defaults(),
+        chargeStationPasses = Stat(),
+        notes = [],
+        fouls = [];
+
+  TeamSummary.only({
+    Stat? score,
+    int? won,
+    int? lost,
+    RobotIndexStat? defenceIndex,
+    PiecesPickupsStat? pickups,
+    PiecesDropoffsStat? dropoffs,
+    Stat? chargeStationPasses,
     List<String>? notes,
     List<String>? fouls,
-  })  : location = location ?? '',
-        rank = rank ?? 1,
+  })  : score = score ?? Stat(),
         won = won ?? 0,
         lost = lost ?? 0,
-        score = score ?? Stat(),
-        defenceIndex = defenceIndex ?? RobotIndexStat.defaults();
-
-  void updateWithReport(Report report) {
-    score.updateWithValue(report.score);
-    defenceIndex.updateWithValue(report.summary.defenceIndex);
-  }
+        defenceIndex = defenceIndex ?? RobotIndexStat.defaults(),
+        pickups = pickups ?? PiecesPickupsStat.defaults(),
+        dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
+        chargeStationPasses = chargeStationPasses ?? Stat(),
+        notes = notes ?? [],
+        fouls = fouls ?? [];
 
   double get winRate {
     if (won == 0) {
@@ -108,226 +332,57 @@ class TeamInfo {
 
     return won / lost;
   }
-}
-
-/// All of the team's autonomous stats and averages.
-class TeamAuto {
-  Stat score;
-  StartPositionStat startPosition;
-  double leftCommunityRate;
-  PiecesPickupsStat pickups;
-  PiecesDropoffsStat dropoffs;
-  CommunityPassesStat communityPasses;
-  ChargeStationPassesStat chargeStationPasses;
-  AutoClimbStat climb;
-  List<String> notes;
-
-  TeamAuto({
-    required this.score,
-    required this.startPosition,
-    required this.leftCommunityRate,
-    required this.pickups,
-    required this.dropoffs,
-    required this.communityPasses,
-    required this.chargeStationPasses,
-    required this.climb,
-    required this.notes,
-  });
-
-  /// Uses default values for all fields.
-  TeamAuto.defaults()
-      : score = Stat(),
-        startPosition = StartPositionStat.defaults(),
-        leftCommunityRate = 0.0,
-        pickups = PiecesPickupsStat.defaults(),
-        dropoffs = PiecesDropoffsStat.defaults(),
-        communityPasses = CommunityPassesStat.defaults(),
-        chargeStationPasses = ChargeStationPassesStat.defaults(),
-        climb = AutoClimbStat.defaults(),
-        notes = [];
-
-  TeamAuto.only({
-    Stat? score,
-    StartPositionStat? startPosition,
-    double? leftCommunityRate,
-    PiecesPickupsStat? pickups,
-    PiecesDropoffsStat? dropoffs,
-    CommunityPassesStat? communityPasses,
-    ChargeStationPassesStat? chargeStationPasses,
-    AutoClimbStat? climb,
-    List<String>? notes,
-  })  : score = score ?? Stat(),
-        startPosition = startPosition ?? StartPositionStat.defaults(),
-        leftCommunityRate = leftCommunityRate ?? 0.0,
-        pickups = pickups ?? PiecesPickupsStat.defaults(),
-        dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
-        communityPasses = communityPasses ?? CommunityPassesStat.defaults(),
-        chargeStationPasses = ChargeStationPassesStat.defaults(),
-        climb = climb ?? AutoClimbStat.defaults(),
-        notes = notes ?? [];
 
   void updateWithReport(Report report) {
-    score.updateWithValue(report.auto.score);
-    startPosition.updateWithValue(report.auto.startPosition);
+    if (report.summary.won) {
+      won += 1;
+    } else {
+      lost += 1;
+    }
+
+    score.updateWithValue(report.score);
+    defenceIndex.updateWithIndex(report.summary.defenceIndex);
+
+    pickups.updateRatesWithPickups(report.auto.pickups);
+    pickups.updateRatesWithPickups(report.teleop.pickups);
+    pickups.updateRatesWithPickups(report.endgame.pickups);
+
+    pickups.updateAveragesWithPieces(
+      numCones: report.auto.pickups.numCones,
+      numCubes: report.auto.pickups.numCubes,
+    );
+    pickups.updateAveragesWithPieces(
+      numCones: report.teleop.pickups.numCones,
+      numCubes: report.teleop.pickups.numCubes,
+    );
+    pickups.updateAveragesWithPieces(
+      numCones: report.endgame.pickups.numCones,
+      numCubes: report.endgame.pickups.numCubes,
+    );
+
+    dropoffs.updateRatesWithDropoffs(report.auto.dropoffs);
+    dropoffs.updateRatesWithDropoffs(report.teleop.dropoffs);
+    dropoffs.updateRatesWithDropoffs(report.endgame.dropoffs);
+    dropoffs.updateAveragesWithPieces(
+      numCones: report.auto.dropoffs.numCones,
+      numCubes: report.auto.dropoffs.numCubes,
+    );
+    dropoffs.updateAveragesWithPieces(
+      numCones: report.teleop.dropoffs.numCones,
+      numCubes: report.teleop.dropoffs.numCubes,
+    );
+    dropoffs.updateAveragesWithPieces(
+      numCones: report.endgame.dropoffs.numCones,
+      numCubes: report.endgame.dropoffs.numCubes,
+    );
+
+    chargeStationPasses.updateWithValue(report.auto.chargeStationPasses);
+    chargeStationPasses.updateWithValue(report.teleop.chargeStationPasses);
+    chargeStationPasses.updateWithValue(report.endgame.chargeStationPasses);
+
+    notes.add(report.summary.notes);
+    fouls.add(report.summary.fouls);
   }
-}
-
-/// All of the team's teleop stats and averages.
-class TeamTeleop {
-  Stat score;
-  PiecesPickupsStat pickups;
-  PiecesDropoffsStat dropoffs;
-  CommunityPassesStat communityPasses;
-  ChargeStationPassesStat chargeStationPasses;
-  LoadingZonePassesStat loadingZonePasses;
-  List<String> notes;
-
-  TeamTeleop({
-    required this.score,
-    required this.pickups,
-    required this.dropoffs,
-    required this.communityPasses,
-    required this.chargeStationPasses,
-    required this.loadingZonePasses,
-    required this.notes,
-  });
-
-  /// Uses default values for all fields.
-  TeamTeleop.defaults()
-      : score = Stat(),
-        pickups = PiecesPickupsStat.defaults(),
-        dropoffs = PiecesDropoffsStat.defaults(),
-        communityPasses = CommunityPassesStat.defaults(),
-        chargeStationPasses = ChargeStationPassesStat.defaults(),
-        loadingZonePasses = LoadingZonePassesStat.defaults(),
-        notes = [];
-
-  TeamTeleop.only({
-    Stat? score,
-    PiecesPickupsStat? pickups,
-    PiecesDropoffsStat? dropoffs,
-    CommunityPassesStat? communityPasses,
-    ChargeStationPassesStat? chargeStationPasses,
-    LoadingZonePassesStat? loadingZonePasses,
-    List<String>? notes,
-  })  : score = score ?? Stat(),
-        pickups = pickups ?? PiecesPickupsStat.defaults(),
-        dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
-        communityPasses = communityPasses ?? CommunityPassesStat.defaults(),
-        chargeStationPasses =
-            chargeStationPasses ?? ChargeStationPassesStat.defaults(),
-        loadingZonePasses =
-            loadingZonePasses ?? LoadingZonePassesStat.defaults(),
-        notes = notes ?? [];
-
-  void updateWithReport(Report report) {
-    score.updateWithValue(report.teleop.score);
-  }
-}
-
-/// All of the team's endgame stats and averages.
-class TeamEndgame {
-  Stat score;
-  PiecesPickupsStat pickups;
-  PiecesDropoffsStat dropoffs;
-  CommunityPassesStat communityPasses;
-  ChargeStationPassesStat chargeStationPasses;
-  LoadingZonePassesStat loadingZonePassesStat;
-  EndgameClimbStat climb;
-  List<String> notes;
-
-  TeamEndgame({
-    required this.score,
-    required this.pickups,
-    required this.dropoffs,
-    required this.communityPasses,
-    required this.chargeStationPasses,
-    required this.loadingZonePassesStat,
-    required this.climb,
-    required this.notes,
-  });
-
-  /// Uses default values for all fields.
-  TeamEndgame.defaults()
-      : score = Stat(),
-        pickups = PiecesPickupsStat.defaults(),
-        dropoffs = PiecesDropoffsStat.defaults(),
-        communityPasses = CommunityPassesStat.defaults(),
-        chargeStationPasses = ChargeStationPassesStat.defaults(),
-        loadingZonePassesStat = LoadingZonePassesStat.defaults(),
-        climb = EndgameClimbStat.defaults(),
-        notes = [];
-
-  TeamEndgame.only({
-    Stat? score,
-    PiecesPickupsStat? pickups,
-    PiecesDropoffsStat? dropoffs,
-    CommunityPassesStat? communityPasses,
-    ChargeStationPassesStat? chargeStationPasses,
-    LoadingZonePassesStat? loadingZonePasses,
-    EndgameClimbStat? climb,
-    List<String>? notes,
-  })  : score = score ?? Stat(),
-        pickups = pickups ?? PiecesPickupsStat.defaults(),
-        dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
-        communityPasses = communityPasses ?? CommunityPassesStat.defaults(),
-        chargeStationPasses =
-            chargeStationPasses ?? ChargeStationPassesStat.defaults(),
-        loadingZonePassesStat =
-            loadingZonePasses ?? LoadingZonePassesStat.defaults(),
-        climb = climb ?? EndgameClimbStat.defaults(),
-        notes = notes ?? [];
-
-  void updateWithReport(Report report) {}
-}
-
-class TeamSummary {
-  PiecesPickupsStat pickups;
-  PiecesDropoffsStat dropoffs;
-  CommunityPassesStat communityPasses;
-  ChargeStationPassesStat chargeStationPasses;
-  LoadingZonePassesStat loadingZonePassesStat;
-  List<String> notes, fouls;
-
-  TeamSummary({
-    required this.pickups,
-    required this.dropoffs,
-    required this.communityPasses,
-    required this.chargeStationPasses,
-    required this.loadingZonePassesStat,
-    required this.notes,
-    required this.fouls,
-  });
-
-  /// Uses default values for all fields.
-  TeamSummary.defaults()
-      : pickups = PiecesPickupsStat.defaults(),
-        dropoffs = PiecesDropoffsStat.defaults(),
-        communityPasses = CommunityPassesStat.defaults(),
-        chargeStationPasses = ChargeStationPassesStat.defaults(),
-        loadingZonePassesStat = LoadingZonePassesStat.defaults(),
-        notes = [],
-        fouls = [];
-
-  TeamSummary.only({
-    PiecesPickupsStat? pickups,
-    PiecesDropoffsStat? dropoffs,
-    CommunityPassesStat? communityPasses,
-    ChargeStationPassesStat? chargeStationPasses,
-    LoadingZonePassesStat? loadingZonePasses,
-    List<String>? notes,
-    List<String>? fouls,
-  })  : pickups = pickups ?? PiecesPickupsStat.defaults(),
-        dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
-        communityPasses = communityPasses ?? CommunityPassesStat.defaults(),
-        chargeStationPasses =
-            chargeStationPasses ?? ChargeStationPassesStat.defaults(),
-        loadingZonePassesStat =
-            loadingZonePasses ?? LoadingZonePassesStat.defaults(),
-        notes = notes ?? [],
-        fouls = fouls ?? [];
-
-  void updateWithReport(Report report) {}
 }
 
 /// Rates of the robot's starting positions.
@@ -366,8 +421,8 @@ class StartPositionStat {
         _middleCount = 0,
         _loadingZoneCount = 0;
 
-  void updateWithValue(StartPosition value) {
-    switch (value) {
+  void updateWithPosition(StartPosition position) {
+    switch (position) {
       case StartPosition.arenaWall:
         _arenaWallCount++;
         break;
@@ -422,8 +477,8 @@ class ActionDurationStat {
         _twoToFiveCount = 0,
         _fivePlusCount = 0;
 
-  void updateWithValue(ActionDuration value) {
-    switch (value) {
+  void updateWithDuration(ActionDuration duration) {
+    switch (duration) {
       case ActionDuration.zeroToTwo:
         _zeroToTwoCount++;
         break;
@@ -476,8 +531,8 @@ class PiecesStat {
         _conesCount = 0,
         _cubesCount = 0;
 
-  void updateRatesWithValue(Piece value) {
-    switch (value) {
+  void updateRatesWithPiece(Piece piece) {
+    switch (piece) {
       case Piece.cone:
         _conesCount++;
         break;
@@ -491,7 +546,7 @@ class PiecesStat {
     cubesRate = _cubesCount / count;
   }
 
-  void updateAveragesWithValues({
+  void updateAveragesWithPieces({
     required int numCones,
     required int numCubes,
   }) {
@@ -500,117 +555,21 @@ class PiecesStat {
   }
 }
 
-/// Pickups from the single or double substations.
-class SubstationsPiecePickupsStat {
-  SubstationsPiecePickupsStat({
-    required this.doubleLeftShelfAverage,
-    required this.doubleRightShelfAverage,
-    required this.doubleLeftFloorAverage,
-    required this.doubleRightFloorAverage,
-    required this.singleAverage,
-    required this.duration,
-  });
-
-  /// Per-game average.
-  PiecesStat doubleLeftShelfAverage,
-      doubleRightShelfAverage,
-      doubleLeftFloorAverage,
-      doubleRightFloorAverage,
-      singleAverage;
-
-  /// Rates of different pickup durations.
-  ActionDurationStat duration;
-
-  /// Uses default values for all fields.
-  SubstationsPiecePickupsStat.defaults()
-      : doubleLeftShelfAverage = PiecesStat.defaults(),
-        doubleRightShelfAverage = PiecesStat.defaults(),
-        doubleLeftFloorAverage = PiecesStat.defaults(),
-        doubleRightFloorAverage = PiecesStat.defaults(),
-        singleAverage = PiecesStat.defaults(),
-        duration = ActionDurationStat.defaults();
-}
-
-/// Pickups from the floor, either laying or standing.
-class FloorPiecePickupsStat {
-  FloorPiecePickupsStat({
-    required this.standingConesRate,
-    required this.layingConesRate,
-    required this.cubesRate,
-    required this.duration,
-  })  : _standingConesCount = 0,
-        _layingConesCount = 0,
-        _cubesCount = 0;
-
-  /// The rate of standing cones pickes.
-  ///
-  /// Together with [layingConesRate] and [cubesRate] represents 100% of pieces picked up from the floor.
-  double standingConesRate;
-
-  /// The rate of standing cones pickes.
-  ///
-  /// Together with [standingConesRate] and [cubesRate] represents 100% of pieces picked up from the floor.
-  double layingConesRate;
-
-  /// The rate of standing cones pickes.
-  ///
-  /// Together with [standingConesRate] and [layingConesRate] represents 100% of pieces picked up from the floor.
-  double cubesRate;
-
-  /// Rates of different pickup durations.
-  ActionDurationStat duration;
-
-  int _standingConesCount, _layingConesCount, _cubesCount;
-
-  /// Uses default values for all fields.
-  FloorPiecePickupsStat.defaults()
-      : standingConesRate = 0.0,
-        layingConesRate = 0.0,
-        cubesRate = 0.0,
-        duration = ActionDurationStat.defaults(),
-        _standingConesCount = 0,
-        _layingConesCount = 0,
-        _cubesCount = 0;
-
-  void updateWithValue(PiecePickup value) {
-    switch (value.piece) {
-      case Piece.cone:
-        if (value.position == PiecePickupPosition.floorStanding) {
-          _standingConesCount++;
-        } else {
-          _layingConesCount++;
-        }
-        break;
-      case Piece.cube:
-        _cubesCount++;
-        break;
-    }
-
-    final count = _standingConesCount + _layingConesCount + _cubesCount;
-    standingConesRate = _standingConesCount / count;
-    layingConesRate = _layingConesCount / count;
-    cubesRate = _cubesCount / count;
-
-    duration.updateWithValue(value.duration);
-  }
-}
-
 /// Pickups from all positions.
 class PiecesPickupsStat {
   PiecesPickupsStat({
-    required this.substationsPickups,
-    required this.floorPickups,
+    required this.doubleShelf,
+    required this.doubleFloor,
+    required this.single,
+    required this.floor,
     required this.pieces,
     required this.duration,
   });
 
-  /// Pickups from the single or double substations.
-  SubstationsPiecePickupsStat substationsPickups;
+  /// Per position averages and rates.
+  PiecesStat doubleShelf, doubleFloor, single, floor;
 
-  /// Pickups from the floor.
-  FloorPiecePickupsStat floorPickups;
-
-  /// Rates of cones and cubes being picked up.
+  /// All positions averages and rates.
   PiecesStat pieces;
 
   /// Rates of different pickup durations.
@@ -618,27 +577,44 @@ class PiecesPickupsStat {
 
   /// Uses default values for all fields.
   PiecesPickupsStat.defaults()
-      : substationsPickups = SubstationsPiecePickupsStat.defaults(),
-        floorPickups = FloorPiecePickupsStat.defaults(),
+      : doubleShelf = PiecesStat.defaults(),
+        doubleFloor = PiecesStat.defaults(),
+        single = PiecesStat.defaults(),
+        floor = PiecesStat.defaults(),
         pieces = PiecesStat.defaults(),
         duration = ActionDurationStat.defaults();
 
-  void updateRatesWithValue(PiecePickup value) {
-    if (value.position.isFromFloor) {
-      floorPickups.updateWithValue(value);
-    } else {
-      substationsPickups.updateWithValue(value);
+  void updateRatesWithPickup(PiecePickup pickup) {
+    switch (pickup.position) {
+      case PiecePickupPosition.doubleShelf:
+        doubleShelf.updateRatesWithPiece(pickup.piece);
+        break;
+      case PiecePickupPosition.doubleFloor:
+        doubleFloor.updateRatesWithPiece(pickup.piece);
+        break;
+      case PiecePickupPosition.single:
+        single.updateRatesWithPiece(pickup.piece);
+        break;
+      case PiecePickupPosition.floor:
+        floor.updateRatesWithPiece(pickup.piece);
+        break;
     }
 
-    pieces.updateRatesWithValue(value.piece);
-    duration.updateWithValue(value.duration);
+    pieces.updateRatesWithPiece(pickup.piece);
+    duration.updateWithDuration(pickup.duration);
   }
 
-  void updateAveragesWithValues({
+  void updateRatesWithPickups(List<PiecePickup> pickups) {
+    for (final pickup in pickups) {
+      updateRatesWithPickup(pickup);
+    }
+  }
+
+  void updateAveragesWithPieces({
     required int numCones,
     required int numCubes,
   }) {
-    pieces.updateAveragesWithValues(numCones: numCones, numCubes: numCubes);
+    pieces.updateAveragesWithPieces(numCones: numCones, numCubes: numCubes);
   }
 }
 
@@ -674,6 +650,15 @@ class GridDropoffsStat {
         ),
         gridRate = 0.0,
         duration = ActionDurationStat.defaults();
+
+  void updateWithDropoff(PieceDropoff dropoff) {
+    dropoffs[dropoff.row][dropoff.column].updateRatesWithPiece(dropoff.piece);
+    duration.updateWithDuration(dropoff.duration);
+  }
+
+  void updateGridRate(double newGridRate) {
+    gridRate = newGridRate;
+  }
 }
 
 /// Dropoffs made in all grids.
@@ -684,16 +669,21 @@ class PiecesDropoffsStat {
     required this.loadingZoneGrid,
     required this.pieces,
     required this.duration,
-  });
+  })  : _arenaWallGridCount = 0,
+        _coopGridCount = 0,
+        _loadingZoneGridCount = 0;
 
   /// Dropoffs made in the grid closest to the arena wall.
   GridDropoffsStat arenaWallGrid;
+  int _arenaWallGridCount;
 
   /// Dropoffs made in the middle grid (aka the coopertition / co-op grid).
   GridDropoffsStat coopGrid;
+  int _coopGridCount;
 
   /// Dropoffs made in the grid closest to the loading zone.
   GridDropoffsStat loadingZoneGrid;
+  int _loadingZoneGridCount;
 
   /// Pieces dropoffs rates.
   PiecesStat pieces;
@@ -707,135 +697,47 @@ class PiecesDropoffsStat {
         coopGrid = GridDropoffsStat.defaults(),
         loadingZoneGrid = GridDropoffsStat.defaults(),
         pieces = PiecesStat.defaults(),
-        duration = ActionDurationStat.defaults();
-}
+        duration = ActionDurationStat.defaults(),
+        _arenaWallGridCount = 0,
+        _coopGridCount = 0,
+        _loadingZoneGridCount = 0;
 
-/// Passes in the alliance's community (closest to the arena wall or loading zone).
-class CommunityPassesStat {
-  CommunityPassesStat({
-    required this.arenaWallRate,
-    required this.loadingZoneRate,
-  })  : _arenaWallCount = 0,
-        _loadingZoneCount = 0;
-
-  /// Rate of passes closest to the arena wall.
-  ///
-  /// Together with [loadingZoneRate] represents 100% of all community passes.
-  double arenaWallRate;
-
-  /// Rate of passes closest to the loading zone.
-  ///
-  /// Together with [arenaWallRate] represents 100% of all community passes.
-  double loadingZoneRate;
-
-  int _arenaWallCount, _loadingZoneCount;
-
-  /// Uses default values for all fields.
-  CommunityPassesStat.defaults()
-      : arenaWallRate = 0.0,
-        loadingZoneRate = 0.0,
-        _arenaWallCount = 0,
-        _loadingZoneCount = 0;
-
-  void updateWithValue(CommunityPass value) {
-    switch (value) {
-      case CommunityPass.arenaWall:
-        _arenaWallCount++;
+  void updateRatesWithDropoff(PieceDropoff dropoff) {
+    switch (dropoff.grid) {
+      case Grid.arenaWall:
+        arenaWallGrid.updateWithDropoff(dropoff);
+        _arenaWallGridCount++;
         break;
-      case CommunityPass.loadingZone:
-        _loadingZoneCount++;
+      case Grid.coop:
+        coopGrid.updateWithDropoff(dropoff);
+        _coopGridCount++;
+        break;
+      case Grid.loadingZone:
+        loadingZoneGrid.updateWithDropoff(dropoff);
+        _loadingZoneGridCount++;
         break;
     }
 
-    final count = _arenaWallCount + _loadingZoneCount;
-    arenaWallRate = _arenaWallCount / count;
-    loadingZoneRate = _loadingZoneCount / count;
+    int count = _arenaWallGridCount + _coopGridCount + _loadingZoneGridCount;
+    arenaWallGrid.updateGridRate(_arenaWallGridCount / count);
+    coopGrid.updateGridRate(_coopGridCount / count);
+    loadingZoneGrid.updateGridRate(_loadingZoneGridCount / count);
+
+    pieces.updateRatesWithPiece(dropoff.piece);
+    duration.updateWithDuration(dropoff.duration);
   }
-}
 
-/// Passes in the alliance's loading zone (start or end of the zone).
-class LoadingZonePassesStat {
-  LoadingZonePassesStat({
-    required this.startRate,
-    required this.endRate,
-  })  : _startCount = 0,
-        _endCount = 0;
-
-  /// Rate of passes at the start of the loading zone.
-  ///
-  /// Together with [endRate] represents 100% of all community passes.
-  double startRate;
-
-  /// Rate of passes at the end of the loading zone.
-  ///
-  /// Together with [startRate] represents 100% of all community passes.
-  double endRate;
-
-  int _startCount, _endCount;
-
-  /// Uses default values for all fields.
-  LoadingZonePassesStat.defaults()
-      : startRate = 0.0,
-        endRate = 0.0,
-        _startCount = 0,
-        _endCount = 0;
-
-  void updateWithValue(LoadingZonePass value) {
-    switch (value) {
-      case LoadingZonePass.start:
-        _startCount++;
-        break;
-      case LoadingZonePass.end:
-        _endCount++;
-        break;
+  void updateRatesWithDropoffs(List<PieceDropoff> dropoffs) {
+    for (final dropoff in dropoffs) {
+      updateRatesWithDropoff(dropoff);
     }
-
-    final count = _startCount + _endCount;
-    startRate = _startCount / count;
-    endRate = _endCount / count;
   }
-}
 
-/// Passes in the alliance's charge station (entering or exiting the community).
-class ChargeStationPassesStat {
-  ChargeStationPassesStat({
-    required this.enteredCommunityRate,
-    required this.exitedCommunityRate,
-  })  : _enteredCommunityCount = 0,
-        _exitedCommunityCount = 0;
-
-  /// Rate of passes on the charge station to enter the community.
-  ///
-  /// Together with [exitedCommunityRate] represents 100% of all community passes.
-  double enteredCommunityRate;
-
-  /// Rate of passes on the charge station to exit the community.
-  ///
-  /// Together with [enteredCommunityRate] represents 100% of all community passes.
-  double exitedCommunityRate;
-
-  int _enteredCommunityCount, _exitedCommunityCount;
-
-  /// Uses default values for all fields.
-  ChargeStationPassesStat.defaults()
-      : enteredCommunityRate = 0.0,
-        exitedCommunityRate = 0.0,
-        _enteredCommunityCount = 0,
-        _exitedCommunityCount = 0;
-
-  void updateWithValue(ChargeStationPass value) {
-    switch (value) {
-      case ChargeStationPass.enteredCommunity:
-        _enteredCommunityCount++;
-        break;
-      case ChargeStationPass.exitedCommunity:
-        _exitedCommunityCount++;
-        break;
-    }
-
-    final count = _enteredCommunityCount + _exitedCommunityCount;
-    enteredCommunityRate = _enteredCommunityCount / count;
-    exitedCommunityRate = _exitedCommunityCount / count;
+  void updateAveragesWithPieces({
+    required int numCones,
+    required int numCubes,
+  }) {
+    pieces.updateAveragesWithPieces(numCones: numCones, numCubes: numCubes);
   }
 }
 
@@ -884,7 +786,7 @@ class ClimbingStateStat {
         _dockedByOtherCount = 0,
         _engagedCount = 0;
 
-  void updateWithValue(ClimbingState value) {
+  void updateWithState(ClimbingState value) {
     switch (value) {
       case ClimbingState.none:
         _noneCount++;
@@ -925,6 +827,11 @@ class AutoClimbStat {
   AutoClimbStat.defaults()
       : states = ClimbingStateStat.defaults(),
         duration = ActionDurationStat.defaults();
+
+  void updateWithClimb(AutoClimb climb) {
+    states.updateWithState(climb.state);
+    duration.updateWithDuration(climb.duration);
+  }
 }
 
 class RobotIndexStat {
@@ -962,7 +869,7 @@ class RobotIndexStat {
         _secondCount = 0,
         _thirdCount = 0;
 
-  void updateWithValue(RobotIndex value) {
+  void updateWithIndex(RobotIndex value) {
     if (value == RobotIndex.first) {
       _firstCount++;
     } else if (value == RobotIndex.second) {
@@ -1000,4 +907,10 @@ class EndgameClimbStat {
       : states = ClimbingStateStat.defaults(),
         indexes = RobotIndexStat.defaults(),
         duration = ActionDurationStat.defaults();
+
+  void updateWithClimb(EndgameClimb climb) {
+    states.updateWithState(climb.state);
+    indexes.updateWithIndex(climb.robotIndex);
+    duration.updateWithDuration(climb.duration);
+  }
 }

@@ -58,13 +58,10 @@ class AnalyticsData {
 
       final team = teamsWithNumber[report.teamNumber]!;
 
-      if (report.summary.won) {
-        team.info.won += 1;
-      } else {
-        team.info.lost += 1;
-      }
-
-      team.info.updateWithReport(report);
+      team.auto.updateWithReport(report.auto);
+      team.teleop.updateWithReport(report.teleop);
+      team.endgame.updateWithReport(report.endgame);
+      team.summary.updateWithReport(report);
     }
 
     return _fromTeamsWithNumber(database.dataStamp, teamsWithNumber);

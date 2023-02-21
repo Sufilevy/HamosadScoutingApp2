@@ -26,16 +26,16 @@ class TeamsPage extends StatefulWidget {
     ),
     'Win Rate': DataEntry<double>(
       height: 35.0,
-      getData: (team) => team.info.winRate,
+      getData: (team) => team.summary.winRate,
       builder: (team) => AnalyticsDataWinRate(
-        won: team.info.won,
-        lost: team.info.lost,
+        won: team.summary.won,
+        lost: team.summary.lost,
         inContainer: false,
       ),
     ),
     'Avg Score': DataEntry<double>(
       height: 30.0,
-      getData: (team) => team.info.score.average,
+      getData: (team) => team.summary.score.average,
     ),
     'Avg Auto Cones Drop': DataEntry<double>(
       height: 30.0,
