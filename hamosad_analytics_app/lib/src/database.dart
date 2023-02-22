@@ -3,6 +3,7 @@ import 'package:hamosad_analytics_app/src/models.dart';
 
 export 'database/analytics_data.dart';
 export 'database/analytics_database.dart';
+export 'database/firebase_options.dart';
 
 Future<void> getData() {
   return Future.delayed(1000.milliseconds);

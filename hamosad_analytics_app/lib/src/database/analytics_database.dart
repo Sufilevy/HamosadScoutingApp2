@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartx/dartx.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
@@ -10,24 +11,30 @@ class TeamNameAndLocation {
   TeamNameAndLocation.fromJson(Json json)
       : name = json['name'],
         location = json['location'];
+
+  @override
+  String toString() {
+    return '$name, $location';
+  }
 }
 
 class AnalyticsDatabase {
   AnalyticsDatabase()
-      : _dataStamp = '',
+      : _db = FirebaseFirestore.instance,
+        _selectedDistrcits = {},
         _reports = [],
         _teams = {};
 
-  String _dataStamp;
+  final FirebaseFirestore _db;
+  final Set<String> _selectedDistrcits;
   List<Report> _reports;
   Map<int, TeamNameAndLocation> _teams;
 
   List<Report> get reports => _reports;
-  String get dataStamp => _dataStamp;
   Map<int, TeamNameAndLocation> get teams => _teams;
 
   Future<void> updateFromFirestore() async {
-    _dataStamp = await _getDataStampFromFirestore();
+    _selectedDistrcits.add(await getCurrentDistrict());
 
     final reports = await _getReportsFromFirestore();
     _reports = reports
@@ -42,16 +49,27 @@ class AnalyticsDatabase {
         ));
   }
 
-  Future<String> _getDataStampFromFirestore() {
-    return Future.value('');
+  Future<String> getCurrentDistrict() async {
+    final informationDoc =
+        await _db.collection('district').doc('information').get();
+    return informationDoc.get('name');
   }
 
   Future<Json> _getReportsFromFirestore() async {
-    return Future.value({});
+    Json reports = {};
+
+    final reportsRef = _db.collection('reports');
+    for (final district in _selectedDistrcits) {
+      final districtDoc = await reportsRef.doc(district).get();
+      reports.addAll(districtDoc.data() ?? {});
+    }
+
+    return reports;
   }
 
   Future<Json> _getTeamsFromFirestore() async {
-    return Future.value({});
+    final teamsDoc = await _db.collection('district').doc('teams').get();
+    return teamsDoc.data() ?? {};
   }
 }
 

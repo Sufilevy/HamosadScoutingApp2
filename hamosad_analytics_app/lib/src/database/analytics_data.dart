@@ -5,17 +5,10 @@ import 'package:hamosad_analytics_app/src/models.dart';
 
 class AnalyticsData {
   const AnalyticsData(
-    this.dataStamp,
     this.teamsByNumber,
     this.teamsWithNumber,
     this.teamsByRank,
   );
-
-  /// The stamp linked with this data, created when a 'Hamosad Scouting App' client submits a report.
-  ///
-  /// The stamp's format is: '$time-$tag', where time is millisecondsSinceEpoch
-  /// when the data was changed, and tag is a randomly generated 4-characters string.
-  final String dataStamp;
 
   /// The teams that have data submitted on them in the reports, sorted by their number.
   final List<Team> teamsByNumber;
@@ -25,18 +18,6 @@ class AnalyticsData {
 
   /// The teams that have data submitted on them in the reports, sorted by their rank.
   final List<Team> teamsByRank;
-
-  @override
-  bool operator ==(Object other) {
-    if (other is AnalyticsData) {
-      return hashCode == other.hashCode;
-    } else {
-      return false;
-    }
-  }
-
-  @override
-  int get hashCode => dataStamp.hashCode;
 
   /// Generate an [AnalyticsData] object from a list of reports.
   factory AnalyticsData.fromReports(AnalyticsDatabase database) {
@@ -56,27 +37,23 @@ class AnalyticsData {
         ),
       );
 
+      // Update the team's stats with the current report
       final team = teamsWithNumber[report.teamNumber]!;
-
       team.auto.updateWithReport(report.auto);
       team.teleop.updateWithReport(report.teleop);
       team.endgame.updateWithReport(report.endgame);
       team.summary.updateWithReport(report);
     }
 
-    return _fromTeamsWithNumber(database.dataStamp, teamsWithNumber);
+    return _fromTeamsWithNumber(teamsWithNumber);
   }
 
-  static AnalyticsData _fromTeamsWithNumber(
-    String dataStamp,
-    Map<int, Team> teamsWithNumber,
-  ) {
+  static AnalyticsData _fromTeamsWithNumber(Map<int, Team> teamsWithNumber) {
     final teamsList = teamsWithNumber.mapEntries((team) => team.value);
     final teamsByNumber = teamsList.sortedBy((team) => team.info.number);
     final teamsByRank = teamsList.sortedBy((team) => team.info.rank);
 
     return AnalyticsData(
-      dataStamp,
       teamsByNumber,
       teamsWithNumber,
       teamsByRank,

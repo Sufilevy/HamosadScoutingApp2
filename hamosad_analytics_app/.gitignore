@@ -44,4 +44,4 @@ app.*.map.json
 /android/app/release
 
 # Shush
-/lib/src/services/firebase_options.dart
+/lib/src/database/firebase_options.dart

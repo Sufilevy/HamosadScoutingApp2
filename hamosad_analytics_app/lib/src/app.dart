@@ -1,37 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/pages.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 import 'package:sidebarx/sidebarx.dart';
 
-class AnalyticsApp extends StatefulWidget {
-  const AnalyticsApp({super.key});
-
-  @override
-  State<AnalyticsApp> createState() => _AnalyticsAppState();
-}
-
-class _AnalyticsAppState extends State<AnalyticsApp> {
-  final List<Widget> _pages = [
-    const TeamDetailsPage(),
-    const TeamsPage(),
-    const ReportDetailsPage(),
-    const ReportsPage(),
-    const AlliancesPage()
-  ];
+class AnalyticsApp extends ConsumerWidget {
+  AnalyticsApp({super.key});
 
   final SidebarXController _sidebarController =
       SidebarXController(selectedIndex: 0, extended: true);
+  final ValueNotifier<int> _dataChangedNotifier = ValueNotifier(0);
 
   @override
-  void initState() {
-    super.initState();
-    _sidebarController.addListener(() => setState(() {}));
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Portal(
       child: MaterialApp(
         title: 'Scouting Analytics',
@@ -42,7 +25,7 @@ class _AnalyticsAppState extends State<AnalyticsApp> {
             children: [
               Sidebar(
                 _sidebarController,
-                onRefreshData: () => setState(() {}),
+                onRefreshData: () => _dataChangedNotifier.value = 0,
                 items: const [
                   SidebarXItem(
                     icon: Icons.people_outline_rounded,
@@ -67,16 +50,54 @@ class _AnalyticsAppState extends State<AnalyticsApp> {
                 ],
               ),
               Expanded(
-                child: AnalyticsFadeSwitcher(
-                  child: Container(
-                    key: ValueKey<int>(_sidebarController.selectedIndex),
-                    child: _pages[_sidebarController.selectedIndex],
-                  ),
+                child: AnalyticsAppBody(
+                  sidebarController: _sidebarController,
+                  dataChangedNotifier: _dataChangedNotifier,
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class AnalyticsAppBody extends StatefulWidget {
+  const AnalyticsAppBody({
+    super.key,
+    required this.sidebarController,
+    required this.dataChangedNotifier,
+  });
+
+  final SidebarXController sidebarController;
+  final ValueNotifier<int> dataChangedNotifier;
+
+  @override
+  State<AnalyticsAppBody> createState() => _AnalyticsAppBodyState();
+}
+
+class _AnalyticsAppBodyState extends State<AnalyticsAppBody> {
+  final List<Widget> _pages = [
+    const TeamDetailsPage(),
+    const TeamsPage(),
+    const ReportDetailsPage(),
+    const ReportsPage(),
+    const AlliancesPage()
+  ];
+  @override
+  void initState() {
+    super.initState();
+    widget.sidebarController.addListener(() => setState(() {}));
+    widget.dataChangedNotifier.addListener(() => setState(() {}));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnalyticsFadeSwitcher(
+      child: Container(
+        key: ValueKey<int>(widget.sidebarController.selectedIndex),
+        child: _pages[widget.sidebarController.selectedIndex],
       ),
     );
   }
