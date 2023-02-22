@@ -17,7 +17,7 @@ class ScoutingImage extends StatelessWidget {
         assert(path.isEmpty || url.isEmpty),
         super(key: key);
 
-  Widget _image() => ClipRRect(
+  Widget _buildImage() => ClipRRect(
         borderRadius: BorderRadius.circular(5.0 * scale),
         child: path.isNotEmpty
             ? Image.asset(path, scale: scale)
@@ -36,10 +36,10 @@ class ScoutingImage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ScoutingText.subtitle(title),
-                _image(),
+                _buildImage(),
               ],
             )
-          : _image(),
+          : _buildImage(),
     );
   }
 }

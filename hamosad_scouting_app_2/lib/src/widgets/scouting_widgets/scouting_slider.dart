@@ -42,7 +42,7 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
     super.initState();
   }
 
-  Color _sliderColor() {
+  Color get _sliderColor {
     return Color.lerp(
           ScoutingTheme.primaryVariant,
           ScoutingTheme.primary,
@@ -51,7 +51,7 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
         ScoutingTheme.primary;
   }
 
-  Widget _slider() => Padding(
+  Widget _buildSlider() => Padding(
         padding: EdgeInsets.symmetric(horizontal: 16 * widget.size),
         child: RepaintBoundary(
           child: Slider(
@@ -59,8 +59,8 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
             onChanged: (value) => setState(() {
               widget.cubit.data = value.toInt();
             }),
-            thumbColor: _sliderColor(),
-            activeColor: _sliderColor(),
+            thumbColor: _sliderColor,
+            activeColor: _sliderColor,
             inactiveColor: ScoutingTheme.background3,
             divisions: (widget.max - widget.min) ~/ widget.step,
             label: widget.cubit.data.toString(),
@@ -84,7 +84,7 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
                 textAlign: TextAlign.center,
               ),
             ),
-          _slider(),
+          _buildSlider(),
           if (widget.subtitle.isNotEmpty)
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 32 * widget.size),
@@ -96,7 +96,7 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
         ],
       );
     } else {
-      return _slider();
+      return _buildSlider();
     }
   }
 }

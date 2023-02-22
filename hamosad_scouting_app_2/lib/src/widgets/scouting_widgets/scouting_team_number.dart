@@ -25,7 +25,7 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
   int _currentTeamIndex = -1;
   final double _width = 150.0, _height = 110.0, _radius = 7.5;
 
-  Widget _teamButton(BuildContext context, int index) {
+  Widget _buildTeamButton(BuildContext context, int index) {
     final Color teamColor =
         index <= 2 ? ScoutingTheme.redAlliance : ScoutingTheme.blueAlliance;
     final bool isSelected = _currentTeamIndex == index;
@@ -108,22 +108,22 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _teamButton(context, 0),
-            _teamButton(context, 3),
+            _buildTeamButton(context, 0),
+            _buildTeamButton(context, 3),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _teamButton(context, 1),
-            _teamButton(context, 4),
+            _buildTeamButton(context, 1),
+            _buildTeamButton(context, 4),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _teamButton(context, 2),
-            _teamButton(context, 5),
+            _buildTeamButton(context, 2),
+            _buildTeamButton(context, 5),
           ],
         ),
       ],

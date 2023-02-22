@@ -56,7 +56,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
     }
   }
 
-  Widget _iconButton(
+  Widget _buildIconButton(
     BuildContext context,
     void Function() onPressed,
     IconData icon,
@@ -75,7 +75,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
     );
   }
 
-  Widget _counterText(BuildContext context) {
+  Widget _buildCounterText(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0 * widget.size),
       child: Container(
@@ -107,12 +107,12 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
     );
   }
 
-  Widget _counter() => Row(
+  Widget _buildCounter() => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _iconButton(context, _decrement, Icons.remove),
-          _counterText(context),
-          _iconButton(context, _increment, Icons.add),
+          _buildIconButton(context, _decrement, Icons.remove),
+          _buildCounterText(context),
+          _buildIconButton(context, _increment, Icons.add),
         ],
       );
 
@@ -130,12 +130,12 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
                 textAlign: TextAlign.center,
               ),
             ),
-            _counter(),
+            _buildCounter(),
           ],
         ),
       );
     } else {
-      return _counter();
+      return _buildCounter();
     }
   }
 }

@@ -20,7 +20,7 @@ class ScoutingNotes extends StatefulWidget {
 }
 
 class _ScoutingNotesState extends State<ScoutingNotes> {
-  Widget _textField(BuildContext context) => TextField(
+  Widget _buildTextField(BuildContext context) => TextField(
         onChanged: (String value) => setState(() => widget.cubit.data = value),
         minLines: 3,
         maxLines: null,
@@ -47,14 +47,14 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 8 * widget.size),
-            _textField(context),
+            _buildTextField(context),
           ],
         ),
       );
     } else {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 56 * widget.size),
-        child: _textField(context),
+        child: _buildTextField(context),
       );
     }
   }
