@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/widgets/scouting_widgets/scouting_text.dart';
 
 class ScoutingImage extends StatelessWidget {
   final String path, url, title;
-  final double scale;
+  final double scale, size;
 
   /// Only one of [path] or [url] must not be empty.
   ScoutingImage({
@@ -11,29 +12,34 @@ class ScoutingImage extends StatelessWidget {
     this.path = '',
     this.url = '',
     this.scale = 1.0,
+    this.size = 1.0,
   })  : assert(path.isNotEmpty || url.isNotEmpty),
         assert(path.isEmpty || url.isEmpty),
         super(key: key);
 
-  Widget _image() => path.isNotEmpty
-      ? Image.asset(path, scale: scale)
-      : Image.network(url, scale: scale);
+  Widget _image() => ClipRRect(
+        borderRadius: BorderRadius.circular(5.0 * scale),
+        child: path.isNotEmpty
+            ? Image.asset(path, scale: scale)
+            : Image.network(
+                url,
+                scale: scale,
+              ),
+      );
 
   @override
   Widget build(BuildContext context) {
-    if (title.isNotEmpty) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            title,
-            style: Theme.of(context).textTheme.labelMedium,
-          ),
-          _image(),
-        ],
-      );
-    } else {
-      return _image();
-    }
+    return Padding(
+      padding: EdgeInsets.all(12.0 * size),
+      child: title.isNotEmpty
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ScoutingText.subtitle(title),
+                _image(),
+              ],
+            )
+          : _image(),
+    );
   }
 }

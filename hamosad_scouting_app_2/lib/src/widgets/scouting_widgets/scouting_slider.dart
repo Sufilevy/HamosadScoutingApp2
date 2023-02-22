@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
+import 'package:hamosad_scouting_app_2/src/widgets.dart';
 
 class ScoutingSlider extends StatefulWidget {
   final Cubit<int> cubit;
@@ -25,27 +27,6 @@ class ScoutingSlider extends StatefulWidget {
         assert(initial == null || (initial >= min && initial <= max)),
         super(key: key);
 
-  static ScoutingSlider fromJSON({
-    required Map<String, dynamic> json,
-    required Cubit<int> cubit,
-    double size = 1,
-  }) {
-    assert(json.containsKey('min'));
-    assert(json.containsKey('max'));
-    assert(json.containsKey('step'));
-
-    return ScoutingSlider(
-      cubit: cubit,
-      size: size,
-      title: json['title'] ?? '',
-      subtitle: json['subtitle'] ?? '',
-      min: json['min']!,
-      max: json['max']!,
-      step: json['step']!,
-      initial: json['initial'],
-    );
-  }
-
   @override
   State<ScoutingSlider> createState() => _ScoutingSliderState();
 }
@@ -62,13 +43,12 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
   }
 
   Color _sliderColor() {
-    HSVColor hsv = HSVColor.fromColor(Theme.of(context).toggleableActiveColor);
     return Color.lerp(
-          hsv.withValue((hsv.value - 0.4).clamp(0, 1)).toColor(),
-          Theme.of(context).toggleableActiveColor,
+          ScoutingTheme.primaryVariant,
+          ScoutingTheme.primary,
           widget.cubit.data / (widget.max - widget.min),
         ) ??
-        Theme.of(context).toggleableActiveColor;
+        ScoutingTheme.primary;
   }
 
   Widget _slider() => Padding(
@@ -81,6 +61,7 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
             }),
             thumbColor: _sliderColor(),
             activeColor: _sliderColor(),
+            inactiveColor: ScoutingTheme.background3,
             divisions: (widget.max - widget.min) ~/ widget.step,
             label: widget.cubit.data.toString(),
             min: widget.min.toDouble(),
@@ -98,9 +79,8 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
           if (widget.title.isNotEmpty)
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 32 * widget.size),
-              child: Text(
+              child: ScoutingText.title(
                 widget.title,
-                style: Theme.of(context).textTheme.labelSmall,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -108,12 +88,8 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
           if (widget.subtitle.isNotEmpty)
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 32 * widget.size),
-              child: Text(
+              child: ScoutingText.text(
                 widget.subtitle,
-                style: TextStyle(
-                  fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
-                  color: Theme.of(context).textTheme.labelSmall?.color,
-                ),
                 textAlign: TextAlign.center,
               ),
             ),

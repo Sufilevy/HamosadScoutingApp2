@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -21,7 +22,7 @@ class ScoutingHomePage extends StatelessWidget {
         context: context,
         builder: (context) => const ScoutingAlertDialog(
           titleIcon: Icons.warning_rounded,
-          iconColor: Colors.yellow,
+          iconColor: ScoutingTheme.warning,
           content: 'Please enter your name and team number.',
         ),
       );
@@ -37,7 +38,7 @@ class ScoutingHomePage extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.all(8.0 * size),
-          child: const ScoutingText(text: 'Report type:'),
+          child: ScoutingText.text('Report type:'),
         ),
         Padding(
           padding: EdgeInsets.only(
@@ -46,19 +47,18 @@ class ScoutingHomePage extends StatelessWidget {
           ),
           child: ToggleSwitch(
             cornerRadius: 10.0 * size,
-            inactiveBgColor: Theme.of(context).backgroundColor.lighten(),
-            inactiveFgColor:
-                Theme.of(context).textTheme.bodySmall?.color?.darken(),
-            activeBgColors: [
-              [const Color(0xFF1E88E5).darken()],
-              [const Color(0xFFC62828).darken()],
+            inactiveBgColor: ScoutingTheme.background3,
+            inactiveFgColor: ScoutingTheme.foreground2,
+            activeBgColors: const [
+              [ScoutingTheme.cones],
+              [ScoutingTheme.cubes],
             ],
-            activeFgColor: const Color.fromARGB(255, 213, 231, 226),
+            activeFgColor: ScoutingTheme.foreground1,
             initialLabelIndex: 0,
             totalSwitches: 2,
             labels: const ['Game', 'Pit'],
-            fontSize: 22 * size,
-            minWidth: 100 * size,
+            fontSize: 28.0 * size,
+            minWidth: 140.0 * size,
             animate: true,
             curve: Curves.easeOutQuint,
             onToggle: (index) {
@@ -71,39 +71,45 @@ class ScoutingHomePage extends StatelessWidget {
     );
   }
 
+  Widget _divider() => Padding(
+        padding: EdgeInsets.symmetric(horizontal: 12.0 * size),
+        child: const Divider(
+          thickness: 1.5,
+          color: ScoutingTheme.background3,
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: ScoutingTheme.background1,
         appBar: AppBar(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: ScoutingTheme.background2,
           centerTitle: true,
-          title: Text(
+          title: ScoutingText.navigation(
             title,
-            style: TextStyle(
-              fontSize: 24 * size,
-              color: Theme.of(context).textTheme.bodySmall?.color,
-            ),
           ),
         ),
         drawer: Drawer(
-          backgroundColor: Theme.of(context).backgroundColor,
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 8.0 * size),
-                  child: ScoutingImage(
-                    path: 'assets/images/hamosad_logo.png',
+          backgroundColor: ScoutingTheme.background2,
+          child: Center(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                DrawerHeader(
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 8.0 * size),
+                    child: ScoutingImage(
+                      path: 'assets/images/hamosad_logo.png',
+                    ),
                   ),
                 ),
-              ),
-              _reportTypeSwitch(context),
-              const Divider(),
-            ],
+                _divider(),
+                _divider(),
+              ],
+            ),
           ),
         ),
         body: ScoutingReportTab(
@@ -122,15 +128,13 @@ class ScoutingHomePage extends StatelessWidget {
               title: 'Team Number',
               onlyNumbers: true,
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 200 * size),
-              child: ScoutingIconButton(
-                size: size,
-                icon: Icons.add_box_outlined,
-                iconSize: 200 * size,
-                tooltip: 'Create a new report',
-                onPressed: () => _createReport(context),
-              ),
+            _reportTypeSwitch(context),
+            ScoutingIconButton(
+              size: size,
+              icon: Icons.add_box_outlined,
+              iconSize: 400.0 * size,
+              tooltip: 'Create a new report',
+              onPressed: () => _createReport(context),
             ),
           ],
         ),

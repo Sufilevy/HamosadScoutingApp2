@@ -1,4 +1,6 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 
 class ScoutingTeamNumber extends StatefulWidget {
@@ -19,21 +21,21 @@ class ScoutingTeamNumber extends StatefulWidget {
 }
 
 class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
-  final Duration _duration = 400.ms;
+  final Duration _duration = 400.milliseconds;
   int _currentTeamIndex = -1;
-  final double _width = 120, _height = 90, _radius = 7.5;
+  final double _width = 150.0, _height = 110.0, _radius = 7.5;
 
   Widget _teamButton(BuildContext context, int index) {
     final Color teamColor =
-        index <= 2 ? const Color(0xFFC62828) : const Color(0xFF1E88E5);
+        index <= 2 ? ScoutingTheme.redAlliance : ScoutingTheme.blueAlliance;
     final bool isSelected = _currentTeamIndex == index;
 
     return Padding(
-      padding: EdgeInsets.all(12 * widget.size),
+      padding: EdgeInsets.all(12.0 * widget.size),
       child: Container(
         width: _width * widget.size,
         height: _height * widget.size,
-        color: Theme.of(context).backgroundColor,
+        color: ScoutingTheme.background1,
         child: RepaintBoundary(
           child: Stack(
             children: [
@@ -42,8 +44,8 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
                 child: AnimatedContainer(
                   duration: _duration,
                   curve: Curves.easeOutQuart,
-                  width: isSelected ? _width * widget.size : 0,
-                  height: isSelected ? _height * widget.size : 0,
+                  width: isSelected ? _width * widget.size : 0.0,
+                  height: isSelected ? _height * widget.size : 0.0,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     color: teamColor,
@@ -70,7 +72,7 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
                     side: MaterialStateProperty.all(
                       BorderSide(
                         color: teamColor,
-                        width: 2 * widget.size,
+                        width: 2.0 * widget.size,
                       ),
                     ),
                     shape: MaterialStateProperty.all(
@@ -82,11 +84,10 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
                   child: AnimatedDefaultTextStyle(
                     duration: _duration * 1.5,
                     curve: Curves.decelerate,
-                    style: TextStyle(
-                      fontSize: 28 * widget.size,
-                      color: isSelected
-                          ? Theme.of(context).backgroundColor
-                          : teamColor,
+                    style: ScoutingTheme.titleStyle.copyWith(
+                      fontSize: 28.0 * widget.size,
+                      color: isSelected ? ScoutingTheme.background1 : teamColor,
+                      fontWeight: FontWeight.w600,
                     ),
                     child: Text(widget.teams[index]),
                   ),

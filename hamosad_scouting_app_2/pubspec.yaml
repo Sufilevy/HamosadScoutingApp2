@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cloud_firestore: ^4.3.1
+  dartx: ^1.1.0
   firebase_auth: ^4.2.2
   firebase_core: ^2.4.1
   flutter:
@@ -91,3 +92,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Varela Round
+      fonts:
+        - asset: assets/fonts/VarelaRound-Regular.ttf
+    - family: Open Sans
+      fonts:
+        - asset: assets/fonts/OpenSans-VariableFont.ttf

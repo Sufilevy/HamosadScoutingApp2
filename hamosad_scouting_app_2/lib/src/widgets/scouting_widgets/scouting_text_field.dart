@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:intl/intl.dart' as intl;
 
@@ -27,6 +28,7 @@ class ScoutingTextField extends StatefulWidget {
 class _ScoutingTextFieldState extends State<ScoutingTextField> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FocusNode _focusNode = FocusNode();
+  bool _hasErrors = false;
 
   @override
   void initState() {
@@ -36,7 +38,7 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
     super.initState();
   }
 
-  String? validateInput(String? value) {
+  String? _validateInput(String? value) {
     if (value == null || value.isEmpty) {
       String hint = widget.hint.isNotEmpty
           ? (widget.hint.endsWith('...')
@@ -54,46 +56,69 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 32 * widget.size),
+      padding: EdgeInsets.symmetric(horizontal: 32.0 * widget.size),
       child: Form(
         key: _formKey,
         child: TextFormField(
           focusNode: _focusNode,
           keyboardType:
               widget.onlyNumbers ? TextInputType.number : TextInputType.text,
-          validator: validateInput,
+          validator: _validateInput,
           onChanged: (value) => setState(
             () {
-              _formKey.currentState!.validate();
+              _hasErrors = !_formKey.currentState!.validate();
               widget.cubit.data = value;
             },
           ),
-          style: TextStyle(
-            fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
-            color: Theme.of(context).textTheme.labelSmall?.color,
-          ),
+          style: ScoutingTheme.textStyle,
           textDirection: intl.Bidi.estimateDirectionOfText(widget.cubit.data) ==
                   intl.TextDirection.RTL
               ? TextDirection.rtl
               : TextDirection.ltr,
           decoration: InputDecoration(
+            hintText: widget.hint,
+            hintStyle: ScoutingTheme.textStyle.copyWith(
+              color: ScoutingTheme.foreground2,
+            ),
+            labelText: widget.title,
+            labelStyle: ScoutingTheme.textStyle.copyWith(
+              color: _focusNode.hasFocus
+                  ? (_hasErrors ? ScoutingTheme.error : ScoutingTheme.primary)
+                  : ScoutingTheme.foreground2,
+            ),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                color: Theme.of(context).primaryColor,
-                width: 2 * widget.size,
+                color: ScoutingTheme.primaryVariant,
+                width: 3.5 * widget.size,
               ),
             ),
-            border: const OutlineInputBorder(),
-            errorStyle: TextStyle(
-              fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
+            errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: ScoutingTheme.background3,
+                width: 2.0 * widget.size,
+              ),
             ),
-            labelText: _focusNode.hasFocus || widget.cubit.data.isNotEmpty
-                ? widget.title
-                : widget.hint,
-            labelStyle: TextStyle(
-              color: _focusNode.hasFocus
-                  ? Theme.of(context).textTheme.bodyLarge?.color
-                  : Theme.of(context).textTheme.labelSmall?.color,
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: ScoutingTheme.error,
+                width: 3.5 * widget.size,
+              ),
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: ScoutingTheme.background3,
+                width: 2.0 * widget.size,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: ScoutingTheme.background3,
+                width: 2.0 * widget.size,
+              ),
+            ),
+            errorStyle: ScoutingTheme.textStyle.copyWith(
+              fontSize: 16.0,
+              color: ScoutingTheme.error,
             ),
           ),
         ),

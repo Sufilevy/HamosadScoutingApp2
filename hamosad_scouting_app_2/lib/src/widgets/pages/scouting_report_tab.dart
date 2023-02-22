@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ScoutingReportTab extends StatelessWidget {
   final String title;
-  final List<Widget> children;
+  final List children;
   final double size;
   final double seperation;
 

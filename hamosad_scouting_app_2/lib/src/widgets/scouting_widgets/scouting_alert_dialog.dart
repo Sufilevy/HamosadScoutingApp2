@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/constants.dart';
+import 'package:hamosad_scouting_app_2/src/widgets.dart';
 
 class ScoutingAlertDialog extends StatelessWidget {
   final String content, title;
   final double size;
   final bool okButton;
-  final List<Widget> actions;
+  final List actions;
   final IconData? titleIcon;
   final Color? iconColor;
 
@@ -22,50 +24,41 @@ class ScoutingAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: ScoutingTheme.background2,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (titleIcon != null)
             Icon(
               titleIcon!,
-              size: 48 * size,
-              color:
-                  iconColor ?? Theme.of(context).textTheme.labelMedium?.color,
+              size: 42.0 * size,
+              color: iconColor ?? ScoutingTheme.primary,
             ),
           if (title.isNotEmpty) ...[
             const Spacer(flex: 2),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: Theme.of(context).textTheme.bodySmall?.color,
-                  ),
-            ),
+            ScoutingText.title(title),
             const Spacer(flex: 3),
           ],
         ],
       ),
-      content: Text(
-        content,
-        style: Theme.of(context).textTheme.bodyLarge,
-        textAlign: TextAlign.center,
+      contentPadding: EdgeInsets.fromLTRB(
+        28.0 * size,
+        20.0 * size,
+        28.0 * size,
+        12.0 * size,
       ),
+      content: ScoutingText.text(content, textAlign: TextAlign.center),
       actionsAlignment: MainAxisAlignment.center,
-      actions: <Widget>[
+      actions: [
         ...actions,
         if (okButton)
           TextButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                Theme.of(context).primaryColor,
-              ),
-            ),
             child: Padding(
-              padding: EdgeInsets.all(6 * size),
-              child: Text(
+              padding: EdgeInsets.all(8.0 * size),
+              child: ScoutingText.subtitle(
                 'OK',
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: Theme.of(context).textTheme.bodySmall?.color,
-                    ),
+                color: ScoutingTheme.primary,
+                fontWeight: FontWeight.w600,
               ),
             ),
             onPressed: () => Navigator.pop(context),

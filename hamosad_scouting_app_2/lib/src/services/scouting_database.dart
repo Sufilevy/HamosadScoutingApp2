@@ -12,17 +12,14 @@ class ScoutingDatabase {
   static const _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   static final Random _random = Random();
-  static final DocumentReference _informationRef =
-      _db.doc('/matches/information');
-  static late final DocumentReference _gameReportsRef, _pitReportsRef;
 
   ScoutingDatabase();
 
   static Future<void> initialize() async {
     await FirebaseAuth.instance.signInAnonymously();
-    _districtName = (await _informationRef.get()).get('currentDistrict');
-    _gameReportsRef = _db.doc('/gameReports/$_districtName');
-    _pitReportsRef = _db.doc('/pitReports/$_districtName');
+    final informationDoc =
+        await _db.collection('district').doc('information').get();
+    _districtName = informationDoc.get('name');
   }
 
   static Future<void> finalize() async {
@@ -53,9 +50,15 @@ class ScoutingDatabase {
     data.addAll({'dateTime': _getDateTime()});
 
     if (reportType == ReportType.game) {
-      await _gameReportsRef.update({id ?? _generateReportId(): data});
+      await _db
+          .collection('reports')
+          .doc(_districtName)
+          .update({id ?? _generateReportId(): data});
     } else {
-      await _pitReportsRef.update({id ?? _generateReportId(): data});
+      await _db
+          .collection('reports')
+          .doc('$_districtName-pit')
+          .update({id ?? _generateReportId(): data});
     }
   }
 }

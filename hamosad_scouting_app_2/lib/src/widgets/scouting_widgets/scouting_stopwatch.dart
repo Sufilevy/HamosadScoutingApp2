@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
 
@@ -26,17 +28,17 @@ class ScoutingStopwatch extends StatefulWidget {
 class _ScoutingStopwatchState extends State<ScoutingStopwatch>
     with SingleTickerProviderStateMixin {
   final Stopwatch _stopwatch = Stopwatch();
-  Timer _timer = Timer(0.ms, () {});
+  Timer _timer = Timer(0.milliseconds, () {});
   late final AnimationController _controller;
 
   @override
   void initState() {
-    _controller = AnimationController(duration: 250.ms, vsync: this);
+    _controller = AnimationController(duration: 250.milliseconds, vsync: this);
     super.initState();
   }
 
   void _start() {
-    _timer = Timer.periodic(10.ms, (_) => setState(() {}));
+    _timer = Timer.periodic(10.milliseconds, (_) => setState(() {}));
     _stopwatch.start();
     _controller.forward();
   }
@@ -98,14 +100,9 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch>
                   children: [
                     IconButton(
                       icon: const Icon(Icons.stop),
-                      color: _stopwatch.isRunning
-                          ? Theme.of(context)
-                              .textTheme
-                              .labelMedium
-                              ?.color
-                              ?.withOpacity(0.5)
-                          : Theme.of(context).textTheme.labelMedium?.color,
-                      iconSize: 24 * widget.size,
+                      color: ScoutingTheme.primary
+                          .withOpacity(_stopwatch.isRunning ? 1.0 : 0.5),
+                      iconSize: 24.0 * widget.size,
                       onPressed: () => _stopwatch.isRunning ? null : _reset(),
                       splashColor: Colors.transparent,
                     ),
@@ -116,8 +113,8 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch>
                       child: AnimatedIcon(
                         icon: AnimatedIcons.play_pause,
                         progress: _controller,
-                        color: Theme.of(context).textTheme.labelMedium?.color,
-                        size: 24 * widget.size,
+                        color: ScoutingTheme.foreground2,
+                        size: 24.0 * widget.size,
                       ),
                     ),
                   ],

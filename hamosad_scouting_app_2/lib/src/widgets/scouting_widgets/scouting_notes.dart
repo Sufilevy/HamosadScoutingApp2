@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:intl/intl.dart' as intl;
 
@@ -23,10 +24,7 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
         onChanged: (String value) => setState(() => widget.cubit.data = value),
         minLines: 3,
         maxLines: null,
-        style: TextStyle(
-          fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
-          color: Theme.of(context).textTheme.labelSmall?.color,
-        ),
+        style: ScoutingTheme.textStyle,
         textDirection: intl.Bidi.estimateDirectionOfText(widget.cubit.data) ==
                 intl.TextDirection.RTL
             ? TextDirection.rtl

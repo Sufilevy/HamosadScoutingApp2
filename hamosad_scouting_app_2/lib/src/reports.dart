@@ -6,11 +6,11 @@ Widget gameReport(BuildContext context, double size) {
   return ScoutingReportPage(
     size: size,
     title: 'Game Report',
-    tabs: <ScoutingReportTab>[
+    tabs: [
       ScoutingReportTab(
         size: size,
         title: 'Info',
-        children: <Widget>[
+        children: [
           ScoutingCounter(
             cubit: reportDataProvider(context).gameReport.teleopHubMissed,
             min: 0,
@@ -50,15 +50,14 @@ Widget gameReport(BuildContext context, double size) {
           ),
           ScoutingTextField(
             cubit: Cubit(''),
-            hint: 'Enter your name',
-            errorHint: 'Please do it!',
-            onlyNumbers: true,
+            title: 'Name',
+            hint: 'Enter your name...',
+            errorHint: 'Please enter your name.',
             size: size,
           ),
-          ScoutingText(
-            text: 'This is some text!',
+          ScoutingText.text(
+            'This is some text!',
             fontSize: 20,
-            size: size,
           ),
           ScoutingToggleButton(
             cubit: Cubit(false),
@@ -89,8 +88,8 @@ Widget gameReport(BuildContext context, double size) {
       ScoutingReportTab(
         size: size,
         title: 'Heyoo',
-        children: const <Widget>[
-          ScoutingText(text: 'hello'),
+        children: [
+          ScoutingText.text('hello'),
         ],
       ),
     ],
@@ -101,12 +100,12 @@ Widget pitReport(BuildContext context, double size) {
   return ScoutingReportPage(
     size: size,
     title: 'Pit Report',
-    tabs: <ScoutingReportTab>[
+    tabs: [
       ScoutingReportTab(
         size: size,
         title: 'Hi',
-        children: const <Widget>[
-          ScoutingText(text: 'hello'),
+        children: [
+          ScoutingText.text('hello'),
         ],
       ),
     ],

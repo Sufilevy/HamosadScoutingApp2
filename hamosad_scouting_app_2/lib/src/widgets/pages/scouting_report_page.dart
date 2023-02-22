@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
 
@@ -22,7 +23,7 @@ class ScoutingReportPage extends StatelessWidget {
             'Closing the report will delete all of the information entered.',
         title: 'Warning!',
         titleIcon: Icons.dangerous_rounded,
-        iconColor: const Color(0xFFC62828),
+        iconColor: ScoutingTheme.error,
         okButton: false,
         actions: [
           Padding(
@@ -34,12 +35,12 @@ class ScoutingReportPage extends StatelessWidget {
                   (route) => route.isFirst,
                 );
               },
-              child: const Padding(
-                padding: EdgeInsets.all(4.0),
-                child: ScoutingText(
-                  text: 'Delete',
-                  color: Color(0xFFC62828),
-                  bold: true,
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: ScoutingText.text(
+                  'Delete',
+                  color: ScoutingTheme.error,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -50,9 +51,12 @@ class ScoutingReportPage extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Padding(
-                padding: EdgeInsets.all(4.0),
-                child: ScoutingText(text: 'Cancel'),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: ScoutingText.text(
+                  'Cancel',
+                  color: ScoutingTheme.primary,
+                ),
               ),
             ),
           ),
@@ -70,7 +74,7 @@ class ScoutingReportPage extends StatelessWidget {
             'Sending the report will upload it to the database and bring you back to the home screen.',
         title: 'Send Report?',
         titleIcon: Icons.send_rounded,
-        iconColor: const Color(0xFF1E88E5),
+        iconColor: ScoutingTheme.blueAlliance,
         okButton: false,
         actions: [
           Padding(
@@ -79,9 +83,12 @@ class ScoutingReportPage extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Padding(
-                padding: EdgeInsets.all(4.0),
-                child: ScoutingText(text: 'Cancel'),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: ScoutingText.text(
+                  'Cancel',
+                  color: ScoutingTheme.primary,
+                ),
               ),
             ),
           ),
@@ -97,12 +104,12 @@ class ScoutingReportPage extends StatelessWidget {
                   (route) => route.isFirst,
                 );
               },
-              child: const Padding(
-                padding: EdgeInsets.all(4.0),
-                child: ScoutingText(
-                  text: 'Send',
-                  color: Color(0xFF1E88E5),
-                  bold: true,
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: ScoutingText.text(
+                  'Send',
+                  color: ScoutingTheme.blueAlliance,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -120,43 +127,45 @@ class ScoutingReportPage extends StatelessWidget {
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: ScoutingTheme.background1,
           appBar: AppBar(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            toolbarHeight: 80.0 * size,
+            backgroundColor: ScoutingTheme.background2,
             actions: [
               ScoutingIconButton(
                 icon: Icons.send_rounded,
+                color: ScoutingTheme.blueAlliance,
                 onPressed: () => _onSendButtonPressed(context),
               ),
             ],
-            leading: CloseButton(
-              color: Theme.of(context).textTheme.bodySmall?.color,
+            leading: ScoutingIconButton(
+              icon: Icons.close_rounded,
+              iconSize: 26.0,
+              color: ScoutingTheme.foreground2,
               onPressed: () => _onCloseButtonPressed(context),
             ),
-            title: Text(
-              title,
-              style: TextStyle(
-                fontSize: 24 * size,
-                color: Theme.of(context).textTheme.bodySmall?.color,
-              ),
-            ),
+            title: ScoutingText.navigation(title, fontSize: 32.0 * size),
             centerTitle: true,
             bottom: TabBar(
               isScrollable: true,
               indicatorWeight: 2.5 * size,
-              indicatorColor: Theme.of(context).primaryColor,
-              labelPadding: EdgeInsets.symmetric(horizontal: 24 * size),
-              labelColor: Theme.of(context).textTheme.bodySmall?.color,
-              unselectedLabelColor:
-                  Theme.of(context).textTheme.labelSmall?.color?.lighten(),
-              labelStyle: Theme.of(context).textTheme.bodyLarge,
+              indicatorColor: ScoutingTheme.primary,
+              labelPadding: EdgeInsets.symmetric(horizontal: 24.0 * size),
+              labelColor: ScoutingTheme.foreground1,
+              unselectedLabelColor: ScoutingTheme.foreground2,
+              labelStyle:
+                  ScoutingTheme.navigationStyle.copyWith(fontSize: 16.0),
               tabs: [
-                for (final tab in tabs) Tab(text: tab.title),
+                for (final tab in tabs)
+                  Tab(
+                    text: tab.title,
+                    height: 52.0 * size,
+                  ),
               ],
             ),
           ),
           body: Padding(
-            padding: EdgeInsets.symmetric(vertical: 16 * size),
+            padding: EdgeInsets.symmetric(vertical: 16.0 * size),
             child: TabBarView(
               children: tabs,
             ),

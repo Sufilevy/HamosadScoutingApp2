@@ -1,5 +1,8 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
+import 'package:hamosad_scouting_app_2/src/widgets.dart';
 
 class ScoutingCounter extends StatefulWidget {
   final Cubit<num> cubit;
@@ -22,26 +25,6 @@ class ScoutingCounter extends StatefulWidget {
         assert(step > 0),
         assert(max > min + step),
         super(key: key);
-
-  static ScoutingCounter fromJSON({
-    required Map<String, dynamic> json,
-    required Cubit<num> cubit,
-    double size = 1,
-  }) {
-    assert(json.containsKey('min'));
-    assert(json.containsKey('max'));
-    assert(json.containsKey('step'));
-
-    return ScoutingCounter(
-      cubit: cubit,
-      size: size,
-      title: json['title'] ?? '',
-      min: json['min'],
-      max: json['max'],
-      step: json['step'],
-      initial: json['initial'],
-    );
-  }
 
   @override
   State<ScoutingCounter> createState() => _ScoutingCounterState();
@@ -79,46 +62,44 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
     IconData icon,
   ) {
     return CircleAvatar(
-      backgroundColor: Theme.of(context).primaryColor,
-      radius: 24 * widget.size,
+      backgroundColor: ScoutingTheme.primary,
+      radius: 32.0 * widget.size,
       child: IconButton(
         onPressed: onPressed,
+        padding: EdgeInsets.zero,
         icon: Icon(icon),
-        color: Theme.of(context).backgroundColor,
-        iconSize: 28 * widget.size,
-        splashRadius: 24 * widget.size,
+        color: ScoutingTheme.background1,
+        iconSize: 32.0 * widget.size,
+        splashRadius: 42.0 * widget.size,
       ),
     );
   }
 
   Widget _counterText(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16 * widget.size),
+      padding: EdgeInsets.symmetric(horizontal: 16.0 * widget.size),
       child: Container(
-        width: 90 * widget.size,
-        height: 70 * widget.size,
+        width: 110.0 * widget.size,
+        height: 80.0 * widget.size,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(8 * widget.size),
+          borderRadius: BorderRadius.circular(8.0 * widget.size),
           border: Border.all(
-            color: Theme.of(context).primaryColor,
-            width: 3,
+            color: ScoutingTheme.primary,
+            width: 2.0,
           ),
         ),
-        padding: EdgeInsets.all(12 * widget.size),
+        padding: EdgeInsets.all(12.0 * widget.size),
         child: RepaintBoundary(
           child: AnimatedSwitcher(
-            duration: 150.ms,
+            duration: 150.milliseconds,
             transitionBuilder: (Widget child, Animation<double> animation) {
               return FadeTransition(opacity: animation, child: child);
             },
-            child: Text(
-              widget.cubit.data.toString(),
-              style: Theme.of(context).textTheme.labelMedium,
-              key: ValueKey<String>(
-                widget.cubit.data.toString(),
-              ),
+            child: Container(
+              key: ValueKey<String>(widget.cubit.data.toString()),
+              child: ScoutingText.subtitle(widget.cubit.data.toString()),
             ),
           ),
         ),
@@ -128,7 +109,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
 
   Widget _counter() => Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
+        children: [
           _iconButton(context, _decrement, Icons.remove),
           _counterText(context),
           _iconButton(context, _increment, Icons.add),
@@ -139,14 +120,13 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
   Widget build(BuildContext context) {
     if (widget.title.isNotEmpty) {
       return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 32 * widget.size),
+        padding: EdgeInsets.symmetric(horizontal: 32.0 * widget.size),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
+          children: [
             Flexible(
-              child: Text(
+              child: ScoutingText.subtitle(
                 widget.title,
-                style: Theme.of(context).textTheme.labelSmall,
                 textAlign: TextAlign.center,
               ),
             ),
