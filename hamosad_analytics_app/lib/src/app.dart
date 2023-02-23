@@ -40,10 +40,6 @@ class AnalyticsApp extends ConsumerWidget {
                     label: 'Report Details',
                   ),
                   SidebarXItem(
-                    icon: Icons.source_outlined,
-                    label: 'Reports',
-                  ),
-                  SidebarXItem(
                     icon: Icons.assessment_outlined,
                     label: 'Alliances',
                   ),
@@ -82,7 +78,6 @@ class _AnalyticsAppBodyState extends State<AnalyticsAppBody> {
     const TeamDetailsPage(),
     const TeamsPage(),
     const ReportDetailsPage(),
-    const ReportsPage(),
     const AlliancesPage()
   ];
   @override
