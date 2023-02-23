@@ -23,7 +23,7 @@ class ScoutingTeamNumber extends StatefulWidget {
 class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
   final Duration _duration = 400.milliseconds;
   int _currentTeamIndex = -1;
-  final double _width = 150.0, _height = 110.0, _radius = 7.5;
+  final double _width = 170.0, _height = 120.0, _radius = 7.5;
 
   Widget _buildTeamButton(BuildContext context, int index) {
     final Color teamColor =
@@ -85,7 +85,7 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
                     duration: _duration * 1.5,
                     curve: Curves.decelerate,
                     style: ScoutingTheme.titleStyle.copyWith(
-                      fontSize: 28.0 * widget.size,
+                      fontSize: 30.0 * widget.size,
                       color: isSelected ? ScoutingTheme.background1 : teamColor,
                       fontWeight: FontWeight.w600,
                     ),
@@ -103,7 +103,7 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

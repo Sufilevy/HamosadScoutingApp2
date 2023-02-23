@@ -6,13 +6,14 @@ import 'package:intl/intl.dart' as intl;
 class ScoutingNotes extends StatefulWidget {
   final Cubit<String> cubit;
   final double size;
-  final String title;
+  final String title, hint;
 
   const ScoutingNotes({
     Key? key,
     required this.cubit,
     this.size = 1.0,
-    this.title = '',
+    this.title = 'Notes',
+    this.hint = 'Enter your notes...',
   }) : super(key: key);
 
   @override
@@ -29,8 +30,49 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
                 intl.TextDirection.RTL
             ? TextDirection.rtl
             : TextDirection.ltr,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
+        decoration: InputDecoration(
+          hintText: widget.hint,
+          hintStyle: ScoutingTheme.textStyle.copyWith(
+            color: ScoutingTheme.foreground2,
+          ),
+          labelText: widget.title,
+          labelStyle: ScoutingTheme.textStyle.copyWith(
+            color: ScoutingTheme.foreground2,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: ScoutingTheme.primaryVariant,
+              width: 3.5 * widget.size,
+            ),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: ScoutingTheme.background3,
+              width: 2.0 * widget.size,
+            ),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: ScoutingTheme.error,
+              width: 3.5 * widget.size,
+            ),
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: ScoutingTheme.background3,
+              width: 2.0 * widget.size,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: ScoutingTheme.background3,
+              width: 2.0 * widget.size,
+            ),
+          ),
+          errorStyle: ScoutingTheme.textStyle.copyWith(
+            fontSize: 16.0,
+            color: ScoutingTheme.error,
+          ),
         ),
       );
 
@@ -38,22 +80,16 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
   Widget build(BuildContext context) {
     if (widget.title.isNotEmpty) {
       return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 56 * widget.size),
+        padding: EdgeInsets.symmetric(horizontal: 56.0 * widget.size),
         child: Column(
           children: [
-            Text(
-              widget.title,
-              style: Theme.of(context).textTheme.labelSmall,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 8 * widget.size),
             _buildTextField(context),
           ],
         ),
       );
     } else {
       return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 56 * widget.size),
+        padding: EdgeInsets.symmetric(horizontal: 56.0 * widget.size),
         child: _buildTextField(context),
       );
     }

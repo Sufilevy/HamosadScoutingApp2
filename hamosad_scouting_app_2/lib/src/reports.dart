@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/models.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
+import 'package:hamosad_scouting_app_2/src/widgets/scouting_widgets/scouting_pickups.dart';
 
 Widget gameReport(BuildContext context, double size) {
+  final report = reportDataProvider(context);
+  final gameReport = report.gameReport;
   return ScoutingReportPage(
     size: size,
     title: 'Game Report',
@@ -11,85 +15,138 @@ Widget gameReport(BuildContext context, double size) {
         size: size,
         title: 'Info',
         children: [
-          ScoutingCounter(
-            cubit: reportDataProvider(context).gameReport.teleopHubMissed,
-            min: 0,
-            max: 100,
-            step: 1,
-            title: 'Teleop Hub Missed',
-            initial: 0,
-            size: size,
-          ),
-          ScoutingImage(
-            title: 'This is an image',
-            url:
-                'https://www.manchesterdigital.com/storage/13256/0_ZQ9Xa7CINFVMA95w.png',
-            scale: 1.0,
-          ),
-          ScoutingSlider(
-            cubit: Cubit(0),
-            min: 1,
-            max: 5,
-            step: 1,
-            title: 'This is a  slider',
-            subtitle: 'This is the subtitle',
-            initial: 1,
-            size: size,
-          ),
-          ScoutingTeamNumber(
-            cubit: Cubit(''),
-            teams: const [
-              '1000',
-              '2000',
-              '3000',
-              '4000',
-              '5000',
-              '6000',
-            ],
-            size: size,
+          ScoutingTextField(
+            cubit: report.teamNumber,
+            onlyNumbers: true,
+            title: 'Team number',
           ),
           ScoutingTextField(
-            cubit: Cubit(''),
-            title: 'Name',
-            hint: 'Enter your name...',
-            errorHint: 'Please enter your name.',
-            size: size,
-          ),
-          ScoutingText.text(
-            'This is some text!',
-            fontSize: 20,
-          ),
-          ScoutingToggleButton(
-            cubit: Cubit(false),
-            title: 'This is a really really extremly very very long title',
-            size: size,
-          ),
-          ScoutingSlider(
-            cubit: Cubit(0),
-            min: 1,
-            max: 5,
-            step: 1,
-            title: 'This is a  slider',
-            subtitle: 'This is the subtitle',
-            initial: 1,
-            size: size,
-          ),
-          ScoutingCounter(
-            cubit: Cubit(0),
-            min: 0,
-            max: 100,
-            step: 1,
-            title: 'This is a looooong counter',
-            initial: 0,
-            size: size,
+            cubit: report.match,
+            title: 'Match',
           ),
         ],
       ),
       ScoutingReportTab(
         size: size,
-        title: 'Heyoo',
+        title: 'Auto',
         children: [
-          ScoutingText.text('hello'),
+          ScoutingStartPosition(
+            size: size,
+            onChanged: (index) => gameReport.auto.startPosition.data =
+                StartPosition.values[index],
+          ),
+          ScoutingToggleButton(
+            size: size,
+            cubit: gameReport.auto.leftCommunity,
+            title: 'Did the robot leave the community?',
+          ),
+          ScoutingPickups(
+            size: size,
+            cubit: gameReport.auto.pickups,
+          ),
+          ScoutingDropoffs(
+            size: size,
+            cubit: gameReport.auto.dropoffs,
+          ),
+          ScoutingCounter(
+            size: size,
+            cubit: gameReport.auto.chargeStationPasses,
+            min: 0,
+            max: 99,
+            step: 1,
+            initial: 0,
+            title: 'Charge Station passes',
+          ),
+          ScoutingAutoClimb(
+            size: size,
+            cubit: gameReport.auto.climb,
+          ),
+          ScoutingNotes(
+            size: size,
+            cubit: gameReport.auto.notes,
+          ),
+        ],
+      ),
+      ScoutingReportTab(
+        size: size,
+        title: 'Teleop',
+        children: [
+          ScoutingPickups(
+            size: size,
+            cubit: gameReport.teleop.pickups,
+          ),
+          ScoutingDropoffs(
+            size: size,
+            cubit: gameReport.teleop.dropoffs,
+          ),
+          ScoutingCounter(
+            size: size,
+            cubit: gameReport.teleop.chargeStationPasses,
+            min: 0,
+            initial: 0,
+            max: 99,
+            step: 1,
+            title: 'Charge Station passes',
+          ),
+          ScoutingNotes(
+            size: size,
+            cubit: gameReport.teleop.notes,
+          ),
+        ],
+      ),
+      ScoutingReportTab(
+        size: size,
+        title: 'Endgame',
+        children: [
+          ScoutingPickups(
+            size: size,
+            cubit: gameReport.endgame.pickups,
+          ),
+          ScoutingDropoffs(
+            size: size,
+            cubit: gameReport.endgame.dropoffs,
+          ),
+          ScoutingCounter(
+            size: size,
+            cubit: gameReport.endgame.chargeStationPasses,
+            min: 0,
+            max: 99,
+            step: 1,
+            initial: 0,
+            title: 'Charge Station passes',
+          ),
+          ScoutingEndgameClimb(
+            size: size,
+            cubit: gameReport.endgame.climb,
+          ),
+          ScoutingNotes(
+            cubit: gameReport.endgame.notes,
+          ),
+        ],
+      ),
+      ScoutingReportTab(
+        title: 'Summary',
+        children: [
+          ScoutingToggleButton(
+            size: size,
+            cubit: gameReport.summary.won,
+            title: 'Did the robot\'s alliance win?',
+          ),
+          ScoutingRobotIndex(
+            size: size,
+            onChanged: (index) =>
+                gameReport.summary.defenceIndex.data = RobotIndex.values[index],
+          ),
+          ScoutingNotes(
+            size: size,
+            cubit: gameReport.summary.notes,
+          ),
+          ScoutingNotes(
+            size: size,
+            cubit: gameReport.summary.fouls,
+            title: 'Fouls',
+            hint: 'Enter the team\'s fouls...',
+          ),
         ],
       ),
     ],
@@ -97,15 +154,27 @@ Widget gameReport(BuildContext context, double size) {
 }
 
 Widget pitReport(BuildContext context, double size) {
+  final report = reportDataProvider(context);
+  final pitReport = report.pitReport;
   return ScoutingReportPage(
     size: size,
     title: 'Pit Report',
     tabs: [
       ScoutingReportTab(
         size: size,
-        title: 'Hi',
+        title: 'Pit',
         children: [
-          ScoutingText.text('hello'),
+          ScoutingTextField(
+            size: size,
+            cubit: report.teamNumber,
+            onlyNumbers: true,
+          ),
+          ScoutingNotes(
+            size: size,
+            title: 'Robot info',
+            hint: 'Enter the robots info...',
+            cubit: pitReport.notes,
+          ),
         ],
       ),
     ],

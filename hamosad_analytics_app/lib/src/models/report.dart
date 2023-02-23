@@ -40,7 +40,7 @@ class ReportAuto {
 
   ReportAuto.fromJson(Json json)
       : startPosition = StartPosition.fromString(json['startPosition'])!,
-        leftCommunity = false,
+        leftCommunity = json['leftCommunity'] ?? false,
         pickups = PiecePickup.list(json['pickups']),
         dropoffs = PieceDropoff.list(json['dropoffs']),
         chargeStationPasses = int.parse(json['chargeStationPasses']),

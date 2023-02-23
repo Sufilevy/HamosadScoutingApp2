@@ -16,8 +16,8 @@ class ScoutingHomePage extends StatelessWidget {
 
   void _createReport(BuildContext context) {
     ReportDataProvider reportData = reportDataProvider(context);
-    if (reportData.reporterName.data.isEmpty ||
-        reportData.reporterTeamNumber.data.isEmpty) {
+    if (reportData.scouter.data.isEmpty ||
+        reportData.scouterTeamNumber.data.isEmpty) {
       showDialog(
         context: context,
         builder: (context) => const ScoutingAlertDialog(
@@ -115,20 +115,28 @@ class ScoutingHomePage extends StatelessWidget {
         body: ScoutingReportTab(
           title: title,
           children: [
-            ScoutingTextField(
-              size: size,
-              cubit: reportDataProvider(context).reporterName,
-              hint: 'Enter your name...',
-              title: 'Name',
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ScoutingTextField(
+                  size: size,
+                  cubit: reportDataProvider(context).scouter,
+                  hint: 'Enter your name...',
+                  title: 'Name',
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: ScoutingTextField(
+                    size: size,
+                    cubit: reportDataProvider(context).scouterTeamNumber,
+                    hint: 'Enter your team number...',
+                    title: 'Team Number',
+                    onlyNumbers: true,
+                  ),
+                ),
+                _reportTypeSwitch(context),
+              ],
             ),
-            ScoutingTextField(
-              size: size,
-              cubit: reportDataProvider(context).reporterTeamNumber,
-              hint: 'Enter your team number...',
-              title: 'Team Number',
-              onlyNumbers: true,
-            ),
-            _reportTypeSwitch(context),
             ScoutingIconButton(
               size: size,
               icon: Icons.add_box_outlined,
