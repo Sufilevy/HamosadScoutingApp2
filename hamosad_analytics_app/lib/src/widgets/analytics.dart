@@ -1,6 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
+import 'package:hamosad_analytics_app/src/models.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 
 class AnalyticsFadeSwitcher extends StatelessWidget {
@@ -139,7 +140,13 @@ class AnalyticsStatChip extends StatelessWidget {
     required this.max,
   }) : super(key: key);
 
-  final String title, average, min, max;
+  AnalyticsStatChip.fromStat(Stat stat, {super.key, required this.title})
+      : average = stat.average,
+        min = stat.min,
+        max = stat.max;
+
+  final String title;
+  final num average, min, max;
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +196,7 @@ class AnalyticsStatChip extends StatelessWidget {
           ),
           Expanded(
             flex: 4,
-            child: AnalyticsText.data(average),
+            child: AnalyticsText.data(average.toString()),
           ),
         ],
       );
@@ -210,7 +217,7 @@ class AnalyticsStatChip extends StatelessWidget {
               const EmptyExpanded(flex: 1),
               Expanded(
                 flex: 8,
-                child: AnalyticsText.dataSubtitle(max),
+                child: AnalyticsText.dataSubtitle(max.toString()),
               ),
             ],
           ),
@@ -227,7 +234,7 @@ class AnalyticsStatChip extends StatelessWidget {
               const EmptyExpanded(flex: 1),
               Expanded(
                 flex: 8,
-                child: AnalyticsText.dataSubtitle(min),
+                child: AnalyticsText.dataSubtitle(min.toString()),
               ),
             ],
           ),

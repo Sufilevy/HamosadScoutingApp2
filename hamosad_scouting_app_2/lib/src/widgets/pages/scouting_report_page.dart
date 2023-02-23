@@ -95,13 +95,16 @@ class ScoutingReportPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextButton(
-              onPressed: () {
-                ScoutingDatabase.sendReport(
-                  reportDataProvider(context).data,
-                );
+              onPressed: () async {
                 Navigator.popUntil(
                   context,
                   (route) => route.isFirst,
+                );
+
+                final reportData = reportDataProvider(context);
+                await ScoutingDatabase.sendReport(
+                  reportData.data,
+                  reportType: reportData.reportType.data,
                 );
               },
               child: Padding(

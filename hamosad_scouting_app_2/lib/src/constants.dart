@@ -25,19 +25,19 @@ class ScoutingTheme {
   static const TextStyle titleStyle = TextStyle(
     fontFamily: 'Open Sans',
     fontWeight: FontWeight.w500,
-    fontSize: 20.0,
+    fontSize: 18.0,
     color: foreground1,
   );
   static const TextStyle subtitleStyle = TextStyle(
     fontFamily: 'Open Sans',
     fontWeight: FontWeight.normal,
-    fontSize: 18.0,
+    fontSize: 17.0,
     color: foreground1,
   );
   static const TextStyle textStyle = TextStyle(
     fontFamily: 'Open Sans',
     fontWeight: FontWeight.w400,
-    fontSize: 16.0,
+    fontSize: 15.0,
     color: foreground1,
   );
 }

@@ -27,7 +27,7 @@ class ScoutingDatabase {
   }
 
   static String _generateReportId() {
-    return List.generate(8, (index) => _chars[_random.nextInt(_chars.length)])
+    return List.generate(12, (index) => _chars[_random.nextInt(_chars.length)])
         .join();
   }
 
@@ -42,9 +42,9 @@ class ScoutingDatabase {
     };
   }
 
-  static void sendReport(
+  static Future<void> sendReport(
     Map<String, dynamic> data, {
-    ReportType reportType = ReportType.game,
+    required ReportType reportType,
     String? id,
   }) async {
     data.addAll({'dateTime': _getDateTime()});

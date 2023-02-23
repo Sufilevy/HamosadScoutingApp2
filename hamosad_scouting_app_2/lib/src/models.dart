@@ -44,7 +44,7 @@ class Dropoffs {
               'row': rowIndex,
               'column': columnIndex,
               'gamePiece': node.cone ? 'cone' : 'cube',
-              'duration': node.duration,
+              'duration': node.duration.toString(),
             });
           }
         });

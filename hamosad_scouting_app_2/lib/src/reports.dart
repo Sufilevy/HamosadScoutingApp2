@@ -120,6 +120,7 @@ Widget gameReport(BuildContext context, double size) {
             cubit: gameReport.endgame.climb,
           ),
           ScoutingNotes(
+            size: size,
             cubit: gameReport.endgame.notes,
           ),
         ],
@@ -134,6 +135,7 @@ Widget gameReport(BuildContext context, double size) {
           ),
           ScoutingRobotIndex(
             size: size,
+            title: 'Robot\'s defence index',
             onChanged: (index) =>
                 gameReport.summary.defenceIndex.data = RobotIndex.values[index],
           ),
@@ -167,6 +169,8 @@ Widget pitReport(BuildContext context, double size) {
           ScoutingTextField(
             size: size,
             cubit: report.teamNumber,
+            title: 'Team number',
+            hint: 'Enter the team\'s number...',
             onlyNumbers: true,
           ),
           ScoutingNotes(

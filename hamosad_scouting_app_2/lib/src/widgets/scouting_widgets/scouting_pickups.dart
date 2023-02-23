@@ -42,9 +42,7 @@ class _ScoutingPickupsState extends State<ScoutingPickups> {
         minWidth: 170.0 * widget.size,
         animate: true,
         curve: Curves.easeOutQuint,
-        onToggle: (index) => setState(() {
-          _position = PickupPosition.values[index ?? 0];
-        }),
+        onToggle: (index) => _position = PickupPosition.values[index ?? 0],
       );
 
   Widget _buildSelectPiece() => ToggleSwitch(
@@ -63,9 +61,7 @@ class _ScoutingPickupsState extends State<ScoutingPickups> {
         minWidth: 150.0 * widget.size,
         animate: true,
         curve: Curves.easeOutQuint,
-        onToggle: (index) => setState(() {
-          _piece = Piece.values[index ?? 0];
-        }),
+        onToggle: (index) => _piece = Piece.values[index ?? 0],
       );
 
   Widget _buildAddButton() => IconButton(

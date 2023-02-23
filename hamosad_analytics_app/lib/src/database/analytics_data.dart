@@ -25,7 +25,11 @@ class AnalyticsData {
 
     for (final report in database.reports) {
       // Add the team the report is about to the teams map if it's not already there
-      final nameAndLocation = database.teams[report.teamNumber]!;
+      final nameAndLocation = database.teams[report.teamNumber] ??
+          TeamNameAndLocation(
+            name: 'Team ${report.teamNumber}',
+            location: 'Israel',
+          );
       teamsWithNumber.putIfAbsent(
         report.teamNumber,
         () => Team.only(

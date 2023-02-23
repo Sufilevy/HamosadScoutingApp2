@@ -22,8 +22,8 @@ class ReportDataProvider {
         'scouter': scouter.data,
         'scouterTeamNumber': scouterTeamNumber.data,
         'teamNumber': teamNumber.data,
-        'match': match.data,
         'time': DateFormat('dd/MM HH:mm:ss').format(DateTime.now()),
+        if (reportType.data == ReportType.game) 'match': match.data,
       },
       ...reportData,
     };
@@ -57,7 +57,7 @@ class GameReportAuto {
 
   Json get data {
     return {
-      'startPosition': startPosition.data,
+      'startPosition': startPosition.data.toString(),
       'leftCommunity': leftCommunity.data,
       'pickups': pickups.data.toJson(),
       'dropoffs': dropoffs.data.toJson(),
@@ -111,7 +111,7 @@ class GameReportSummary {
   Json get data {
     return {
       'won': won.data,
-      'defenceRobotIndex': defenceIndex.data,
+      'defenceRobotIndex': defenceIndex.data.toString(),
       'fouls': fouls.data,
       'notes': notes.data,
     };
@@ -123,7 +123,7 @@ class PitReport {
 
   Json get data {
     return {
-      'notes': notes,
+      'notes': notes.data,
     };
   }
 }

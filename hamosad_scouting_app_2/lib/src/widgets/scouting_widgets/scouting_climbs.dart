@@ -32,7 +32,7 @@ class ScoutingClimbState extends StatelessWidget {
       totalSwitches: 4,
       labels: const ['None', 'Docked', 'Docked by Other', 'Engaged'],
       fontSize: 24.0 * size,
-      customWidths: [160.0 * size, 170.0 * size, 210.0 * size, 170.0 * size],
+      customWidths: [130.0 * size, 140.0 * size, 220.0 * size, 140.0 * size],
       animate: true,
       curve: Curves.easeOutQuint,
       onToggle: (index) => onChanged(index ?? 0),
@@ -55,10 +55,12 @@ class ScoutingAutoClimb extends StatelessWidget {
     return Column(
       children: [
         ScoutingClimbState(
+          size: size,
           onChanged: (state) => cubit.data.state = ClimbState.values[state],
         ),
         SizedBox(height: 30.0 * size),
         ScoutingDuration(
+          size: size,
           onChanged: (duration) =>
               cubit.data.duration = ActionDuration.values[duration],
         ),
@@ -82,15 +84,18 @@ class ScoutingEndgameClimb extends StatelessWidget {
     return Column(
       children: [
         ScoutingClimbState(
+          size: size,
           onChanged: (state) => cubit.data.state = ClimbState.values[state],
         ),
         SizedBox(height: 30.0 * size),
         ScoutingDuration(
+          size: size,
           onChanged: (duration) =>
               cubit.data.duration = ActionDuration.values[duration],
         ),
         SizedBox(height: 30.0 * size),
         ScoutingRobotIndex(
+          size: size,
           onChanged: (index) => cubit.data.index = RobotIndex.values[index],
         ),
       ],
