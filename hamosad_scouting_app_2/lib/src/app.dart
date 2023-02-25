@@ -43,3 +43,19 @@ class _ScoutingAppState extends State<ScoutingApp> {
     );
   }
 }
+
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: ScoutingTheme.background1,
+      child: const Center(
+        child: CircularProgressIndicator(
+          color: ScoutingTheme.primary,
+        ),
+      ),
+    );
+  }
+}

@@ -5,6 +5,8 @@ import 'package:hamosad_scouting_app_2/src/app.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 
 void main() async {
+  runApp(const LoadingScreen());
+
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize Firebase and app database (create a temporary user and connect to database)
