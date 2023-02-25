@@ -152,6 +152,7 @@ class ScoutingHomePage extends StatelessWidget {
                   cubit: reportDataProvider(context).scouter,
                   hint: 'Enter your name...',
                   title: 'Name',
+                  onlyNames: true,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),

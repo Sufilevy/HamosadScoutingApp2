@@ -8,7 +8,7 @@ class ScoutingTextField extends StatefulWidget {
   final double size;
   final String hint;
   final String title;
-  final bool onlyNumbers;
+  final bool onlyNumbers, onlyNames;
   final String? errorHint;
 
   const ScoutingTextField({
@@ -18,6 +18,7 @@ class ScoutingTextField extends StatefulWidget {
     this.hint = '',
     this.title = '',
     this.onlyNumbers = false,
+    this.onlyNames = false,
     this.errorHint,
   }) : super(key: key);
 
@@ -28,6 +29,7 @@ class ScoutingTextField extends StatefulWidget {
 class _ScoutingTextFieldState extends State<ScoutingTextField> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FocusNode _focusNode = FocusNode();
+  final RegExp _namesValidator = RegExp(r'^[a-zA-Z -]{1,30}$');
   bool _hasErrors = false;
 
   @override
@@ -47,9 +49,17 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
           : 'enter some text';
       return widget.errorHint ?? 'Please $hint.';
     }
+
     if (widget.onlyNumbers) {
       if (int.tryParse(value) == null) return 'Only numbers are allowed.';
     }
+
+    if (widget.onlyNames) {
+      if (!_namesValidator.hasMatch(value)) {
+        return 'Names should only contain English letters.';
+      }
+    }
+
     return null;
   }
 
