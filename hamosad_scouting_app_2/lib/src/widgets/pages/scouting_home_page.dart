@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
@@ -94,22 +95,50 @@ class ScoutingHomePage extends StatelessWidget {
         ),
         drawer: Drawer(
           backgroundColor: ScoutingTheme.background2,
-          child: Center(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                DrawerHeader(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 8.0 * size),
+          child: ListView(
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(
+                  40.0 * size,
+                  20.0 * size,
+                  40.0 * size,
+                  30.0 * size,
+                ),
+                child: ScoutingImage(
+                  path: 'assets/images/hamosad_logo.png',
+                ),
+              ),
+              Center(
+                child: ScoutingText.navigation(
+                  'In association with:',
+                  fontSize: 36.0 * size,
+                ),
+              ),
+              Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 40.0 * size,
+                    ),
                     child: ScoutingImage(
-                      path: 'assets/images/hamosad_logo.png',
+                      path: 'assets/images/ma_logo.png',
                     ),
                   ),
-                ),
-                _divider(),
-                _divider(),
-              ],
-            ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 40.0 * size,
+                      right: 40.0 * size,
+                      top: 230.0 * size,
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/images/black_unicorns_logo.svg',
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
         body: ScoutingReportTab(
