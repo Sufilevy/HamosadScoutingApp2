@@ -94,12 +94,12 @@ class _ScoutingDropoffsState extends State<ScoutingDropoffs> {
                       ? ScoutingTheme.textStyle.copyWith(
                           color: ScoutingTheme.cones,
                           fontWeight: FontWeight.w600,
-                          fontSize: 21.0,
+                          fontSize: 21.0 * widget.size,
                         )
                       : ScoutingTheme.textStyle.copyWith(
                           color: ScoutingTheme.foreground2,
                           fontWeight: FontWeight.w400,
-                          fontSize: 17.0,
+                          fontSize: 17.0 * widget.size,
                         ),
                   duration: 200.milliseconds,
                   child: const Text('Cone'),
@@ -141,6 +141,7 @@ class _ScoutingDropoffsState extends State<ScoutingDropoffs> {
           crossAxisCount: 3,
           mainAxisSpacing: 3.0,
           crossAxisSpacing: 3.0,
+          physics: const NeverScrollableScrollPhysics(),
           children: [
             _buildNodeButton(0, 0, cone: true),
             _buildNodeButton(0, 1, cube: true),

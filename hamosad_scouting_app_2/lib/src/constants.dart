@@ -16,28 +16,30 @@ class ScoutingTheme {
   static const Color cones = Color(0xFFE78907);
   static const Color cubes = Color(0xFF5323C2);
 
-  static const TextStyle navigationStyle = TextStyle(
-    fontFamily: 'Varela Round',
-    fontWeight: FontWeight.normal,
-    fontSize: 18.0,
-    color: foreground1,
-  );
-  static const TextStyle titleStyle = TextStyle(
-    fontFamily: 'Open Sans',
-    fontWeight: FontWeight.w500,
-    fontSize: 18.0,
-    color: foreground1,
-  );
-  static const TextStyle subtitleStyle = TextStyle(
-    fontFamily: 'Open Sans',
-    fontWeight: FontWeight.normal,
-    fontSize: 17.0,
-    color: foreground1,
-  );
-  static const TextStyle textStyle = TextStyle(
-    fontFamily: 'Open Sans',
-    fontWeight: FontWeight.w400,
-    fontSize: 15.0,
-    color: foreground1,
-  );
+  static double size = 1.0;
+
+  static TextStyle get navigationStyle => TextStyle(
+        fontFamily: 'Varela Round',
+        fontWeight: FontWeight.normal,
+        fontSize: 24.0 * size,
+        color: foreground1,
+      );
+  static TextStyle get titleStyle => TextStyle(
+        fontFamily: 'Open Sans',
+        fontWeight: FontWeight.w500,
+        fontSize: 24.0 * size,
+        color: foreground1,
+      );
+  static TextStyle get subtitleStyle => TextStyle(
+        fontFamily: 'Open Sans',
+        fontWeight: FontWeight.normal,
+        fontSize: 22.0 * size,
+        color: foreground1,
+      );
+  static TextStyle get textStyle => TextStyle(
+        fontFamily: 'Open Sans',
+        fontWeight: FontWeight.w400,
+        fontSize: 20.0 * size,
+        color: foreground1,
+      );
 }

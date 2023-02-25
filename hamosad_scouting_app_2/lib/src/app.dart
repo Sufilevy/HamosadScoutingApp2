@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/reports.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
@@ -26,6 +27,7 @@ class _ScoutingAppState extends State<ScoutingApp> {
     final screenSize =
         MediaQueryData.fromWindow(WidgetsBinding.instance.window).size;
     size = screenSize.height / 1200;
+    ScoutingTheme.size = size;
     return Provider<ReportDataProvider>(
       create: (_) => ReportDataProvider(),
       child: MaterialApp(
