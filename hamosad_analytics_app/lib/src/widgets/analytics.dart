@@ -388,10 +388,14 @@ class AnalyticsText {
     String data, {
     Color? color,
     TextAlign textAlign = TextAlign.center,
+    double? fontSize,
   }) {
     return Text(
       data,
-      style: AnalyticsTheme.dataTextStyle.copyWith(color: color),
+      style: AnalyticsTheme.dataTextStyle.copyWith(
+        color: color,
+        fontSize: fontSize,
+      ),
       textAlign: textAlign,
     );
   }

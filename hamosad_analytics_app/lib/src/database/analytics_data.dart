@@ -7,7 +7,6 @@ class AnalyticsData {
   const AnalyticsData(
     this.teamsByNumber,
     this.teamsWithNumber,
-    this.teamsByRank,
   );
 
   /// The teams that have data submitted on them in the reports, sorted by their number.
@@ -15,9 +14,6 @@ class AnalyticsData {
 
   /// The teams that have data submitted on them in the reports, in a {teamNumber: team} format.
   final Map<int, Team> teamsWithNumber;
-
-  /// The teams that have data submitted on them in the reports, sorted by their rank.
-  final List<Team> teamsByRank;
 
   /// Generate an [AnalyticsData] object from a list of reports.
   factory AnalyticsData.fromReports(AnalyticsDatabase database) {
@@ -55,12 +51,10 @@ class AnalyticsData {
   static AnalyticsData _fromTeamsWithNumber(Map<int, Team> teamsWithNumber) {
     final teamsList = teamsWithNumber.mapEntries((team) => team.value);
     final teamsByNumber = teamsList.sortedBy((team) => team.info.number);
-    final teamsByRank = teamsList.sortedBy((team) => team.info.rank);
 
     return AnalyticsData(
       teamsByNumber,
       teamsWithNumber,
-      teamsByRank,
     );
   }
 }

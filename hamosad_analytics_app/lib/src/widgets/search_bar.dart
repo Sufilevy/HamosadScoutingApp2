@@ -9,6 +9,7 @@ class SearchBar extends StatelessWidget {
     this.hintText,
     this.borderColor,
     this.cursorColor,
+    this.searchIconColor,
     this.underlineBorder = false,
     TextEditingController? controller,
     String currentQuery = '',
@@ -17,7 +18,7 @@ class SearchBar extends StatelessWidget {
 
   final void Function(String)? onSubmitted;
   final String? hintText;
-  final Color? borderColor, cursorColor;
+  final Color? borderColor, cursorColor, searchIconColor;
   final bool underlineBorder;
   final TextEditingController _controller;
 
@@ -56,7 +57,7 @@ class SearchBar extends StatelessWidget {
             },
             icon: const Icon(Icons.search_rounded),
             iconSize: 32.0,
-            color: AnalyticsTheme.foreground2,
+            color: searchIconColor ?? AnalyticsTheme.foreground2,
             splashRadius: 1.0,
           ),
           hintText: hintText,

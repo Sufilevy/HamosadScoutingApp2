@@ -52,18 +52,14 @@ class Team {
 class TeamInfo {
   int number;
   String name, location;
-  int rank;
 
   TeamInfo({
     required this.number,
     required this.name,
     required this.location,
-    required this.rank,
   });
 
-  TeamInfo.defaults({required this.number, required this.name})
-      : location = '',
-        rank = 1;
+  TeamInfo.defaults({required this.number, required this.name}) : location = '';
 
   TeamInfo.only({
     required this.number,
@@ -74,8 +70,7 @@ class TeamInfo {
     int? lost,
     Stat? score,
     RobotIndexStat? defenceIndex,
-  })  : location = location ?? '',
-        rank = rank ?? 1;
+  }) : location = location ?? '';
 }
 
 /// All of the team's autonomous stats and averages.
