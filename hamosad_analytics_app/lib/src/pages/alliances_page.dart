@@ -178,7 +178,7 @@ class _AlliancesPageState extends State<AlliancesPage> {
 
   Widget _buildDivider() => Container(
         height: 45.0,
-        width: 2,
+        width: 2.0,
         decoration: BoxDecoration(
           color: AnalyticsTheme.foreground2,
           borderRadius: BorderRadius.circular(1.0),
@@ -452,23 +452,23 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              const EmptyExpanded(flex: 1),
+              const EmptyExpanded(flex: 10),
               Expanded(
-                flex: 12,
+                flex: 120,
                 child: AnalyticsText.data(
                   team.info.number.toString(),
                   color: widget.alliance.color,
                 ),
               ),
-              const EmptyExpanded(flex: 1),
-              const AnalyticsDataDivider(),
-              const EmptyExpanded(flex: 3),
+              const EmptyExpanded(flex: 10),
+              const AnalyticsDataDivider(flex: 3),
+              const EmptyExpanded(flex: 30),
               Expanded(
-                flex: 50,
+                flex: 500,
                 child: AnalyticsText.dataTitle(team.info.name.toString()),
               ),
               Expanded(
-                flex: 8,
+                flex: 80,
                 child: IconButton(
                   icon: const Icon(Icons.add_circle_rounded),
                   iconSize: 28.0,
@@ -482,7 +482,7 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
                   }),
                 ),
               ),
-              const EmptyExpanded(flex: 1),
+              const EmptyExpanded(flex: 10),
             ],
           ),
         ),

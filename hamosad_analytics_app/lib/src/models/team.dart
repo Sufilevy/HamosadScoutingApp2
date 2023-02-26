@@ -914,3 +914,10 @@ class EndgameClimbStat {
     duration.updateWithDuration(climb.duration);
   }
 }
+
+extension TeamsListToTeamNumbersList on List<Team> {
+  List<String> toTeamNumbers() {
+    return map((team) => '${team.info.number.toString()} ${team.info.name}')
+        .toList();
+  }
+}
