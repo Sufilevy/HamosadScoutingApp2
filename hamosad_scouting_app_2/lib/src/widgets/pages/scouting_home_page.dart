@@ -39,7 +39,7 @@ class ScoutingHomePage extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.all(8.0 * size),
-          child: ScoutingText.text('Report type:'),
+          child: ScoutingText.subtitle('Report type:'),
         ),
         Padding(
           padding: EdgeInsets.only(

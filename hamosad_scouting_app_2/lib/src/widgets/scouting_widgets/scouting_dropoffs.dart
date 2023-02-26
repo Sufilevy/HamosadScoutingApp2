@@ -40,7 +40,11 @@ class _ScoutingDropoffsState extends State<ScoutingDropoffs> {
         totalSwitches: 3,
         labels: const ['Arena Wall', 'Co-Op', 'Loading Zone'],
         fontSize: 26.0 * widget.size,
-        minWidth: 200.0 * widget.size,
+        customWidths: [
+          190.0 * widget.size,
+          160.0 * widget.size,
+          210.0 * widget.size,
+        ],
         animate: true,
         curve: Curves.easeOutQuint,
         onToggle: (index) => setState(() {
@@ -94,12 +98,12 @@ class _ScoutingDropoffsState extends State<ScoutingDropoffs> {
                       ? ScoutingTheme.textStyle.copyWith(
                           color: ScoutingTheme.cones,
                           fontWeight: FontWeight.w600,
-                          fontSize: 21.0 * widget.size,
+                          fontSize: 31.0 * widget.size,
                         )
                       : ScoutingTheme.textStyle.copyWith(
                           color: ScoutingTheme.foreground2,
                           fontWeight: FontWeight.w400,
-                          fontSize: 17.0 * widget.size,
+                          fontSize: 28.0 * widget.size,
                         ),
                   duration: 200.milliseconds,
                   child: const Text('Cone'),
@@ -111,12 +115,12 @@ class _ScoutingDropoffsState extends State<ScoutingDropoffs> {
                       ? ScoutingTheme.textStyle.copyWith(
                           color: ScoutingTheme.cubes,
                           fontWeight: FontWeight.w600,
-                          fontSize: 21.0,
+                          fontSize: 31.0 * widget.size,
                         )
                       : ScoutingTheme.textStyle.copyWith(
                           color: ScoutingTheme.foreground2,
                           fontWeight: FontWeight.w400,
-                          fontSize: 17.0,
+                          fontSize: 28.0 * widget.size,
                         ),
                   duration: 200.milliseconds,
                   child: const Text('Cube'),
@@ -245,17 +249,21 @@ class _ScoutingDropoffsState extends State<ScoutingDropoffs> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Center(
+          child: ScoutingText.subtitle('Pieces Dropoffs:'),
+        ),
+        SizedBox(height: 25.0 * widget.size),
         _buildSelectGrid(),
-        SizedBox(height: 30.0 * widget.size),
+        SizedBox(height: 25.0 * widget.size),
         _buildSelectNode(),
-        SizedBox(height: 30.0 * widget.size),
+        SizedBox(height: 25.0 * widget.size),
         ScoutingDuration(
           onChanged: (duration) {
             _duration = ActionDuration.values[duration];
             _setCurrentNodeDuration();
           },
         ),
-        SizedBox(height: 30.0 * widget.size),
+        SizedBox(height: 25.0 * widget.size),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

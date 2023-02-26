@@ -104,14 +104,14 @@ class GameReportEndgame {
 
 class GameReportSummary {
   Cubit<bool> won = Cubit(false);
-  Cubit<RobotIndex> defenceIndex = Cubit(RobotIndex.second);
+  Cubit<DefenceFocus> defenceFocus = Cubit(DefenceFocus.none);
   Cubit<String> fouls = Cubit('');
   Cubit<String> notes = Cubit('');
 
   Json get data {
     return {
       'won': won.data,
-      'defenceRobotIndex': defenceIndex.data.toString(),
+      'defenceRobotIndex': defenceFocus.data.toString(),
       'fouls': fouls.data,
       'notes': notes.data,
     };

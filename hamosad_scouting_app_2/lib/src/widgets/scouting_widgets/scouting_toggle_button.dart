@@ -55,7 +55,7 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
                   vertical: 4.0 * widget.size,
                   horizontal: 2.0 * widget.size,
                 ),
-                child: ScoutingText.text(
+                child: ScoutingText.subtitle(
                   widget.title,
                   textAlign: TextAlign.center,
                 ),

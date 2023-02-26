@@ -43,6 +43,7 @@ Widget gameReport(BuildContext context, double size) {
           ScoutingPickups(
             size: size,
             cubit: gameReport.auto.pickups,
+            onlyFloor: true,
           ),
           ScoutingDropoffs(
             size: size,
@@ -133,11 +134,10 @@ Widget gameReport(BuildContext context, double size) {
             cubit: gameReport.summary.won,
             title: 'Did the robot\'s alliance win?',
           ),
-          ScoutingRobotIndex(
+          ScoutingDefenceFocus(
             size: size,
-            title: 'Robot\'s defence index',
-            onChanged: (index) =>
-                gameReport.summary.defenceIndex.data = RobotIndex.values[index],
+            onChanged: (index) => gameReport.summary.defenceFocus.data =
+                DefenceFocus.values[index],
           ),
           ScoutingNotes(
             size: size,

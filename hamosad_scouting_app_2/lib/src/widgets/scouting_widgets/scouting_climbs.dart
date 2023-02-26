@@ -9,10 +9,12 @@ class ScoutingClimbState extends StatelessWidget {
   const ScoutingClimbState({
     Key? key,
     required this.onChanged,
+    this.dockedByOther = true,
     this.size = 1.0,
   }) : super(key: key);
 
   final void Function(int) onChanged;
+  final bool dockedByOther;
   final double size;
 
   @override
@@ -21,18 +23,28 @@ class ScoutingClimbState extends StatelessWidget {
       cornerRadius: 10.0 * size,
       inactiveBgColor: ScoutingTheme.background2,
       inactiveFgColor: ScoutingTheme.foreground2,
-      activeBgColors: const [
-        [ScoutingTheme.primaryVariant],
-        [ScoutingTheme.primaryVariant],
-        [ScoutingTheme.primaryVariant],
-        [ScoutingTheme.primaryVariant],
+      activeBgColors: [
+        const [ScoutingTheme.primaryVariant],
+        const [ScoutingTheme.primaryVariant],
+        if (dockedByOther) [ScoutingTheme.primaryVariant],
+        const [ScoutingTheme.primaryVariant],
       ],
       activeFgColor: ScoutingTheme.foreground1,
       initialLabelIndex: 0,
-      totalSwitches: 4,
-      labels: const ['None', 'Docked', 'Docked by Other', 'Engaged'],
+      totalSwitches: dockedByOther ? 4 : 3,
+      labels: [
+        'None',
+        'Docked',
+        if (dockedByOther) 'Docked by Other',
+        'Engaged'
+      ],
       fontSize: 24.0 * size,
-      customWidths: [130.0 * size, 140.0 * size, 220.0 * size, 140.0 * size],
+      customWidths: [
+        110.0 * size,
+        130.0 * size,
+        if (dockedByOther) 220.0 * size,
+        130.0 * size
+      ],
       animate: true,
       curve: Curves.easeOutQuint,
       onToggle: (index) => onChanged(index ?? 0),
@@ -57,6 +69,7 @@ class ScoutingAutoClimb extends StatelessWidget {
         ScoutingClimbState(
           size: size,
           onChanged: (state) => cubit.data.state = ClimbState.values[state],
+          dockedByOther: false,
         ),
         SizedBox(height: 30.0 * size),
         ScoutingDuration(
