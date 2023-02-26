@@ -18,20 +18,16 @@ class TeamDetailsPage extends ConsumerStatefulWidget {
 
 class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
   late final AnalyticsData _data;
-  late final Map<AnalyticsTab, List<Widget>> _tabs;
+  late Map<AnalyticsTab, List<Widget>> _tabs;
   final Cubit<AnalyticsTab> _currentTab = Cubit(AnalyticsTab.general);
 
-  @override
-  void initState() {
-    _data = ref.read(analytisDataProvider);
-    // print(_data.teamsByNumber.first);
-    // TeamDetailsPage.team = _data.teamsByNumber.first;
-
+  void _setTabs() {
     if (TeamDetailsPage.team != null) {
       final team = TeamDetailsPage.team!;
       _tabs = {
         AnalyticsTab.general: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               AnalyticsStatChip.fromStat(
                 team.summary.score,
@@ -56,9 +52,8 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
             ],
           ),
           Row(
-            children: [
-              TeamDropoffsChart(dropoffs: team.summary.dropoffs),
-            ],
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: const [],
           ),
         ],
         AnalyticsTab.auto: [
@@ -72,62 +67,85 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
         ],
       };
     }
+  }
+
+  @override
+  void initState() {
+    _data = ref.read(analytisDataProvider);
+    _setTabs();
     super.initState();
   }
 
   Widget _buildTitle() {
-    if (TeamDetailsPage.team == null) {
-      return Container();
+    Widget title = AnalyticsText.navigation('Search for a team:');
+    if (TeamDetailsPage.team != null) {
+      final team = TeamDetailsPage.team!;
+      title = AnalyticsPageTitle(
+        title: 'Team ${team.info.number}',
+        subtitle: '${team.info.name}, ${team.info.location}',
+      );
     }
 
-    final team = TeamDetailsPage.team!;
     return Column(
       children: [
-        AnalyticsPageTitle(
-          title: 'Team ${team.info.number}',
-          subtitle: '${team.info.name}, ${team.info.location}',
-        ),
-        const SizedBox(height: 20.0),
-        AnalyticsTabsSelector(
-          currentTabCubit: _currentTab,
-          onTabSelected: () => setState(() {}),
-        ),
+        _buildTeamSearch(title),
+        if (TeamDetailsPage.team != null) ...[
+          const SizedBox(height: 25.0),
+          AnalyticsTabsSelector(
+            currentTabCubit: _currentTab,
+            onTabSelected: () => setState(() {}),
+          ),
+        ],
       ],
     );
   }
 
-  Widget _buildTeamSearch() => EasySearchBar(
-        title: Container(),
-        onSearch: (team) => setState(() {
-          print(team);
-        }),
-        openOverlayOnSearch: true,
-        searchBackgroundColor: AnalyticsTheme.background2,
-        searchCursorColor: AnalyticsTheme.primary,
-        searchTextStyle: AnalyticsTheme.navigationTextStyle,
-        searchHintStyle: AnalyticsTheme.navigationTextStyle.copyWith(
-          color: AnalyticsTheme.foreground2,
+  Widget _buildTeamSearch(Widget title) => SizedBox(
+        height: 55.0,
+        child: EasySearchBar(
+          onSearch: (_) {},
+          onSuggestionTap: (data) => setState(() {
+            final teamNumber = int.parse(data.split('-').first.trim());
+            TeamDetailsPage.team = _data.teamsWithNumber[teamNumber];
+            _setTabs();
+          }),
+          suggestions: _data.teamsByNumber.toTeamNumbers(),
+          title: title,
+          elevation: 2.0,
+          appBarHeight: 55.0,
+          iconTheme: const IconThemeData(color: AnalyticsTheme.primary),
+          searchBackIconTheme:
+              const IconThemeData(color: AnalyticsTheme.primary),
+          suggestionBuilder: (data) => Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: AnalyticsText.dataTitle(data),
+            ),
+          ),
+          suggestionBackgroundColor: AnalyticsTheme.background2,
+          backgroundColor: AnalyticsTheme.background2,
+          suggestionsElevation: 8.0,
+          openOverlayOnSearch: true,
+          searchBackgroundColor: AnalyticsTheme.background2,
+          searchCursorColor: AnalyticsTheme.primary,
+          searchTextStyle: AnalyticsTheme.navigationTextStyle,
+          searchHintStyle: AnalyticsTheme.navigationTextStyle.copyWith(
+            color: AnalyticsTheme.foreground2,
+          ),
+          searchHintText: 'Enter a team\'s name or number...',
         ),
-        searchHintText: 'Enter a team\'s name or number...',
-        suggestions: const [
-          '1657 Hamosad',
-          '1690 Orbit',
-          '5135 Black Unicorns',
-          '5951 MA',
-          '3075 Ha-Dream',
-        ],
-        // _data.teamsByNumber.toTeamNumbers(),
       );
 
   Widget _buildBody() {
     if (TeamDetailsPage.team == null) {
-      return _buildTeamSearch();
+      return Center(
+        child: AnalyticsText.data('There is no selected team.'),
+      );
     }
 
     return Column(
       key: ValueKey<AnalyticsTab>(_currentTab.data),
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: _tabs[_currentTab.data]!,
     );
   }

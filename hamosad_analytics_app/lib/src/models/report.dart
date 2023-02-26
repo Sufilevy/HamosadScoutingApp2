@@ -14,8 +14,8 @@ class Report {
   final ReportSummary summary;
 
   Report.fromJson(Json json)
-      : teamNumber = json['info']['teamNumber'],
-        scouterTeamNumber = json['info']['scouterTeamNumber'],
+      : teamNumber = int.parse(json['info']['teamNumber']),
+        scouterTeamNumber = teamNumberFrom(json['info']['scouterTeamNumber']),
         match = json['info']['match'],
         scouter = json['info']['scouter'],
         time = DateFormat('dd/MM HH:mm:ss').parse(json['info']['time']),
@@ -26,6 +26,14 @@ class Report {
 
   int get score {
     return auto.score + teleop.score + endgame.score;
+  }
+
+  static int teamNumberFrom(String teamNumber) {
+    if (teamNumber.isEmpty) {
+      return 1657;
+    } else {
+      return int.parse(teamNumber);
+    }
   }
 }
 
@@ -43,7 +51,7 @@ class ReportAuto {
         leftCommunity = json['leftCommunity'] ?? false,
         pickups = PiecePickup.list(json['pickups']),
         dropoffs = PieceDropoff.list(json['dropoffs']),
-        chargeStationPasses = int.parse(json['chargeStationPasses']),
+        chargeStationPasses = json['chargeStationPasses'],
         climb = AutoClimb.fromJson(json['climb'])!,
         notes = json['notes'];
 
@@ -61,7 +69,7 @@ class ReportTeleop {
   ReportTeleop.fromJson(Json json)
       : pickups = PiecePickup.list(json['pickups']),
         dropoffs = PieceDropoff.list(json['dropoffs']),
-        chargeStationPasses = int.parse(json['chargeStationPasses']),
+        chargeStationPasses = json['chargeStationPasses'],
         notes = json['notes'];
 
   int get score {
@@ -73,18 +81,18 @@ class ReportEndgame {
   List<PiecePickup> pickups;
   List<PieceDropoff> dropoffs;
   int chargeStationPasses;
-  EndgameClimb climb;
+  EndgameClimb? climb;
   String notes;
 
   ReportEndgame.fromJson(Json json)
       : pickups = PiecePickup.list(json['pickups']),
         dropoffs = PieceDropoff.list(json['dropoffs']),
-        chargeStationPasses = int.parse(json['chargeStationPasses']),
-        climb = EndgameClimb.fromJson(json['climb'])!,
+        chargeStationPasses = json['chargeStationPasses'],
+        climb = EndgameClimb.fromJson(json['climb']),
         notes = json['notes'];
 
   int get score {
-    return dropoffs.score(isAuto: false) + climb.score;
+    return dropoffs.score(isAuto: false) + (climb?.score ?? 0);
   }
 }
 
@@ -251,8 +259,15 @@ class PiecePickup {
     );
   }
 
-  static List<PiecePickup> list(List<Json> list) {
-    return list.map((pickup) => fromJson(pickup)).filterNotNull().toList();
+  static List<PiecePickup> list(List list) {
+    if (list.isEmpty) {
+      return [];
+    }
+
+    return list
+        .map((pickup) => fromJson(pickup as Json))
+        .filterNotNull()
+        .toList();
   }
 }
 
@@ -316,8 +331,15 @@ class PieceDropoff {
     return 0;
   }
 
-  static List<PieceDropoff> list(List<Json> list) {
-    return list.map((dropoff) => fromJson(dropoff)).filterNotNull().toList();
+  static List<PieceDropoff> list(List list) {
+    if (list.isEmpty) {
+      return [];
+    }
+
+    return list
+        .map((dropoff) => fromJson(dropoff as Json))
+        .filterNotNull()
+        .toList();
   }
 }
 
@@ -409,7 +431,9 @@ class EndgameClimb {
   final ClimbingState state;
   final RobotIndex robotIndex;
 
-  static EndgameClimb? fromJson(Json json) {
+  static EndgameClimb? fromJson(Json? json) {
+    if (json == null) return null;
+
     final duration = ActionDuration.fromString(json['duration']);
     final state = ClimbingState.fromString(json['state']);
     final robotIndex = RobotIndex.fromString(json['robotIndex']);

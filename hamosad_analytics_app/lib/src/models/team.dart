@@ -908,7 +908,9 @@ class EndgameClimbStat {
         indexes = RobotIndexStat.defaults(),
         duration = ActionDurationStat.defaults();
 
-  void updateWithClimb(EndgameClimb climb) {
+  void updateWithClimb(EndgameClimb? climb) {
+    if (climb == null) return;
+
     states.updateWithState(climb.state);
     indexes.updateWithIndex(climb.robotIndex);
     duration.updateWithDuration(climb.duration);
@@ -917,7 +919,7 @@ class EndgameClimbStat {
 
 extension TeamsListToTeamNumbersList on List<Team> {
   List<String> toTeamNumbers() {
-    return map((team) => '${team.info.number.toString()} ${team.info.name}')
+    return map((team) => '${team.info.number.toString()}  -  ${team.info.name}')
         .toList();
   }
 }

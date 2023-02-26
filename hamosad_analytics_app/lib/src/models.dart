@@ -21,8 +21,8 @@ class Stat {
   double get average => _average;
 
   Stat({num? min, num? max, double? average})
-      : _min = min ?? double.negativeInfinity,
-        _max = max ?? double.infinity,
+      : _min = min ?? double.infinity,
+        _max = max ?? double.negativeInfinity,
         _average = average ?? 0.0,
         _count = 0,
         _sum = 0.0;
