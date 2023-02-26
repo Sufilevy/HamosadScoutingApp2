@@ -28,6 +28,13 @@ class ReportDataProvider {
       ...reportData,
     };
   }
+
+  void clear() {
+    teamNumber.data = null;
+    match.data = null;
+    gameReport.clear();
+    pitReport.clear();
+  }
 }
 
 class GameReport {
@@ -43,6 +50,13 @@ class GameReport {
       'endgame': teleop.data,
       'summary': summary.data,
     };
+  }
+
+  void clear() {
+    auto.clear();
+    teleop.clear();
+    endgame.clear();
+    summary.clear();
   }
 }
 
@@ -66,6 +80,16 @@ class GameReportAuto {
       'notes': notes.data,
     };
   }
+
+  void clear() {
+    startPosition.data = null;
+    leftCommunity.data = false;
+    pickups.data = Pickups();
+    dropoffs.data = Dropoffs();
+    chargeStationPasses.data = 0;
+    climb.data = AutoClimb();
+    notes.data = '';
+  }
 }
 
 class GameReportTeleop {
@@ -81,6 +105,13 @@ class GameReportTeleop {
       'chargeStationPasses': chargeStationPasses.data,
       'notes': notes.data,
     };
+  }
+
+  void clear() {
+    pickups.data = Pickups();
+    dropoffs.data = Dropoffs();
+    chargeStationPasses.data = 0;
+    notes.data = '';
   }
 }
 
@@ -100,6 +131,14 @@ class GameReportEndgame {
       'notes': notes.data,
     };
   }
+
+  void clear() {
+    pickups.data = Pickups();
+    dropoffs.data = Dropoffs();
+    chargeStationPasses.data = 0;
+    climb.data = EndgameClimb();
+    notes.data = '';
+  }
 }
 
 class GameReportSummary {
@@ -116,6 +155,13 @@ class GameReportSummary {
       'notes': notes.data,
     };
   }
+
+  void clear() {
+    won.data = false;
+    defenceFocus.data = null;
+    fouls.data = '';
+    notes.data = '';
+  }
 }
 
 class PitReport {
@@ -126,7 +172,11 @@ class PitReport {
       'notes': notes.data,
     };
   }
+
+  void clear() {
+    notes.data = '';
+  }
 }
 
 ReportDataProvider reportDataProvider(BuildContext context) =>
-    Provider.of<ReportDataProvider>(context, listen: false);
+    context.read<ReportDataProvider>();

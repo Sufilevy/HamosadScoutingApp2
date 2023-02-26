@@ -116,12 +116,12 @@ class ScoutingReportPage extends StatelessWidget {
                         context,
                         (route) => route.isFirst,
                       );
-
                       final reportData = reportDataProvider(context);
                       await ScoutingDatabase.sendReport(
                         reportData.data,
                         reportType: reportData.reportType.data,
                       );
+                      reportData.clear();
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
