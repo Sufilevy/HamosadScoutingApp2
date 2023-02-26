@@ -20,7 +20,7 @@ void main() async {
     resumedCallback: ScoutingDatabase.initialize,
   ));
 
-  SystemChrome.setPreferredOrientations([
+  await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);

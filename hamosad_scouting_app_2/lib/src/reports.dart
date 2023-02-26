@@ -15,14 +15,10 @@ Widget gameReport(BuildContext context, double size) {
         size: size,
         title: 'Info',
         children: [
-          ScoutingTextField(
-            cubit: report.teamNumber,
-            onlyNumbers: true,
-            title: 'Team number',
-          ),
-          ScoutingTextField(
-            cubit: report.match,
-            title: 'Match',
+          ScoutingMatchAndTeam(
+            matches: ScoutingDatabase.matches,
+            match: report.match,
+            team: report.teamNumber,
           ),
         ],
       ),

@@ -4,7 +4,7 @@ import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:intl/intl.dart' as intl;
 
 class ScoutingTextField extends StatefulWidget {
-  final Cubit<String> cubit;
+  final Cubit<String?> cubit;
   final double size;
   final String hint;
   final String title;
@@ -81,10 +81,11 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
             },
           ),
           style: ScoutingTheme.textStyle,
-          textDirection: intl.Bidi.estimateDirectionOfText(widget.cubit.data) ==
-                  intl.TextDirection.RTL
-              ? TextDirection.rtl
-              : TextDirection.ltr,
+          textDirection:
+              intl.Bidi.estimateDirectionOfText(widget.cubit.data ?? '') ==
+                      intl.TextDirection.RTL
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
           decoration: InputDecoration(
             hintText: widget.hint,
             hintStyle: ScoutingTheme.textStyle.copyWith(

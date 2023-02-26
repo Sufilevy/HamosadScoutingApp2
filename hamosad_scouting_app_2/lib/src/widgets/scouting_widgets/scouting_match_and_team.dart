@@ -2,9 +2,10 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
+import 'package:hamosad_scouting_app_2/src/widgets.dart';
 
 class ScoutingTeamNumber extends StatefulWidget {
-  final Cubit<String> cubit;
+  final Cubit<String?> cubit;
   final double size;
   final List<String> teams;
 
@@ -23,7 +24,7 @@ class ScoutingTeamNumber extends StatefulWidget {
 class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
   final Duration _duration = 400.milliseconds;
   int _currentTeamIndex = -1;
-  final double _width = 170.0, _height = 120.0, _radius = 7.5;
+  final double _width = 120.0, _height = 80.0, _radius = 7.5;
 
   Widget _buildTeamButton(BuildContext context, int index) {
     final Color teamColor =
@@ -61,7 +62,7 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
                     setState(() {
                       if (isSelected) {
                         _currentTeamIndex = -1;
-                        widget.cubit.data = '';
+                        widget.cubit.data = null;
                       } else {
                         _currentTeamIndex = index;
                         widget.cubit.data = widget.teams[index];
@@ -126,6 +127,88 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
             _buildTeamButton(context, 5),
           ],
         ),
+      ],
+    );
+  }
+}
+
+class ScoutingMatchAndTeam extends StatefulWidget {
+  const ScoutingMatchAndTeam({
+    super.key,
+    required this.matches,
+    required this.team,
+    required this.match,
+    this.size = 1.0,
+  });
+
+  final Map<String, List<String>> matches;
+  final Cubit<String?> team, match;
+  final double size;
+
+  @override
+  State<ScoutingMatchAndTeam> createState() => _ScoutingMatchAndTeamState();
+}
+
+class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
+  String? _match;
+
+  Widget _buildSelectMatch() => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ScoutingText.title('Match:'),
+          SizedBox(width: 50.0 * widget.size),
+          DropdownButton<String>(
+            value: _match,
+            borderRadius: BorderRadius.circular(5.0 * widget.size),
+            dropdownColor: ScoutingTheme.background2,
+            style: ScoutingTheme.textStyle,
+            alignment: Alignment.center,
+            items: widget.matches.keys
+                .prependElement('Eliminations')
+                .map(
+                  (match) => DropdownMenuItem<String>(
+                    value: match,
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ScoutingText.text(
+                          match,
+                          fontSize: 20.0 * widget.size,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
+            onChanged: (value) => setState(() {
+              _match = value;
+              widget.match.data = value;
+            }),
+          ),
+        ],
+      );
+
+  Widget _buildSelectTeam() => _match == 'Eliminations'
+      ? ScoutingTextField(
+          cubit: widget.team,
+          onlyNumbers: true,
+          hint: 'Enter the team\'s number...',
+          title: 'Team number',
+          errorHint: 'Please enter a team number.',
+        )
+      : ScoutingTeamNumber(
+          size: widget.size,
+          cubit: widget.team,
+          teams: widget.matches[_match]!,
+        );
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _buildSelectMatch(),
+        SizedBox(height: 25.0 * widget.size),
+        if (_match != null) _buildSelectTeam(),
       ],
     );
   }

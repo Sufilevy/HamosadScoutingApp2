@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
@@ -68,59 +69,82 @@ class ScoutingReportPage extends StatelessWidget {
 
   void _onSendButtonPressed(BuildContext context) {
     showDialog(
-      context: context,
-      builder: (BuildContext context) => ScoutingAlertDialog(
-        content:
-            'Sending the report will upload it to the database and bring you back to the home screen.',
-        title: 'Send Report?',
-        titleIcon: Icons.send_rounded,
-        iconColor: ScoutingTheme.blueAlliance,
-        okButton: false,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: ScoutingText.text(
-                  'Cancel',
-                  color: ScoutingTheme.primary,
+        context: context,
+        builder: (BuildContext context) {
+          final report = reportDataProvider(context);
+          String content;
+          if (report.match.data.isNullOrEmpty ||
+              report.teamNumber.data.isNullOrEmpty) {
+            content = 'Please fill the match and team number.';
+          } else if (report.gameReport.auto.startPosition.data == null) {
+            content = 'Please fill the robot\'s start position.';
+          } else if (!report.gameReport.auto.climb.data.isFilled) {
+            content = 'Please fill the autonomous climb.';
+          } else if (!report.gameReport.endgame.climb.data.isFilled) {
+            content = 'Please fill the endgame climb.';
+          } else if (report.gameReport.summary.defenceFocus.data == null) {
+            content = 'Please fill the defence focus.';
+          } else {
+            return ScoutingAlertDialog(
+              content:
+                  'Sending the report will upload it to the database and bring you back to the home screen.',
+              title: 'Send Report?',
+              titleIcon: Icons.send_rounded,
+              iconColor: ScoutingTheme.blueAlliance,
+              okButton: false,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ScoutingText.text(
+                        'Cancel',
+                        color: ScoutingTheme.primary,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextButton(
-              onPressed: () async {
-                Navigator.popUntil(
-                  context,
-                  (route) => route.isFirst,
-                );
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextButton(
+                    onPressed: () async {
+                      Navigator.popUntil(
+                        context,
+                        (route) => route.isFirst,
+                      );
 
-                final reportData = reportDataProvider(context);
-                await ScoutingDatabase.sendReport(
-                  reportData.data,
-                  reportType: reportData.reportType.data,
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: ScoutingText.text(
-                  'Send',
-                  color: ScoutingTheme.blueAlliance,
-                  fontWeight: FontWeight.bold,
+                      final reportData = reportDataProvider(context);
+                      await ScoutingDatabase.sendReport(
+                        reportData.data,
+                        reportType: reportData.reportType.data,
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ScoutingText.text(
+                        'Send',
+                        color: ScoutingTheme.blueAlliance,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-        ],
-        size: size,
-      ),
-    );
+              ],
+              size: size,
+            );
+          }
+
+          return ScoutingAlertDialog(
+            content: content,
+            title: 'Incomplete report',
+            iconColor: ScoutingTheme.warning,
+            titleIcon: Icons.warning_rounded,
+          );
+        });
   }
 
   @override

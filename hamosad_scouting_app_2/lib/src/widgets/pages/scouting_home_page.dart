@@ -72,14 +72,6 @@ class ScoutingHomePage extends StatelessWidget {
     );
   }
 
-  Widget _divider() => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.0 * size),
-        child: const Divider(
-          thickness: 1.5,
-          color: ScoutingTheme.background3,
-        ),
-      );
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -120,7 +112,7 @@ class ScoutingHomePage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 40.0 * size,
+                      horizontal: 60.0 * size,
                     ),
                     child: ScoutingImage(
                       path: 'assets/images/ma_logo.png',
@@ -128,9 +120,9 @@ class ScoutingHomePage extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                      left: 40.0 * size,
-                      right: 40.0 * size,
-                      top: 230.0 * size,
+                      left: 60.0 * size,
+                      right: 60.0 * size,
+                      top: 210.0 * size,
                     ),
                     child: SvgPicture.asset(
                       'assets/images/black_unicorns_logo.svg',

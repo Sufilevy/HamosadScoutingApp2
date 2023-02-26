@@ -59,7 +59,7 @@ class ScoutingStartPosition extends StatelessWidget {
         [ScoutingTheme.primaryVariant],
       ],
       activeFgColor: ScoutingTheme.foreground1,
-      initialLabelIndex: 1,
+      initialLabelIndex: null,
       totalSwitches: 3,
       labels: const ['Arena Wall', 'Middle', 'Loading Zone'],
       customWidths: [
@@ -107,7 +107,7 @@ class ScoutingRobotIndex extends StatelessWidget {
             [ScoutingTheme.primaryVariant],
           ],
           activeFgColor: ScoutingTheme.foreground1,
-          initialLabelIndex: 1,
+          initialLabelIndex: null,
           totalSwitches: 3,
           labels: const ['First', 'Second', 'Third'],
           fontSize: 26.0 * size,
@@ -151,7 +151,7 @@ class ScoutingDefenceFocus extends StatelessWidget {
             [ScoutingTheme.primaryVariant],
           ],
           activeFgColor: ScoutingTheme.foreground1,
-          initialLabelIndex: 1,
+          initialLabelIndex: null,
           totalSwitches: 3,
           customWidths: [
             200.0 * size,

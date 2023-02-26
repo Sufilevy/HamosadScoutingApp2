@@ -30,7 +30,7 @@ class ScoutingClimbState extends StatelessWidget {
         const [ScoutingTheme.primaryVariant],
       ],
       activeFgColor: ScoutingTheme.foreground1,
-      initialLabelIndex: 0,
+      initialLabelIndex: null,
       totalSwitches: dockedByOther ? 4 : 3,
       labels: [
         'None',

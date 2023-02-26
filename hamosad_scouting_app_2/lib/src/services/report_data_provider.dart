@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 class ReportDataProvider {
   final Cubit<String> scouter = Cubit('');
   final Cubit<String> scouterTeamNumber = Cubit('');
-  final Cubit<String> teamNumber = Cubit('');
-  final Cubit<String> match = Cubit('');
+  final Cubit<String?> teamNumber = Cubit(null);
+  final Cubit<String?> match = Cubit(null);
   final Cubit<ReportType> reportType = Cubit(ReportType.game);
 
   final GameReport gameReport = GameReport();
@@ -47,7 +47,7 @@ class GameReport {
 }
 
 class GameReportAuto {
-  Cubit<StartPosition> startPosition = Cubit(StartPosition.arenaWall);
+  Cubit<StartPosition?> startPosition = Cubit(null);
   Cubit<bool> leftCommunity = Cubit(false);
   Cubit<Pickups> pickups = Cubit(Pickups());
   Cubit<Dropoffs> dropoffs = Cubit(Dropoffs());
@@ -104,7 +104,7 @@ class GameReportEndgame {
 
 class GameReportSummary {
   Cubit<bool> won = Cubit(false);
-  Cubit<DefenceFocus> defenceFocus = Cubit(DefenceFocus.none);
+  Cubit<DefenceFocus?> defenceFocus = Cubit(null);
   Cubit<String> fouls = Cubit('');
   Cubit<String> notes = Cubit('');
 

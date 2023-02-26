@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartx/dartx.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
@@ -20,6 +21,7 @@ class ScoutingDatabase {
     final informationDoc =
         await _db.collection('district').doc('information').get();
     _districtName = informationDoc.get('name');
+    await _getMatches();
   }
 
   static Future<void> finalize() async {
@@ -60,5 +62,14 @@ class ScoutingDatabase {
           .doc('$_districtName-pit')
           .update({id ?? _generateReportId(): data});
     }
+  }
+
+  static late Map<String, List<String>> matches;
+
+  static Future<void> _getMatches() async {
+    final matchesJson = await _db.collection('district').doc('matches').get();
+    matches = matchesJson.data()?.mapValues((match) =>
+            (match.value as List).map((team) => team.toString()).toList()) ??
+        {};
   }
 }

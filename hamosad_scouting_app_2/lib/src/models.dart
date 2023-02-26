@@ -87,12 +87,8 @@ class Pickups {
 }
 
 class AutoClimb {
-  AutoClimb()
-      : state = ClimbState.none,
-        duration = ActionDuration.twoToFive;
-
-  ClimbState state;
-  ActionDuration duration;
+  ClimbState? state;
+  ActionDuration? duration;
 
   Json toJson() {
     return {
@@ -100,17 +96,16 @@ class AutoClimb {
       'duration': duration.toString(),
     };
   }
+
+  bool get isFilled {
+    return state != null && (state! == ClimbState.none || duration != null);
+  }
 }
 
 class EndgameClimb {
-  EndgameClimb()
-      : state = ClimbState.none,
-        index = RobotIndex.first,
-        duration = ActionDuration.twoToFive;
-
-  ClimbState state;
-  RobotIndex index;
-  ActionDuration duration;
+  ClimbState? state;
+  RobotIndex? index;
+  ActionDuration? duration;
 
   Json toJson() {
     return {
@@ -118,6 +113,11 @@ class EndgameClimb {
       'robotIndex': index.toString(),
       'duration': duration.toString(),
     };
+  }
+
+  bool get isFilled {
+    return state != null &&
+        (state! == ClimbState.none || (index != null && duration != null));
   }
 }
 
