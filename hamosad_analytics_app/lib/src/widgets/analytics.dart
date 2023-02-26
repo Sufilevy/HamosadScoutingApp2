@@ -207,7 +207,7 @@ class AnalyticsStatChip extends StatelessWidget {
           Row(
             children: [
               const Expanded(
-                flex: 5,
+                flex: 8,
                 child: Icon(
                   Icons.arrow_circle_up_rounded,
                   size: 20.0,
@@ -216,15 +216,18 @@ class AnalyticsStatChip extends StatelessWidget {
               ),
               const EmptyExpanded(flex: 1),
               Expanded(
-                flex: 8,
-                child: AnalyticsText.dataSubtitle(max.toString()),
+                flex: 30,
+                child: AnalyticsText.dataSubtitle(
+                  max.toString(),
+                  textAlign: TextAlign.left,
+                ),
               ),
             ],
           ),
           Row(
             children: [
               const Expanded(
-                flex: 5,
+                flex: 8,
                 child: Icon(
                   Icons.arrow_circle_down_rounded,
                   size: 20.0,
@@ -233,8 +236,11 @@ class AnalyticsStatChip extends StatelessWidget {
               ),
               const EmptyExpanded(flex: 1),
               Expanded(
-                flex: 8,
-                child: AnalyticsText.dataSubtitle(min.toString()),
+                flex: 30,
+                child: AnalyticsText.dataSubtitle(
+                  min.toString(),
+                  textAlign: TextAlign.left,
+                ),
               ),
             ],
           ),
@@ -352,61 +358,73 @@ class AnalyticsText {
     );
   }
 
-  static Text dataTitle(
+  static Widget dataTitle(
     String data, {
     Color? color,
     FontWeight? fontWeight,
     TextAlign? textAlign,
   }) {
-    return Text(
-      data,
-      style: AnalyticsTheme.dataTitleTextStyle.copyWith(
-        color: color,
-        fontWeight: fontWeight,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        data,
+        style: AnalyticsTheme.dataTitleTextStyle.copyWith(
+          color: color,
+          fontWeight: fontWeight,
+        ),
+        textAlign: textAlign,
       ),
-      textAlign: textAlign,
     );
   }
 
-  static Text dataSubtitle(
+  static Widget dataSubtitle(
     String data, {
     Color? color,
     FontWeight? fontWeight,
     TextAlign? textAlign,
   }) {
-    return Text(
-      data,
-      style: AnalyticsTheme.dataSubtitleTextStyle.copyWith(
-        color: color,
-        fontWeight: fontWeight,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        data,
+        style: AnalyticsTheme.dataSubtitleTextStyle.copyWith(
+          color: color,
+          fontWeight: fontWeight,
+        ),
+        textAlign: textAlign,
       ),
-      textAlign: textAlign,
     );
   }
 
-  static Text data(
+  static Widget data(
     String data, {
     Color? color,
     TextAlign textAlign = TextAlign.center,
     double? fontSize,
   }) {
-    return Text(
-      data,
-      style: AnalyticsTheme.dataTextStyle.copyWith(
-        color: color,
-        fontSize: fontSize,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        data,
+        style: AnalyticsTheme.dataTextStyle.copyWith(
+          color: color,
+          fontSize: fontSize,
+        ),
+        textAlign: textAlign,
       ),
-      textAlign: textAlign,
     );
   }
 
-  static Text logo(
+  static Widget logo(
     String data, {
     Color? color,
   }) {
-    return Text(
-      data,
-      style: AnalyticsTheme.logoTextStyle.copyWith(color: color),
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        data,
+        style: AnalyticsTheme.logoTextStyle.copyWith(color: color),
+      ),
     );
   }
 }

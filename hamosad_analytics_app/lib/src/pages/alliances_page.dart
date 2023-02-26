@@ -3,12 +3,13 @@ import 'dart:math' as math;
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
-import 'package:hamosad_analytics_app/src/database.dart' as db;
+import 'package:hamosad_analytics_app/src/database.dart';
 import 'package:hamosad_analytics_app/src/models/team.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 
-class AlliancesPage extends StatefulWidget {
+class AlliancesPage extends ConsumerStatefulWidget {
   const AlliancesPage({Key? key}) : super(key: key);
 
   static final Map<String, double Function(Team)> tableEntries = {
@@ -20,14 +21,21 @@ class AlliancesPage extends StatefulWidget {
   };
 
   @override
-  State<AlliancesPage> createState() => _AlliancesPageState();
+  ConsumerState<AlliancesPage> createState() => _AlliancesPageState();
 }
 
-class _AlliancesPageState extends State<AlliancesPage> {
+class _AlliancesPageState extends ConsumerState<AlliancesPage> {
+  late final AnalyticsData _data;
   final _blueAlliance = Alliance.blue(), _redAlliance = Alliance.red();
 
   List<Team> get _teams {
     return _blueAlliance.teamsWith(_redAlliance);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _data = ref.read(analytisDataProvider);
   }
 
   @override
@@ -52,6 +60,7 @@ class _AlliancesPageState extends State<AlliancesPage> {
             AddTeamsButton(
               alliance: _blueAlliance,
               otherAlliance: _redAlliance,
+              teams: _data.teamsByNumber,
               addTeam: _addTeamToAlliance,
               clearTeams: _clearAllianceTeams,
             ),
@@ -59,6 +68,7 @@ class _AlliancesPageState extends State<AlliancesPage> {
             AddTeamsButton(
               alliance: _redAlliance,
               otherAlliance: _blueAlliance,
+              teams: _data.teamsByNumber,
               addTeam: _addTeamToAlliance,
               clearTeams: _clearAllianceTeams,
             ),
@@ -311,11 +321,13 @@ class AddTeamsButton extends StatefulWidget {
     Key? key,
     required this.alliance,
     required this.otherAlliance,
+    required this.teams,
     required this.addTeam,
     required this.clearTeams,
   }) : super(key: key);
 
   final Alliance alliance, otherAlliance;
+  final List<Team> teams;
   final void Function(Alliance, Team) addTeam;
   final void Function(Alliance) clearTeams;
 
@@ -332,7 +344,6 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
   @override
   void initState() {
     super.initState();
-
     _colorAnimationController = AnimationController(
       vsync: this,
       duration: 250.milliseconds,
@@ -394,7 +405,9 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
               onPressed: () => setState(
                 () {
                   if (widget.alliance.teams.length < 3) {
-                    _isMenuOpen = true;
+                    if (_currentTeams.isNotEmpty) {
+                      _isMenuOpen = true;
+                    }
                   } else {
                     widget.clearTeams(widget.alliance);
                     Future.delayed(
@@ -417,11 +430,7 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
       );
 
   Widget _buildAddTeamsPopup() {
-    final currentTeams = widget.alliance.teamsWith(widget.otherAlliance);
-    final teams = db.getTeams().where((team) {
-      return !currentTeams.contains(team);
-    }).toList();
-
+    final teams = _currentTeams;
     final height = math.min(700.0, 11.0 + teams.length * 70);
 
     return Padding(
@@ -475,6 +484,10 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
                   color: widget.alliance.color,
                   onPressed: () => setState(() {
                     widget.addTeam(widget.alliance, team);
+                    if (_currentTeams.isEmpty) {
+                      _isMenuOpen = false;
+                    }
+
                     if (widget.alliance.teams.length == 3) {
                       _isMenuOpen = false;
                       _colorAnimationController.forward();
@@ -487,4 +500,9 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
           ),
         ),
       );
+
+  List<Team> get _currentTeams {
+    final currentTeams = widget.alliance.teamsWith(widget.otherAlliance);
+    return widget.teams.where((team) => !currentTeams.contains(team)).toList();
+  }
 }

@@ -101,7 +101,7 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
   }
 
   Widget _buildTeamSearch(Widget title) => SizedBox(
-        height: 55.0,
+        height: 65.0,
         child: EasySearchBar(
           onSearch: (_) {},
           onSuggestionTap: (data) => setState(() {
@@ -112,10 +112,15 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
           suggestions: _data.teamsByNumber.toTeamNumbers(),
           title: title,
           elevation: 2.0,
-          appBarHeight: 55.0,
-          iconTheme: const IconThemeData(color: AnalyticsTheme.primary),
-          searchBackIconTheme:
-              const IconThemeData(color: AnalyticsTheme.primary),
+          appBarHeight: 65.0,
+          iconTheme: const IconThemeData(
+            color: AnalyticsTheme.primary,
+            size: 34.0,
+          ),
+          searchBackIconTheme: const IconThemeData(
+            size: 28.0,
+            color: AnalyticsTheme.primary,
+          ),
           suggestionBuilder: (data) => Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(

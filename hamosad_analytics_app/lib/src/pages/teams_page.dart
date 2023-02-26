@@ -324,15 +324,19 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
                     color: AnalyticsTheme.foreground2,
                   ),
                 ),
-                cancelText: AnalyticsText.dataSubtitle(
+                cancelText: Text(
                   'CANCEL',
-                  color: AnalyticsTheme.foreground2,
-                  fontWeight: FontWeight.w500,
+                  style: AnalyticsTheme.dataSubtitleTextStyle.copyWith(
+                    color: AnalyticsTheme.foreground2,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                confirmText: AnalyticsText.dataSubtitle(
+                confirmText: Text(
                   'CONFIRM',
-                  color: AnalyticsTheme.primary,
-                  fontWeight: FontWeight.w700,
+                  style: AnalyticsTheme.dataSubtitleTextStyle.copyWith(
+                    color: AnalyticsTheme.primary,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
                 searchable: true,
                 searchHint: 'Search...',
@@ -428,7 +432,10 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
                   vertical: 6.0,
                   horizontal: 12.0,
                 ),
-                child: AnalyticsText.dataTitle(_dataRows[index]),
+                child: AnalyticsText.dataTitle(
+                  _dataRows[index],
+                  color: AnalyticsTheme.foreground1.withOpacity(0.8),
+                ),
               ),
             ),
           ),
