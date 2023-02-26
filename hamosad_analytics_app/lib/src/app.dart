@@ -98,6 +98,21 @@ class _AnalyticsAppBodyState extends State<AnalyticsAppBody> {
   }
 }
 
+class LoadingScreen extends ConsumerWidget {
+  const LoadingScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+      color: AnalyticsTheme.background1,
+      alignment: Alignment.center,
+      child: const CircularProgressIndicator(
+        color: AnalyticsTheme.primary,
+      ),
+    );
+  }
+}
+
 // TODO: Remove at production.
 T debug<T>(T object) {
   debugPrint(object.toString());
