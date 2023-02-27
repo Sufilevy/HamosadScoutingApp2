@@ -1,6 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -32,9 +33,9 @@ class _SidebarState extends State<Sidebar> {
       headerDivider: _buildHeaderDivider(),
       footerBuilder: (context, extended) => _buildRefreshDataButton(),
       theme: _theme(),
-      extendedTheme: const SidebarXTheme(
-        width: 200.0,
-        decoration: BoxDecoration(color: AnalyticsTheme.background2),
+      extendedTheme: SidebarXTheme(
+        width: 200.0 * AnalyticsApp.size,
+        decoration: const BoxDecoration(color: AnalyticsTheme.background2),
       ),
       items: widget.items,
     );
@@ -44,66 +45,72 @@ class _SidebarState extends State<Sidebar> {
         children: [
           Padding(
             padding: const EdgeInsets.only(
-              top: 9.0,
-              left: 9.0,
-              right: 12.0,
-            ),
+                  top: 9.0,
+                  left: 9.0,
+                  right: 12.0,
+                ) *
+                AnalyticsApp.size,
             child: SizedBox(
-              width: 50.0,
-              height: 50.0,
+              width: 50.0 * AnalyticsApp.size,
+              height: 50.0 * AnalyticsApp.size,
               child: SvgPicture.asset('assets/svg/logo.svg'),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 9.0),
+            padding: EdgeInsets.only(top: 9.0 * AnalyticsApp.size),
             child: AnalyticsText.logo('Hamosad\nAnalytics'),
           ),
         ],
       );
 
   Widget _buildHeaderDivider() => Container(
-        height: 1.5,
-        width: 114,
+        height: 1.5 * AnalyticsApp.size,
+        width: 114.0 * AnalyticsApp.size,
         foregroundDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(0.5),
           color: AnalyticsTheme.primary,
         ),
-        margin: const EdgeInsets.only(left: 34.0, top: 3.0, bottom: 15.0),
+        margin: EdgeInsets.only(
+          left: 34.0 * AnalyticsApp.size,
+          top: 3.0 * AnalyticsApp.size,
+          bottom: 15.0 * AnalyticsApp.size,
+        ),
       );
 
   Widget _buildRefreshDataButton() => Padding(
-        padding: const EdgeInsets.all(40.0),
+        padding: EdgeInsets.all(40.0 * AnalyticsApp.size),
         child: RefreshDataButton(onPressed: widget.onRefreshData),
       );
 
   SidebarXTheme _theme() => SidebarXTheme(
-        width: 68.0,
+        width: 68.0 * AnalyticsApp.size,
         decoration: const BoxDecoration(color: AnalyticsTheme.background2),
         hoverColor: AnalyticsTheme.background2,
         textStyle: AnalyticsTheme.navigationTextStyle,
         selectedTextStyle: AnalyticsTheme.navigationTextStyle,
-        itemMargin: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 10.0,
+        itemMargin: EdgeInsets.symmetric(
+          vertical: 10.0 * AnalyticsApp.size,
+          horizontal: 10.0 * AnalyticsApp.size,
         ),
-        selectedItemMargin: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 10.0,
+        selectedItemMargin: EdgeInsets.symmetric(
+          vertical: 10.0 * AnalyticsApp.size,
+          horizontal: 10.0 * AnalyticsApp.size,
         ),
-        itemTextPadding: const EdgeInsets.only(left: 7.0),
-        selectedItemTextPadding: const EdgeInsets.only(left: 7.0),
-        itemDecoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0)),
+        itemTextPadding: EdgeInsets.only(left: 7.0 * AnalyticsApp.size),
+        selectedItemTextPadding: EdgeInsets.only(left: 7.0 * AnalyticsApp.size),
+        itemDecoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5.0 * AnalyticsApp.size)),
         selectedItemDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0),
+          borderRadius: BorderRadius.circular(5.0 * AnalyticsApp.size),
           color: AnalyticsTheme.background3,
         ),
-        iconTheme: const IconThemeData(
+        iconTheme: IconThemeData(
           color: AnalyticsTheme.foreground1,
-          size: 28.0,
+          size: 28.0 * AnalyticsApp.size,
         ),
-        selectedIconTheme: const IconThemeData(
+        selectedIconTheme: IconThemeData(
           color: AnalyticsTheme.foreground1,
-          size: 28.0,
+          size: 28.0 * AnalyticsApp.size,
         ),
       );
 }
@@ -145,19 +152,19 @@ class _RefreshDataButtonState extends State<RefreshDataButton>
   }
 
   Widget _buildLoadingIndicator() => Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0 * AnalyticsApp.size),
         child: LoadingAnimationWidget.staggeredDotsWave(
           color: AnalyticsTheme.primary,
-          size: 70.0,
+          size: 70.0 * AnalyticsApp.size,
         ),
       );
 
   Widget _buildRefreshButton() => IconButton(
-        iconSize: 70.0,
-        icon: const Icon(
+        iconSize: 70.0 * AnalyticsApp.size,
+        icon: Icon(
           Icons.refresh_rounded,
           color: AnalyticsTheme.primary,
-          size: 70.0,
+          size: 70.0 * AnalyticsApp.size,
         ),
         onPressed: () async {
           setState(() {});

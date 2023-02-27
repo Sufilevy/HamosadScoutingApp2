@@ -4,6 +4,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/database.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
@@ -18,13 +19,13 @@ class TeamsPage extends ConsumerStatefulWidget {
   static final List<String> defaultTeamEntreis = dataEntries.keys.toList();
   static final Map<String, DataEntry> dataEntries = {
     'Name': DataEntry<String>(
-        height: 30.0,
+        height: 30.0 * AnalyticsApp.size,
         getData: (team) => team.info.name,
         builder: (team) => FittedBox(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
-                  vertical: 4.0,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 8.0 * AnalyticsApp.size,
+                  vertical: 4.0 * AnalyticsApp.size,
                 ),
                 child: AnalyticsText.data(
                   team.info.name,
@@ -33,7 +34,7 @@ class TeamsPage extends ConsumerStatefulWidget {
               ),
             )),
     'Win Rate': DataEntry<double>(
-      height: 35.0,
+      height: 35.0 * AnalyticsApp.size,
       getData: (team) => team.summary.winRate,
       builder: (team) => AnalyticsTwoRateChip(
         first: team.summary.won,
@@ -42,23 +43,23 @@ class TeamsPage extends ConsumerStatefulWidget {
       ),
     ),
     'Avg Score': DataEntry<double>(
-      height: 30.0,
+      height: 30.0 * AnalyticsApp.size,
       getData: (team) => team.summary.score.average,
     ),
     'Avg Auto Cones Drop': DataEntry<double>(
-      height: 30.0,
+      height: 30.0 * AnalyticsApp.size,
       getData: (team) => team.auto.dropoffs.pieces.cones.average,
     ),
     'Avg Tele Cones Pick': DataEntry<double>(
-      height: 30.0,
+      height: 30.0 * AnalyticsApp.size,
       getData: (team) => team.teleop.pickups.pieces.cones.average,
     ),
     'Avg Total Cones Pick': DataEntry<double>(
-      height: 30.0,
+      height: 30.0 * AnalyticsApp.size,
       getData: (team) => team.summary.pickups.pieces.cones.average,
     ),
     'Avg Endg Score': DataEntry<double>(
-      height: 30.0,
+      height: 30.0 * AnalyticsApp.size,
       getData: (team) => team.endgame.score.average,
     ),
   };
@@ -126,11 +127,11 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.all(20.0 * AnalyticsApp.size),
       child: Column(
         children: [
           _buildTitle(),
-          const SizedBox(height: 10.0),
+          SizedBox(height: 10.0 * AnalyticsApp.size),
           Expanded(child: _buildBody(context)),
         ],
       ),
@@ -142,7 +143,7 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
           Expanded(
             flex: 30,
             child: SizedBox(
-              height: 50.0,
+              height: 50.0 * AnalyticsApp.size,
               child: SearchBar(
                 onSubmitted: (query) => setState(() {
                   _searchQuery = query;
@@ -153,22 +154,22 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
               ),
             ),
           ),
-          const SizedBox(width: 10.0),
+          SizedBox(width: 10.0 * AnalyticsApp.size),
           Expanded(
             flex: 30,
             child: Container(
-              height: 50.0,
+              height: 50.0 * AnalyticsApp.size,
               decoration: BoxDecoration(
                 color: AnalyticsTheme.background2,
-                borderRadius: BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(5.0 * AnalyticsApp.size),
               ),
               child: _buildSortByMenu(),
             ),
           ),
-          const SizedBox(width: 10.0),
+          SizedBox(width: 10.0 * AnalyticsApp.size),
           AnalyticsContainer(
-            height: 50.0,
-            width: 50.0,
+            height: 50.0 * AnalyticsApp.size,
+            width: 50.0 * AnalyticsApp.size,
             child: IconButton(
               splashRadius: 1.0,
               onPressed: () => setState(() {
@@ -194,7 +195,7 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
               ),
             ),
           ),
-          const SizedBox(width: 10.0),
+          SizedBox(width: 10.0 * AnalyticsApp.size),
           Expanded(
             flex: 13,
             child: TextButton(
@@ -203,7 +204,7 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
                   AnalyticsTheme.background2,
                 ),
                 fixedSize: MaterialStateProperty.all(
-                  const Size.fromHeight(50.0),
+                  Size.fromHeight(50.0 * AnalyticsApp.size),
                 ),
               ),
               onPressed: _clearFilters,
@@ -218,28 +219,28 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
 
   Widget _buildSortByMenu() => Row(
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.0 * AnalyticsApp.size),
             child: Icon(
               Icons.sort_rounded,
-              size: 32.0,
+              size: 32.0 * AnalyticsApp.size,
               color: AnalyticsTheme.primary,
             ),
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: EdgeInsets.only(right: 8.0 * AnalyticsApp.size),
               child: DropdownButton<String>(
                 dropdownColor: AnalyticsTheme.background2,
                 style: AnalyticsTheme.dataTitleTextStyle.copyWith(
                   color: AnalyticsTheme.foreground2,
                 ),
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(10.0 * AnalyticsApp.size),
                 focusColor: AnalyticsTheme.background2,
                 isExpanded: true,
                 underline: const SizedBox.shrink(),
                 value: _sortByKey,
-                iconSize: 32.0,
+                iconSize: 32.0 * AnalyticsApp.size,
                 iconEnabledColor: AnalyticsTheme.primary,
                 items: _dataRows
                     .map((sortKey) => DropdownMenuItem<String>(
@@ -261,28 +262,28 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
     return Column(
       children: [
         SizedBox(
-          height: 50.0,
+          height: 50.0 * AnalyticsApp.size,
           child: Row(
             children: [
               _buildSelectRowsButton(context),
-              const SizedBox(width: 10.0),
+              SizedBox(width: 10.0 * AnalyticsApp.size),
               AnalyticsContainer(
                 alignment: Alignment.center,
-                width: 110.0,
-                height: 50.0,
+                width: 110.0 * AnalyticsApp.size,
+                height: 50.0 * AnalyticsApp.size,
                 child: AnalyticsText.data('Team'),
               ),
-              const SizedBox(width: 10.0),
+              SizedBox(width: 10.0 * AnalyticsApp.size),
               Expanded(child: _buildColumnTitles(teamsEntries)),
             ],
           ),
         ),
-        const SizedBox(height: 10.0),
+        SizedBox(height: 10.0 * AnalyticsApp.size),
         Expanded(
           child: Row(
             children: [
               _buildRowTitles(teamsEntries),
-              const SizedBox(width: 10.0),
+              SizedBox(width: 10.0 * AnalyticsApp.size),
               Expanded(child: _buildTable(teamsEntries)),
             ],
           ),
@@ -293,12 +294,12 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
 
   Widget _buildSelectRowsButton(BuildContext context) => AnalyticsContainer(
         child: AnalyticsContainer(
-          width: 50.0,
-          height: 50.0,
+          width: 50.0 * AnalyticsApp.size,
+          height: 50.0 * AnalyticsApp.size,
           child: IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.add_chart_rounded,
-              size: 32.0,
+              size: 32.0 * AnalyticsApp.size,
               color: AnalyticsTheme.primary,
             ),
             splashRadius: 1.0,
@@ -346,19 +347,19 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
                 searchTextStyle: AnalyticsTheme.dataSubtitleTextStyle.copyWith(
                   color: AnalyticsTheme.foreground2,
                 ),
-                searchIcon: const Icon(
+                searchIcon: Icon(
                   Icons.search_rounded,
-                  size: 28.0,
+                  size: 28.0 * AnalyticsApp.size,
                   color: AnalyticsTheme.foreground2,
                 ),
-                closeSearchIcon: const Icon(
+                closeSearchIcon: Icon(
                   Icons.clear_rounded,
-                  size: 28.0,
+                  size: 28.0 * AnalyticsApp.size,
                   color: AnalyticsTheme.foreground2,
                 ),
                 separateSelectedItems: true,
-                height: 600.0,
-                width: 500.0,
+                height: 600.0 * AnalyticsApp.size,
+                width: 500.0 * AnalyticsApp.size,
                 onConfirm: (selectedData) => setState(() {
                   _dataRows = selectedData;
                   if (!_dataRows.contains(_sortByKey)) {
@@ -382,27 +383,29 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
 
   Widget _buildColumnTitles(List<TeamEntry> teamsEntries) => AnalyticsContainer(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          padding: EdgeInsets.symmetric(horizontal: 5.0 * AnalyticsApp.size),
           child: ListView.separated(
             controller: _columnsTitlesScrollController,
             itemCount: teamsEntries.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) => Container(
-              height: 50.0,
+              height: 50.0 * AnalyticsApp.size,
               alignment: Alignment.center,
               width: teamsEntries[index].width,
               child: AnalyticsText.data(
                   teamsEntries[index].team.info.number.toString()),
             ),
             separatorBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 1.5),
+              padding: EdgeInsets.symmetric(
+                horizontal: 1.5 * AnalyticsApp.size,
+              ),
               child: Container(
-                width: 2.0,
+                width: 2.0 * AnalyticsApp.size,
                 decoration: BoxDecoration(
                   color: AnalyticsTheme.foreground2,
-                  borderRadius: BorderRadius.circular(1.0),
+                  borderRadius: BorderRadius.circular(1.0 * AnalyticsApp.size),
                 ),
-                margin: const EdgeInsets.symmetric(vertical: 7.5),
+                margin: EdgeInsets.symmetric(vertical: 7.5 * AnalyticsApp.size),
               ),
             ),
           ),
@@ -410,27 +413,28 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
       );
 
   Widget _buildHorizontalSeperator() => Container(
-        height: 2.0,
+        height: 2.0 * AnalyticsApp.size,
         decoration: BoxDecoration(
           color: AnalyticsTheme.foreground2,
-          borderRadius: BorderRadius.circular(1.0),
+          borderRadius: BorderRadius.circular(1.0 * AnalyticsApp.size),
         ),
-        margin: const EdgeInsets.symmetric(horizontal: 10.0),
+        margin: EdgeInsets.symmetric(horizontal: 10.0 * AnalyticsApp.size),
       );
 
   Widget _buildRowTitles(List<TeamEntry> teamsEntries) => AnalyticsContainer(
-        width: 170.0,
+        width: 170.0 * AnalyticsApp.size,
         child: ListView.separated(
           controller: _rowsTitlesScrollController,
           itemCount: _dataRows.length,
           itemBuilder: (context, index) => Container(
-            height: TeamsPage.dataEntries[_dataRows[index]]!.height + 14.0,
+            height: TeamsPage.dataEntries[_dataRows[index]]!.height +
+                14.0 * AnalyticsApp.size,
             alignment: Alignment.center,
             child: FittedBox(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 6.0,
-                  horizontal: 12.0,
+                padding: EdgeInsets.symmetric(
+                  vertical: 6.0 * AnalyticsApp.size,
+                  horizontal: 12.0 * AnalyticsApp.size,
                 ),
                 child: AnalyticsText.dataTitle(
                   _dataRows[index],
@@ -445,19 +449,24 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
 
   Widget _buildTable(List<TeamEntry> teamsEntries) => AnalyticsContainer(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2.5, vertical: 5.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 2.5 * AnalyticsApp.size,
+            vertical: 5.0 * AnalyticsApp.size,
+          ),
           child: ListView.builder(
             controller: _tableScrollController,
             scrollDirection: Axis.horizontal,
             itemCount: teamsEntries.length,
             itemBuilder: (context, teamIndex) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2.5),
+              padding:
+                  EdgeInsets.symmetric(horizontal: 2.5 * AnalyticsApp.size),
               child: AnalyticsContainer(
                 color: AnalyticsTheme.background1,
                 width: teamsEntries[teamIndex].width,
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 5.0 * AnalyticsApp.size),
                   child: ListView.separated(
                     controller: _tableEntriesControllers[teamIndex],
                     itemCount: _dataRows.length,
@@ -471,7 +480,8 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
                       );
                     },
                     separatorBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6.0),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 6.0 * AnalyticsApp.size),
                       child: _buildHorizontalSeperator(),
                     ),
                   ),
@@ -490,7 +500,7 @@ class TeamEntry {
   final double width;
 
   static double _calculateWidth(String name) {
-    return 100.0 + math.max(name.length - 7, 0) * 10.0;
+    return (100.0 + math.max(name.length - 7, 0) * 10.0) * AnalyticsApp.size;
   }
 }
 
@@ -502,9 +512,9 @@ class DataEntry<T> {
   }) : builder = builder ??
             ((team) => FittedBox(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0,
-                      vertical: 4.0,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.0 * AnalyticsApp.size,
+                      vertical: 4.0 * AnalyticsApp.size,
                     ),
                     child: AnalyticsText.data(
                       dataToString(

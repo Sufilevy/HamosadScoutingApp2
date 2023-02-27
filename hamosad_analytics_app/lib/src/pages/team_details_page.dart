@@ -1,6 +1,7 @@
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/database/analytics_data.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
@@ -195,7 +196,7 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
       children: [
         _buildTeamSearch(title),
         if (TeamDetailsPage.team != null) ...[
-          const SizedBox(height: 25.0),
+          SizedBox(height: 25.0 * AnalyticsApp.size),
           AnalyticsTabsSelector(
             currentTabCubit: _currentTab,
             onTabSelected: () => setState(() {}),
@@ -206,7 +207,7 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
   }
 
   Widget _buildTeamSearch(Widget title) => SizedBox(
-        height: 65.0,
+        height: 65.0 * AnalyticsApp.size,
         child: EasySearchBar(
           onSearch: (_) {},
           onSuggestionTap: (data) => setState(() {
@@ -217,17 +218,17 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
           suggestions: _data.teamsByNumber.toTeamNumbers(),
           title: title,
           elevation: 2.0,
-          appBarHeight: 65.0,
-          iconTheme: const IconThemeData(
+          appBarHeight: 65.0 * AnalyticsApp.size,
+          iconTheme: IconThemeData(
             color: AnalyticsTheme.primary,
-            size: 34.0,
+            size: 34.0 * AnalyticsApp.size,
           ),
-          searchBackIconTheme: const IconThemeData(
-            size: 28.0,
+          searchBackIconTheme: IconThemeData(
+            size: 28.0 * AnalyticsApp.size,
             color: AnalyticsTheme.primary,
           ),
           suggestionBuilder: (data) => Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0 * AnalyticsApp.size),
             child: Center(
               child: AnalyticsText.dataTitle(data),
             ),

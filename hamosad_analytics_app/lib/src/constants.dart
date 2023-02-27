@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_analytics_app/src/app.dart';
 
 class AnalyticsTheme {
   static const Color background1 = Color(0xFF1F1E24);
@@ -16,34 +17,48 @@ class AnalyticsTheme {
   static const Color cones = Color(0xFFE78907);
   static const Color cubes = Color(0xFF5323C2);
 
-  static const TextStyle logoTextStyle = TextStyle(
-    fontFamily: 'Fira Code',
-    fontWeight: FontWeight.w700,
-    fontSize: 20.0,
-    color: primary,
-  );
-  static const TextStyle navigationTextStyle = TextStyle(
-    fontFamily: 'Varela Round',
-    fontWeight: FontWeight.normal,
-    fontSize: 16.0,
-    color: foreground1,
-  );
-  static const TextStyle dataTitleTextStyle = TextStyle(
-    fontFamily: 'Open Sans',
-    fontWeight: FontWeight.w500,
-    fontSize: 19.0,
-    color: foreground1,
-  );
-  static const TextStyle dataSubtitleTextStyle = TextStyle(
-    fontFamily: 'Open Sans',
-    fontWeight: FontWeight.normal,
-    fontSize: 17.0,
-    color: foreground1,
-  );
-  static const TextStyle dataTextStyle = TextStyle(
-    fontFamily: 'Open Sans',
-    fontWeight: FontWeight.w600,
-    fontSize: 20.0,
-    color: primary,
-  );
+  static TextStyle get logoTextStyle {
+    return TextStyle(
+      fontFamily: 'Fira Code',
+      fontWeight: FontWeight.w700,
+      fontSize: 20.0 * AnalyticsApp.size,
+      color: primary,
+    );
+  }
+
+  static TextStyle get navigationTextStyle {
+    return TextStyle(
+      fontFamily: 'Varela Round',
+      fontWeight: FontWeight.normal,
+      fontSize: 16.0 * AnalyticsApp.size,
+      color: foreground1,
+    );
+  }
+
+  static TextStyle get dataTitleTextStyle {
+    return TextStyle(
+      fontFamily: 'Open Sans',
+      fontWeight: FontWeight.w500,
+      fontSize: 19.0 * AnalyticsApp.size,
+      color: foreground1,
+    );
+  }
+
+  static TextStyle get dataSubtitleTextStyle {
+    return TextStyle(
+      fontFamily: 'Open Sans',
+      fontWeight: FontWeight.normal,
+      fontSize: 17.0 * AnalyticsApp.size,
+      color: foreground1,
+    );
+  }
+
+  static TextStyle get dataTextStyle {
+    return TextStyle(
+      fontFamily: 'Open Sans',
+      fontWeight: FontWeight.w600,
+      fontSize: 20.0 * AnalyticsApp.size,
+      color: primary,
+    );
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
@@ -38,7 +39,7 @@ class AnalyticsContainer extends StatelessWidget {
     this.alignment,
     this.padding,
     this.border,
-    this.borderRadius = 5.0,
+    this.borderRadius,
     this.color = AnalyticsTheme.background2,
   }) : super(key: key);
 
@@ -47,7 +48,7 @@ class AnalyticsContainer extends StatelessWidget {
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
   final BoxBorder? border;
-  final double borderRadius;
+  final double? borderRadius;
   final Color color;
 
   @override
@@ -58,7 +59,9 @@ class AnalyticsContainer extends StatelessWidget {
       padding: padding,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: BorderRadius.circular(
+          (borderRadius ?? 5.0) * AnalyticsApp.size,
+        ),
         border: border,
       ),
       alignment: alignment,
@@ -71,13 +74,13 @@ class AnalyticsDataDivider extends StatelessWidget {
   const AnalyticsDataDivider({
     Key? key,
     this.flex = 1,
-    this.width = 2.0,
-    this.height = 45.0,
+    this.width,
+    this.height,
     this.color = AnalyticsTheme.background3,
   }) : super(key: key);
 
   final int flex;
-  final double width, height;
+  final double? width, height;
   final Color color;
 
   @override
@@ -85,10 +88,10 @@ class AnalyticsDataDivider extends StatelessWidget {
     return Expanded(
       flex: flex,
       child: AnalyticsContainer(
-        height: height,
-        width: width,
+        height: (height ?? 45.0) * AnalyticsApp.size,
+        width: (width ?? 2.0) * AnalyticsApp.size,
         color: AnalyticsTheme.background3,
-        borderRadius: 1.0,
+        borderRadius: 1.0 * AnalyticsApp.size,
       ),
     );
   }
@@ -103,15 +106,15 @@ class AnalyticsDataChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnalyticsContainer(
-      width: 220,
-      height: 70,
+      width: 220.0 * AnalyticsApp.size,
+      height: 70.0 * AnalyticsApp.size,
       color: AnalyticsTheme.background1,
       child: Row(
         children: [
           Expanded(
             flex: 60,
             child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
+              padding: EdgeInsets.only(left: 10.0 * AnalyticsApp.size),
               child: AnalyticsText.dataSubtitle(
                 title,
                 textAlign: TextAlign.center,
@@ -151,15 +154,15 @@ class AnalyticsStatChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnalyticsContainer(
-      width: 330,
-      height: 70,
+      width: 330.0 * AnalyticsApp.size,
+      height: 70.0 * AnalyticsApp.size,
       color: AnalyticsTheme.background1,
       child: Row(
         children: [
           Expanded(
             flex: 60,
             child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
+              padding: EdgeInsets.only(left: 10.0 * AnalyticsApp.size),
               child: AnalyticsText.dataSubtitle(
                 title,
                 textAlign: TextAlign.center,
@@ -206,11 +209,11 @@ class AnalyticsStatChip extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 flex: 8,
                 child: Icon(
                   Icons.arrow_circle_up_rounded,
-                  size: 20.0,
+                  size: 20.0 * AnalyticsApp.size,
                   color: AnalyticsTheme.foreground1,
                 ),
               ),
@@ -226,11 +229,11 @@ class AnalyticsStatChip extends StatelessWidget {
           ),
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 flex: 8,
                 child: Icon(
                   Icons.arrow_circle_down_rounded,
-                  size: 20.0,
+                  size: 20.0 * AnalyticsApp.size,
                   color: AnalyticsTheme.foreground1,
                 ),
               ),
@@ -276,12 +279,12 @@ class AnalyticsTwoRateChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return inContainer
         ? AnalyticsContainer(
-            width: 220,
-            height: 70,
+            width: 220.0 * AnalyticsApp.size,
+            height: 70.0 * AnalyticsApp.size,
             color: AnalyticsTheme.background1,
-            child: _buildWinRate(8.0, 4.0),
+            child: _buildWinRate(8.0 * AnalyticsApp.size, 4.0),
           )
-        : _buildWinRate(3.0, 2.5);
+        : _buildWinRate(3.0 * AnalyticsApp.size, 2.5);
   }
 
   Widget _buildWinRate(double gap, double barHeight) => Column(
@@ -298,11 +301,11 @@ class AnalyticsTwoRateChip extends StatelessWidget {
                   color: firstColor,
                 ),
               ),
-              const Expanded(
+              Expanded(
                 flex: 1,
                 child: SizedBox(
-                  height: 25.0,
-                  child: VerticalDivider(
+                  height: 25.0 * AnalyticsApp.size,
+                  child: const VerticalDivider(
                     color: AnalyticsTheme.background3,
                     thickness: 2,
                   ),
@@ -320,7 +323,11 @@ class AnalyticsTwoRateChip extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: EdgeInsets.only(left: 10.0, right: 10.0, top: gap),
+            padding: EdgeInsets.only(
+              left: 10.0 * AnalyticsApp.size,
+              right: 10.0 * AnalyticsApp.size,
+              top: gap,
+            ),
             child: (first == 0 && second == 0)
                 ? Container(
                     height: barHeight,
@@ -377,12 +384,12 @@ class AnalyticsClimbsStatChip extends StatelessWidget {
   final ClimbingStateStat data;
   final bool dockedByOther;
 
-  Widget _buildDivider() => const Expanded(
+  Widget _buildDivider() => Expanded(
         flex: 1,
         child: SizedBox(
-          width: 15.0,
-          height: 25.0,
-          child: VerticalDivider(
+          width: 15.0 * AnalyticsApp.size,
+          height: 25.0 * AnalyticsApp.size,
+          child: const VerticalDivider(
             color: AnalyticsTheme.background3,
             thickness: 2,
           ),
@@ -392,7 +399,7 @@ class AnalyticsClimbsStatChip extends StatelessWidget {
   Widget _buildText(String text) => Expanded(
         flex: 10,
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: EdgeInsets.all(12.0 * AnalyticsApp.size),
           child: AnalyticsText.data(
             text,
           ),
@@ -402,8 +409,8 @@ class AnalyticsClimbsStatChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnalyticsContainer(
-      width: 400,
-      height: 70,
+      width: 400.0 * AnalyticsApp.size,
+      height: 70.0 * AnalyticsApp.size,
       color: AnalyticsTheme.background1,
       child: Row(
         children: [
@@ -432,14 +439,14 @@ class AnalyticsDurationsStatChip extends StatelessWidget {
   final ActionDurationStat data;
   final String title;
 
-  Widget _buildDivider() => const Expanded(
+  Widget _buildDivider() => Expanded(
         flex: 1,
         child: SizedBox(
-          width: 15.0,
-          height: 25.0,
-          child: VerticalDivider(
+          width: 15.0 * AnalyticsApp.size,
+          height: 25.0 * AnalyticsApp.size,
+          child: const VerticalDivider(
             color: AnalyticsTheme.background3,
-            thickness: 2,
+            thickness: 2.0,
           ),
         ),
       );
@@ -447,7 +454,7 @@ class AnalyticsDurationsStatChip extends StatelessWidget {
   Widget _buildText(String text) => Expanded(
         flex: 8,
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: EdgeInsets.all(12.0 * AnalyticsApp.size),
           child: AnalyticsText.data(
             text,
           ),
@@ -458,7 +465,11 @@ class AnalyticsDurationsStatChip extends StatelessWidget {
       Color.lerp(AnalyticsTheme.primary, AnalyticsTheme.primaryVariant, t)!;
 
   Widget _buildBars() => Padding(
-        padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 4.0),
+        padding: EdgeInsets.only(
+          left: 10.0 * AnalyticsApp.size,
+          right: 10.0 * AnalyticsApp.size,
+          top: 4.0 * AnalyticsApp.size,
+        ),
         child: (data.zeroToTwoRate == 0 &&
                 data.twoToFiveRate == 0 &&
                 data.fivePlusRate == 0.0)
@@ -520,8 +531,8 @@ class AnalyticsDurationsStatChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnalyticsContainer(
-      width: 400,
-      height: 70,
+      width: 400.0 * AnalyticsApp.size,
+      height: 70.0 * AnalyticsApp.size,
       color: AnalyticsTheme.background1,
       child: Row(
         children: [
@@ -648,27 +659,27 @@ class AnalyticsPageTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const SizedBox(width: 30.0),
+        SizedBox(width: 30.0 * AnalyticsApp.size),
         SizedBox(
-          width: 120.0,
-          height: 30.0,
+          width: 120.0 * AnalyticsApp.size,
+          height: 30.0 * AnalyticsApp.size,
           child: Align(
             alignment: Alignment.centerRight,
             child: AnalyticsText.dataTitle(title),
           ),
         ),
-        const SizedBox(
-          width: 50.0,
-          height: 30.0,
+        SizedBox(
+          width: 50.0 * AnalyticsApp.size,
+          height: 30.0 * AnalyticsApp.size,
           child: VerticalDivider(
             color: AnalyticsTheme.foreground1,
             thickness: 1.5,
-            width: 30.0,
+            width: 30.0 * AnalyticsApp.size,
           ),
         ),
         SizedBox(
-          width: 450.0,
-          height: 30.0,
+          width: 450.0 * AnalyticsApp.size,
+          height: 30.0 * AnalyticsApp.size,
           child: Align(
             alignment: Alignment.centerLeft,
             child: AnalyticsText.dataSubtitle(subtitle),

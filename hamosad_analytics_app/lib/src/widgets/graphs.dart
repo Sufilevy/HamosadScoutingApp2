@@ -1,5 +1,6 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
@@ -39,7 +40,7 @@ class _TeamDropoffsChartState extends State<TeamDropoffsChart> {
               ? Icons.arrow_back_ios_rounded
               : Icons.arrow_forward_ios_rounded,
         ),
-        iconSize: 24.0,
+        iconSize: 24.0 * AnalyticsApp.size,
         padding: EdgeInsets.zero,
         color: AnalyticsTheme.foreground2,
       );
@@ -51,8 +52,8 @@ class _TeamDropoffsChartState extends State<TeamDropoffsChart> {
     double percentage =
         (piece == Piece.cone) ? percentages.conesRate : percentages.cubesRate;
     return AnalyticsContainer(
-      width: 90.0,
-      height: 90.0,
+      width: 90.0 * AnalyticsApp.size,
+      height: 90.0 * AnalyticsApp.size,
       borderRadius: 2.0,
       child: Center(
         child: AnalyticsText.data(
@@ -67,8 +68,8 @@ class _TeamDropoffsChartState extends State<TeamDropoffsChart> {
     required PiecesStat percentages,
   }) =>
       AnalyticsContainer(
-        width: 90.0,
-        height: 90.0,
+        width: 90.0 * AnalyticsApp.size,
+        height: 90.0 * AnalyticsApp.size,
         borderRadius: 2.0,
         child: Column(
           children: [
@@ -81,9 +82,9 @@ class _TeamDropoffsChartState extends State<TeamDropoffsChart> {
                 ),
               ),
             ),
-            const AnalyticsDataDivider(
-              width: 75.0,
-              height: 1.5,
+            AnalyticsDataDivider(
+              width: 75.0 * AnalyticsApp.size,
+              height: 1.5 * AnalyticsApp.size,
             ),
             Expanded(
               flex: 21,
@@ -101,8 +102,8 @@ class _TeamDropoffsChartState extends State<TeamDropoffsChart> {
   Widget _buildDropoffsGrid(GridDropoffsStat gridDropoffs) =>
       AnalyticsContainer(
         borderRadius: 5.0,
-        height: 268.0,
-        width: 268.0,
+        height: 268.0 * AnalyticsApp.size,
+        width: 268.0 * AnalyticsApp.size,
         color: AnalyticsTheme.foreground2,
         border: Border.all(
           color: AnalyticsTheme.foreground2,
@@ -163,8 +164,8 @@ class _TeamDropoffsChartState extends State<TeamDropoffsChart> {
       },
       child: AnalyticsContainer(
         color: AnalyticsTheme.background1,
-        width: 350.0,
-        height: 300.0,
+        width: 350.0 * AnalyticsApp.size,
+        height: 300.0 * AnalyticsApp.size,
         child: Row(
           children: [
             const EmptyExpanded(flex: 1),

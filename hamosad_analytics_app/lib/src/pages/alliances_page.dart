@@ -4,6 +4,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/database.dart';
 import 'package:hamosad_analytics_app/src/models/team.dart';
@@ -41,11 +42,11 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.all(20.0 * AnalyticsApp.size),
       child: Column(
         children: [
           _buildSelectAlliancesBar(),
-          const SizedBox(height: 10.0),
+          SizedBox(height: 10.0 * AnalyticsApp.size),
           Expanded(child: _buildAlliancesTable()),
         ],
       ),
@@ -53,7 +54,7 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
   }
 
   Widget _buildSelectAlliancesBar() => AnalyticsContainer(
-        height: 60.0,
+        height: 60.0 * AnalyticsApp.size,
         child: Row(
           children: [
             _buildAllianceList(_blueAlliance),
@@ -108,7 +109,7 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
 
   Widget _buildAllianceList(Alliance alliance) => Expanded(
         child: SizedBox(
-          height: 45.0,
+          height: 45.0 * AnalyticsApp.size,
           child: AnimatedPadding(
             padding: EdgeInsets.only(left: alliance.chipsPadding),
             duration: 200.milliseconds,
@@ -150,16 +151,19 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
       {VoidCallback? onDeleted}) {
     String title = alliance.teams[index].info.number.toString();
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      padding: EdgeInsets.symmetric(horizontal: 10.0 * AnalyticsApp.size),
       child: Container(
           decoration: BoxDecoration(
             color: alliance.color,
-            borderRadius: BorderRadius.circular(25.0),
+            borderRadius: BorderRadius.circular(25.0 * AnalyticsApp.size),
           ),
           child: Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 29, right: 14),
+                padding: EdgeInsets.only(
+                  left: 29.0 * AnalyticsApp.size,
+                  right: 14.0 * AnalyticsApp.size,
+                ),
                 child: SizedBox(
                   child: AnalyticsText.logo(
                     title,
@@ -168,13 +172,13 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 9.0),
+                padding: EdgeInsets.only(right: 9.0 * AnalyticsApp.size),
                 child: IconButton(
                   onPressed: onDeleted,
                   color: AnalyticsTheme.foreground1,
                   disabledColor: AnalyticsTheme.foreground1,
                   splashRadius: 1.0,
-                  iconSize: 28.0,
+                  iconSize: 28.0 * AnalyticsApp.size,
                   padding: EdgeInsets.zero,
                   icon: const Icon(
                     Icons.cancel_rounded,
@@ -187,7 +191,7 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
   }
 
   Widget _buildDivider() => Container(
-        height: 45.0,
+        height: 45.0 * AnalyticsApp.size,
         width: 2.0,
         decoration: BoxDecoration(
           color: AnalyticsTheme.foreground2,
@@ -201,7 +205,7 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
         .toList();
     return AnalyticsContainer(
       child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        padding: EdgeInsets.symmetric(horizontal: 10.0 * AnalyticsApp.size),
         itemCount: AlliancesPage.tableEntries.length,
         itemBuilder: (context, index) => entries[index],
       ),
@@ -214,20 +218,22 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
         .sortedByDescending((team) => team.second);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(vertical: 8.0 * AnalyticsApp.size),
       child: AnalyticsContainer(
-        height: 60.0,
+        height: 60.0 * AnalyticsApp.size,
         color: AnalyticsTheme.background1,
-        padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 10.0),
+        padding: EdgeInsets.symmetric(
+            vertical: 7.5 * AnalyticsApp.size,
+            horizontal: 10.0 * AnalyticsApp.size),
         child: Row(
           children: [
             Container(
-              width: 300.0,
+              width: 300.0 * AnalyticsApp.size,
               alignment: Alignment.center,
               child: AnalyticsText.dataTitle(entry.key),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 5.0),
+              padding: EdgeInsets.only(left: 5.0 * AnalyticsApp.size),
               child: _buildDivider(),
             ),
             Expanded(
@@ -245,7 +251,7 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
   }
 
   Widget _buildTeamEntry(Pair<int, double> team) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.0 * AnalyticsApp.size),
         child: Row(
           children: [
             AnalyticsText.dataTitle(
@@ -255,10 +261,13 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 7.0, right: 8.0),
+              padding: EdgeInsets.only(
+                left: 7.0 * AnalyticsApp.size,
+                right: 8.0 * AnalyticsApp.size,
+              ),
               child: Container(
-                width: 4.0,
-                height: 4.0,
+                width: 4.0 * AnalyticsApp.size,
+                height: 4.0 * AnalyticsApp.size,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: AnalyticsTheme.foreground2,
@@ -295,13 +304,13 @@ class Alliance {
   double get chipsPadding {
     switch (teams.length) {
       case 1:
-        return 320.0;
+        return 320.0 * AnalyticsApp.size;
       case 2:
-        return 230.5;
+        return 230.5 * AnalyticsApp.size;
       case 3:
-        return 140.0;
+        return 140.0 * AnalyticsApp.size;
       default:
-        return 320.0;
+        return 320.0 * AnalyticsApp.size;
     }
   }
 
@@ -393,10 +402,10 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
   }
 
   Widget _buildButton() => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        padding: EdgeInsets.symmetric(horizontal: 10.0 * AnalyticsApp.size),
         child: SizedBox(
-          width: 40.0,
-          height: 40.0,
+          width: 40.0 * AnalyticsApp.size,
+          height: 40.0 * AnalyticsApp.size,
           child: AnimatedRotation(
             duration: 250.milliseconds,
             turns: widget.alliance.teams.length < 3 ? 0.0 : 0.125,
@@ -417,7 +426,7 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
                   }
                 },
               ),
-              iconSize: 40.0,
+              iconSize: 40.0 * AnalyticsApp.size,
               padding: EdgeInsets.zero,
               splashRadius: 1.0,
               icon: Icon(
@@ -431,19 +440,23 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
 
   Widget _buildAddTeamsPopup() {
     final teams = _currentTeams;
-    final height = math.min(700.0, 11.0 + teams.length * 70);
+    final height = math.min(700.0 * AnalyticsApp.size,
+        (11.0 + teams.length * 70.0) * AnalyticsApp.size);
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.0 * AnalyticsApp.size),
       child: AnalyticsContainer(
-        width: 500.0,
+        width: 500.0 * AnalyticsApp.size,
         height: height,
         border: Border.all(
           color: AnalyticsTheme.background3,
           width: 2.0,
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 3.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 8.0 * AnalyticsApp.size,
+            vertical: 3.0 * AnalyticsApp.size,
+          ),
           child: ListView.builder(
             itemCount: teams.length,
             itemBuilder: (context, index) => _buildAddTeamButton(teams[index]),
@@ -454,11 +467,11 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
   }
 
   Widget _buildAddTeamButton(Team team) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
+        padding: EdgeInsets.symmetric(vertical: 5.0 * AnalyticsApp.size),
         child: AnalyticsContainer(
-          height: 60.0,
+          height: 60.0 * AnalyticsApp.size,
           color: AnalyticsTheme.background1,
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0 * AnalyticsApp.size),
           child: Row(
             children: [
               const EmptyExpanded(flex: 10),
@@ -480,7 +493,7 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
                 flex: 80,
                 child: IconButton(
                   icon: const Icon(Icons.add_circle_rounded),
-                  iconSize: 28.0,
+                  iconSize: 28.0 * AnalyticsApp.size,
                   color: widget.alliance.color,
                   onPressed: () => setState(() {
                     widget.addTeam(widget.alliance, team);

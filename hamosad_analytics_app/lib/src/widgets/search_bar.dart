@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 
@@ -36,7 +37,7 @@ class SearchBar extends StatelessWidget {
         autocorrect: false,
         strutStyle: StrutStyle.fromTextStyle(AnalyticsTheme.dataTitleTextStyle),
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(16.0),
+          contentPadding: EdgeInsets.all(16.0 * AnalyticsApp.size),
           focusedBorder: underlineBorder
               ? UnderlineInputBorder(
                   borderRadius: BorderRadius.circular(1.5),
@@ -56,7 +57,7 @@ class SearchBar extends StatelessWidget {
               if (onSubmitted != null) onSubmitted!(_controller.text);
             },
             icon: const Icon(Icons.search_rounded),
-            iconSize: 32.0,
+            iconSize: 32.0 * AnalyticsApp.size,
             color: searchIconColor ?? AnalyticsTheme.foreground2,
             splashRadius: 1.0,
           ),
