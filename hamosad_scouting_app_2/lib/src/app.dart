@@ -59,3 +59,9 @@ class LoadingScreen extends StatelessWidget {
     );
   }
 }
+
+// TODO: Remove at production
+T debug<T>(T value) {
+  debugPrint(value.toString());
+  return value;
+}

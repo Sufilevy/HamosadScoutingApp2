@@ -26,6 +26,14 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
   int _currentTeamIndex = -1;
   final double _width = 120.0, _height = 80.0, _radius = 7.5;
 
+  @override
+  void initState() {
+    if (widget.cubit.data != null) {
+      _currentTeamIndex = widget.teams.indexOf(widget.cubit.data!);
+    }
+    super.initState();
+  }
+
   Widget _buildTeamButton(BuildContext context, int index) {
     final Color teamColor =
         index <= 2 ? ScoutingTheme.redAlliance : ScoutingTheme.blueAlliance;
@@ -60,10 +68,7 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
                 child: TextButton(
                   onPressed: () {
                     setState(() {
-                      if (isSelected) {
-                        _currentTeamIndex = -1;
-                        widget.cubit.data = null;
-                      } else {
+                      if (!isSelected) {
                         _currentTeamIndex = index;
                         widget.cubit.data = widget.teams[index];
                       }
@@ -152,6 +157,12 @@ class ScoutingMatchAndTeam extends StatefulWidget {
 class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
   String? _match;
 
+  @override
+  void initState() {
+    _match = widget.match.data;
+    super.initState();
+  }
+
   Widget _buildSelectMatch() => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -181,8 +192,10 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
                 )
                 .toList(),
             onChanged: (value) => setState(() {
-              _match = value;
-              widget.match.data = value;
+              if (value != null) {
+                _match = value;
+                widget.match.data = value;
+              }
             }),
           ),
         ],

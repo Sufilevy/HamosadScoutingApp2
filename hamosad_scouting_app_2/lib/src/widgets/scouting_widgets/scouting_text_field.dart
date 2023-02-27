@@ -74,6 +74,7 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
           keyboardType:
               widget.onlyNumbers ? TextInputType.number : TextInputType.text,
           validator: _validateInput,
+          initialValue: widget.cubit.data,
           onChanged: (value) => setState(
             () {
               _hasErrors = !_formKey.currentState!.validate();
