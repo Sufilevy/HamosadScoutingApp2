@@ -26,8 +26,8 @@ class ScoutingClimbState extends StatelessWidget {
       activeBgColors: [
         const [ScoutingTheme.primaryVariant],
         const [ScoutingTheme.primaryVariant],
-        if (dockedByOther) [ScoutingTheme.primaryVariant],
         const [ScoutingTheme.primaryVariant],
+        if (dockedByOther) [ScoutingTheme.primaryVariant],
       ],
       activeFgColor: ScoutingTheme.foreground1,
       initialLabelIndex: null,
@@ -35,15 +35,15 @@ class ScoutingClimbState extends StatelessWidget {
       labels: [
         'None',
         'Docked',
+        'Engaged',
         if (dockedByOther) 'Docked by Other',
-        'Engaged'
       ],
       fontSize: 24.0 * size,
       customWidths: [
         110.0 * size,
         130.0 * size,
+        130.0 * size,
         if (dockedByOther) 220.0 * size,
-        130.0 * size
       ],
       animate: true,
       curve: Curves.easeOutQuint,

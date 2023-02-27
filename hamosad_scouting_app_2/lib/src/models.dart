@@ -208,8 +208,8 @@ enum ActionDuration {
 enum ClimbState {
   none,
   docked,
-  dockedByOther,
-  engaged;
+  engaged,
+  dockedByOther;
 
   @override
   String toString() {
@@ -218,10 +218,10 @@ enum ClimbState {
         return 'none';
       case ClimbState.docked:
         return 'docked';
-      case ClimbState.dockedByOther:
-        return 'dockedByOther';
       case ClimbState.engaged:
         return 'engaged';
+      case ClimbState.dockedByOther:
+        return 'dockedByOther';
     }
   }
 }
