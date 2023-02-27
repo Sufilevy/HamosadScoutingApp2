@@ -124,9 +124,9 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.0 * widget.size),
-              child: Flexible(
+            Flexible(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.0 * widget.size),
                 child: ScoutingText.subtitle(
                   widget.title,
                   textAlign: TextAlign.center,

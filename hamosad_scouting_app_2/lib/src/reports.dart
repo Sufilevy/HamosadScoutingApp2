@@ -52,7 +52,7 @@ Widget gameReport(BuildContext context, double size) {
             max: 99,
             step: 1,
             initial: 0,
-            title: 'Charge Station passes',
+            title: 'Charge Station\npasses',
           ),
           ScoutingAutoClimb(
             size: size,
@@ -83,7 +83,7 @@ Widget gameReport(BuildContext context, double size) {
             initial: 0,
             max: 99,
             step: 1,
-            title: 'Charge Station passes',
+            title: 'Charge Station\npasses',
           ),
           ScoutingNotes(
             size: size,
@@ -110,7 +110,7 @@ Widget gameReport(BuildContext context, double size) {
             max: 99,
             step: 1,
             initial: 0,
-            title: 'Charge Station passes',
+            title: 'Charge Station\npasses',
           ),
           ScoutingEndgameClimb(
             size: size,
