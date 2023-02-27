@@ -1,8 +1,10 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
+import 'package:hamosad_analytics_app/src/database.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:sidebarx/sidebarx.dart';
@@ -12,12 +14,10 @@ class Sidebar extends StatefulWidget {
     this.sidebarController, {
     Key? key,
     required this.items,
-    this.onRefreshData,
   }) : super(key: key);
 
   final SidebarXController sidebarController;
   final List<SidebarXItem> items;
-  final VoidCallback? onRefreshData;
 
   @override
   State<Sidebar> createState() => _SidebarState();
@@ -31,7 +31,7 @@ class _SidebarState extends State<Sidebar> {
       showToggleButton: false,
       headerBuilder: (context, extended) => _buildSidebarLogo(),
       headerDivider: _buildHeaderDivider(),
-      footerBuilder: (context, extended) => _buildRefreshDataButton(),
+      // footerBuilder: (context, extended) => _buildRefreshDataButton(),
       theme: _theme(),
       extendedTheme: SidebarXTheme(
         width: 200.0 * AnalyticsApp.size,
@@ -79,7 +79,7 @@ class _SidebarState extends State<Sidebar> {
 
   Widget _buildRefreshDataButton() => Padding(
         padding: EdgeInsets.all(40.0 * AnalyticsApp.size),
-        child: RefreshDataButton(onPressed: widget.onRefreshData),
+        child: const RefreshDataButton(),
       );
 
   SidebarXTheme _theme() => SidebarXTheme(
@@ -115,19 +115,16 @@ class _SidebarState extends State<Sidebar> {
       );
 }
 
-class RefreshDataButton extends StatefulWidget {
+class RefreshDataButton extends ConsumerStatefulWidget {
   const RefreshDataButton({
     Key? key,
-    required this.onPressed,
   }) : super(key: key);
 
-  final VoidCallback? onPressed;
-
   @override
-  State<RefreshDataButton> createState() => _RefreshDataButtonState();
+  ConsumerState<RefreshDataButton> createState() => _RefreshDataButtonState();
 }
 
-class _RefreshDataButtonState extends State<RefreshDataButton>
+class _RefreshDataButtonState extends ConsumerState<RefreshDataButton>
     with SingleTickerProviderStateMixin {
   bool _loading = false;
 
@@ -169,10 +166,7 @@ class _RefreshDataButtonState extends State<RefreshDataButton>
         onPressed: () async {
           setState(() {});
           _loading = true;
-          await Future.wait([
-            Future.delayed(1500.milliseconds),
-          ]);
-          if (widget.onPressed != null) widget.onPressed!();
+          await ref.read(analyticsDatabaseProvider).updateFromFirestore();
           _loading = false;
           setState(() {});
         },

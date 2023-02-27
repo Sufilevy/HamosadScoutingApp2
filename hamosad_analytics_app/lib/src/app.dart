@@ -15,7 +15,6 @@ class AnalyticsApp extends ConsumerWidget {
 
   final SidebarXController _sidebarController =
       SidebarXController(selectedIndex: 0, extended: true);
-  final ValueNotifier<int> _dataChangedNotifier = ValueNotifier(0);
 
   static double size = 1.0;
 
@@ -33,6 +32,7 @@ class AnalyticsApp extends ConsumerWidget {
       screenSize.width / 1400.0,
       screenSize.height / 750.0,
     );
+
     return FutureBuilder(
         future: initializeDatabase(ref),
         builder: (context, snapshot) {
@@ -55,7 +55,6 @@ class AnalyticsApp extends ConsumerWidget {
                   children: [
                     Sidebar(
                       _sidebarController,
-                      onRefreshData: () => _dataChangedNotifier.value = 0,
                       items: const [
                         SidebarXItem(
                           icon: Icons.people_outline_rounded,
@@ -78,7 +77,6 @@ class AnalyticsApp extends ConsumerWidget {
                     Expanded(
                       child: AnalyticsAppBody(
                         sidebarController: _sidebarController,
-                        dataChangedNotifier: _dataChangedNotifier,
                       ),
                     ),
                   ],
@@ -94,11 +92,9 @@ class AnalyticsAppBody extends StatefulWidget {
   const AnalyticsAppBody({
     super.key,
     required this.sidebarController,
-    required this.dataChangedNotifier,
   });
 
   final SidebarXController sidebarController;
-  final ValueNotifier<int> dataChangedNotifier;
 
   @override
   State<AnalyticsAppBody> createState() => _AnalyticsAppBodyState();
@@ -115,7 +111,6 @@ class _AnalyticsAppBodyState extends State<AnalyticsAppBody> {
   void initState() {
     super.initState();
     widget.sidebarController.addListener(() => setState(() {}));
-    widget.dataChangedNotifier.addListener(() => setState(() {}));
   }
 
   @override
