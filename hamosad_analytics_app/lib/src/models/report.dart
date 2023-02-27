@@ -6,18 +6,19 @@ import 'package:intl/intl.dart';
 
 class Report {
   final int teamNumber, scouterTeamNumber;
-  final String match, scouter;
+  final String match, scouter, id;
   final DateTime time;
   final ReportAuto auto;
   final ReportTeleop teleop;
   final ReportEndgame endgame;
   final ReportSummary summary;
 
-  Report.fromJson(Json json)
+  Report.fromJson(Json json, {required this.id})
       : teamNumber = int.parse(json['info']['teamNumber']),
-        scouterTeamNumber = teamNumberFrom(json['info']['scouterTeamNumber']),
+        scouterTeamNumber =
+            teamNumberFrom(json['info']['scouterTeamNumber'] ?? ''),
         match = json['info']['match'],
-        scouter = json['info']['scouter'],
+        scouter = json['info']['scouter'] ?? '',
         time = DateFormat('dd/MM HH:mm:ss').parse(json['info']['time']),
         auto = ReportAuto.fromJson(json['auto']),
         teleop = ReportTeleop.fromJson(json['teleop']),
@@ -43,7 +44,7 @@ class ReportAuto {
   List<PiecePickup> pickups;
   List<PieceDropoff> dropoffs;
   int chargeStationPasses;
-  AutoClimb climb;
+  AutoClimb? climb;
   String notes;
 
   ReportAuto.fromJson(Json json)
@@ -52,11 +53,13 @@ class ReportAuto {
         pickups = PiecePickup.list(json['pickups']),
         dropoffs = PieceDropoff.list(json['dropoffs']),
         chargeStationPasses = json['chargeStationPasses'],
-        climb = AutoClimb.fromJson(json['climb'])!,
+        climb = AutoClimb.fromJson(json['climb']),
         notes = json['notes'];
 
   int get score {
-    return (leftCommunity ? 3 : 0) + dropoffs.score(isAuto: true) + climb.score;
+    return (leftCommunity ? 3 : 0) +
+        dropoffs.score(isAuto: true) +
+        (climb?.score ?? 0);
   }
 }
 

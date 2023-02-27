@@ -38,8 +38,10 @@ class AnalyticsDatabase {
     _selectedDistrcits.add(await getCurrentDistrict());
 
     final reports = await _getReportsFromFirestore();
-    _reports = debug(
-        reports.mapEntries((report) => Report.fromJson(report.value)).toList());
+    _reports = reports
+        .mapEntries(
+            (report) => Report.fromJson(report.value, id: debug(report.key)))
+        .toList();
 
     final teams = await _getTeamsFromFirestore();
     _teams = teams.map((key, value) => MapEntry(

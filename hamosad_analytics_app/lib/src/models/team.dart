@@ -339,7 +339,9 @@ class ActionDurationStat {
         _twoToFiveCount = 0,
         _fivePlusCount = 0;
 
-  void updateWithDuration(ActionDuration duration) {
+  void updateWithDuration(ActionDuration? duration) {
+    if (duration == null) return;
+
     switch (duration) {
       case ActionDuration.zeroToTwo:
         _zeroToTwoCount++;
@@ -630,8 +632,9 @@ class ClimbingStateStat {
         _dockedByOtherCount = 0,
         _engagedCount = 0;
 
-  void updateWithState(ClimbingState value) {
+  void updateWithState(ClimbingState? value) {
     switch (value) {
+      case null:
       case ClimbingState.none:
         _noneCount++;
         break;
@@ -667,9 +670,9 @@ class AutoClimbStat {
       : states = ClimbingStateStat.defaults(),
         duration = ActionDurationStat.defaults();
 
-  void updateWithClimb(AutoClimb climb) {
-    states.updateWithState(climb.state);
-    duration.updateWithDuration(climb.duration);
+  void updateWithClimb(AutoClimb? climb) {
+    states.updateWithState(climb?.state);
+    duration.updateWithDuration(climb?.duration);
   }
 }
 
