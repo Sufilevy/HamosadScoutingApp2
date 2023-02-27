@@ -183,7 +183,7 @@ class TeamEndgame {
 class TeamSummary {
   Stat score;
   int won, lost;
-  RobotIndexStat defenceIndex;
+  DefenceRobotIndexStat defenceIndex;
   PiecesPickupsStat pickups;
   PiecesDropoffsStat dropoffs;
   Stat chargeStationPasses;
@@ -194,7 +194,7 @@ class TeamSummary {
       : score = Stat(),
         won = 0,
         lost = 0,
-        defenceIndex = RobotIndexStat.defaults(),
+        defenceIndex = DefenceRobotIndexStat.defaults(),
         pickups = PiecesPickupsStat.defaults(),
         dropoffs = PiecesDropoffsStat.defaults(),
         chargeStationPasses = Stat(),
@@ -713,6 +713,49 @@ class RobotIndexStat {
     firstRate = _firstCount / count;
     secondRate = _secondCount / count;
     thirdRate = _thirdCount / count;
+  }
+}
+
+class DefenceRobotIndexStat {
+  /// The robot climbed first.
+  ///
+  /// Together with [halfRate] and [noneRate] represents 100% of the climbing indexes.
+  double almostAllRate;
+
+  /// The robot climbed second.
+  ///
+  /// Together with [almostAllRate] and [noneRate] represents 100% of the climbing indexes.
+  double halfRate;
+
+  /// The robot climbed third.
+  ///
+  /// Together with [almostAllRate] and [halfRate] represents 100% of the climbing indexes.
+  double noneRate;
+
+  int _almostAllCount, _halfCount, _noneCount;
+
+  /// Uses default values for all fields.
+  DefenceRobotIndexStat.defaults()
+      : almostAllRate = 0.0,
+        halfRate = 0.0,
+        noneRate = 0.0,
+        _almostAllCount = 0,
+        _halfCount = 0,
+        _noneCount = 0;
+
+  void updateWithIndex(DefenceRobotIndex value) {
+    if (value == DefenceRobotIndex.almostAll) {
+      _almostAllCount++;
+    } else if (value == DefenceRobotIndex.half) {
+      _halfCount++;
+    } else if (value == DefenceRobotIndex.none) {
+      _noneCount++;
+    }
+
+    final count = _almostAllCount + _halfCount + _noneCount;
+    almostAllRate = _almostAllCount / count;
+    halfRate = _halfCount / count;
+    noneRate = _noneCount / count;
   }
 }
 

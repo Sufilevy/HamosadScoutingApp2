@@ -98,12 +98,12 @@ class ReportEndgame {
 
 class ReportSummary {
   bool won;
-  RobotIndex defenceIndex;
+  DefenceRobotIndex defenceIndex;
   String fouls, notes;
 
   ReportSummary.fromJson(Json json)
       : won = json['won'],
-        defenceIndex = RobotIndex.fromString(json['defenceRobotIndex'])!,
+        defenceIndex = DefenceRobotIndex.fromString(json['defenceRobotIndex'])!,
         fouls = json['fouls'],
         notes = json['notes'];
 }
@@ -188,6 +188,24 @@ enum RobotIndex {
         return second;
       case 'third':
         return third;
+    }
+    return null;
+  }
+}
+
+enum DefenceRobotIndex {
+  almostAll,
+  half,
+  none;
+
+  static DefenceRobotIndex? fromString(String value) {
+    switch (value) {
+      case 'almostAll':
+        return almostAll;
+      case 'half':
+        return half;
+      case 'none':
+        return none;
     }
     return null;
   }
