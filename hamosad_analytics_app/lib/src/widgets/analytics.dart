@@ -95,10 +95,10 @@ class AnalyticsDataDivider extends StatelessWidget {
 }
 
 class AnalyticsDataChip extends StatelessWidget {
-  const AnalyticsDataChip({Key? key, required this.title, required this.data})
+  const AnalyticsDataChip(this.data, {Key? key, required this.title})
       : super(key: key);
 
-  final String title, data;
+  final String data, title;
 
   @override
   Widget build(BuildContext context) {
@@ -248,16 +248,29 @@ class AnalyticsStatChip extends StatelessWidget {
       );
 }
 
-class AnalyticsDataWinRate extends StatelessWidget {
-  const AnalyticsDataWinRate({
+class AnalyticsTwoRateChip extends StatelessWidget {
+  const AnalyticsTwoRateChip({
     Key? key,
-    required this.won,
-    required this.lost,
+    required this.first,
+    required this.second,
     this.inContainer = true,
+    this.firstColor = AnalyticsTheme.primary,
+    this.secondColor = AnalyticsTheme.error,
   }) : super(key: key);
 
-  final int won, lost;
+  const AnalyticsTwoRateChip.pieces(
+      {super.key,
+      required num cones,
+      required num cubes,
+      this.inContainer = true})
+      : first = cones,
+        second = cubes,
+        firstColor = AnalyticsTheme.cones,
+        secondColor = AnalyticsTheme.cubes;
+
+  final num first, second;
   final bool inContainer;
+  final Color firstColor, secondColor;
 
   @override
   Widget build(BuildContext context) {
@@ -279,8 +292,10 @@ class AnalyticsDataWinRate extends StatelessWidget {
               Expanded(
                 flex: 10,
                 child: AnalyticsText.data(
-                  won.toString(),
-                  color: AnalyticsTheme.primary,
+                  (first is int)
+                      ? first.toString()
+                      : first.toStringAsPrecision(3),
+                  color: firstColor,
                 ),
               ),
               const Expanded(
@@ -296,15 +311,17 @@ class AnalyticsDataWinRate extends StatelessWidget {
               Expanded(
                 flex: 10,
                 child: AnalyticsText.data(
-                  lost.toString(),
-                  color: AnalyticsTheme.error,
+                  (second is int)
+                      ? second.toString()
+                      : second.toStringAsPrecision(3),
+                  color: secondColor,
                 ),
               ),
             ],
           ),
           Padding(
             padding: EdgeInsets.only(left: 10.0, right: 10.0, top: gap),
-            child: (won == 0 && lost == 0)
+            child: (first == 0 && second == 0)
                 ? Container(
                     height: barHeight,
                     decoration: const BoxDecoration(
@@ -318,28 +335,28 @@ class AnalyticsDataWinRate extends StatelessWidget {
                 : Row(
                     children: [
                       Expanded(
-                        flex: won,
+                        flex: (first * 10).toInt(),
                         child: Container(
                           height: barHeight,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(2.0),
                               bottomLeft: Radius.circular(2.0),
                             ),
-                            color: AnalyticsTheme.primary,
+                            color: firstColor,
                           ),
                         ),
                       ),
                       Expanded(
-                        flex: lost,
+                        flex: (second * 10).toInt(),
                         child: Container(
                           height: barHeight,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
                               topRight: Radius.circular(2.0),
                               bottomRight: Radius.circular(2.0),
                             ),
-                            color: AnalyticsTheme.error,
+                            color: secondColor,
                           ),
                         ),
                       ),
@@ -348,6 +365,195 @@ class AnalyticsDataWinRate extends StatelessWidget {
           )
         ],
       );
+}
+
+class AnalyticsClimbsStatChip extends StatelessWidget {
+  const AnalyticsClimbsStatChip(
+    this.data, {
+    Key? key,
+    this.dockedByOther = true,
+  }) : super(key: key);
+
+  final ClimbingStateStat data;
+  final bool dockedByOther;
+
+  Widget _buildDivider() => const Expanded(
+        flex: 1,
+        child: SizedBox(
+          width: 15.0,
+          height: 25.0,
+          child: VerticalDivider(
+            color: AnalyticsTheme.background3,
+            thickness: 2,
+          ),
+        ),
+      );
+
+  Widget _buildText(String text) => Expanded(
+        flex: 10,
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: AnalyticsText.data(
+            text,
+          ),
+        ),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return AnalyticsContainer(
+      width: 400,
+      height: 70,
+      color: AnalyticsTheme.background1,
+      child: Row(
+        children: [
+          _buildText('None:\n${data.noneRate.toString()}'),
+          _buildDivider(),
+          _buildText('Docked:\n${data.dockedRate.toString()}'),
+          if (dockedByOther) ...[
+            _buildDivider(),
+            _buildText('By Other:\n${data.dockedByOtherRate.toString()}'),
+          ],
+          _buildDivider(),
+          _buildText('Engaged:\n${data.engagedRate.toString()}'),
+        ],
+      ),
+    );
+  }
+}
+
+class AnalyticsDurationsStatChip extends StatelessWidget {
+  const AnalyticsDurationsStatChip(
+    this.data, {
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
+  final ActionDurationStat data;
+  final String title;
+
+  Widget _buildDivider() => const Expanded(
+        flex: 1,
+        child: SizedBox(
+          width: 15.0,
+          height: 25.0,
+          child: VerticalDivider(
+            color: AnalyticsTheme.background3,
+            thickness: 2,
+          ),
+        ),
+      );
+
+  Widget _buildText(String text) => Expanded(
+        flex: 8,
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: AnalyticsText.data(
+            text,
+          ),
+        ),
+      );
+
+  Color _barColor(double t) =>
+      Color.lerp(AnalyticsTheme.primary, AnalyticsTheme.primaryVariant, t)!;
+
+  Widget _buildBars() => Padding(
+        padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 4.0),
+        child: (data.zeroToTwoRate == 0 &&
+                data.twoToFiveRate == 0 &&
+                data.fivePlusRate == 0.0)
+            ? Container(
+                height: 3.0,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(2.0),
+                    bottomLeft: Radius.circular(2.0),
+                  ),
+                  color: AnalyticsTheme.background3,
+                ),
+              )
+            : Row(
+                children: [
+                  Expanded(
+                    flex: (data.zeroToTwoRate * 10).toInt(),
+                    child: Container(
+                      height: 3.0,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(2.0),
+                          bottomLeft: Radius.circular(2.0),
+                        ),
+                        color: _barColor(0.0),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: (data.twoToFiveRate * 10).toInt(),
+                    child: Container(
+                      height: 3.0,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(2.0),
+                          bottomRight: Radius.circular(2.0),
+                        ),
+                        color: _barColor(0.5),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: (data.fivePlusRate * 10).toInt(),
+                    child: Container(
+                      height: 3.0,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(2.0),
+                          bottomRight: Radius.circular(2.0),
+                        ),
+                        color: _barColor(1.0),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return AnalyticsContainer(
+      width: 400,
+      height: 70,
+      color: AnalyticsTheme.background1,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 12,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AnalyticsText.dataSubtitle(title),
+            ),
+          ),
+          _buildDivider(),
+          Column(
+            children: [
+              Row(
+                children: [
+                  _buildText(
+                      '0-2:\n${data.zeroToTwoRate.toStringAsPrecision(3)}'),
+                  _buildDivider(),
+                  _buildText(
+                      '2-5:\n${data.twoToFiveRate.toStringAsPrecision(3)}'),
+                  _buildDivider(),
+                  _buildText(
+                      '5+:\n${data.fivePlusRate.toStringAsPrecision(3)}'),
+                ],
+              ),
+              _buildBars(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class AnalyticsText {

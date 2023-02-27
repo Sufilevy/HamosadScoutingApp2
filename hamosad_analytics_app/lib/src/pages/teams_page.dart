@@ -35,9 +35,9 @@ class TeamsPage extends ConsumerStatefulWidget {
     'Win Rate': DataEntry<double>(
       height: 35.0,
       getData: (team) => team.summary.winRate,
-      builder: (team) => AnalyticsDataWinRate(
-        won: team.summary.won,
-        lost: team.summary.lost,
+      builder: (team) => AnalyticsTwoRateChip(
+        first: team.summary.won,
+        second: team.summary.lost,
         inContainer: false,
       ),
     ),

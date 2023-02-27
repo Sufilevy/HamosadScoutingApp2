@@ -33,6 +33,19 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
                 team.summary.score,
                 title: 'Total Score',
               ),
+              AnalyticsTwoRateChip(
+                first: team.summary.won,
+                second: team.summary.lost,
+              ),
+              AnalyticsTwoRateChip.pieces(
+                cones: team.summary.dropoffs.pieces.cones.average,
+                cubes: team.summary.dropoffs.pieces.cubes.average,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
               AnalyticsStatChip.fromStat(
                 team.auto.score,
                 title: 'Auto Score',
@@ -45,25 +58,117 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
                 team.endgame.score,
                 title: 'Endgame Score',
               ),
-              AnalyticsDataWinRate(
-                won: team.summary.won,
-                lost: team.summary.lost,
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsStatChip.fromStat(
+                team.auto.dropoffs.totalDropoffs,
+                title: 'Auto\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.teleop.dropoffs.totalDropoffs,
+                title: 'Teleop\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.endgame.dropoffs.totalDropoffs,
+                title: 'Endgame\nDropoffs',
+              ),
+            ],
+          ),
+        ],
+        AnalyticsTab.auto: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsStatChip.fromStat(
+                team.auto.dropoffs.allGrids.rows[0],
+                title: 'Top Row\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.auto.dropoffs.allGrids.rows[1],
+                title: 'Middle Row\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.auto.dropoffs.allGrids.rows[2],
+                title: 'Bottom Row\nDropoffs',
               ),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [],
+            children: [
+              AnalyticsTwoRateChip.pieces(
+                cones: team.auto.dropoffs.pieces.cones.average,
+                cubes: team.auto.dropoffs.pieces.cubes.average,
+              ),
+              AnalyticsClimbsStatChip(
+                team.auto.climb.states,
+                dockedByOther: false,
+              ),
+            ],
           ),
         ],
-        AnalyticsTab.auto: [
-          const Text('Auto'),
-        ],
         AnalyticsTab.teleop: [
-          const Text('Teleop'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsStatChip.fromStat(
+                team.teleop.dropoffs.allGrids.rows[0],
+                title: 'Top Row\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.teleop.dropoffs.allGrids.rows[1],
+                title: 'Middle Row\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.teleop.dropoffs.allGrids.rows[2],
+                title: 'Bottom Row\nDropoffs',
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsTwoRateChip.pieces(
+                cones: team.teleop.dropoffs.pieces.cones.average,
+                cubes: team.teleop.dropoffs.pieces.cubes.average,
+              ),
+            ],
+          ),
         ],
         AnalyticsTab.endgame: [
-          const Text('Endgame'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsStatChip.fromStat(
+                team.endgame.dropoffs.allGrids.rows[0],
+                title: 'Top Row\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.endgame.dropoffs.allGrids.rows[1],
+                title: 'Middle Row\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.endgame.dropoffs.allGrids.rows[2],
+                title: 'Bottom Row\nDropoffs',
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsTwoRateChip.pieces(
+                cones: team.endgame.dropoffs.pieces.cones.average,
+                cubes: team.endgame.dropoffs.pieces.cubes.average,
+              ),
+              AnalyticsClimbsStatChip(
+                team.endgame.climb.states,
+                dockedByOther: false,
+              ),
+            ],
+          ),
         ],
       };
     }

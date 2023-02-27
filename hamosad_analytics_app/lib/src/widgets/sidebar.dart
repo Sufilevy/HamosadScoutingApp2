@@ -2,7 +2,6 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
-import 'package:hamosad_analytics_app/src/database.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:sidebarx/sidebarx.dart';
@@ -165,7 +164,6 @@ class _RefreshDataButtonState extends State<RefreshDataButton>
           _loading = true;
           await Future.wait([
             Future.delayed(1500.milliseconds),
-            getData(),
           ]);
           if (widget.onPressed != null) widget.onPressed!();
           _loading = false;

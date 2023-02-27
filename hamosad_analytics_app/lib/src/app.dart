@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -15,6 +17,8 @@ class AnalyticsApp extends ConsumerWidget {
       SidebarXController(selectedIndex: 0, extended: true);
   final ValueNotifier<int> _dataChangedNotifier = ValueNotifier(0);
 
+  static double size = 1.0;
+
   Future<void> initializeDatabase(WidgetRef ref) async {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
@@ -23,6 +27,12 @@ class AnalyticsApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final screenSize =
+        MediaQueryData.fromWindow(WidgetsBinding.instance.window).size;
+    size = math.min(
+      screenSize.width / 1400.0,
+      screenSize.height / 750.0,
+    );
     return FutureBuilder(
         future: initializeDatabase(ref),
         builder: (context, snapshot) {
