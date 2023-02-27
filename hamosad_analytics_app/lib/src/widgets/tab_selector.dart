@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
@@ -54,7 +55,7 @@ class _AnalyticsTabsSelectorState extends State<AnalyticsTabsSelector> {
     return Expanded(
       flex: 16,
       child: SizedBox(
-        height: 40.0,
+        height: 40.0 * AnalyticsApp.size,
         child: ElevatedButton.icon(
           onPressed: () => setState(() {
             widget.currentTabCubit.data = tab;
@@ -63,7 +64,7 @@ class _AnalyticsTabsSelectorState extends State<AnalyticsTabsSelector> {
           icon: Icon(
             isSelected ? tab.selectedIcon : tab.icon,
             color: color,
-            size: 32.0,
+            size: 32.0 * AnalyticsApp.size,
           ),
           style: ButtonStyle(
             backgroundColor:

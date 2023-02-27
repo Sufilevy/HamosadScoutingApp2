@@ -2,64 +2,109 @@ import 'dart:math' as math;
 
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
-import 'package:hamosad_analytics_app/src/database.dart' as db;
+import 'package:hamosad_analytics_app/src/database.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-class TeamsPage extends StatefulWidget {
+class TeamsPage extends ConsumerStatefulWidget {
   const TeamsPage({Key? key}) : super(key: key);
 
-  static const String defaultSortKey = 'Rank';
+  static const String defaultSortKey = 'Name';
   static final List<String> defaultTeamEntreis = dataEntries.keys.toList();
   static final Map<String, DataEntry> dataEntries = {
     'Name': DataEntry<String>(
-      height: 30.0,
-      getData: (team) => team.info.name,
-    ),
-    'Rank': DataEntry<int>(
-      height: 30.0,
-      getData: (team) => db.getRanks().indexOf(team.info.number) + 1,
-    ),
+        height: 30.0 * AnalyticsApp.size,
+        getData: (team) => team.info.name,
+        builder: (team) => FittedBox(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 8.0 * AnalyticsApp.size,
+                  vertical: 4.0 * AnalyticsApp.size,
+                ),
+                child: AnalyticsText.data(
+                  team.info.name,
+                  color: AnalyticsTheme.primary.withOpacity(0.8),
+                ),
+              ),
+            )),
     'Win Rate': DataEntry<double>(
-      height: 35.0,
+      height: 35.0 * AnalyticsApp.size,
       getData: (team) => team.summary.winRate,
-      builder: (team) => AnalyticsDataWinRate(
-        won: team.summary.won,
-        lost: team.summary.lost,
+      builder: (team) => AnalyticsTwoRateChip(
+        first: team.summary.won,
+        second: team.summary.lost,
         inContainer: false,
       ),
     ),
-    'Avg Score': DataEntry<double>(
-      height: 30.0,
+    'Score': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
       getData: (team) => team.summary.score.average,
     ),
-    'Avg Auto Cones Drop': DataEntry<double>(
-      height: 30.0,
-      getData: (team) => team.auto.dropoffs.pieces.cones.average,
+    'Auto Score': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.auto.score.average,
     ),
-    'Avg Tele Cones Pick': DataEntry<double>(
-      height: 30.0,
-      getData: (team) => team.teleop.pickups.pieces.cones.average,
+    'Teleop Score': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.teleop.score.average,
     ),
-    'Avg Total Cones Pick': DataEntry<double>(
-      height: 30.0,
-      getData: (team) => team.summary.pickups.pieces.cones.average,
-    ),
-    'Avg Endg Score': DataEntry<double>(
-      height: 30.0,
+    'Endgame Score': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
       getData: (team) => team.endgame.score.average,
+    ),
+    'Auto Drops': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.auto.dropoffs.totalDropoffs.average,
+    ),
+    'Teleop Drops': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.teleop.dropoffs.totalDropoffs.average,
+    ),
+    'Endgame Drops': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.endgame.dropoffs.totalDropoffs.average,
+    ),
+    'Cones Drops': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.summary.dropoffs.pieces.cones.average,
+    ),
+    'Cubes Drops': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.summary.dropoffs.pieces.cubes.average,
+    ),
+    'Mobility Rate': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.auto.leftCommunity.trueRate * 100.0,
+    ),
+    'Auto Engaged': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.auto.climb.states.engagedRate * 100.0,
+    ),
+    'Auto Docked': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.auto.climb.states.engagedRate * 100.0,
+    ),
+    'Endagme Engaged': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.endgame.climb.states.engagedRate * 100.0,
+    ),
+    'Endagme Docked': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.endgame.climb.states.dockedRate * 100.0,
     ),
   };
 
   @override
-  State<TeamsPage> createState() => _TeamsPageState();
+  ConsumerState<TeamsPage> createState() => _TeamsPageState();
 }
 
-class _TeamsPageState extends State<TeamsPage> {
+class _TeamsPageState extends ConsumerState<TeamsPage> {
   final LinkedScrollControllerGroup _horizontalScrollController =
           LinkedScrollControllerGroup(),
       _verticalScrollController = LinkedScrollControllerGroup();
@@ -96,9 +141,9 @@ class _TeamsPageState extends State<TeamsPage> {
     teams.sort((a, b) {
       dynamic dataA = getDataFromTeam(a.team), dataB = getDataFromTeam(b.team);
       if (_isSortingDescending) {
-        return Comparable.compare(dataA, dataB);
-      } else {
         return Comparable.compare(dataB, dataA);
+      } else {
+        return Comparable.compare(dataA, dataB);
       }
     });
 
@@ -107,7 +152,7 @@ class _TeamsPageState extends State<TeamsPage> {
 
   @override
   void initState() {
-    _teamsData = db.getTeams();
+    _teamsData = ref.read(analytisDataProvider).teamsByNumber;
     _tableEntriesControllers = List.generate(
       _teamsData.length,
       (index) => _verticalScrollController.addAndGet(),
@@ -118,11 +163,11 @@ class _TeamsPageState extends State<TeamsPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.all(20.0 * AnalyticsApp.size),
       child: Column(
         children: [
           _buildTitle(),
-          const SizedBox(height: 10.0),
+          SizedBox(height: 10.0 * AnalyticsApp.size),
           Expanded(child: _buildBody(context)),
         ],
       ),
@@ -134,32 +179,33 @@ class _TeamsPageState extends State<TeamsPage> {
           Expanded(
             flex: 30,
             child: SizedBox(
-              height: 50.0,
+              height: 50.0 * AnalyticsApp.size,
               child: SearchBar(
                 onSubmitted: (query) => setState(() {
                   _searchQuery = query;
                 }),
                 currentQuery: _searchQuery,
                 hintText: 'Search for a team...',
+                searchIconColor: AnalyticsTheme.primary,
               ),
             ),
           ),
-          const SizedBox(width: 10.0),
+          SizedBox(width: 10.0 * AnalyticsApp.size),
           Expanded(
             flex: 30,
             child: Container(
-              height: 50.0,
+              height: 50.0 * AnalyticsApp.size,
               decoration: BoxDecoration(
                 color: AnalyticsTheme.background2,
-                borderRadius: BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(5.0 * AnalyticsApp.size),
               ),
               child: _buildSortByMenu(),
             ),
           ),
-          const SizedBox(width: 10.0),
+          SizedBox(width: 10.0 * AnalyticsApp.size),
           AnalyticsContainer(
-            height: 50.0,
-            width: 50.0,
+            height: 50.0 * AnalyticsApp.size,
+            width: 50.0 * AnalyticsApp.size,
             child: IconButton(
               splashRadius: 1.0,
               onPressed: () => setState(() {
@@ -185,7 +231,7 @@ class _TeamsPageState extends State<TeamsPage> {
               ),
             ),
           ),
-          const SizedBox(width: 10.0),
+          SizedBox(width: 10.0 * AnalyticsApp.size),
           Expanded(
             flex: 13,
             child: TextButton(
@@ -194,13 +240,13 @@ class _TeamsPageState extends State<TeamsPage> {
                   AnalyticsTheme.background2,
                 ),
                 fixedSize: MaterialStateProperty.all(
-                  const Size.fromHeight(50.0),
+                  Size.fromHeight(50.0 * AnalyticsApp.size),
                 ),
               ),
               onPressed: _clearFilters,
               child: AnalyticsText.dataTitle(
                 'Clear Filters',
-                color: AnalyticsTheme.foreground2,
+                color: AnalyticsTheme.primary,
               ),
             ),
           ),
@@ -209,29 +255,29 @@ class _TeamsPageState extends State<TeamsPage> {
 
   Widget _buildSortByMenu() => Row(
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.0 * AnalyticsApp.size),
             child: Icon(
               Icons.sort_rounded,
-              size: 32.0,
-              color: AnalyticsTheme.foreground2,
+              size: 32.0 * AnalyticsApp.size,
+              color: AnalyticsTheme.primary,
             ),
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: EdgeInsets.only(right: 8.0 * AnalyticsApp.size),
               child: DropdownButton<String>(
-                dropdownColor: AnalyticsTheme.background3,
+                dropdownColor: AnalyticsTheme.background2,
                 style: AnalyticsTheme.dataTitleTextStyle.copyWith(
                   color: AnalyticsTheme.foreground2,
                 ),
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(10.0 * AnalyticsApp.size),
                 focusColor: AnalyticsTheme.background2,
                 isExpanded: true,
                 underline: const SizedBox.shrink(),
                 value: _sortByKey,
-                iconSize: 32.0,
-                iconEnabledColor: AnalyticsTheme.foreground2,
+                iconSize: 32.0 * AnalyticsApp.size,
+                iconEnabledColor: AnalyticsTheme.primary,
                 items: _dataRows
                     .map((sortKey) => DropdownMenuItem<String>(
                           value: sortKey,
@@ -252,28 +298,28 @@ class _TeamsPageState extends State<TeamsPage> {
     return Column(
       children: [
         SizedBox(
-          height: 50.0,
+          height: 50.0 * AnalyticsApp.size,
           child: Row(
             children: [
               _buildSelectRowsButton(context),
-              const SizedBox(width: 10.0),
+              SizedBox(width: 10.0 * AnalyticsApp.size),
               AnalyticsContainer(
                 alignment: Alignment.center,
-                width: 110.0,
-                height: 50.0,
+                width: 110.0 * AnalyticsApp.size,
+                height: 50.0 * AnalyticsApp.size,
                 child: AnalyticsText.data('Team'),
               ),
-              const SizedBox(width: 10.0),
+              SizedBox(width: 10.0 * AnalyticsApp.size),
               Expanded(child: _buildColumnTitles(teamsEntries)),
             ],
           ),
         ),
-        const SizedBox(height: 10.0),
+        SizedBox(height: 10.0 * AnalyticsApp.size),
         Expanded(
           child: Row(
             children: [
               _buildRowTitles(teamsEntries),
-              const SizedBox(width: 10.0),
+              SizedBox(width: 10.0 * AnalyticsApp.size),
               Expanded(child: _buildTable(teamsEntries)),
             ],
           ),
@@ -284,13 +330,13 @@ class _TeamsPageState extends State<TeamsPage> {
 
   Widget _buildSelectRowsButton(BuildContext context) => AnalyticsContainer(
         child: AnalyticsContainer(
-          width: 50.0,
-          height: 50.0,
+          width: 50.0 * AnalyticsApp.size,
+          height: 50.0 * AnalyticsApp.size,
           child: IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.add_chart_rounded,
-              size: 32.0,
-              color: AnalyticsTheme.primaryVariant,
+              size: 32.0 * AnalyticsApp.size,
+              color: AnalyticsTheme.primary,
             ),
             splashRadius: 1.0,
             onPressed: () => showDialog(
@@ -315,15 +361,19 @@ class _TeamsPageState extends State<TeamsPage> {
                     color: AnalyticsTheme.foreground2,
                   ),
                 ),
-                cancelText: AnalyticsText.dataSubtitle(
+                cancelText: Text(
                   'CANCEL',
-                  color: AnalyticsTheme.foreground2,
-                  fontWeight: FontWeight.w500,
+                  style: AnalyticsTheme.dataSubtitleTextStyle.copyWith(
+                    color: AnalyticsTheme.foreground2,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                confirmText: AnalyticsText.dataSubtitle(
+                confirmText: Text(
                   'CONFIRM',
-                  color: AnalyticsTheme.primary,
-                  fontWeight: FontWeight.w700,
+                  style: AnalyticsTheme.dataSubtitleTextStyle.copyWith(
+                    color: AnalyticsTheme.primary,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
                 searchable: true,
                 searchHint: 'Search...',
@@ -333,19 +383,19 @@ class _TeamsPageState extends State<TeamsPage> {
                 searchTextStyle: AnalyticsTheme.dataSubtitleTextStyle.copyWith(
                   color: AnalyticsTheme.foreground2,
                 ),
-                searchIcon: const Icon(
+                searchIcon: Icon(
                   Icons.search_rounded,
-                  size: 28.0,
+                  size: 28.0 * AnalyticsApp.size,
                   color: AnalyticsTheme.foreground2,
                 ),
-                closeSearchIcon: const Icon(
+                closeSearchIcon: Icon(
                   Icons.clear_rounded,
-                  size: 28.0,
+                  size: 28.0 * AnalyticsApp.size,
                   color: AnalyticsTheme.foreground2,
                 ),
                 separateSelectedItems: true,
-                height: 600.0,
-                width: 500.0,
+                height: 600.0 * AnalyticsApp.size,
+                width: 500.0 * AnalyticsApp.size,
                 onConfirm: (selectedData) => setState(() {
                   _dataRows = selectedData;
                   if (!_dataRows.contains(_sortByKey)) {
@@ -369,27 +419,29 @@ class _TeamsPageState extends State<TeamsPage> {
 
   Widget _buildColumnTitles(List<TeamEntry> teamsEntries) => AnalyticsContainer(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          padding: EdgeInsets.symmetric(horizontal: 5.0 * AnalyticsApp.size),
           child: ListView.separated(
             controller: _columnsTitlesScrollController,
             itemCount: teamsEntries.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) => Container(
-              height: 50.0,
+              height: 50.0 * AnalyticsApp.size,
               alignment: Alignment.center,
               width: teamsEntries[index].width,
               child: AnalyticsText.data(
                   teamsEntries[index].team.info.number.toString()),
             ),
             separatorBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 1.5),
+              padding: EdgeInsets.symmetric(
+                horizontal: 1.5 * AnalyticsApp.size,
+              ),
               child: Container(
-                width: 2.0,
+                width: 2.0 * AnalyticsApp.size,
                 decoration: BoxDecoration(
                   color: AnalyticsTheme.foreground2,
-                  borderRadius: BorderRadius.circular(1.0),
+                  borderRadius: BorderRadius.circular(1.0 * AnalyticsApp.size),
                 ),
-                margin: const EdgeInsets.symmetric(vertical: 7.5),
+                margin: EdgeInsets.symmetric(vertical: 7.5 * AnalyticsApp.size),
               ),
             ),
           ),
@@ -397,46 +449,60 @@ class _TeamsPageState extends State<TeamsPage> {
       );
 
   Widget _buildHorizontalSeperator() => Container(
-        height: 2.0,
+        height: 2.0 * AnalyticsApp.size,
         decoration: BoxDecoration(
           color: AnalyticsTheme.foreground2,
-          borderRadius: BorderRadius.circular(1.0),
+          borderRadius: BorderRadius.circular(1.0 * AnalyticsApp.size),
         ),
-        margin: const EdgeInsets.symmetric(horizontal: 10.0),
+        margin: EdgeInsets.symmetric(horizontal: 10.0 * AnalyticsApp.size),
       );
 
   Widget _buildRowTitles(List<TeamEntry> teamsEntries) => AnalyticsContainer(
-        width: 170.0,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 1.0),
-          child: ListView.separated(
-            controller: _rowsTitlesScrollController,
-            itemCount: _dataRows.length,
-            itemBuilder: (context, index) => Container(
-              height: TeamsPage.dataEntries[_dataRows[index]]!.height + 14.0,
-              alignment: Alignment.center,
-              child: AnalyticsText.dataTitle(_dataRows[index]),
+        width: 170.0 * AnalyticsApp.size,
+        child: ListView.separated(
+          controller: _rowsTitlesScrollController,
+          itemCount: _dataRows.length,
+          itemBuilder: (context, index) => Container(
+            height: TeamsPage.dataEntries[_dataRows[index]]!.height +
+                14.0 * AnalyticsApp.size,
+            alignment: Alignment.center,
+            child: FittedBox(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 6.0 * AnalyticsApp.size,
+                  horizontal: 12.0 * AnalyticsApp.size,
+                ),
+                child: AnalyticsText.dataTitle(
+                  _dataRows[index],
+                  color: AnalyticsTheme.foreground1.withOpacity(0.8),
+                ),
+              ),
             ),
-            separatorBuilder: (context, index) => _buildHorizontalSeperator(),
           ),
+          separatorBuilder: (context, index) => _buildHorizontalSeperator(),
         ),
       );
 
   Widget _buildTable(List<TeamEntry> teamsEntries) => AnalyticsContainer(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2.5, vertical: 5.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 2.5 * AnalyticsApp.size,
+            vertical: 5.0 * AnalyticsApp.size,
+          ),
           child: ListView.builder(
             controller: _tableScrollController,
             scrollDirection: Axis.horizontal,
             itemCount: teamsEntries.length,
             itemBuilder: (context, teamIndex) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2.5),
+              padding:
+                  EdgeInsets.symmetric(horizontal: 2.5 * AnalyticsApp.size),
               child: AnalyticsContainer(
                 color: AnalyticsTheme.background1,
                 width: teamsEntries[teamIndex].width,
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 5.0 * AnalyticsApp.size),
                   child: ListView.separated(
                     controller: _tableEntriesControllers[teamIndex],
                     itemCount: _dataRows.length,
@@ -450,7 +516,8 @@ class _TeamsPageState extends State<TeamsPage> {
                       );
                     },
                     separatorBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6.0),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 6.0 * AnalyticsApp.size),
                       child: _buildHorizontalSeperator(),
                     ),
                   ),
@@ -469,7 +536,7 @@ class TeamEntry {
   final double width;
 
   static double _calculateWidth(String name) {
-    return 100.0 + math.max(name.length - 7, 0) * 10.0;
+    return (100.0 + math.max(name.length - 7, 0) * 10.0) * AnalyticsApp.size;
   }
 }
 
@@ -478,10 +545,30 @@ class DataEntry<T> {
     required this.height,
     required this.getData,
     Widget Function(Team)? builder,
-  }) : builder =
-            builder ?? ((team) => AnalyticsText.data(getData(team).toString()));
+  }) : builder = builder ??
+            ((team) => FittedBox(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.0 * AnalyticsApp.size,
+                      vertical: 4.0 * AnalyticsApp.size,
+                    ),
+                    child: AnalyticsText.data(
+                      dataToString(
+                        getData(team),
+                      ),
+                      color: AnalyticsTheme.foreground1,
+                    ),
+                  ),
+                ));
 
   final double height;
   final T Function(Team) getData;
   final Widget Function(Team) builder;
+
+  static String dataToString(data) {
+    if (data is num) {
+      return data.toStringAsPrecision(3);
+    }
+    return data.toString();
+  }
 }

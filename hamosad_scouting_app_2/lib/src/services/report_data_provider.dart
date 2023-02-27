@@ -47,7 +47,7 @@ class GameReport {
     return {
       'auto': auto.data,
       'teleop': teleop.data,
-      'endgame': teleop.data,
+      'endgame': endgame.data,
       'summary': summary.data,
     };
   }

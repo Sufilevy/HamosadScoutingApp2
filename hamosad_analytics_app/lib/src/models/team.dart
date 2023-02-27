@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
 
 /// All of the team's stats and averages.
@@ -7,14 +8,6 @@ class Team {
   final TeamTeleop teleop;
   final TeamEndgame endgame;
   final TeamSummary summary;
-
-  Team({
-    required this.info,
-    required this.auto,
-    required this.teleop,
-    required this.endgame,
-    required this.summary,
-  });
 
   Team.defaults({int number = 1657, String name = 'Hamosad'})
       : info = TeamInfo.defaults(number: number, name: name),
@@ -52,18 +45,8 @@ class Team {
 class TeamInfo {
   int number;
   String name, location;
-  int rank;
 
-  TeamInfo({
-    required this.number,
-    required this.name,
-    required this.location,
-    required this.rank,
-  });
-
-  TeamInfo.defaults({required this.number, required this.name})
-      : location = '',
-        rank = 1;
+  TeamInfo.defaults({required this.number, required this.name}) : location = '';
 
   TeamInfo.only({
     required this.number,
@@ -74,8 +57,7 @@ class TeamInfo {
     int? lost,
     Stat? score,
     RobotIndexStat? defenceIndex,
-  })  : location = location ?? '',
-        rank = rank ?? 1;
+  }) : location = location ?? '';
 }
 
 /// All of the team's autonomous stats and averages.
@@ -89,17 +71,6 @@ class TeamAuto {
   AutoClimbStat climb;
   List<String> notes;
 
-  TeamAuto({
-    required this.score,
-    required this.startPosition,
-    required this.leftCommunity,
-    required this.pickups,
-    required this.dropoffs,
-    required this.chargeStationPasses,
-    required this.climb,
-    required this.notes,
-  });
-
   /// Uses default values for all fields.
   TeamAuto.defaults()
       : score = Stat(),
@@ -110,24 +81,6 @@ class TeamAuto {
         chargeStationPasses = Stat(),
         climb = AutoClimbStat.defaults(),
         notes = [];
-
-  TeamAuto.only({
-    Stat? score,
-    StartPositionStat? startPosition,
-    Rate? leftCommunity,
-    PiecesPickupsStat? pickups,
-    PiecesDropoffsStat? dropoffs,
-    Stat? chargeStationPasses,
-    AutoClimbStat? climb,
-    List<String>? notes,
-  })  : score = score ?? Stat(),
-        startPosition = startPosition ?? StartPositionStat.defaults(),
-        leftCommunity = leftCommunity ?? Rate(),
-        pickups = pickups ?? PiecesPickupsStat.defaults(),
-        dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
-        chargeStationPasses = Stat(),
-        climb = climb ?? AutoClimbStat.defaults(),
-        notes = notes ?? [];
 
   void updateWithReport(ReportAuto report) {
     score.updateWithValue(report.score);
@@ -160,14 +113,6 @@ class TeamTeleop {
   Stat chargeStationPasses;
   List<String> notes;
 
-  TeamTeleop({
-    required this.score,
-    required this.pickups,
-    required this.dropoffs,
-    required this.chargeStationPasses,
-    required this.notes,
-  });
-
   /// Uses default values for all fields.
   TeamTeleop.defaults()
       : score = Stat(),
@@ -175,18 +120,6 @@ class TeamTeleop {
         dropoffs = PiecesDropoffsStat.defaults(),
         chargeStationPasses = Stat(),
         notes = [];
-
-  TeamTeleop.only({
-    Stat? score,
-    PiecesPickupsStat? pickups,
-    PiecesDropoffsStat? dropoffs,
-    Stat? chargeStationPasses,
-    List<String>? notes,
-  })  : score = score ?? Stat(),
-        pickups = pickups ?? PiecesPickupsStat.defaults(),
-        dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
-        chargeStationPasses = chargeStationPasses ?? Stat(),
-        notes = notes ?? [];
 
   void updateWithReport(ReportTeleop report) {
     score.updateWithValue(report.score);
@@ -217,15 +150,6 @@ class TeamEndgame {
   EndgameClimbStat climb;
   List<String> notes;
 
-  TeamEndgame({
-    required this.score,
-    required this.pickups,
-    required this.dropoffs,
-    required this.chargeStationPasses,
-    required this.climb,
-    required this.notes,
-  });
-
   /// Uses default values for all fields.
   TeamEndgame.defaults()
       : score = Stat(),
@@ -234,20 +158,6 @@ class TeamEndgame {
         chargeStationPasses = Stat(),
         climb = EndgameClimbStat.defaults(),
         notes = [];
-
-  TeamEndgame.only({
-    Stat? score,
-    PiecesPickupsStat? pickups,
-    PiecesDropoffsStat? dropoffs,
-    Stat? chargeStationPasses,
-    EndgameClimbStat? climb,
-    List<String>? notes,
-  })  : score = score ?? Stat(),
-        pickups = pickups ?? PiecesPickupsStat.defaults(),
-        dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
-        chargeStationPasses = chargeStationPasses ?? Stat(),
-        climb = climb ?? EndgameClimbStat.defaults(),
-        notes = notes ?? [];
 
   void updateWithReport(ReportEndgame report) {
     score.updateWithValue(report.score);
@@ -279,18 +189,6 @@ class TeamSummary {
   Stat chargeStationPasses;
   List<String> notes, fouls;
 
-  TeamSummary({
-    required this.score,
-    required this.won,
-    required this.lost,
-    required this.defenceIndex,
-    required this.pickups,
-    required this.dropoffs,
-    required this.chargeStationPasses,
-    required this.notes,
-    required this.fouls,
-  });
-
   /// Uses default values for all fields.
   TeamSummary.defaults()
       : score = Stat(),
@@ -302,26 +200,6 @@ class TeamSummary {
         chargeStationPasses = Stat(),
         notes = [],
         fouls = [];
-
-  TeamSummary.only({
-    Stat? score,
-    int? won,
-    int? lost,
-    RobotIndexStat? defenceIndex,
-    PiecesPickupsStat? pickups,
-    PiecesDropoffsStat? dropoffs,
-    Stat? chargeStationPasses,
-    List<String>? notes,
-    List<String>? fouls,
-  })  : score = score ?? Stat(),
-        won = won ?? 0,
-        lost = lost ?? 0,
-        defenceIndex = defenceIndex ?? RobotIndexStat.defaults(),
-        pickups = pickups ?? PiecesPickupsStat.defaults(),
-        dropoffs = dropoffs ?? PiecesDropoffsStat.defaults(),
-        chargeStationPasses = chargeStationPasses ?? Stat(),
-        notes = notes ?? [],
-        fouls = fouls ?? [];
 
   double get winRate {
     if (won == 0) {
@@ -387,14 +265,6 @@ class TeamSummary {
 
 /// Rates of the robot's starting positions.
 class StartPositionStat {
-  StartPositionStat({
-    required this.arenaWallRate,
-    required this.middleRate,
-    required this.loadingZoneRate,
-  })  : _arenaWallCount = 0,
-        _middleCount = 0,
-        _loadingZoneCount = 0;
-
   /// The robot is the closest to the arena wall out of the 3 robots in his alliance.
   ///
   /// Together with [middleRate] and [loadingZoneRate] represents 100% of the starting positions.
@@ -443,14 +313,6 @@ class StartPositionStat {
 
 /// Rates of different durations (0-2, 2-5, 5+).
 class ActionDurationStat {
-  ActionDurationStat({
-    required this.zeroToTwoRate,
-    required this.twoToFiveRate,
-    required this.fivePlusRate,
-  })  : _zeroToTwoCount = 0,
-        _twoToFiveCount = 0,
-        _fivePlusCount = 0;
-
   /// The action was performed in less than two seconds.
   ///
   /// Together with [twoToFiveRate] and [fivePlusRate] represents 100% of the durations.
@@ -499,14 +361,6 @@ class ActionDurationStat {
 
 /// Rates of cones and cubes for a specific action.
 class PiecesStat {
-  PiecesStat({
-    required this.conesRate,
-    required this.cubesRate,
-    required this.cones,
-    required this.cubes,
-  })  : _conesCount = 0,
-        _cubesCount = 0;
-
   /// The rate of this action performed with cones.
   ///
   /// Together with [cubesRate] represents 100% of the piece actions.
@@ -557,15 +411,6 @@ class PiecesStat {
 
 /// Pickups from all positions.
 class PiecesPickupsStat {
-  PiecesPickupsStat({
-    required this.doubleShelf,
-    required this.doubleFloor,
-    required this.single,
-    required this.floor,
-    required this.pieces,
-    required this.duration,
-  });
-
   /// Per position averages and rates.
   PiecesStat doubleShelf, doubleFloor, single, floor;
 
@@ -620,14 +465,11 @@ class PiecesPickupsStat {
 
 /// Dropoffs made on all nodes in a grid.
 class GridDropoffsStat {
-  GridDropoffsStat({
-    required this.dropoffs,
-    required this.gridRate,
-    required this.duration,
-  });
-
   /// A 3x3 grid of cubes and cones dropoffs rates, representing all of the nodes in this grid.
   List<List<PiecesStat>> dropoffs;
+
+  /// Stats for dropoffs in each row.
+  List<Stat> rows;
 
   /// Rate of game pieces dropoffs in this grid.
   ///
@@ -639,21 +481,32 @@ class GridDropoffsStat {
 
   /// Uses default values for all fields.
   GridDropoffsStat.defaults()
-      : dropoffs = List.filled(
+      : dropoffs = List.generate(
           3,
-          List.filled(
+          (_) => List.generate(
             3,
-            PiecesStat.defaults(),
+            (_) => PiecesStat.defaults(),
             growable: false,
           ),
           growable: false,
         ),
+        rows = List.generate(3, (_) => Stat()),
         gridRate = 0.0,
         duration = ActionDurationStat.defaults();
 
   void updateWithDropoff(PieceDropoff dropoff) {
     dropoffs[dropoff.row][dropoff.column].updateRatesWithPiece(dropoff.piece);
     duration.updateWithDuration(dropoff.duration);
+  }
+
+  void updateRowsWithDropoffs(List<PieceDropoff> dropoffs) {
+    for (int row = 0; row < 3; row++) {
+      rows[row].updateWithValue(
+        dropoffs.count(
+          (dropoff) => dropoff.row == row,
+        ),
+      );
+    }
   }
 
   void updateGridRate(double newGridRate) {
@@ -663,16 +516,6 @@ class GridDropoffsStat {
 
 /// Dropoffs made in all grids.
 class PiecesDropoffsStat {
-  PiecesDropoffsStat({
-    required this.arenaWallGrid,
-    required this.coopGrid,
-    required this.loadingZoneGrid,
-    required this.pieces,
-    required this.duration,
-  })  : _arenaWallGridCount = 0,
-        _coopGridCount = 0,
-        _loadingZoneGridCount = 0;
-
   /// Dropoffs made in the grid closest to the arena wall.
   GridDropoffsStat arenaWallGrid;
   int _arenaWallGridCount;
@@ -685,19 +528,27 @@ class PiecesDropoffsStat {
   GridDropoffsStat loadingZoneGrid;
   int _loadingZoneGridCount;
 
+  /// Dropoffs made in all grids.
+  GridDropoffsStat allGrids;
+
   /// Pieces dropoffs rates.
   PiecesStat pieces;
 
   /// Rates of dropoffs durations.
   ActionDurationStat duration;
 
+  /// Game pieces stat
+  Stat totalDropoffs;
+
   /// Uses default values for all fields.
   PiecesDropoffsStat.defaults()
       : arenaWallGrid = GridDropoffsStat.defaults(),
         coopGrid = GridDropoffsStat.defaults(),
         loadingZoneGrid = GridDropoffsStat.defaults(),
+        allGrids = GridDropoffsStat.defaults(),
         pieces = PiecesStat.defaults(),
         duration = ActionDurationStat.defaults(),
+        totalDropoffs = Stat(),
         _arenaWallGridCount = 0,
         _coopGridCount = 0,
         _loadingZoneGridCount = 0;
@@ -717,6 +568,7 @@ class PiecesDropoffsStat {
         _loadingZoneGridCount++;
         break;
     }
+    allGrids.updateWithDropoff(dropoff);
 
     int count = _arenaWallGridCount + _coopGridCount + _loadingZoneGridCount;
     arenaWallGrid.updateGridRate(_arenaWallGridCount / count);
@@ -731,6 +583,8 @@ class PiecesDropoffsStat {
     for (final dropoff in dropoffs) {
       updateRatesWithDropoff(dropoff);
     }
+    totalDropoffs.updateWithValue(dropoffs.length);
+    allGrids.updateRowsWithDropoffs(dropoffs);
   }
 
   void updateAveragesWithPieces({
@@ -743,16 +597,6 @@ class PiecesDropoffsStat {
 
 /// Climbings states (not climbed, docked, docked by another robot or engaged).
 class ClimbingStateStat {
-  ClimbingStateStat({
-    required this.noneRate,
-    required this.dockedRate,
-    required this.dockedByOtherRate,
-    required this.engagedRate,
-  })  : _noneCount = 0,
-        _dockedCount = 0,
-        _dockedByOtherCount = 0,
-        _engagedCount = 0;
-
   /// Rate of not climbed.
   ///
   /// Together with [dockedRate], [dockedByOtherRate] and [engagedRate] represents 100% of all climbing states.
@@ -812,11 +656,6 @@ class ClimbingStateStat {
 
 /// Autonomous climbings.
 class AutoClimbStat {
-  AutoClimbStat({
-    required this.states,
-    required this.duration,
-  });
-
   /// Rates of climbing states.
   ClimbingStateStat states;
 
@@ -835,14 +674,6 @@ class AutoClimbStat {
 }
 
 class RobotIndexStat {
-  RobotIndexStat({
-    required this.firstRate,
-    required this.secondRate,
-    required this.thirdRate,
-  })  : _firstCount = 0,
-        _secondCount = 0,
-        _thirdCount = 0;
-
   /// The robot climbed first.
   ///
   /// Together with [secondRate] and [thirdRate] represents 100% of the climbing indexes.
@@ -887,12 +718,6 @@ class RobotIndexStat {
 
 /// Autonomous climbings.
 class EndgameClimbStat {
-  EndgameClimbStat({
-    required this.states,
-    required this.indexes,
-    required this.duration,
-  });
-
   /// Rates of climbing states.
   ClimbingStateStat states;
 
@@ -908,7 +733,9 @@ class EndgameClimbStat {
         indexes = RobotIndexStat.defaults(),
         duration = ActionDurationStat.defaults();
 
-  void updateWithClimb(EndgameClimb climb) {
+  void updateWithClimb(EndgameClimb? climb) {
+    if (climb == null) return;
+
     states.updateWithState(climb.state);
     indexes.updateWithIndex(climb.robotIndex);
     duration.updateWithDuration(climb.duration);
@@ -917,7 +744,7 @@ class EndgameClimbStat {
 
 extension TeamsListToTeamNumbersList on List<Team> {
   List<String> toTeamNumbers() {
-    return map((team) => '${team.info.number.toString()} ${team.info.name}')
+    return map((team) => '${team.info.number.toString()}  -  ${team.info.name}')
         .toList();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/database/analytics_data.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
@@ -18,25 +19,34 @@ class TeamDetailsPage extends ConsumerStatefulWidget {
 
 class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
   late final AnalyticsData _data;
-  late final Map<AnalyticsTab, List<Widget>> _tabs;
+  late Map<AnalyticsTab, List<Widget>> _tabs;
   final Cubit<AnalyticsTab> _currentTab = Cubit(AnalyticsTab.general);
 
-  @override
-  void initState() {
-    _data = ref.read(analytisDataProvider);
-    // print(_data.teamsByNumber.first);
-    // TeamDetailsPage.team = _data.teamsByNumber.first;
-
+  void _setTabs() {
     if (TeamDetailsPage.team != null) {
       final team = TeamDetailsPage.team!;
       _tabs = {
         AnalyticsTab.general: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               AnalyticsStatChip.fromStat(
                 team.summary.score,
                 title: 'Total Score',
               ),
+              AnalyticsTwoRateChip(
+                first: team.summary.won,
+                second: team.summary.lost,
+              ),
+              AnalyticsTwoRateChip.pieces(
+                cones: team.summary.dropoffs.pieces.cones.average,
+                cubes: team.summary.dropoffs.pieces.cubes.average,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
               AnalyticsStatChip.fromStat(
                 team.auto.score,
                 title: 'Auto Score',
@@ -49,85 +59,216 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
                 team.endgame.score,
                 title: 'Endgame Score',
               ),
-              AnalyticsDataWinRate(
-                won: team.summary.won,
-                lost: team.summary.lost,
-              ),
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              TeamDropoffsChart(dropoffs: team.summary.dropoffs),
+              AnalyticsStatChip.fromStat(
+                team.auto.dropoffs.totalDropoffs,
+                title: 'Auto\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.teleop.dropoffs.totalDropoffs,
+                title: 'Teleop\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.endgame.dropoffs.totalDropoffs,
+                title: 'Endgame\nDropoffs',
+              ),
             ],
           ),
         ],
         AnalyticsTab.auto: [
-          const Text('Auto'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsStatChip.fromStat(
+                team.auto.dropoffs.allGrids.rows[0],
+                title: 'Top Row\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.auto.dropoffs.allGrids.rows[1],
+                title: 'Middle Row\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.auto.dropoffs.allGrids.rows[2],
+                title: 'Bottom Row\nDropoffs',
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsTwoRateChip.pieces(
+                cones: team.auto.dropoffs.pieces.cones.average,
+                cubes: team.auto.dropoffs.pieces.cubes.average,
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 8.0 * AnalyticsApp.size),
+                    child: AnalyticsText.dataSubtitle('Mobility'),
+                  ),
+                  AnalyticsTwoRateChip(
+                    first: team.auto.leftCommunity.trueRate,
+                    second: team.auto.leftCommunity.falseRate,
+                  ),
+                ],
+              ),
+              AnalyticsClimbsStatChip(
+                team.auto.climb.states,
+                dockedByOther: false,
+              ),
+            ],
+          ),
         ],
         AnalyticsTab.teleop: [
-          const Text('Teleop'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsStatChip.fromStat(
+                team.teleop.dropoffs.allGrids.rows[0],
+                title: 'Top Row\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.teleop.dropoffs.allGrids.rows[1],
+                title: 'Middle Row\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.teleop.dropoffs.allGrids.rows[2],
+                title: 'Bottom Row\nDropoffs',
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsTwoRateChip.pieces(
+                cones: team.teleop.dropoffs.pieces.cones.average,
+                cubes: team.teleop.dropoffs.pieces.cubes.average,
+              ),
+            ],
+          ),
         ],
         AnalyticsTab.endgame: [
-          const Text('Endgame'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsStatChip.fromStat(
+                team.endgame.dropoffs.allGrids.rows[0],
+                title: 'Top Row\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.endgame.dropoffs.allGrids.rows[1],
+                title: 'Middle Row\nDropoffs',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.endgame.dropoffs.allGrids.rows[2],
+                title: 'Bottom Row\nDropoffs',
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsTwoRateChip.pieces(
+                cones: team.endgame.dropoffs.pieces.cones.average,
+                cubes: team.endgame.dropoffs.pieces.cubes.average,
+              ),
+              AnalyticsClimbsStatChip(
+                team.endgame.climb.states,
+                dockedByOther: false,
+              ),
+            ],
+          ),
         ],
       };
     }
+  }
+
+  @override
+  void initState() {
+    _data = ref.read(analytisDataProvider);
+    _setTabs();
     super.initState();
   }
 
   Widget _buildTitle() {
-    if (TeamDetailsPage.team == null) {
-      return Container();
+    Widget title = AnalyticsText.navigation('Search for a team:');
+    if (TeamDetailsPage.team != null) {
+      final team = TeamDetailsPage.team!;
+      title = AnalyticsPageTitle(
+        title: 'Team ${team.info.number}',
+        subtitle: '${team.info.name}, ${team.info.location}',
+      );
     }
 
-    final team = TeamDetailsPage.team!;
     return Column(
       children: [
-        AnalyticsPageTitle(
-          title: 'Team ${team.info.number}',
-          subtitle: '${team.info.name}, ${team.info.location}',
-        ),
-        const SizedBox(height: 20.0),
-        AnalyticsTabsSelector(
-          currentTabCubit: _currentTab,
-          onTabSelected: () => setState(() {}),
-        ),
+        _buildTeamSearch(title),
+        if (TeamDetailsPage.team != null) ...[
+          SizedBox(height: 25.0 * AnalyticsApp.size),
+          AnalyticsTabsSelector(
+            currentTabCubit: _currentTab,
+            onTabSelected: () => setState(() {}),
+          ),
+        ],
       ],
     );
   }
 
-  Widget _buildTeamSearch() => EasySearchBar(
-        title: Container(),
-        onSearch: (team) => setState(() {
-          print(team);
-        }),
-        openOverlayOnSearch: true,
-        searchBackgroundColor: AnalyticsTheme.background2,
-        searchCursorColor: AnalyticsTheme.primary,
-        searchTextStyle: AnalyticsTheme.navigationTextStyle,
-        searchHintStyle: AnalyticsTheme.navigationTextStyle.copyWith(
-          color: AnalyticsTheme.foreground2,
+  Widget _buildTeamSearch(Widget title) => SizedBox(
+        height: 65.0 * AnalyticsApp.size,
+        child: EasySearchBar(
+          onSearch: (_) {},
+          onSuggestionTap: (data) => setState(() {
+            final teamNumber = int.parse(data.split('-').first.trim());
+            TeamDetailsPage.team = _data.teamsWithNumber[teamNumber];
+            _setTabs();
+          }),
+          suggestions: _data.teamsByNumber.toTeamNumbers(),
+          title: title,
+          elevation: 2.0,
+          appBarHeight: 65.0 * AnalyticsApp.size,
+          iconTheme: IconThemeData(
+            color: AnalyticsTheme.primary,
+            size: 34.0 * AnalyticsApp.size,
+          ),
+          searchBackIconTheme: IconThemeData(
+            size: 28.0 * AnalyticsApp.size,
+            color: AnalyticsTheme.primary,
+          ),
+          suggestionBuilder: (data) => Padding(
+            padding: EdgeInsets.all(8.0 * AnalyticsApp.size),
+            child: Center(
+              child: AnalyticsText.dataTitle(data),
+            ),
+          ),
+          suggestionBackgroundColor: AnalyticsTheme.background2,
+          backgroundColor: AnalyticsTheme.background2,
+          suggestionsElevation: 8.0,
+          openOverlayOnSearch: true,
+          searchBackgroundColor: AnalyticsTheme.background2,
+          searchCursorColor: AnalyticsTheme.primary,
+          searchTextStyle: AnalyticsTheme.navigationTextStyle,
+          searchHintStyle: AnalyticsTheme.navigationTextStyle.copyWith(
+            color: AnalyticsTheme.foreground2,
+          ),
+          searchHintText: 'Enter a team\'s name or number...',
         ),
-        searchHintText: 'Enter a team\'s name or number...',
-        suggestions: const [
-          '1657 Hamosad',
-          '1690 Orbit',
-          '5135 Black Unicorns',
-          '5951 MA',
-          '3075 Ha-Dream',
-        ],
-        // _data.teamsByNumber.toTeamNumbers(),
       );
 
   Widget _buildBody() {
     if (TeamDetailsPage.team == null) {
-      return _buildTeamSearch();
+      return Center(
+        child: AnalyticsText.data('There is no selected team.'),
+      );
     }
 
     return Column(
       key: ValueKey<AnalyticsTab>(_currentTab.data),
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: _tabs[_currentTab.data]!,
     );
   }
