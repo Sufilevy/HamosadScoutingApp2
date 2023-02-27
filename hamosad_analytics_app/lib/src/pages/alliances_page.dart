@@ -15,10 +15,20 @@ class AlliancesPage extends ConsumerStatefulWidget {
 
   static final Map<String, double Function(Team)> tableEntries = {
     'Win Rate': (team) => team.summary.winRate,
-    'Min Auto Cones Drop': (team) =>
-        team.auto.dropoffs.pieces.cones.min.toDouble(),
-    'Avg Tele Score': (team) => team.teleop.score.average,
-    'Avg Endg Cubes Pick': (team) => team.endgame.pickups.pieces.cubes.average,
+    'Score': (team) => team.summary.score.average,
+    'Auto Score': (team) => team.auto.score.average,
+    'Teleop Score': (team) => team.teleop.score.average,
+    'Endgame Score': (team) => team.endgame.score.average,
+    'Auto Drops': (team) => team.auto.dropoffs.totalDropoffs.average,
+    'Teleop Drops': (team) => team.teleop.dropoffs.totalDropoffs.average,
+    'Endgame Drops': (team) => team.endgame.dropoffs.totalDropoffs.average,
+    'Cones Drops': (team) => team.summary.dropoffs.pieces.cones.average,
+    'Cubes Drops': (team) => team.summary.dropoffs.pieces.cubes.average,
+    'Mobility Rate': (team) => team.auto.leftCommunity.trueRate * 100.0,
+    'Auto Engaged': (team) => team.auto.climb.states.engagedRate * 100.0,
+    'Auto Docked': (team) => team.auto.climb.states.dockedRate * 100.0,
+    'Endgame Engaged': (team) => team.endgame.climb.states.engagedRate * 100.0,
+    'Endgame Docked': (team) => team.endgame.climb.states.dockedRate * 100.00,
   };
 
   @override
@@ -304,13 +314,13 @@ class Alliance {
   double get chipsPadding {
     switch (teams.length) {
       case 1:
-        return 320.0 * AnalyticsApp.size;
+        return 320.0 * AnalyticsApp.size / 2;
       case 2:
-        return 230.5 * AnalyticsApp.size;
+        return 230.5 * AnalyticsApp.size / 2;
       case 3:
-        return 140.0 * AnalyticsApp.size;
+        return 140.0 * AnalyticsApp.size / 2;
       default:
-        return 320.0 * AnalyticsApp.size;
+        return 320.0 * AnalyticsApp.size / 2;
     }
   }
 

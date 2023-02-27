@@ -42,25 +42,61 @@ class TeamsPage extends ConsumerStatefulWidget {
         inContainer: false,
       ),
     ),
-    'Avg Score': DataEntry<double>(
+    'Score': DataEntry<double>(
       height: 30.0 * AnalyticsApp.size,
       getData: (team) => team.summary.score.average,
     ),
-    'Avg Auto Cones Drop': DataEntry<double>(
+    'Auto Score': DataEntry<double>(
       height: 30.0 * AnalyticsApp.size,
-      getData: (team) => team.auto.dropoffs.pieces.cones.average,
+      getData: (team) => team.auto.score.average,
     ),
-    'Avg Tele Cones Pick': DataEntry<double>(
+    'Teleop Score': DataEntry<double>(
       height: 30.0 * AnalyticsApp.size,
-      getData: (team) => team.teleop.pickups.pieces.cones.average,
+      getData: (team) => team.teleop.score.average,
     ),
-    'Avg Total Cones Pick': DataEntry<double>(
-      height: 30.0 * AnalyticsApp.size,
-      getData: (team) => team.summary.pickups.pieces.cones.average,
-    ),
-    'Avg Endg Score': DataEntry<double>(
+    'Endgame Score': DataEntry<double>(
       height: 30.0 * AnalyticsApp.size,
       getData: (team) => team.endgame.score.average,
+    ),
+    'Auto Drops': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.auto.dropoffs.totalDropoffs.average,
+    ),
+    'Teleop Drops': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.teleop.dropoffs.totalDropoffs.average,
+    ),
+    'Endgame Drops': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.endgame.dropoffs.totalDropoffs.average,
+    ),
+    'Cones Drops': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.summary.dropoffs.pieces.cones.average,
+    ),
+    'Cubes Drops': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.summary.dropoffs.pieces.cubes.average,
+    ),
+    'Mobility Rate': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.auto.leftCommunity.trueRate * 100.0,
+    ),
+    'Auto Engaged': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.auto.climb.states.engagedRate * 100.0,
+    ),
+    'Auto Docked': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.auto.climb.states.engagedRate * 100.0,
+    ),
+    'Endagme Engaged': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.endgame.climb.states.engagedRate * 100.0,
+    ),
+    'Endagme Docked': DataEntry<double>(
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.endgame.climb.states.dockedRate * 100.0,
     ),
   };
 

@@ -104,6 +104,18 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
                 cones: team.auto.dropoffs.pieces.cones.average,
                 cubes: team.auto.dropoffs.pieces.cubes.average,
               ),
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 8.0 * AnalyticsApp.size),
+                    child: AnalyticsText.dataSubtitle('Mobility'),
+                  ),
+                  AnalyticsTwoRateChip(
+                    first: team.auto.leftCommunity.trueRate,
+                    second: team.auto.leftCommunity.falseRate,
+                  ),
+                ],
+              ),
               AnalyticsClimbsStatChip(
                 team.auto.climb.states,
                 dockedByOther: false,
