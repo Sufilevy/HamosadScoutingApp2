@@ -165,6 +165,8 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.0 * AnalyticsApp.size),
       child: Container(
+          width: 130.0 * AnalyticsApp.size,
+          height: 40.0 * AnalyticsApp.size,
           decoration: BoxDecoration(
             color: alliance.color,
             borderRadius: BorderRadius.circular(25.0 * AnalyticsApp.size),
@@ -173,8 +175,7 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  left: 29.0 * AnalyticsApp.size,
-                  right: 14.0 * AnalyticsApp.size,
+                  left: 20.0 * AnalyticsApp.size,
                 ),
                 child: SizedBox(
                   child: AnalyticsText.logo(
@@ -184,7 +185,7 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(right: 9.0 * AnalyticsApp.size),
+                padding: const EdgeInsets.only(),
                 child: IconButton(
                   onPressed: onDeleted,
                   color: AnalyticsTheme.foreground1,
@@ -192,9 +193,7 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
                   splashRadius: 1.0,
                   iconSize: 28.0 * AnalyticsApp.size,
                   padding: EdgeInsets.zero,
-                  icon: const Icon(
-                    Icons.cancel_rounded,
-                  ),
+                  icon: const Icon(Icons.cancel_rounded),
                 ),
               ),
             ],
@@ -204,7 +203,7 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
 
   Widget _buildDivider() => Container(
         height: 45.0 * AnalyticsApp.size,
-        width: 2.0,
+        width: 2.0 * AnalyticsApp.size,
         decoration: BoxDecoration(
           color: AnalyticsTheme.foreground2,
           borderRadius: BorderRadius.circular(1.0),
@@ -316,13 +315,13 @@ class Alliance {
   double get chipsPadding {
     switch (teams.length) {
       case 1:
-        return 320.0 * AnalyticsApp.size / 2;
+        return 320.0 * (AnalyticsApp.size / 2.0);
       case 2:
-        return 230.5 * AnalyticsApp.size / 2;
+        return 230.5 * (AnalyticsApp.size / 2.5);
       case 3:
-        return 140.0 * AnalyticsApp.size / 2;
+        return 140.0 * (AnalyticsApp.size / 3.5);
       default:
-        return 320.0 * AnalyticsApp.size / 2;
+        return 320.0 * (AnalyticsApp.size / 2.0);
     }
   }
 
