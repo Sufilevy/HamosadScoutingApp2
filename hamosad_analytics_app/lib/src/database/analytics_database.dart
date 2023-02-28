@@ -54,7 +54,7 @@ class AnalyticsDatabase {
   Future<String> _getCurrentDistrict() async {
     final informationDoc =
         await _db.collection('district').doc('information').get();
-    return informationDoc.get('name');
+    return '${informationDoc.get('name')}-1657';
   }
 
   Future<List<String>> _getDistricts() async {
