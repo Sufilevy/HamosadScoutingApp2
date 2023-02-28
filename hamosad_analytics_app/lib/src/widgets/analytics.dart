@@ -256,21 +256,26 @@ class AnalyticsTwoRateChip extends StatelessWidget {
     Key? key,
     required this.first,
     required this.second,
+    this.title,
     this.inContainer = true,
     this.firstColor = AnalyticsTheme.primary,
     this.secondColor = AnalyticsTheme.error,
-  }) : super(key: key);
+  })  : assert(!inContainer || title != null),
+        super(key: key);
 
-  const AnalyticsTwoRateChip.pieces(
-      {super.key,
-      required num cones,
-      required num cubes,
-      this.inContainer = true})
-      : first = cones,
+  const AnalyticsTwoRateChip.pieces({
+    super.key,
+    required num cones,
+    required num cubes,
+    this.inContainer = true,
+    this.title,
+  })  : assert(!inContainer || title != null),
+        first = cones,
         second = cubes,
         firstColor = AnalyticsTheme.cones,
         secondColor = AnalyticsTheme.cubes;
 
+  final String? title;
   final num first, second;
   final bool inContainer;
   final Color firstColor, secondColor;
@@ -282,12 +287,24 @@ class AnalyticsTwoRateChip extends StatelessWidget {
             width: 220.0 * AnalyticsApp.size,
             height: 70.0 * AnalyticsApp.size,
             color: AnalyticsTheme.background1,
-            child: _buildWinRate(8.0 * AnalyticsApp.size, 4.0),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 40,
+                  child: AnalyticsText.dataSubtitle(title!),
+                ),
+                const AnalyticsDataDivider(),
+                Expanded(
+                  flex: 50,
+                  child: _buildRates(8.0 * AnalyticsApp.size, 4.0),
+                ),
+              ],
+            ),
           )
-        : _buildWinRate(3.0 * AnalyticsApp.size, 2.5);
+        : _buildRates(3.0 * AnalyticsApp.size, 2.5);
   }
 
-  Widget _buildWinRate(double gap, double barHeight) => Column(
+  Widget _buildRates(double gap, double barHeight) => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
@@ -297,7 +314,7 @@ class AnalyticsTwoRateChip extends StatelessWidget {
                 child: AnalyticsText.data(
                   (first is int)
                       ? first.toString()
-                      : first.toStringAsPrecision(3),
+                      : first.toStringAsPrecision(2),
                   color: firstColor,
                 ),
               ),
@@ -316,7 +333,7 @@ class AnalyticsTwoRateChip extends StatelessWidget {
                 child: AnalyticsText.data(
                   (second is int)
                       ? second.toString()
-                      : second.toStringAsPrecision(3),
+                      : second.toStringAsPrecision(2),
                   color: secondColor,
                 ),
               ),
@@ -439,30 +456,30 @@ class AnalyticsDurationsStatChip extends StatelessWidget {
   final ActionDurationStat data;
   final String title;
 
-  Widget _buildDivider() => Expanded(
-        flex: 1,
-        child: SizedBox(
-          width: 15.0 * AnalyticsApp.size,
-          height: 25.0 * AnalyticsApp.size,
-          child: const VerticalDivider(
-            color: AnalyticsTheme.background3,
-            thickness: 2.0,
-          ),
+  Widget _buildDivider() => SizedBox(
+        width: 15.0 * AnalyticsApp.size,
+        height: 25.0 * AnalyticsApp.size,
+        child: const VerticalDivider(
+          color: AnalyticsTheme.background3,
+          thickness: 2.0,
         ),
       );
 
-  Widget _buildText(String text) => Expanded(
+  Widget _buildText(String text, int index) => Expanded(
         flex: 8,
         child: Padding(
-          padding: EdgeInsets.all(12.0 * AnalyticsApp.size),
+          padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 0.0) *
+              AnalyticsApp.size,
           child: AnalyticsText.data(
             text,
+            fontSize: 16.0 * AnalyticsApp.size,
+            color: _durationColor(index / 2),
           ),
         ),
       );
 
-  Color _barColor(double t) =>
-      Color.lerp(AnalyticsTheme.primary, AnalyticsTheme.primaryVariant, t)!;
+  Color _durationColor(double t) => Color.lerp(
+      AnalyticsTheme.primary, AnalyticsTheme.primary.withOpacity(0.75), t)!;
 
   Widget _buildBars() => Padding(
         padding: EdgeInsets.only(
@@ -494,7 +511,7 @@ class AnalyticsDurationsStatChip extends StatelessWidget {
                           topLeft: Radius.circular(2.0),
                           bottomLeft: Radius.circular(2.0),
                         ),
-                        color: _barColor(0.0),
+                        color: _durationColor(0.0),
                       ),
                     ),
                   ),
@@ -507,7 +524,7 @@ class AnalyticsDurationsStatChip extends StatelessWidget {
                           topRight: Radius.circular(2.0),
                           bottomRight: Radius.circular(2.0),
                         ),
-                        color: _barColor(0.5),
+                        color: _durationColor(0.5),
                       ),
                     ),
                   ),
@@ -520,7 +537,7 @@ class AnalyticsDurationsStatChip extends StatelessWidget {
                           topRight: Radius.circular(2.0),
                           bottomRight: Radius.circular(2.0),
                         ),
-                        color: _barColor(1.0),
+                        color: _durationColor(1.0),
                       ),
                     ),
                   ),
@@ -543,23 +560,35 @@ class AnalyticsDurationsStatChip extends StatelessWidget {
               child: AnalyticsText.dataSubtitle(title),
             ),
           ),
-          _buildDivider(),
-          Column(
-            children: [
-              Row(
-                children: [
-                  _buildText(
-                      '0-2:\n${data.zeroToTwoRate.toStringAsPrecision(3)}'),
-                  _buildDivider(),
-                  _buildText(
-                      '2-5:\n${data.twoToFiveRate.toStringAsPrecision(3)}'),
-                  _buildDivider(),
-                  _buildText(
-                      '5+:\n${data.fivePlusRate.toStringAsPrecision(3)}'),
-                ],
-              ),
-              _buildBars(),
-            ],
+          Expanded(
+            flex: 1,
+            child: _buildDivider(),
+          ),
+          Expanded(
+            flex: 34,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    _buildText(
+                      '0-2:\n${data.zeroToTwoRate.toPercent().toStringAsPrecision(3)}%',
+                      0,
+                    ),
+                    _buildDivider(),
+                    _buildText(
+                      '2-5:\n${data.twoToFiveRate.toPercent().toStringAsPrecision(3)}%',
+                      1,
+                    ),
+                    _buildDivider(),
+                    _buildText(
+                      '5+:\n${data.fivePlusRate.toPercent().toStringAsPrecision(3)}%',
+                      2,
+                    ),
+                  ],
+                ),
+                _buildBars(),
+              ],
+            ),
           ),
         ],
       ),

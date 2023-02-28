@@ -37,10 +37,12 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
               AnalyticsTwoRateChip(
                 first: team.summary.won,
                 second: team.summary.lost,
+                title: 'Win Rate',
               ),
               AnalyticsTwoRateChip.pieces(
                 cones: team.summary.dropoffs.pieces.cones.average,
                 cubes: team.summary.dropoffs.pieces.cubes.average,
+                title: 'Dropoffs',
               ),
             ],
           ),
@@ -103,22 +105,33 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
               AnalyticsTwoRateChip.pieces(
                 cones: team.auto.dropoffs.pieces.cones.average,
                 cubes: team.auto.dropoffs.pieces.cubes.average,
+                title: 'Dropoffs',
               ),
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 8.0 * AnalyticsApp.size),
-                    child: AnalyticsText.dataSubtitle('Mobility'),
-                  ),
-                  AnalyticsTwoRateChip(
-                    first: team.auto.leftCommunity.trueRate,
-                    second: team.auto.leftCommunity.falseRate,
-                  ),
-                ],
+              AnalyticsDurationsStatChip(
+                team.auto.dropoffs.duration,
+                title: 'Dropoffs',
+              ),
+              AnalyticsDurationsStatChip(
+                team.auto.pickups.duration,
+                title: 'Pickups',
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsTwoRateChip(
+                first: team.auto.leftCommunity.trueRate,
+                second: team.auto.leftCommunity.falseRate,
+                title: 'Mobility',
               ),
               AnalyticsClimbsStatChip(
                 team.auto.climb.states,
                 dockedByOther: false,
+              ),
+              AnalyticsDurationsStatChip(
+                team.auto.climb.duration,
+                title: 'Climb',
               ),
             ],
           ),
@@ -147,6 +160,15 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
               AnalyticsTwoRateChip.pieces(
                 cones: team.teleop.dropoffs.pieces.cones.average,
                 cubes: team.teleop.dropoffs.pieces.cubes.average,
+                title: 'Dropoffs',
+              ),
+              AnalyticsDurationsStatChip(
+                team.teleop.dropoffs.duration,
+                title: 'Dropoffs',
+              ),
+              AnalyticsDurationsStatChip(
+                team.teleop.pickups.duration,
+                title: 'Pickups',
               ),
             ],
           ),
@@ -175,13 +197,31 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
               AnalyticsTwoRateChip.pieces(
                 cones: team.endgame.dropoffs.pieces.cones.average,
                 cubes: team.endgame.dropoffs.pieces.cubes.average,
+                title: 'Dropoffs',
               ),
+              AnalyticsDurationsStatChip(
+                team.endgame.dropoffs.duration,
+                title: 'Dropoffs',
+              ),
+              AnalyticsDurationsStatChip(
+                team.endgame.pickups.duration,
+                title: 'Pickups',
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
               AnalyticsClimbsStatChip(
                 team.endgame.climb.states,
                 dockedByOther: true,
               ),
+              AnalyticsDurationsStatChip(
+                team.endgame.climb.duration,
+                title: 'Climb',
+              ),
             ],
-          ),
+          )
         ],
       };
     }
