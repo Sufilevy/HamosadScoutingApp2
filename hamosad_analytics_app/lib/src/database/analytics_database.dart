@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartx/dartx.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
 
 class TeamNameAndLocation {
@@ -39,8 +38,7 @@ class AnalyticsDatabase {
 
     final reports = await _getReportsFromFirestore();
     _reports = reports
-        .mapEntries(
-            (report) => Report.fromJson(report.value, id: debug(report.key)))
+        .mapEntries((report) => Report.fromJson(report.value, id: report.key))
         .toList();
 
     final teams = await _getTeamsFromFirestore();

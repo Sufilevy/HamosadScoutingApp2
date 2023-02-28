@@ -178,7 +178,7 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
               ),
               AnalyticsClimbsStatChip(
                 team.endgame.climb.states,
-                dockedByOther: false,
+                dockedByOther: true,
               ),
             ],
           ),
