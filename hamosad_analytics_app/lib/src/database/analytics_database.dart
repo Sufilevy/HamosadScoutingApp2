@@ -20,13 +20,15 @@ class TeamNameAndLocation {
 
 class AnalyticsDatabase {
   AnalyticsDatabase()
-      : _db = FirebaseFirestore.instance,
-        _selectedDistrcits = {},
+      : _selectedDistrcits = [],
+        _db = FirebaseFirestore.instance,
+        _districts = [],
         _reports = [],
         _teams = {};
 
   final FirebaseFirestore _db;
-  final Set<String> _selectedDistrcits;
+  List<String> _selectedDistrcits;
+  List<String> _districts;
   List<Report> _reports;
   Map<int, TeamNameAndLocation> _teams;
 
@@ -34,7 +36,8 @@ class AnalyticsDatabase {
   Map<int, TeamNameAndLocation> get teams => _teams;
 
   Future<void> updateFromFirestore() async {
-    _selectedDistrcits.add(await getCurrentDistrict());
+    _selectedDistrcits.add(await _getCurrentDistrict());
+    _districts = await _getDistricts();
 
     final reports = await _getReportsFromFirestore();
     _reports = reports
@@ -48,11 +51,27 @@ class AnalyticsDatabase {
         ));
   }
 
-  Future<String> getCurrentDistrict() async {
+  Future<String> _getCurrentDistrict() async {
     final informationDoc =
         await _db.collection('district').doc('information').get();
     return informationDoc.get('name');
   }
+
+  Future<List<String>> _getDistricts() async {
+    final reportsCollection = await _db.collection('reports').get();
+    return reportsCollection.docs
+        .map((doc) => doc.id)
+        .whereNot((docName) => docName.contains('pit'))
+        .toList();
+  }
+
+  void setSelectedDistrict(List<String> districts) {
+    _selectedDistrcits = districts;
+  }
+
+  List<String> get districts => _districts;
+
+  List<String> get selectedDistricts => _selectedDistrcits;
 
   Future<Json> _getReportsFromFirestore() async {
     Json reports = {};
