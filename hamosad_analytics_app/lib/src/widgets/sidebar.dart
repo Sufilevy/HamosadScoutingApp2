@@ -26,23 +26,18 @@ class Sidebar extends StatefulWidget {
 class _SidebarState extends State<Sidebar> {
   @override
   Widget build(BuildContext context) {
-    return ScrollConfiguration(
-      behavior: const MaterialScrollBehavior().copyWith(
-        physics: const NeverScrollableScrollPhysics(),
+    return SidebarX(
+      controller: widget.sidebarController,
+      showToggleButton: false,
+      headerBuilder: (context, extended) => _buildSidebarLogo(),
+      headerDivider: _buildHeaderDivider(),
+      // footerBuilder: (context, extended) => _buildRefreshDataButton(),
+      theme: _theme(),
+      extendedTheme: SidebarXTheme(
+        width: 200.0 * AnalyticsApp.size,
+        decoration: const BoxDecoration(color: AnalyticsTheme.background2),
       ),
-      child: SidebarX(
-        controller: widget.sidebarController,
-        showToggleButton: false,
-        headerBuilder: (context, extended) => _buildSidebarLogo(),
-        headerDivider: _buildHeaderDivider(),
-        // footerBuilder: (context, extended) => _buildRefreshDataButton(),
-        theme: _theme(),
-        extendedTheme: SidebarXTheme(
-          width: 200.0 * AnalyticsApp.size,
-          decoration: const BoxDecoration(color: AnalyticsTheme.background2),
-        ),
-        items: widget.items,
-      ),
+      items: widget.items,
     );
   }
 
