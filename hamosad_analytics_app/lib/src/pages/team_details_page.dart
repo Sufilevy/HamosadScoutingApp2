@@ -266,10 +266,37 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
       );
     }
 
-    return Column(
-      key: ValueKey<AnalyticsTab>(_currentTab.data),
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: _tabs[_currentTab.data]!,
+    return AnalyticsFadeSwitcher(
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        key: ValueKey<AnalyticsTab>(_currentTab.data),
+        onHorizontalDragEnd: (details) {
+          final velocity = details.primaryVelocity ?? 0.0;
+
+          // Swipe right - go one tab to the left
+          if (velocity > 500.0) {
+            if (_currentTab.data.index > 0) {
+              setState(() {
+                _currentTab.data =
+                    AnalyticsTab.values[_currentTab.data.index - 1];
+              });
+            }
+          }
+          // Swipe left - go one tab to the right
+          else if (velocity < -500.0) {
+            if (_currentTab.data.index < AnalyticsTab.values.length - 1) {
+              setState(() {
+                _currentTab.data =
+                    AnalyticsTab.values[_currentTab.data.index + 1];
+              });
+            }
+          }
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: _tabs[_currentTab.data]!,
+        ),
+      ),
     );
   }
 
