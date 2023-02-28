@@ -203,12 +203,12 @@ class TeamSummary {
 
   double get winRate {
     if (won == 0) {
-      return 0;
+      return -lost.toDouble() * 100.0;
     } else if (lost == 0) {
-      return 1;
+      return won.toDouble() * 100.0;
     }
 
-    return won / lost;
+    return (won / (won + lost)) * won;
   }
 
   void updateWithReport(Report report) {
