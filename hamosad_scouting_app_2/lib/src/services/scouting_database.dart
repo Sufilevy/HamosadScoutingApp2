@@ -37,10 +37,10 @@ class ScoutingDatabase {
     DateTime now = DateTime.now();
 
     return {
-      "day": now.day,
-      "month": now.month,
-      "year": now.year,
-      "time": DateFormat('dd/MM HH:mm:ss').format(now),
+      'day': now.day,
+      'month': now.month,
+      'year': now.year,
+      'time': DateFormat('dd/MM HH:mm:ss').format(now),
     };
   }
 
@@ -51,17 +51,11 @@ class ScoutingDatabase {
   }) async {
     data.addAll({'dateTime': _getDateTime()});
 
-    if (reportType == ReportType.game) {
-      await _db
-          .collection('reports')
-          .doc(_districtName)
-          .update({id ?? _generateReportId(): data});
-    } else {
-      await _db
-          .collection('reports')
-          .doc('$_districtName-pit')
-          .update({id ?? _generateReportId(): data});
-    }
+    final reports = _db.collection('reports');
+    final docName =
+        '$_districtName-${reportType == ReportType.pit ? 'pit-' : ''}${data['info']['scouterTeamNumber']}';
+
+    await reports.doc(docName).update({id ?? _generateReportId(): data});
   }
 
   static late Map<String, List<String>> matches;
