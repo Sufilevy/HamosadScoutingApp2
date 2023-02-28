@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/database.dart';
-import 'package:hamosad_analytics_app/src/models/team.dart';
+import 'package:hamosad_analytics_app/src/models.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 
 class AlliancesPage extends ConsumerStatefulWidget {
@@ -24,11 +24,13 @@ class AlliancesPage extends ConsumerStatefulWidget {
     'Endgame Drops': (team) => team.endgame.dropoffs.totalDropoffs.average,
     'Cones Drops': (team) => team.summary.dropoffs.pieces.cones.average,
     'Cubes Drops': (team) => team.summary.dropoffs.pieces.cubes.average,
-    'Mobility Rate': (team) => team.auto.leftCommunity.trueRate * 100.0,
-    'Auto Engaged': (team) => team.auto.climb.states.engagedRate * 100.0,
-    'Auto Docked': (team) => team.auto.climb.states.dockedRate * 100.0,
-    'Endgame Engaged': (team) => team.endgame.climb.states.engagedRate * 100.0,
-    'Endgame Docked': (team) => team.endgame.climb.states.dockedRate * 100.00,
+    'Mobility Rate': (team) => team.auto.leftCommunity.trueRate.toPercent(),
+    'Auto Engaged': (team) => team.auto.climb.states.engagedRate.toPercent(),
+    'Auto Docked': (team) => team.auto.climb.states.dockedRate.toPercent(),
+    'Endgame Engaged': (team) =>
+        team.endgame.climb.states.engagedRate.toPercent(),
+    'Endgame Docked': (team) =>
+        team.endgame.climb.states.dockedRate.toPercent(),
   };
 
   @override

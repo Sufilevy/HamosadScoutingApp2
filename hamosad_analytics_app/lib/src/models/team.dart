@@ -649,7 +649,8 @@ class ClimbingStateStat {
         break;
     }
 
-    final count = _noneCount + _dockedCount + _dockedByOtherCount;
+    final count =
+        _noneCount + _dockedCount + _dockedByOtherCount + _engagedCount;
     noneRate = _noneCount / count;
     dockedRate = _dockedCount / count;
     dockedByOtherRate = _dockedByOtherCount / count;

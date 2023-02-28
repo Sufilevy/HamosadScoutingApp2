@@ -207,6 +207,7 @@ enum DefenceRobotIndex {
         return almostAll;
       case 'half':
         return half;
+      case 'null':
       case 'none':
         return none;
     }
@@ -388,6 +389,7 @@ enum ClimbingState {
 
   static ClimbingState? fromString(String value) {
     switch (value) {
+      case 'null':
       case 'none':
         return none;
       case 'docked':

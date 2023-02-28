@@ -54,3 +54,16 @@ class Rate {
     }
   }
 }
+
+extension DoubleRateToPercent on double {
+  double toPercent() {
+    if (isNaN) {
+      return 0.0;
+    }
+    if (isInfinite) {
+      return 100.0;
+    }
+
+    return this * 100.0;
+  }
+}
