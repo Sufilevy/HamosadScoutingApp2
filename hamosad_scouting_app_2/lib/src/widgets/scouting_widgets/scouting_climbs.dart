@@ -66,6 +66,12 @@ class ScoutingAutoClimb extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0) * size,
+            child: ScoutingText.title('Climb:'),
+          ),
+        ),
         ScoutingClimbState(
           size: size,
           onChanged: (state) => cubit.data.state = ClimbState.values[state],
@@ -96,6 +102,12 @@ class ScoutingEndgameClimb extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0) * size,
+            child: ScoutingText.title('Climb:'),
+          ),
+        ),
         ScoutingClimbState(
           size: size,
           onChanged: (state) => cubit.data.state = ClimbState.values[state],

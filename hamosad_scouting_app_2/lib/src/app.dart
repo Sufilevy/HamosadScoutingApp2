@@ -26,7 +26,7 @@ class _ScoutingAppState extends State<ScoutingApp> {
   Widget build(BuildContext context) {
     final screenSize =
         MediaQueryData.fromWindow(WidgetsBinding.instance.window).size;
-    size = screenSize.height / 1500.0;
+    size = screenSize.height / 1350.0;
     ScoutingTheme.size = size;
     return Provider<ReportDataProvider>(
       create: (_) => ReportDataProvider(),

@@ -215,7 +215,7 @@ class _ScoutingPickupsState extends State<ScoutingPickups> {
     return Column(
       children: [
         Center(
-          child: ScoutingText.subtitle('Pieces Pickups:'),
+          child: ScoutingText.title('Pieces Pickups:'),
         ),
         SizedBox(height: 25.0 * widget.size),
         if (!widget.onlyFloor) ...[

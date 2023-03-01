@@ -49,28 +49,38 @@ class ScoutingStartPosition extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ToggleSwitch(
-      cornerRadius: 10.0 * size,
-      inactiveBgColor: ScoutingTheme.background2,
-      inactiveFgColor: ScoutingTheme.foreground2,
-      activeBgColors: const [
-        [ScoutingTheme.primaryVariant],
-        [ScoutingTheme.primaryVariant],
-        [ScoutingTheme.primaryVariant],
+    return Column(
+      children: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0) * size,
+            child: ScoutingText.title('Climb:'),
+          ),
+        ),
+        ToggleSwitch(
+          cornerRadius: 10.0 * size,
+          inactiveBgColor: ScoutingTheme.background2,
+          inactiveFgColor: ScoutingTheme.foreground2,
+          activeBgColors: const [
+            [ScoutingTheme.primaryVariant],
+            [ScoutingTheme.primaryVariant],
+            [ScoutingTheme.primaryVariant],
+          ],
+          activeFgColor: ScoutingTheme.foreground1,
+          initialLabelIndex: null,
+          totalSwitches: 3,
+          labels: const ['Arena Wall', 'Middle', 'Loading Zone'],
+          customWidths: [
+            180.0 * size,
+            150.0 * size,
+            210.0 * size,
+          ],
+          fontSize: 26.0 * size,
+          animate: true,
+          curve: Curves.easeOutQuint,
+          onToggle: (index) => onChanged(index ?? 1),
+        ),
       ],
-      activeFgColor: ScoutingTheme.foreground1,
-      initialLabelIndex: null,
-      totalSwitches: 3,
-      labels: const ['Arena Wall', 'Middle', 'Loading Zone'],
-      customWidths: [
-        180.0 * size,
-        150.0 * size,
-        210.0 * size,
-      ],
-      fontSize: 26.0 * size,
-      animate: true,
-      curve: Curves.easeOutQuint,
-      onToggle: (index) => onChanged(index ?? 1),
     );
   }
 }

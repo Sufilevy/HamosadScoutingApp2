@@ -250,7 +250,7 @@ class _ScoutingDropoffsState extends State<ScoutingDropoffs> {
     return Column(
       children: [
         Center(
-          child: ScoutingText.subtitle('Pieces Dropoffs:'),
+          child: ScoutingText.title('Pieces Dropoffs:'),
         ),
         SizedBox(height: 25.0 * widget.size),
         _buildSelectGrid(),
