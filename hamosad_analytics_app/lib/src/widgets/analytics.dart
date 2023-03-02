@@ -768,45 +768,77 @@ class AnalyticsDefenceStatChip extends StatelessWidget {
 }
 
 class AnalyticsNotes extends StatelessWidget {
-  const AnalyticsNotes({
+  const AnalyticsNotes(
+    this.team, {
     Key? key,
-    required this.notes,
   }) : super(key: key);
 
-  final List<String> notes;
+  final Team team;
 
   @override
   Widget build(BuildContext context) {
-    return AnalyticsContainer(
-      color: AnalyticsTheme.background1,
-      width: 900.0 * AnalyticsApp.size,
-      height: 80.0 * AnalyticsApp.size,
-      child: Row(
-        children: notes
-            .mapIndexed(
-              (index, note) => Row(
-                children: [
-                  SingleChildScrollView(
-                    child: AnalyticsText.dataSubtitle(
-                      notes[index],
-                      fontSize: 15.0 * AnalyticsApp.size,
-                      fittedBox: false,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0) * AnalyticsApp.size,
-                    child: VerticalDivider(
-                      color: AnalyticsTheme.background3,
-                      thickness: 2.0 * AnalyticsApp.size,
-                    ),
-                  ),
-                ],
-              ),
-            )
-            .toList(),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(10.0) * AnalyticsApp.size,
+      child: Column(
+        children: [
+          if (team.summary.notes.isNotEmpty) ...[
+            _buildTitle('Summary Notes'),
+            _buildNotes(team.summary.notes),
+          ],
+          if (team.summary.fouls.isNotEmpty) ...[
+            _buildTitle('Fouls'),
+            _buildNotes(team.summary.fouls),
+          ],
+          if (team.auto.notes.isNotEmpty) ...[
+            _buildTitle('Auto Notes'),
+            _buildNotes(team.auto.notes),
+          ],
+          if (team.teleop.notes.isNotEmpty) ...[
+            _buildTitle('Teleop Notes'),
+            _buildNotes(team.teleop.notes),
+          ],
+          if (team.endgame.notes.isNotEmpty) ...[
+            _buildTitle('Endgame Notes'),
+            _buildNotes(team.endgame.notes),
+          ],
+        ],
       ),
     );
   }
+
+  Widget _buildTitle(String title) => Center(
+        child: Padding(
+          padding: const EdgeInsets.all(6.0) * AnalyticsApp.size,
+          child: AnalyticsText.dataTitle(title),
+        ),
+      );
+
+  Widget _buildNotes(List<String> notes) => Column(
+        children: [
+          ...notes
+              .map(
+                (note) => Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: 12.0) * AnalyticsApp.size,
+                  child: AnalyticsContainer(
+                    color: AnalyticsTheme.background1,
+                    width: 800.0 * AnalyticsApp.size,
+                    height: 50.0 * AnalyticsApp.size,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 4.0) *
+                          AnalyticsApp.size,
+                      child: AnalyticsText.dataSubtitle(
+                        note,
+                        maxLines: 2,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+              .toList(),
+        ],
+      );
 }
 
 class AnalyticsText {
@@ -842,6 +874,7 @@ class AnalyticsText {
     FontWeight? fontWeight,
     double? fontSize,
     TextAlign? textAlign,
+    int? maxLines,
     bool fittedBox = true,
   }) {
     return fittedBox
@@ -854,6 +887,7 @@ class AnalyticsText {
                 fontWeight: fontWeight,
                 fontSize: fontSize,
               ),
+              maxLines: maxLines,
               textAlign: textAlign,
             ),
           )
@@ -864,6 +898,7 @@ class AnalyticsText {
               fontWeight: fontWeight,
               fontSize: fontSize,
             ),
+            maxLines: maxLines,
             textAlign: textAlign,
           );
   }

@@ -276,6 +276,9 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
             ],
           )
         ],
+        AnalyticsTab.notes: [
+          AnalyticsNotes(team),
+        ]
       };
     }
   }

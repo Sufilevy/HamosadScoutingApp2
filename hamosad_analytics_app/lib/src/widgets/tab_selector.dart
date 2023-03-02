@@ -8,7 +8,8 @@ enum AnalyticsTab {
   general(Icons.assessment_outlined, Icons.assessment_rounded, 'General'),
   auto(Icons.code_rounded, Icons.code_outlined, 'Auto'),
   teleop(Icons.person_outline_rounded, Icons.person_rounded, 'Teleop'),
-  endgame(Icons.timer_outlined, Icons.timer_rounded, 'Endgame');
+  endgame(Icons.timer_outlined, Icons.timer_rounded, 'Endgame'),
+  notes(Icons.assignment_outlined, Icons.assignment_rounded, 'Notes');
 
   const AnalyticsTab(this.icon, this.selectedIcon, this.label);
 
@@ -43,6 +44,8 @@ class _AnalyticsTabsSelectorState extends State<AnalyticsTabsSelector> {
         _buildTabButton(AnalyticsTab.teleop),
         _buildSeperator(),
         _buildTabButton(AnalyticsTab.endgame),
+        _buildSeperator(),
+        _buildTabButton(AnalyticsTab.notes),
       ],
     );
   }
