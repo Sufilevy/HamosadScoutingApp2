@@ -11,10 +11,12 @@ class ScoutingDropoffs extends StatefulWidget {
     Key? key,
     required this.cubit,
     this.size = 1.0,
+    this.isAuto = false,
   }) : super(key: key);
 
   final double size;
   final Cubit<Dropoffs> cubit;
+  final bool isAuto;
 
   @override
   State<ScoutingDropoffs> createState() => _ScoutingDropoffsState();
@@ -257,12 +259,13 @@ class _ScoutingDropoffsState extends State<ScoutingDropoffs> {
         SizedBox(height: 25.0 * widget.size),
         _buildSelectNode(),
         SizedBox(height: 25.0 * widget.size),
-        ScoutingDuration(
-          onChanged: (duration) {
-            _duration = ActionDuration.values[duration];
-            _setCurrentNodeDuration();
-          },
-        ),
+        if (!widget.isAuto)
+          ScoutingDuration(
+            onChanged: (duration) {
+              _duration = ActionDuration.values[duration];
+              _setCurrentNodeDuration();
+            },
+          ),
         SizedBox(height: 25.0 * widget.size),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

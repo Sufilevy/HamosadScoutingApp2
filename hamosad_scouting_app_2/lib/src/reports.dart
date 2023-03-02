@@ -44,6 +44,7 @@ Widget gameReport(BuildContext context, double size) {
           ScoutingDropoffs(
             size: size,
             cubit: gameReport.auto.dropoffs,
+            isAuto: true,
           ),
           ScoutingCounter(
             size: size,
