@@ -777,9 +777,10 @@ class AnalyticsNotes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(10.0) * AnalyticsApp.size,
-      child: Column(
+    return Expanded(
+      child: ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: const EdgeInsets.all(10.0) * AnalyticsApp.size,
         children: [
           if (team.summary.notes.isNotEmpty) ...[
             _buildTitle('Summary Notes'),
