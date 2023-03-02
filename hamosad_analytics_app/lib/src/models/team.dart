@@ -101,7 +101,10 @@ class TeamAuto {
 
     chargeStationPasses.updateWithValue(report.chargeStationPasses);
     climb.updateWithClimb(report.climb);
-    notes.add(report.notes);
+
+    if (report.notes.isNotEmpty) {
+      notes.add(report.notes);
+    }
   }
 }
 
@@ -137,7 +140,10 @@ class TeamTeleop {
     );
 
     chargeStationPasses.updateWithValue(report.chargeStationPasses);
-    notes.add(report.notes);
+
+    if (report.notes.isNotEmpty) {
+      notes.add(report.notes);
+    }
   }
 }
 
@@ -176,14 +182,17 @@ class TeamEndgame {
 
     chargeStationPasses.updateWithValue(report.chargeStationPasses);
     climb.updateWithClimb(report.climb);
-    notes.add(report.notes);
+
+    if (report.notes.isNotEmpty) {
+      notes.add(report.notes);
+    }
   }
 }
 
 class TeamSummary {
   Stat score;
   int won, lost;
-  DefenceRobotIndexStat defenceIndex;
+  DefenceIndexStat defenceIndex;
   PiecesPickupsStat pickups;
   PiecesDropoffsStat dropoffs;
   Stat chargeStationPasses;
@@ -194,7 +203,7 @@ class TeamSummary {
       : score = Stat(),
         won = 0,
         lost = 0,
-        defenceIndex = DefenceRobotIndexStat.defaults(),
+        defenceIndex = DefenceIndexStat.defaults(),
         pickups = PiecesPickupsStat.defaults(),
         dropoffs = PiecesDropoffsStat.defaults(),
         chargeStationPasses = Stat(),
@@ -258,8 +267,12 @@ class TeamSummary {
     chargeStationPasses.updateWithValue(report.teleop.chargeStationPasses);
     chargeStationPasses.updateWithValue(report.endgame.chargeStationPasses);
 
-    notes.add(report.summary.notes);
-    fouls.add(report.summary.fouls);
+    if (report.summary.notes.isNotEmpty) {
+      notes.add(report.summary.notes);
+    }
+    if (report.summary.fouls.isNotEmpty) {
+      fouls.add(report.summary.fouls);
+    }
   }
 }
 
@@ -419,6 +432,10 @@ class PiecesPickupsStat {
   /// All positions averages and rates.
   PiecesStat pieces;
 
+  /// Rates of differnet pickups locations
+  double loadingZoneRate, floorRate;
+  int _loadingZoneCount, _floorCount;
+
   /// Rates of different pickup durations.
   ActionDurationStat duration;
 
@@ -429,26 +446,38 @@ class PiecesPickupsStat {
         single = PiecesStat.defaults(),
         floor = PiecesStat.defaults(),
         pieces = PiecesStat.defaults(),
+        loadingZoneRate = 0.0,
+        floorRate = 0.0,
+        _loadingZoneCount = 0,
+        _floorCount = 0,
         duration = ActionDurationStat.defaults();
 
   void updateRatesWithPickup(PiecePickup pickup) {
     switch (pickup.position) {
       case PiecePickupPosition.doubleShelf:
+        _loadingZoneCount++;
         doubleShelf.updateRatesWithPiece(pickup.piece);
         break;
       case PiecePickupPosition.doubleFloor:
+        _loadingZoneCount++;
         doubleFloor.updateRatesWithPiece(pickup.piece);
         break;
       case PiecePickupPosition.single:
+        _loadingZoneCount++;
         single.updateRatesWithPiece(pickup.piece);
         break;
       case PiecePickupPosition.floor:
+        _floorCount++;
         floor.updateRatesWithPiece(pickup.piece);
         break;
     }
 
     pieces.updateRatesWithPiece(pickup.piece);
     duration.updateWithDuration(pickup.duration);
+
+    final count = _loadingZoneCount + _floorCount;
+    loadingZoneRate = _loadingZoneCount / count;
+    floorRate = _floorCount / count;
   }
 
   void updateRatesWithPickups(List<PiecePickup> pickups) {
@@ -720,7 +749,7 @@ class RobotIndexStat {
   }
 }
 
-class DefenceRobotIndexStat {
+class DefenceIndexStat {
   /// The robot climbed first.
   ///
   /// Together with [halfRate] and [noneRate] represents 100% of the climbing indexes.
@@ -739,7 +768,7 @@ class DefenceRobotIndexStat {
   int _almostAllCount, _halfCount, _noneCount;
 
   /// Uses default values for all fields.
-  DefenceRobotIndexStat.defaults()
+  DefenceIndexStat.defaults()
       : almostAllRate = 0.0,
         halfRate = 0.0,
         noneRate = 0.0,

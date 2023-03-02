@@ -199,7 +199,9 @@ class AnalyticsStatChip extends StatelessWidget {
           ),
           Expanded(
             flex: 4,
-            child: AnalyticsText.data(average.toString()),
+            child: AnalyticsText.data(
+              average.toStringAsPrecision(3),
+            ),
           ),
         ],
       );
@@ -258,6 +260,7 @@ class AnalyticsTwoRateChip extends StatelessWidget {
     required this.second,
     this.title,
     this.inContainer = true,
+    this.isPercent = true,
     this.firstColor = AnalyticsTheme.primary,
     this.secondColor = AnalyticsTheme.error,
   })  : assert(!inContainer || title != null),
@@ -268,6 +271,7 @@ class AnalyticsTwoRateChip extends StatelessWidget {
     required num cones,
     required num cubes,
     this.inContainer = true,
+    this.isPercent = true,
     this.title,
   })  : assert(!inContainer || title != null),
         first = cones,
@@ -278,6 +282,7 @@ class AnalyticsTwoRateChip extends StatelessWidget {
   final String? title;
   final num first, second;
   final bool inContainer;
+  final bool isPercent;
   final Color firstColor, secondColor;
 
   @override
@@ -291,7 +296,14 @@ class AnalyticsTwoRateChip extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 40,
-                  child: AnalyticsText.dataSubtitle(title!),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0) *
+                        AnalyticsApp.size,
+                    child: AnalyticsText.dataSubtitle(
+                      title!,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ),
                 const AnalyticsDataDivider(),
                 Expanded(
@@ -312,10 +324,11 @@ class AnalyticsTwoRateChip extends StatelessWidget {
               Expanded(
                 flex: 10,
                 child: AnalyticsText.data(
-                  (first is int)
-                      ? first.toString()
-                      : first.toStringAsPrecision(2),
+                  (isPercent)
+                      ? '${first.toDouble().toPercent().toStringAsPrecision(3)}%'
+                      : first.toString(),
                   color: firstColor,
+                  fontSize: 15.0 * AnalyticsApp.size,
                 ),
               ),
               Expanded(
@@ -331,10 +344,11 @@ class AnalyticsTwoRateChip extends StatelessWidget {
               Expanded(
                 flex: 10,
                 child: AnalyticsText.data(
-                  (second is int)
-                      ? second.toString()
-                      : second.toStringAsPrecision(2),
+                  (isPercent)
+                      ? '${second.toDouble().toPercent().toStringAsPrecision(3)}%'
+                      : second.toString(),
                   color: secondColor,
+                  fontSize: 15.0 * AnalyticsApp.size,
                 ),
               ),
             ],
@@ -417,8 +431,11 @@ class AnalyticsClimbsStatChip extends StatelessWidget {
         flex: 10,
         child: Padding(
           padding: EdgeInsets.all(12.0 * AnalyticsApp.size),
-          child: AnalyticsText.data(
-            text,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: AnalyticsText.data(
+              text,
+            ),
           ),
         ),
       );
@@ -431,15 +448,19 @@ class AnalyticsClimbsStatChip extends StatelessWidget {
       color: AnalyticsTheme.background1,
       child: Row(
         children: [
-          _buildText('None:\n${data.noneRate.toString()}'),
+          _buildText(
+              'None:\n${data.noneRate.toPercent().toStringAsPrecision(3)}%'),
           _buildDivider(),
-          _buildText('Docked:\n${data.dockedRate.toString()}'),
+          _buildText(
+              'Docked:\n${data.dockedRate.toPercent().toStringAsPrecision(3)}%'),
           if (dockedByOther) ...[
             _buildDivider(),
-            _buildText('By Other:\n${data.dockedByOtherRate.toString()}'),
+            _buildText(
+                'By Other:\n${data.dockedByOtherRate.toPercent().toStringAsPrecision(3)}%'),
           ],
           _buildDivider(),
-          _buildText('Engaged:\n${data.engagedRate.toString()}'),
+          _buildText(
+              'Engaged:\n${data.engagedRate.toPercent().toStringAsPrecision(3)}%'),
         ],
       ),
     );
@@ -479,7 +500,7 @@ class AnalyticsDurationsStatChip extends StatelessWidget {
       );
 
   Color _durationColor(double t) => Color.lerp(
-      AnalyticsTheme.primary, AnalyticsTheme.primary.withOpacity(0.75), t)!;
+      AnalyticsTheme.primary, AnalyticsTheme.primary.withOpacity(0.65), t)!;
 
   Widget _buildBars() => Padding(
         padding: EdgeInsets.only(
@@ -596,6 +617,198 @@ class AnalyticsDurationsStatChip extends StatelessWidget {
   }
 }
 
+class AnalyticsDefenceStatChip extends StatelessWidget {
+  const AnalyticsDefenceStatChip(
+    this.data, {
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
+  final DefenceIndexStat data;
+  final String title;
+
+  Widget _buildDivider() => SizedBox(
+        width: 15.0 * AnalyticsApp.size,
+        height: 25.0 * AnalyticsApp.size,
+        child: const VerticalDivider(
+          color: AnalyticsTheme.background3,
+          thickness: 2.0,
+        ),
+      );
+
+  Widget _buildText(String text, int index) => Expanded(
+        flex: 8,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 0.0) *
+              AnalyticsApp.size,
+          child: AnalyticsText.data(
+            text,
+            fontSize: 16.0 * AnalyticsApp.size,
+            color: _durationColor(index / 2),
+          ),
+        ),
+      );
+
+  Color _durationColor(double t) => Color.lerp(
+      AnalyticsTheme.primary, AnalyticsTheme.primary.withOpacity(0.65), t)!;
+
+  Widget _buildBars() => Padding(
+        padding: EdgeInsets.only(
+          left: 10.0 * AnalyticsApp.size,
+          right: 10.0 * AnalyticsApp.size,
+          top: 4.0 * AnalyticsApp.size,
+        ),
+        child: (data.noneRate == 0 &&
+                data.halfRate == 0 &&
+                data.almostAllRate == 0.0)
+            ? Container(
+                height: 3.0,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(2.0),
+                    bottomLeft: Radius.circular(2.0),
+                  ),
+                  color: AnalyticsTheme.background3,
+                ),
+              )
+            : Row(
+                children: [
+                  Expanded(
+                    flex: (data.noneRate * 10).toInt(),
+                    child: Container(
+                      height: 3.0,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(2.0),
+                          bottomLeft: Radius.circular(2.0),
+                        ),
+                        color: _durationColor(0.0),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: (data.halfRate * 10).toInt(),
+                    child: Container(
+                      height: 3.0,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(2.0),
+                          bottomRight: Radius.circular(2.0),
+                        ),
+                        color: _durationColor(0.5),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: (data.almostAllRate * 10).toInt(),
+                    child: Container(
+                      height: 3.0,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(2.0),
+                          bottomRight: Radius.circular(2.0),
+                        ),
+                        color: _durationColor(1.0),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return AnalyticsContainer(
+      width: 400.0 * AnalyticsApp.size,
+      height: 70.0 * AnalyticsApp.size,
+      color: AnalyticsTheme.background1,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 12,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AnalyticsText.dataSubtitle(title),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: _buildDivider(),
+          ),
+          Expanded(
+            flex: 34,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    _buildText(
+                      'None:\n${data.noneRate.toPercent().toStringAsPrecision(3)}%',
+                      0,
+                    ),
+                    _buildDivider(),
+                    _buildText(
+                      'Half:\n${data.halfRate.toPercent().toStringAsPrecision(3)}%',
+                      1,
+                    ),
+                    _buildDivider(),
+                    _buildText(
+                      'Almost all:\n${data.almostAllRate.toPercent().toStringAsPrecision(3)}%',
+                      2,
+                    ),
+                  ],
+                ),
+                _buildBars(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AnalyticsNotes extends StatelessWidget {
+  const AnalyticsNotes({
+    Key? key,
+    required this.notes,
+  }) : super(key: key);
+
+  final List<String> notes;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnalyticsContainer(
+      color: AnalyticsTheme.background1,
+      width: 900.0 * AnalyticsApp.size,
+      height: 80.0 * AnalyticsApp.size,
+      child: Row(
+        children: notes
+            .mapIndexed(
+              (index, note) => Row(
+                children: [
+                  SingleChildScrollView(
+                    child: AnalyticsText.dataSubtitle(
+                      notes[index],
+                      fontSize: 15.0 * AnalyticsApp.size,
+                      fittedBox: false,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0) * AnalyticsApp.size,
+                    child: VerticalDivider(
+                      color: AnalyticsTheme.background3,
+                      thickness: 2.0 * AnalyticsApp.size,
+                    ),
+                  ),
+                ],
+              ),
+            )
+            .toList(),
+      ),
+    );
+  }
+}
+
 class AnalyticsText {
   static Text navigation(String data) {
     return Text(
@@ -627,19 +840,32 @@ class AnalyticsText {
     String data, {
     Color? color,
     FontWeight? fontWeight,
+    double? fontSize,
     TextAlign? textAlign,
+    bool fittedBox = true,
   }) {
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      child: Text(
-        data,
-        style: AnalyticsTheme.dataSubtitleTextStyle.copyWith(
-          color: color,
-          fontWeight: fontWeight,
-        ),
-        textAlign: textAlign,
-      ),
-    );
+    return fittedBox
+        ? FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              data,
+              style: AnalyticsTheme.dataSubtitleTextStyle.copyWith(
+                color: color,
+                fontWeight: fontWeight,
+                fontSize: fontSize,
+              ),
+              textAlign: textAlign,
+            ),
+          )
+        : Text(
+            data,
+            style: AnalyticsTheme.dataSubtitleTextStyle.copyWith(
+              color: color,
+              fontWeight: fontWeight,
+              fontSize: fontSize,
+            ),
+            textAlign: textAlign,
+          );
   }
 
   static Widget data(

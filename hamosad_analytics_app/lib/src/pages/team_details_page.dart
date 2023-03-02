@@ -38,11 +38,11 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
                 first: team.summary.won,
                 second: team.summary.lost,
                 title: 'Win Rate',
+                isPercent: false,
               ),
-              AnalyticsTwoRateChip.pieces(
-                cones: team.summary.dropoffs.pieces.cones.average,
-                cubes: team.summary.dropoffs.pieces.cubes.average,
-                title: 'Dropoffs',
+              AnalyticsDefenceStatChip(
+                team.summary.defenceIndex,
+                title: 'Defence',
               ),
             ],
           ),
@@ -66,17 +66,31 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              AnalyticsStatChip.fromStat(
-                team.auto.dropoffs.totalDropoffs,
-                title: 'Auto\nDropoffs',
+              AnalyticsTwoRateChip.pieces(
+                cones: team.summary.dropoffs.pieces.cones.average,
+                cubes: team.summary.dropoffs.pieces.cubes.average,
+                title: 'Dropoffs',
               ),
-              AnalyticsStatChip.fromStat(
-                team.teleop.dropoffs.totalDropoffs,
-                title: 'Teleop\nDropoffs',
+              AnalyticsDurationsStatChip(
+                team.summary.dropoffs.duration,
+                title: 'Dropoffs',
               ),
-              AnalyticsStatChip.fromStat(
-                team.endgame.dropoffs.totalDropoffs,
-                title: 'Endgame\nDropoffs',
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsTwoRateChip(
+                first: team.summary.pickups.loadingZoneRate,
+                second: team.summary.pickups.floorRate,
+                isPercent: true,
+                firstColor: AnalyticsTheme.primary,
+                secondColor: AnalyticsTheme.primary.withOpacity(0.8),
+                title: '< Load zone\nFloor >',
+              ),
+              AnalyticsDurationsStatChip(
+                team.summary.pickups.duration,
+                title: 'Pickups',
               ),
             ],
           ),
@@ -110,6 +124,19 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
               AnalyticsDurationsStatChip(
                 team.auto.dropoffs.duration,
                 title: 'Dropoffs',
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsTwoRateChip(
+                first: team.auto.pickups.loadingZoneRate,
+                second: team.auto.pickups.floorRate,
+                isPercent: true,
+                firstColor: AnalyticsTheme.primary,
+                secondColor: AnalyticsTheme.primary.withOpacity(0.8),
+                title: '< Load zone\nFloor >',
               ),
               AnalyticsDurationsStatChip(
                 team.auto.pickups.duration,
@@ -166,6 +193,19 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
                 team.teleop.dropoffs.duration,
                 title: 'Dropoffs',
               ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsTwoRateChip(
+                first: team.teleop.pickups.loadingZoneRate,
+                second: team.teleop.pickups.floorRate,
+                isPercent: true,
+                firstColor: AnalyticsTheme.primary,
+                secondColor: AnalyticsTheme.primary.withOpacity(0.8),
+                title: '< Load zone\nFloor >',
+              ),
               AnalyticsDurationsStatChip(
                 team.teleop.pickups.duration,
                 title: 'Pickups',
@@ -202,6 +242,19 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
               AnalyticsDurationsStatChip(
                 team.endgame.dropoffs.duration,
                 title: 'Dropoffs',
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AnalyticsTwoRateChip(
+                first: team.endgame.pickups.loadingZoneRate,
+                second: team.endgame.pickups.floorRate,
+                isPercent: true,
+                firstColor: AnalyticsTheme.primary,
+                secondColor: AnalyticsTheme.primary.withOpacity(0.8),
+                title: '< Load zone\nFloor >',
               ),
               AnalyticsDurationsStatChip(
                 team.endgame.pickups.duration,

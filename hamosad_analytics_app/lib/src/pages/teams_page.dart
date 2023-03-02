@@ -40,6 +40,7 @@ class TeamsPage extends ConsumerStatefulWidget {
         first: team.summary.won,
         second: team.summary.lost,
         inContainer: false,
+        isPercent: false,
       ),
     ),
     'Score': DataEntry<double>(

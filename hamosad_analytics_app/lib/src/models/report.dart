@@ -57,7 +57,7 @@ class ReportAuto {
         notes = json['notes'];
 
   int get score {
-    return (leftCommunity ? 3 : 0) +
+    return (leftCommunity ? 2 : 0) +
         dropoffs.score(isAuto: true) +
         (climb?.score ?? 0);
   }
