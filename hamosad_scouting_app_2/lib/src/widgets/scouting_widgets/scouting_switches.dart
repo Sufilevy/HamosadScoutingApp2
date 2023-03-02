@@ -54,7 +54,7 @@ class ScoutingStartPosition extends StatelessWidget {
         Center(
           child: Padding(
             padding: const EdgeInsets.all(12.0) * size,
-            child: ScoutingText.title('Climb:'),
+            child: ScoutingText.title('Start position:'),
           ),
         ),
         ToggleSwitch(
