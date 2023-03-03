@@ -94,3 +94,9 @@ class AnalyticsDatabase {
 final Provider<AnalyticsDatabase> analyticsDatabaseProvider = Provider((ref) {
   return AnalyticsDatabase();
 });
+
+extension TeamsMapToTeamNamesList on Map<int, TeamNameAndLocation> {
+  List<String> toTeamNames() {
+    return mapValues((team) => team.value.name).values.toList();
+  }
+}

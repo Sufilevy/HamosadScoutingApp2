@@ -181,13 +181,17 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
             flex: 30,
             child: SizedBox(
               height: 50.0 * AnalyticsApp.size,
-              child: SearchBar(
-                onSubmitted: (query) => setState(() {
-                  _searchQuery = query;
-                }),
-                currentQuery: _searchQuery,
-                hintText: 'Search for a team...',
-                searchIconColor: AnalyticsTheme.primary,
+              child: AnalyticsContainer(
+                child: SearchBar(
+                  onSubmitted: (query) => setState(() {
+                    _searchQuery = query;
+                  }),
+                  suggestions:
+                      ref.read(analyticsDatabaseProvider).teams.toTeamNames(),
+                  currentQuery: _searchQuery,
+                  hintText: 'Search for a team...',
+                  searchIconColor: AnalyticsTheme.primary,
+                ),
               ),
             ),
           ),
