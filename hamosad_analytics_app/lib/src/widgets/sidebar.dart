@@ -1,5 +1,6 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hamosad_analytics_app/src/app.dart';
@@ -31,11 +32,7 @@ class _SidebarState extends ConsumerState<Sidebar> {
       showToggleButton: false,
       headerBuilder: (context, extended) => _buildSidebarLogo(),
       headerDivider: _buildHeaderDivider(),
-      footerBuilder: (context, extended) => Column(
-        children: const [
-          // _buildRefreshDataButton(),
-        ],
-      ),
+      footerBuilder: (context, extended) => _buildRefreshDataButton(),
       theme: _theme(),
       extendedTheme: SidebarXTheme(
         width: 200.0 * AnalyticsApp.size,
@@ -135,9 +132,9 @@ class _RefreshDataButtonState extends ConsumerState<RefreshDataButton>
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: 250.milliseconds,
+      duration: 350.milliseconds,
       transitionBuilder: (child, animation) => RotationTransition(
-        turns: Tween(begin: -0.4, end: -1.0).animate(animation),
+        turns: Tween(begin: 0.0, end: -1.0).animate(animation),
         child: ScaleTransition(
           scale: animation,
           alignment: Alignment.center,
@@ -168,11 +165,14 @@ class _RefreshDataButtonState extends ConsumerState<RefreshDataButton>
           size: 70.0 * AnalyticsApp.size,
         ),
         onPressed: () async {
-          setState(() {});
-          _loading = true;
-          await ref.read(analyticsDatabaseProvider).updateFromFirestore();
-          _loading = false;
-          setState(() {});
+          setState(() {
+            _loading = true;
+          });
+
+          ref
+              .read(analyticsDatabaseProvider)
+              .updateFromFirestore()
+              .then((value) => Phoenix.rebirth(context));
         },
       );
 }
