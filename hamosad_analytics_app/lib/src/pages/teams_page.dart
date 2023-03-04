@@ -131,9 +131,23 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
   List<TeamEntry> _getTeamsEntries() {
     List<TeamEntry> teams = _teamsData
         .where((team) {
-          String query = _searchQuery.toLowerCase();
-          return team.info.name.toLowerCase().contains(query) ||
-              team.info.number.toString().contains(query);
+          final query = _searchQuery.toLowerCase();
+
+          if (query.contains(' ')) {
+            final queries = query.split(' ');
+
+            if (queries.first == 'team') {
+              return team.info.number.toString().contains(queries.second);
+            }
+
+            return team.info.number.toString().contains(queries.first) &&
+                team.info.name.toLowerCase().contains(
+                      queries.skip(1).joinToString(separator: ' '),
+                    );
+          }
+
+          return team.info.number.toString().contains(query) ||
+              team.info.name.toLowerCase().contains(query);
         })
         .map((team) => TeamEntry(team))
         .toList();
@@ -182,12 +196,14 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
             child: SizedBox(
               height: 50.0 * AnalyticsApp.size,
               child: AnalyticsContainer(
-                child: SearchBar(
+                child: TeamSearchBar(
                   onSubmitted: (query) => setState(() {
                     _searchQuery = query;
                   }),
-                  suggestions:
-                      ref.read(analyticsDatabaseProvider).teams.toTeamNames(),
+                  suggestions: ref
+                      .read(analytisDataProvider)
+                      .teamsByNumber
+                      .toTeamNumbers(),
                   currentQuery: _searchQuery,
                   hintText: 'Search for a team...',
                   searchIconColor: AnalyticsTheme.primary,

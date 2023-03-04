@@ -53,100 +53,95 @@ class _AnalyticsAppState extends ConsumerState<AnalyticsApp> {
             ),
           );
         }
-        final db = ref.read(analyticsDatabaseProvider);
         return Portal(
           child: MaterialApp(
             title: 'Scouting Analytics',
             themeMode: ThemeMode.dark,
             home: Scaffold(
               backgroundColor: AnalyticsTheme.background1,
-              body: Row(
-                children: [
-                  Sidebar(
-                    widget.sidebarController,
-                    items: const [
-                      SidebarXItem(
-                        icon: Icons.people_outline_rounded,
-                        label: 'Team Details',
-                      ),
-                      SidebarXItem(
-                        icon: Icons.groups_outlined,
-                        label: 'Teams',
-                      ),
-                      // SidebarXItem(
-                      //   icon: Icons.assignment_outlined,
-                      //   label: 'Report Details',
-                      // ),
-                      SidebarXItem(
-                        icon: Icons.assessment_outlined,
-                        label: 'Alliances',
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: _finishedDialog
-                        ? AnalyticsAppBody(
-                            sidebarController: widget.sidebarController,
-                          )
-                        : MultiSelectDialog(
-                            backgroundColor: AnalyticsTheme.background2,
-                            checkColor: AnalyticsTheme.foreground1,
-                            selectedColor: AnalyticsTheme.primaryVariant,
-                            unselectedColor: AnalyticsTheme.foreground2,
-                            itemsTextStyle:
-                                AnalyticsTheme.dataTitleTextStyle.copyWith(
-                              color: AnalyticsTheme.foreground2,
+              body: _finishedDialog
+                  ? Row(
+                      children: [
+                        Sidebar(
+                          widget.sidebarController,
+                          items: const [
+                            SidebarXItem(
+                              icon: Icons.people_outline_rounded,
+                              label: 'Team Details',
                             ),
-                            selectedItemsTextStyle:
-                                AnalyticsTheme.dataTitleTextStyle.copyWith(
-                              color: AnalyticsTheme.foreground2,
+                            SidebarXItem(
+                              icon: Icons.groups_outlined,
+                              label: 'Teams',
                             ),
-                            title: Text(
-                              'Select districts:',
-                              textAlign: TextAlign.center,
-                              style: AnalyticsTheme.dataTitleTextStyle.copyWith(
-                                fontSize: 26.0,
-                                color: AnalyticsTheme.foreground2,
-                              ),
+                            // SidebarXItem(
+                            //   icon: Icons.assignment_outlined,
+                            //   label: 'Report Details',
+                            // ),
+                            SidebarXItem(
+                              icon: Icons.assessment_outlined,
+                              label: 'Alliances',
                             ),
-                            cancelText: Text(
-                              'CANCEL',
-                              style:
-                                  AnalyticsTheme.dataSubtitleTextStyle.copyWith(
-                                color: AnalyticsTheme.foreground2,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            confirmText: Text(
-                              'CONFIRM',
-                              style:
-                                  AnalyticsTheme.dataSubtitleTextStyle.copyWith(
-                                color: AnalyticsTheme.primary,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            height: 600.0 * AnalyticsApp.size,
-                            width: 500.0 * AnalyticsApp.size,
-                            onConfirm: (selectedDistricts) => setState(() {
-                              db.setSelectedDistrict(
-                                selectedDistricts
-                                    .mapNotNull((e) => e.toString())
-                                    .toList(),
-                              );
-                              _finishedDialog = true;
-                            }),
-                            items: db.districts
-                                .map((data) => MultiSelectItem(data, data))
-                                .toList(),
-                            initialValue: db.selectedDistricts,
-                          ),
-                  ),
-                ],
-              ),
+                          ],
+                        ),
+                        Expanded(
+                            child: AnalyticsAppBody(
+                          sidebarController: widget.sidebarController,
+                        )),
+                      ],
+                    )
+                  : _buildSelectDistricts(),
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildSelectDistricts() {
+    final db = ref.read(analyticsDatabaseProvider);
+    return MultiSelectDialog(
+      backgroundColor: AnalyticsTheme.background2,
+      checkColor: AnalyticsTheme.foreground1,
+      selectedColor: AnalyticsTheme.primaryVariant,
+      unselectedColor: AnalyticsTheme.foreground2,
+      itemsTextStyle: AnalyticsTheme.dataTitleTextStyle.copyWith(
+        color: AnalyticsTheme.foreground2,
+      ),
+      selectedItemsTextStyle: AnalyticsTheme.dataTitleTextStyle.copyWith(
+        color: AnalyticsTheme.foreground2,
+      ),
+      title: Text(
+        'Select districts:',
+        textAlign: TextAlign.center,
+        style: AnalyticsTheme.dataTitleTextStyle.copyWith(
+          fontSize: 26.0,
+          color: AnalyticsTheme.foreground2,
+        ),
+      ),
+      cancelText: Text(
+        'CANCEL',
+        style: AnalyticsTheme.dataSubtitleTextStyle.copyWith(
+          color: AnalyticsTheme.foreground2,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      confirmText: Text(
+        'CONFIRM',
+        style: AnalyticsTheme.dataSubtitleTextStyle.copyWith(
+          color: AnalyticsTheme.primary,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      height: 600.0 * AnalyticsApp.size,
+      width: 500.0 * AnalyticsApp.size,
+      onConfirm: (selectedDistricts) => setState(() {
+        db.setSelectedDistrict(
+          selectedDistricts.mapNotNull((e) => e.toString()).toList(),
+        );
+        _finishedDialog = true;
+      }),
+      items: db.districts.map((data) => MultiSelectItem(data, data)).toList(),
+      initialValue: db.selectedDistricts,
     );
   }
 }

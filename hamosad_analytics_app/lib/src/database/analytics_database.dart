@@ -97,6 +97,6 @@ final Provider<AnalyticsDatabase> analyticsDatabaseProvider = Provider((ref) {
 
 extension TeamsMapToTeamNamesList on Map<int, TeamNameAndLocation> {
   List<String> toTeamNames() {
-    return mapValues((team) => team.value.name).values.toList();
+    return mapEntries((entry) => '${entry.key} ${entry.value.name}').toList();
   }
 }

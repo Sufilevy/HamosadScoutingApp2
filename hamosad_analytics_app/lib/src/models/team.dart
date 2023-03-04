@@ -820,7 +820,12 @@ class EndgameClimbStat {
 
 extension TeamsListToTeamNumbersList on List<Team> {
   List<String> toTeamNumbers() {
-    return map((team) => '${team.info.number.toString()}  -  ${team.info.name}')
-        .toList();
+    return map((team) {
+      if (team.info.name.contains('Team')) {
+        return team.info.name;
+      }
+
+      return '${team.info.number} ${team.info.name}';
+    }).toList();
   }
 }

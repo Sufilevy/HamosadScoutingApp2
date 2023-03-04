@@ -1,10 +1,12 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/widgets/analytics.dart';
 
-class SearchBar extends StatelessWidget {
-  const SearchBar({
+class TeamSearchBar extends StatelessWidget {
+  TeamSearchBar({
     Key? key,
     required this.suggestions,
     this.onSubmitted,
@@ -14,48 +16,58 @@ class SearchBar extends StatelessWidget {
     this.searchIconColor,
     this.underlineBorder = false,
     String currentQuery = '',
-  }) : super(key: key);
+  })  : _controller = TextEditingController(text: currentQuery),
+        super(key: key);
 
   final void Function(String)? onSubmitted;
   final String? hintText;
   final Color? borderColor, cursorColor, searchIconColor;
   final bool underlineBorder;
   final List<String> suggestions;
+  final TextEditingController _controller;
 
   @override
   Widget build(BuildContext context) {
-    return Autocomplete<String>(
-      onSelected: (value) {
-        if (onSubmitted != null) onSubmitted!(value);
-      },
-      optionsBuilder: (query) {
-        if (query.text.isEmpty) {
-          return const Iterable<String>.empty();
+    return TypeAheadField(
+      suggestionsCallback: (query) {
+        if (query.isEmpty) {
+          return suggestions;
         }
 
         return suggestions.where(
           (suggestion) =>
-              suggestion.toLowerCase().contains(query.text.toLowerCase()),
+              suggestion.toLowerCase().contains(query.toLowerCase()),
         );
       },
-      optionsMaxHeight: 600.0 * AnalyticsApp.size,
-      optionsViewBuilder: (context, onSelected, options) => ListView.builder(
-        itemBuilder: (context, index) => AnalyticsText.dataSubtitle(
-          options.elementAt(index),
+      hideOnLoading: true,
+      hideOnError: true,
+      hideOnEmpty: true,
+      getImmediateSuggestions: true,
+      onSuggestionSelected: (value) => onSubmitted?.call(value),
+      itemBuilder: (context, itemData) => AnalyticsContainer(
+        borderRadius: 0.0,
+        padding: const EdgeInsets.all(6.0) * AnalyticsApp.size,
+        child: AnalyticsText.dataSubtitle(itemData),
+      ),
+      suggestionsBoxDecoration: SuggestionsBoxDecoration(
+        color: AnalyticsTheme.background2,
+        borderRadius: BorderRadius.circular(20.0) * AnalyticsApp.size,
+        constraints: BoxConstraints(
+          maxHeight: 600.0 * AnalyticsApp.size,
         ),
       ),
-      fieldViewBuilder:
-          (context, textEditingController, focusNode, onFieldSubmitted) =>
-              TextField(
-        controller: textEditingController,
-        onSubmitted: onSubmitted,
+      animationDuration: 250.milliseconds,
+      textFieldConfiguration: TextFieldConfiguration(
+        controller: _controller,
         cursorColor: cursorColor ?? AnalyticsTheme.primary,
-        maxLines: 1,
         style: AnalyticsTheme.dataTitleTextStyle.copyWith(
           color: AnalyticsTheme.foreground2,
         ),
         autocorrect: false,
-        strutStyle: StrutStyle.fromTextStyle(AnalyticsTheme.dataTitleTextStyle),
+        maxLines: 1,
+        onSubmitted: onSubmitted,
+        cursorRadius: const Radius.circular(1.0) * AnalyticsApp.size,
+        cursorWidth: 1.5 * AnalyticsApp.size,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(16.0 * AnalyticsApp.size),
           focusedBorder: underlineBorder
@@ -73,7 +85,7 @@ class SearchBar extends StatelessWidget {
                   ),
                 ),
           suffixIcon: IconButton(
-            onPressed: onFieldSubmitted,
+            onPressed: () => onSubmitted?.call(_controller.text),
             icon: const Icon(Icons.search_rounded),
             iconSize: 32.0 * AnalyticsApp.size,
             color: searchIconColor ?? AnalyticsTheme.foreground2,
