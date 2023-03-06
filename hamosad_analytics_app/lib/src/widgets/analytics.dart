@@ -843,10 +843,15 @@ class AnalyticsNotes extends StatelessWidget {
 }
 
 class AnalyticsText {
-  static Text navigation(String data) {
+  static Text navigation(
+    String data, {
+    Color? color,
+  }) {
     return Text(
       data,
-      style: AnalyticsTheme.navigationTextStyle,
+      style: AnalyticsTheme.navigationTextStyle.copyWith(
+        color: color,
+      ),
     );
   }
 

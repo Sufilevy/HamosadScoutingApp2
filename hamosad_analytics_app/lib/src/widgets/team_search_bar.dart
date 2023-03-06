@@ -15,6 +15,7 @@ class TeamSearchBar extends StatelessWidget {
     this.cursorColor,
     this.searchIconColor,
     this.underlineBorder = false,
+    this.searchOnIconPressed = true,
     String currentQuery = '',
   })  : _controller = TextEditingController(text: currentQuery),
         super(key: key);
@@ -22,7 +23,7 @@ class TeamSearchBar extends StatelessWidget {
   final void Function(String)? onSubmitted;
   final String? hintText;
   final Color? borderColor, cursorColor, searchIconColor;
-  final bool underlineBorder;
+  final bool underlineBorder, searchOnIconPressed;
   final List<String> suggestions;
   final TextEditingController _controller;
 
@@ -70,40 +71,35 @@ class TeamSearchBar extends StatelessWidget {
         cursorWidth: 1.5 * AnalyticsApp.size,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(16.0 * AnalyticsApp.size),
-          focusedBorder: underlineBorder
-              ? UnderlineInputBorder(
-                  borderRadius: BorderRadius.circular(1.5),
-                  borderSide: BorderSide(
-                    width: 3.0,
-                    color: borderColor ?? AnalyticsTheme.foreground2,
-                  ),
-                )
-              : OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: borderColor ?? AnalyticsTheme.primaryVariant,
-                    width: 2.0,
-                  ),
-                ),
           suffixIcon: IconButton(
-            onPressed: () => onSubmitted?.call(_controller.text),
+            onPressed: searchOnIconPressed
+                ? () => onSubmitted?.call(_controller.text)
+                : null,
             icon: const Icon(Icons.search_rounded),
             iconSize: 32.0 * AnalyticsApp.size,
             color: searchIconColor ?? AnalyticsTheme.foreground2,
+            disabledColor: searchIconColor ?? AnalyticsTheme.foreground2,
             splashRadius: 1.0,
           ),
           hintText: hintText,
           hintStyle: AnalyticsTheme.dataTitleTextStyle.copyWith(
             color: AnalyticsTheme.foreground2,
           ),
-          enabledBorder: underlineBorder
-              ? UnderlineInputBorder(
-                  borderRadius: BorderRadius.circular(1.5),
-                  borderSide: const BorderSide(
-                    width: 3.0,
-                    color: AnalyticsTheme.foreground2,
-                  ),
-                )
-              : null,
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: borderColor ?? AnalyticsTheme.primaryVariant,
+              width: 2.0,
+            ),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderRadius: BorderRadius.circular(1.0),
+            borderSide: BorderSide(
+              width: 2,
+              color: underlineBorder
+                  ? AnalyticsTheme.foreground2
+                  : Colors.transparent,
+            ),
+          ),
         ),
       ),
     );

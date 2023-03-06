@@ -1,4 +1,4 @@
-import 'package:easy_search_bar/easy_search_bar.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hamosad_analytics_app/src/app.dart';
@@ -291,7 +291,12 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
   }
 
   Widget _buildTitle() {
-    Widget title = AnalyticsText.navigation('Search for a team:');
+    var searchBarVisible = false;
+
+    Widget title = AnalyticsText.navigation(
+      'Search for a team:',
+      color: AnalyticsTheme.foreground2,
+    );
     if (TeamDetailsPage.team != null) {
       final team = TeamDetailsPage.team!;
       title = AnalyticsPageTitle(
@@ -302,7 +307,44 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
 
     return Column(
       children: [
-        _buildTeamSearch(title),
+        AnalyticsContainer(
+          padding: const EdgeInsets.all(10.0) * AnalyticsApp.size,
+          child: SizedBox(
+            height: 50.0 * AnalyticsApp.size,
+            child: StatefulBuilder(
+              builder: (context, setState) {
+                return searchBarVisible
+                    ? Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back_rounded),
+                            color: AnalyticsTheme.primary,
+                            iconSize: 32.0 * AnalyticsApp.size,
+                            onPressed: () => setState(() {
+                              searchBarVisible = false;
+                            }),
+                          ),
+                          Expanded(child: _buildTeamSearch()),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          title,
+                          IconButton(
+                            icon: const Icon(Icons.search_rounded),
+                            color: AnalyticsTheme.primary,
+                            iconSize: 32.0 * AnalyticsApp.size,
+                            onPressed: () => setState(() {
+                              searchBarVisible = true;
+                            }),
+                          ),
+                        ],
+                      );
+              },
+            ),
+          ),
+        ),
         if (TeamDetailsPage.team != null) ...[
           SizedBox(height: 25.0 * AnalyticsApp.size),
           AnalyticsTabsSelector(
@@ -314,45 +356,19 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
     );
   }
 
-  Widget _buildTeamSearch(Widget title) => SizedBox(
-        height: 65.0 * AnalyticsApp.size,
-        child: EasySearchBar(
-          onSearch: (_) {},
-          onSuggestionTap: (data) => setState(() {
-            final teamNumber = int.parse(data.split('-').first.trim());
-            TeamDetailsPage.team = _data.teamsWithNumber[teamNumber];
-            _setTabs();
-          }),
-          suggestions: _data.teamsByNumber.toTeamNumbers(),
-          title: title,
-          elevation: 2.0,
-          appBarHeight: 65.0 * AnalyticsApp.size,
-          iconTheme: IconThemeData(
-            color: AnalyticsTheme.primary,
-            size: 34.0 * AnalyticsApp.size,
-          ),
-          searchBackIconTheme: IconThemeData(
-            size: 28.0 * AnalyticsApp.size,
-            color: AnalyticsTheme.primary,
-          ),
-          suggestionBuilder: (data) => Padding(
-            padding: EdgeInsets.all(8.0 * AnalyticsApp.size),
-            child: Center(
-              child: AnalyticsText.dataTitle(data),
-            ),
-          ),
-          suggestionBackgroundColor: AnalyticsTheme.background2,
-          backgroundColor: AnalyticsTheme.background2,
-          suggestionsElevation: 8.0,
-          openOverlayOnSearch: true,
-          searchBackgroundColor: AnalyticsTheme.background2,
-          searchCursorColor: AnalyticsTheme.primary,
-          searchTextStyle: AnalyticsTheme.navigationTextStyle,
-          searchHintStyle: AnalyticsTheme.navigationTextStyle.copyWith(
-            color: AnalyticsTheme.foreground2,
-          ),
-          searchHintText: 'Enter a team\'s name or number...',
-        ),
+  Widget _buildTeamSearch() => TeamSearchBar(
+        hintText: 'Enter a team\'s name or number...',
+        searchOnIconPressed: false,
+        searchIconColor: AnalyticsTheme.primary,
+        underlineBorder: true,
+        suggestions: _data.teamsByNumber.toTeamNumbers(),
+        onSubmitted: (query) => setState(() {
+          final parts = query.split(' ');
+          final teamNumber =
+              int.parse(query.contains('Team') ? parts.second : parts.first);
+          TeamDetailsPage.team = _data.teamsWithNumber[teamNumber];
+          _setTabs();
+        }),
       );
 
   Widget _buildBody() {
