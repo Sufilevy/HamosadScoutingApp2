@@ -4,85 +4,67 @@ import 'package:hamosad_scouting_app_2/src/constants.dart';
 
 typedef Json = Map<String, dynamic>;
 
-class PieceInteraction {
-  PieceInteraction({
-    this.cone = false,
-    this.cube = false,
-    this.duration = ActionDuration.twoToFive,
+class Dropoff {
+  Dropoff({
+    required this.piece,
+    required this.duration,
+    required this.row,
   });
 
-  bool cone, cube;
-  ActionDuration duration;
-}
+  Piece piece;
+  ActionDuration? duration;
+  int row;
 
-class GridDropoffs {
-  GridDropoffs()
-      : dropoffs = List.generate(
-          3,
-          (_) => List.generate(3, (_) => PieceInteraction(), growable: false),
-          growable: false,
-        );
-
-  List<List<PieceInteraction>> dropoffs;
+  Json toJson() {
+    return {
+      'row': row,
+      'piece': piece.toString(),
+      if (duration != null) 'duration': duration.toString(),
+    };
+  }
 }
 
 class Dropoffs {
-  Dropoffs() : grids = List.generate(3, (_) => GridDropoffs(), growable: false);
+  Dropoffs() : dropoffs = [];
 
-  List<GridDropoffs> grids;
+  List<Dropoff> dropoffs;
 
   List<Json> toJson() {
-    List<Json> json = [];
+    return dropoffs.map((dropoff) => dropoff.toJson()).toList();
+  }
 
-    grids.forEachIndexed((grid, gridIndex) {
-      final gridName = Grid.values[gridIndex].toString();
-      grid.dropoffs.forEachIndexed((row, rowIndex) {
-        row.forEachIndexed((node, columnIndex) {
-          if (node.cone || node.cube) {
-            json.add({
-              'grid': gridName,
-              'row': rowIndex,
-              'column': columnIndex,
-              'gamePiece': node.cone ? 'cone' : 'cube',
-              'duration': node.duration.toString(),
-            });
-          }
-        });
-      });
-    });
+  int countDropoffs(int row) {
+    return dropoffs.count((dropoff) => dropoff.row == row);
+  }
+}
 
-    return json;
+class Pickup {
+  Pickup({required this.duration, required this.position, required this.piece});
+
+  ActionDuration duration;
+  PickupPosition position;
+  Piece piece;
+
+  Json toJson() {
+    return {
+      'duration': duration.toString(),
+      'position': position.toString(),
+      'piece': piece.toString(),
+    };
   }
 }
 
 class Pickups {
-  Pickups()
-      : floor = [],
-        single = [],
-        doubleFloor = [],
-        doubleShelf = [];
+  Pickups() : pickups = [];
 
-  List<PieceInteraction> floor, single, doubleFloor, doubleShelf;
+  List<Pickup> pickups;
 
   List<Json> toJson() {
-    List<Json> json = [];
+    return pickups.map((pickup) => pickup.toJson()).toList();
+  }
 
-    addToJson(position, pickups) {
-      for (final pickup in pickups) {
-        json.add({
-          'position': position,
-          'duration': pickup.duration.toString(),
-          'gamePiece': pickup.cone ? 'cone' : 'cube',
-        });
-      }
-    }
-
-    addToJson('floor', floor);
-    addToJson('single', single);
-    addToJson('doubleFloor', doubleFloor);
-    addToJson('doubleShelf', doubleShelf);
-
-    return json;
+  int countPickups(PickupPosition position) {
+    return pickups.count((pickup) => pickup.position == position);
   }
 }
 
@@ -146,6 +128,16 @@ enum Piece {
   const Piece(this.color);
 
   final Color color;
+
+  @override
+  String toString() {
+    switch (this) {
+      case Piece.cone:
+        return 'cone';
+      case Piece.cube:
+        return 'cube';
+    }
+  }
 }
 
 enum StartPosition {
@@ -168,21 +160,15 @@ enum StartPosition {
 
 enum PickupPosition {
   floor,
-  single,
-  doubleFloor,
-  doubleShelf;
+  loadingZone;
 
   @override
   String toString() {
     switch (this) {
       case PickupPosition.floor:
         return 'floor';
-      case PickupPosition.single:
-        return 'single';
-      case PickupPosition.doubleFloor:
-        return 'doubleFloor';
-      case PickupPosition.doubleShelf:
-        return 'doubleShelf';
+      case PickupPosition.loadingZone:
+        return 'loadingZone';
     }
   }
 }

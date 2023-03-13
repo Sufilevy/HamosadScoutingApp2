@@ -1,4 +1,3 @@
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/models.dart';
@@ -23,228 +22,131 @@ class ScoutingDropoffs extends StatefulWidget {
 }
 
 class _ScoutingDropoffsState extends State<ScoutingDropoffs> {
-  int _column = 0, _row = 0;
-  Grid _grid = Grid.arenaWall;
-  Piece _piece = Piece.cone;
-  ActionDuration _duration = ActionDuration.twoToFive;
+  int? _row;
+  Piece? _piece;
+  ActionDuration? _duration;
 
-  Widget _buildSelectGrid() => ToggleSwitch(
-        cornerRadius: 10.0 * widget.size,
-        inactiveBgColor: ScoutingTheme.background2,
-        inactiveFgColor: ScoutingTheme.foreground2,
-        activeBgColors: const [
-          [ScoutingTheme.primaryVariant],
-          [ScoutingTheme.primaryVariant],
-          [ScoutingTheme.primaryVariant],
-        ],
-        activeFgColor: ScoutingTheme.foreground1,
-        initialLabelIndex: _grid.index,
-        totalSwitches: 3,
-        labels: const ['Arena Wall', 'Co-Op', 'Loading Zone'],
-        fontSize: 26.0 * widget.size,
-        customWidths: [
-          190.0 * widget.size,
-          160.0 * widget.size,
-          210.0 * widget.size,
-        ],
-        animate: true,
-        curve: Curves.easeOutQuint,
-        onToggle: (index) => setState(() {
-          _grid = Grid.values[index ?? 0];
-        }),
-      );
-
-  Piece? _getNodePiece(int row, int column) {
-    final node = widget.cubit.data.grids[_grid.index].dropoffs[row][column];
-    if (node.cone) {
-      return Piece.cone;
-    } else if (node.cube) {
-      return Piece.cube;
+  void _addDropoff() {
+    if (_row == null ||
+        _piece == null ||
+        (_duration == null && !widget.isAuto)) {
+      return;
     }
-    return null;
+
+    widget.cubit.data.dropoffs.add(
+      Dropoff(
+          piece: _piece!,
+          duration: widget.isAuto ? null : _duration!,
+          row: _row!),
+    );
+
+    _row = null;
+    _piece = null;
+    _duration = null;
   }
 
-  Widget _buildNodeButton(
-    int row,
-    int column, {
-    bool cone = false,
-    bool cube = false,
-  }) =>
-      ElevatedButton(
-        onPressed: () => setState(() {
-          _row = row;
-          _column = column;
-        }),
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(
-            (_row == row && _column == column)
-                ? ScoutingTheme.background2
-                : ScoutingTheme.background1,
-          ),
-          shadowColor: MaterialStateProperty.all(Colors.transparent),
-          side: MaterialStateProperty.all(
-            BorderSide(
-              color: _getNodePiece(row, column)?.color ?? Colors.transparent,
-              width: 1.5,
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(8.0 * widget.size),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (cone)
-                AnimatedDefaultTextStyle(
-                  style: (_row == row && _column == column)
-                      ? ScoutingTheme.textStyle.copyWith(
-                          color: ScoutingTheme.cones,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 31.0 * widget.size,
-                        )
-                      : ScoutingTheme.textStyle.copyWith(
-                          color: ScoutingTheme.foreground2,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 28.0 * widget.size,
-                        ),
-                  duration: 200.milliseconds,
-                  child: const Text('Cone'),
-                ),
-              if (cone && cube) SizedBox(height: 10.0 * widget.size),
-              if (cube)
-                AnimatedDefaultTextStyle(
-                  style: (_row == row && _column == column)
-                      ? ScoutingTheme.textStyle.copyWith(
-                          color: ScoutingTheme.cubes,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 31.0 * widget.size,
-                        )
-                      : ScoutingTheme.textStyle.copyWith(
-                          color: ScoutingTheme.foreground2,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 28.0 * widget.size,
-                        ),
-                  duration: 200.milliseconds,
-                  child: const Text('Cube'),
-                ),
+  Widget _buildSelectRow() => Column(
+        children: [
+          ToggleSwitch(
+            cornerRadius: 10.0 * widget.size,
+            inactiveBgColor: ScoutingTheme.background2,
+            inactiveFgColor: ScoutingTheme.foreground2,
+            activeBgColors: const [
+              [ScoutingTheme.primaryVariant],
+              [ScoutingTheme.primaryVariant],
+              [ScoutingTheme.primaryVariant],
             ],
+            activeFgColor: ScoutingTheme.foreground1,
+            initialLabelIndex: _row,
+            totalSwitches: 3,
+            labels: const ['Low', 'Mid', 'High'],
+            fontSize: 30.0 * widget.size,
+            minWidth: 150.0 * widget.size,
+            animate: true,
+            curve: Curves.easeOutQuint,
+            onToggle: (index) => _row = index,
           ),
-        ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 18.0 * widget.size),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  width: 100.0 * widget.size,
+                  child: ScoutingText.text(
+                    'Pieces: ${widget.cubit.data.countDropoffs(0)}',
+                    color: ScoutingTheme.foreground2,
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  width: 100.0 * widget.size,
+                  child: ScoutingText.text(
+                    'Pieces: ${widget.cubit.data.countDropoffs(1)}',
+                    color: ScoutingTheme.foreground2,
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  width: 100.0 * widget.size,
+                  child: ScoutingText.text(
+                    'Pieces: ${widget.cubit.data.countDropoffs(2)}',
+                    color: ScoutingTheme.foreground2,
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
       );
-
-  Widget _buildSelectNode() => Container(
-        width: 500.0 * widget.size,
-        height: 500.0 * widget.size,
-        decoration: BoxDecoration(
-          color: ScoutingTheme.background2,
-          borderRadius: BorderRadius.circular(2.0),
-          border: Border.all(
-            color: ScoutingTheme.background2,
-            width: 3.0,
-          ),
-        ),
-        child: GridView.count(
-          crossAxisCount: 3,
-          mainAxisSpacing: 3.0,
-          crossAxisSpacing: 3.0,
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-            _buildNodeButton(0, 0, cone: true),
-            _buildNodeButton(0, 1, cube: true),
-            _buildNodeButton(0, 2, cone: true),
-            _buildNodeButton(1, 0, cone: true),
-            _buildNodeButton(1, 1, cube: true),
-            _buildNodeButton(1, 2, cone: true),
-            _buildNodeButton(2, 0, cone: true, cube: true),
-            _buildNodeButton(2, 1, cone: true, cube: true),
-            _buildNodeButton(2, 2, cone: true, cube: true),
-          ],
-        ),
-      );
-
-  Piece _getCurrentPiece() {
-    if (_row == 2) return _piece;
-    if (_column == 1) return Piece.cube;
-    return Piece.cone;
-  }
 
   Widget _buildSelectPiece() => ToggleSwitch(
         cornerRadius: 10.0 * widget.size,
         inactiveBgColor: ScoutingTheme.background2,
-        inactiveFgColor:
-            (_row == 2) ? ScoutingTheme.foreground2 : ScoutingTheme.background2,
+        inactiveFgColor: ScoutingTheme.foreground2,
         activeBgColors: const [
           [ScoutingTheme.cones],
           [ScoutingTheme.cubes],
         ],
         activeFgColor: ScoutingTheme.foreground1,
-        initialLabelIndex: _getCurrentPiece().index,
+        initialLabelIndex:
+            _piece != null ? (_piece! == Piece.cone ? 0 : 1) : null,
         totalSwitches: 2,
         labels: const ['Cone', 'Cube'],
         fontSize: 30.0 * widget.size,
         minWidth: 150.0 * widget.size,
         animate: true,
         curve: Curves.easeOutQuint,
-        onToggle: (index) => setState(() {
-          _piece = Piece.values[index ?? 0];
-        }),
+        onToggle: (index) => _piece = Piece.values[index ?? 0],
       );
 
-  void _setCurrentNodeTaken(bool value) {
-    final node = widget.cubit.data.grids[_grid.index].dropoffs[_row][_column];
-    _getCurrentPiece() == Piece.cone ? node.cone = value : node.cube = value;
-  }
+  Widget _buildAddButton() => CircleAvatar(
+        backgroundColor: ScoutingTheme.primary,
+        child: IconButton(
+          onPressed: () => setState(() {
+            _addDropoff();
+          }),
+          color: ScoutingTheme.background1,
+          splashRadius: 45.0 * widget.size,
+          iconSize: 32.0 * widget.size,
+          padding: EdgeInsets.zero,
+          icon: const Icon(Icons.add_rounded),
+        ),
+      );
 
-  void _setCurrentNodeDuration() {
-    final node = widget.cubit.data.grids[_grid.index].dropoffs[_row][_column];
-    node.duration = _duration;
-  }
-
-  bool _getCurrentNodeTaken() {
-    final node = widget.cubit.data.grids[_grid.index].dropoffs[_row][_column];
-    return node.cone || node.cube;
-  }
-
-  Widget _buildCheckbox() => Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 12.0 * widget.size),
-            child: TextButton(
-              onPressed: () => setState(() {
-                _setCurrentNodeTaken(!_getCurrentNodeTaken());
-                _setCurrentNodeDuration();
-              }),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 4.0 * widget.size,
-                  horizontal: 2.0 * widget.size,
-                ),
-                child: ScoutingText.text('Piece placed:',
-                    color: ScoutingTheme.foreground2),
-              ),
-            ),
-          ),
-          Transform.scale(
-            scale: 1.75 * widget.size,
-            child: Checkbox(
-              value: _getCurrentNodeTaken(),
-              onChanged: (value) => setState(() {
-                _setCurrentNodeTaken(value ?? false);
-                _setCurrentNodeDuration();
-              }),
-              side: const BorderSide(
-                color: ScoutingTheme.foreground2,
-                width: 2.0,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(2),
-              ),
-              activeColor: ScoutingTheme.primary,
-              checkColor: ScoutingTheme.background1,
-            ),
-          ),
-        ],
+  Widget _buildRemoveButton() => CircleAvatar(
+        backgroundColor: ScoutingTheme.error,
+        child: IconButton(
+          onPressed: () => setState(() {
+            widget.cubit.data.dropoffs.removeLast();
+          }),
+          color: ScoutingTheme.background1,
+          splashRadius: 45.0 * widget.size,
+          iconSize: 32.0 * widget.size,
+          padding: EdgeInsets.zero,
+          icon: const Icon(Icons.remove_rounded),
+        ),
       );
 
   @override
@@ -255,25 +157,23 @@ class _ScoutingDropoffsState extends State<ScoutingDropoffs> {
           child: ScoutingText.title('Pieces Dropoffs:'),
         ),
         SizedBox(height: 25.0 * widget.size),
-        _buildSelectGrid(),
-        SizedBox(height: 25.0 * widget.size),
-        _buildSelectNode(),
+        _buildSelectRow(),
         SizedBox(height: 25.0 * widget.size),
         if (!widget.isAuto)
           ScoutingDuration(
-            onChanged: (duration) {
-              _duration = ActionDuration.values[duration];
-              _setCurrentNodeDuration();
-            },
+            onChanged: (duration) =>
+                _duration = ActionDuration.values[duration],
           ),
         SizedBox(height: 25.0 * widget.size),
+        _buildSelectPiece(),
+        SizedBox(height: 25.0 * widget.size),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildSelectPiece(),
-            _buildCheckbox(),
+            _buildRemoveButton(),
+            _buildAddButton(),
           ],
-        )
+        ),
       ],
     );
   }

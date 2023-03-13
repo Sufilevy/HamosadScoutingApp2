@@ -427,7 +427,7 @@ class PiecesStat {
 /// Pickups from all positions.
 class PiecesPickupsStat {
   /// Per position averages and rates.
-  PiecesStat doubleShelf, doubleFloor, single, floor;
+  PiecesStat loadingZone, floor;
 
   /// All positions averages and rates.
   PiecesStat pieces;
@@ -441,9 +441,7 @@ class PiecesPickupsStat {
 
   /// Uses default values for all fields.
   PiecesPickupsStat.defaults()
-      : doubleShelf = PiecesStat.defaults(),
-        doubleFloor = PiecesStat.defaults(),
-        single = PiecesStat.defaults(),
+      : loadingZone = PiecesStat.defaults(),
         floor = PiecesStat.defaults(),
         pieces = PiecesStat.defaults(),
         loadingZoneRate = 0.0,
@@ -454,17 +452,9 @@ class PiecesPickupsStat {
 
   void updateRatesWithPickup(PiecePickup pickup) {
     switch (pickup.position) {
-      case PiecePickupPosition.doubleShelf:
+      case PiecePickupPosition.loadingZone:
         _loadingZoneCount++;
-        doubleShelf.updateRatesWithPiece(pickup.piece);
-        break;
-      case PiecePickupPosition.doubleFloor:
-        _loadingZoneCount++;
-        doubleFloor.updateRatesWithPiece(pickup.piece);
-        break;
-      case PiecePickupPosition.single:
-        _loadingZoneCount++;
-        single.updateRatesWithPiece(pickup.piece);
+        loadingZone.updateRatesWithPiece(pickup.piece);
         break;
       case PiecePickupPosition.floor:
         _floorCount++;
@@ -496,16 +486,11 @@ class PiecesPickupsStat {
 
 /// Dropoffs made on all nodes in a grid.
 class GridDropoffsStat {
-  /// A 3x3 grid of cubes and cones dropoffs rates, representing all of the nodes in this grid.
-  List<List<PiecesStat>> dropoffs;
+  /// A list of rows of cubes and cones dropoffs rates, representing all of the nodes in this grid.
+  List<PiecesStat> dropoffs;
 
   /// Stats for dropoffs in each row.
   List<Stat> rows;
-
-  /// Rate of game pieces dropoffs in this grid.
-  ///
-  /// Together with the [gridRate] of the two other grids represents 100% of all pieces dropoffs.
-  double gridRate;
 
   /// Rates of different dropoffs durations.
   ActionDurationStat duration;
@@ -514,19 +499,14 @@ class GridDropoffsStat {
   GridDropoffsStat.defaults()
       : dropoffs = List.generate(
           3,
-          (_) => List.generate(
-            3,
-            (_) => PiecesStat.defaults(),
-            growable: false,
-          ),
+          (_) => PiecesStat.defaults(),
           growable: false,
         ),
         rows = List.generate(3, (_) => Stat()),
-        gridRate = 0.0,
         duration = ActionDurationStat.defaults();
 
   void updateWithDropoff(PieceDropoff dropoff) {
-    dropoffs[dropoff.row][dropoff.column].updateRatesWithPiece(dropoff.piece);
+    dropoffs[dropoff.row].updateRatesWithPiece(dropoff.piece);
     duration.updateWithDuration(dropoff.duration);
   }
 
@@ -539,26 +519,10 @@ class GridDropoffsStat {
       );
     }
   }
-
-  void updateGridRate(double newGridRate) {
-    gridRate = newGridRate;
-  }
 }
 
 /// Dropoffs made in all grids.
 class PiecesDropoffsStat {
-  /// Dropoffs made in the grid closest to the arena wall.
-  GridDropoffsStat arenaWallGrid;
-  int _arenaWallGridCount;
-
-  /// Dropoffs made in the middle grid (aka the coopertition / co-op grid).
-  GridDropoffsStat coopGrid;
-  int _coopGridCount;
-
-  /// Dropoffs made in the grid closest to the loading zone.
-  GridDropoffsStat loadingZoneGrid;
-  int _loadingZoneGridCount;
-
   /// Dropoffs made in all grids.
   GridDropoffsStat allGrids;
 
@@ -573,38 +537,13 @@ class PiecesDropoffsStat {
 
   /// Uses default values for all fields.
   PiecesDropoffsStat.defaults()
-      : arenaWallGrid = GridDropoffsStat.defaults(),
-        coopGrid = GridDropoffsStat.defaults(),
-        loadingZoneGrid = GridDropoffsStat.defaults(),
-        allGrids = GridDropoffsStat.defaults(),
+      : allGrids = GridDropoffsStat.defaults(),
         pieces = PiecesStat.defaults(),
         duration = ActionDurationStat.defaults(),
-        totalDropoffs = Stat(),
-        _arenaWallGridCount = 0,
-        _coopGridCount = 0,
-        _loadingZoneGridCount = 0;
+        totalDropoffs = Stat();
 
   void updateRatesWithDropoff(PieceDropoff dropoff) {
-    switch (dropoff.grid) {
-      case Grid.arenaWall:
-        arenaWallGrid.updateWithDropoff(dropoff);
-        _arenaWallGridCount++;
-        break;
-      case Grid.coop:
-        coopGrid.updateWithDropoff(dropoff);
-        _coopGridCount++;
-        break;
-      case Grid.loadingZone:
-        loadingZoneGrid.updateWithDropoff(dropoff);
-        _loadingZoneGridCount++;
-        break;
-    }
     allGrids.updateWithDropoff(dropoff);
-
-    int count = _arenaWallGridCount + _coopGridCount + _loadingZoneGridCount;
-    arenaWallGrid.updateGridRate(_arenaWallGridCount / count);
-    coopGrid.updateGridRate(_coopGridCount / count);
-    loadingZoneGrid.updateGridRate(_loadingZoneGridCount / count);
 
     pieces.updateRatesWithPiece(dropoff.piece);
     duration.updateWithDuration(dropoff.duration);

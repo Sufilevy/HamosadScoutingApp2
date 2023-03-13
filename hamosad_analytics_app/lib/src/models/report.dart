@@ -128,7 +128,11 @@ enum ActionDuration {
     }
   }
 
-  static ActionDuration? fromString(String value) {
+  static ActionDuration? fromString(String? value) {
+    if (value == null) {
+      return zeroToTwo;
+    }
+
     switch (value) {
       case '0-2':
         return zeroToTwo;
@@ -155,24 +159,6 @@ enum Piece {
         return cone;
       case 'cube':
         return cube;
-    }
-    return null;
-  }
-}
-
-enum Grid {
-  arenaWall,
-  coop,
-  loadingZone;
-
-  static Grid? fromString(String value) {
-    switch (value) {
-      case 'arenaWall':
-        return arenaWall;
-      case 'coop':
-        return coop;
-      case 'loadingZone':
-        return loadingZone;
     }
     return null;
   }
@@ -234,19 +220,16 @@ enum StartPosition {
 }
 
 enum PiecePickupPosition {
-  doubleShelf,
-  doubleFloor,
-  single,
+  loadingZone,
   floor;
 
   static PiecePickupPosition? fromString(String value) {
     switch (value) {
       case 'doubleShelf':
-        return doubleShelf;
       case 'doubleFloor':
-        return doubleFloor;
       case 'single':
-        return single;
+      case 'loadingZone':
+        return loadingZone;
       case 'floor':
         return floor;
     }
@@ -268,7 +251,7 @@ class PiecePickup {
   static PiecePickup? fromJson(Json json) {
     final duration = ActionDuration.fromString(json['duration']);
     final position = PiecePickupPosition.fromString(json['position']);
-    final gamePiece = Piece.fromString(json['gamePiece']);
+    final gamePiece = Piece.fromString(json['piece']);
 
     if (duration == null || position == null || gamePiece == null) {
       return null;
@@ -306,37 +289,26 @@ extension ListPickupCountPieces on List<PiecePickup> {
 class PieceDropoff {
   const PieceDropoff({
     required this.duration,
-    required this.grid,
     required this.row,
-    required this.column,
     required this.piece,
   });
 
   final ActionDuration duration;
-  final Grid grid;
-  final int row, column;
+  final int row;
   final Piece piece;
 
   static PieceDropoff? fromJson(Json json) {
     final duration = ActionDuration.fromString(json['duration']);
-    final grid = Grid.fromString(json['grid']);
     final row = json['row'];
-    final column = json['column'];
-    final gamePiece = Piece.fromString(json['gamePiece']);
+    final gamePiece = Piece.fromString(json['piece']);
 
-    if (duration == null ||
-        grid == null ||
-        row == null ||
-        column == null ||
-        gamePiece == null) {
+    if (duration == null || row == null || gamePiece == null) {
       return null;
     }
 
     return PieceDropoff(
       duration: duration,
-      grid: grid,
       row: row,
-      column: column,
       piece: gamePiece,
     );
   }
