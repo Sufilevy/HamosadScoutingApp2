@@ -832,6 +832,8 @@ class AnalyticsNotes extends StatelessWidget {
                       child: AnalyticsText.dataSubtitle(
                         note,
                         maxLines: 2,
+                        fittedBox: false,
+                        fontSize: 15.0 * AnalyticsApp.size,
                       ),
                     ),
                   ),

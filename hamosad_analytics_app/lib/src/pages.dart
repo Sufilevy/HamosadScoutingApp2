@@ -3,7 +3,6 @@ import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 
 export 'pages/alliances_page.dart';
-export 'pages/report_details_page.dart';
 export 'pages/team_details_page.dart';
 export 'pages/teams_page.dart';
 

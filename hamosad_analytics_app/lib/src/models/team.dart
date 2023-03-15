@@ -211,7 +211,7 @@ class TeamSummary {
     defenceIndex.updateWithIndex(report.summary.defenceIndex);
 
     pickups.updateRatesWithPickups(
-      report.auto.pickups + report.teleop.pickups + report.endgame.pickups,
+      report.teleop.pickups + report.endgame.pickups,
     );
     pickups.updateAveragesWithPieces(
       numCones: report.auto.pickups.numCones +

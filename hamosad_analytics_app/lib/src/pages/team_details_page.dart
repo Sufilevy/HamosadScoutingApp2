@@ -59,8 +59,8 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               AnalyticsStatChip.fromStat(
-                team.teleop.dropoffs.grids.rows[0] &
-                    team.endgame.dropoffs.grids.rows[0],
+                team.teleop.dropoffs.grids.rows[2] &
+                    team.endgame.dropoffs.grids.rows[2],
                 title: 'Top Row\nDropoffs',
               ),
               AnalyticsStatChip.fromStat(
@@ -69,8 +69,8 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
                 title: 'Middle Row\nDropoffs',
               ),
               AnalyticsStatChip.fromStat(
-                team.teleop.dropoffs.grids.rows[2] &
-                    team.endgame.dropoffs.grids.rows[2],
+                team.teleop.dropoffs.grids.rows[0] &
+                    team.endgame.dropoffs.grids.rows[0],
                 title: 'Bottom Row\nDropoffs',
               ),
             ],
@@ -98,7 +98,7 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               AnalyticsStatChip.fromStat(
-                team.auto.dropoffs.grids.rows[0],
+                team.auto.dropoffs.grids.rows[2],
                 title: 'Top Row\nDropoffs',
               ),
               AnalyticsStatChip.fromStat(
@@ -106,7 +106,7 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
                 title: 'Middle Row\nDropoffs',
               ),
               AnalyticsStatChip.fromStat(
-                team.auto.dropoffs.grids.rows[2],
+                team.auto.dropoffs.grids.rows[0],
                 title: 'Bottom Row\nDropoffs',
               ),
             ],
@@ -138,10 +138,6 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
                 team.auto.climb.states,
                 dockedByOther: false,
               ),
-              AnalyticsDurationsStatChip(
-                team.auto.climb.duration,
-                title: 'Climb',
-              ),
             ],
           ),
         ],
@@ -150,7 +146,7 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               AnalyticsStatChip.fromStat(
-                team.teleop.dropoffs.grids.rows[0],
+                team.teleop.dropoffs.grids.rows[2],
                 title: 'Top Row\nDropoffs',
               ),
               AnalyticsStatChip.fromStat(
@@ -158,7 +154,7 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
                 title: 'Middle Row\nDropoffs',
               ),
               AnalyticsStatChip.fromStat(
-                team.teleop.dropoffs.grids.rows[2],
+                team.teleop.dropoffs.grids.rows[0],
                 title: 'Bottom Row\nDropoffs',
               ),
             ],
@@ -185,6 +181,10 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
                 team.teleop.pickups.duration,
                 title: 'Pickups',
               ),
+              AnalyticsStatChip.fromStat(
+                team.teleop.chargeStationPasses,
+                title: 'Charge Station Passes',
+              ),
             ],
           ),
         ],
@@ -193,7 +193,7 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               AnalyticsStatChip.fromStat(
-                team.endgame.dropoffs.grids.rows[0],
+                team.endgame.dropoffs.grids.rows[2],
                 title: 'Top Row\nDropoffs',
               ),
               AnalyticsStatChip.fromStat(
@@ -201,7 +201,7 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
                 title: 'Middle Row\nDropoffs',
               ),
               AnalyticsStatChip.fromStat(
-                team.endgame.dropoffs.grids.rows[2],
+                team.endgame.dropoffs.grids.rows[0],
                 title: 'Bottom Row\nDropoffs',
               ),
             ],
@@ -227,6 +227,10 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
               AnalyticsDurationsStatChip(
                 team.endgame.pickups.duration,
                 title: 'Pickups',
+              ),
+              AnalyticsStatChip.fromStat(
+                team.endgame.chargeStationPasses,
+                title: 'Charge Station Passes',
               ),
             ],
           ),
