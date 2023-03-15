@@ -39,7 +39,6 @@ class Report {
 }
 
 class ReportAuto {
-  StartPosition startPosition;
   bool leftCommunity;
   List<PiecePickup> pickups;
   List<PieceDropoff> dropoffs;
@@ -48,8 +47,7 @@ class ReportAuto {
   String notes;
 
   ReportAuto.fromJson(Json json)
-      : startPosition = StartPosition.fromString(json['startPosition'])!,
-        leftCommunity = json['leftCommunity'] ?? false,
+      : leftCommunity = json['leftCommunity'] ?? false,
         pickups = PiecePickup.list(json['pickups']),
         dropoffs = PieceDropoff.list(json['dropoffs']),
         chargeStationPasses = json['chargeStationPasses'],
@@ -133,11 +131,11 @@ enum ActionDuration {
 
     switch (value) {
       case '0-2':
-        return zeroToTwo;
+        return ActionDuration.zeroToTwo;
       case '2-5':
-        return twoToFive;
+        return ActionDuration.twoToFive;
       case '5+':
-        return fivePlus;
+        return ActionDuration.fivePlus;
     }
     return null;
   }
@@ -154,9 +152,9 @@ enum Piece {
   static Piece? fromString(String value) {
     switch (value) {
       case 'cone':
-        return cone;
+        return Piece.cone;
       case 'cube':
-        return cube;
+        return Piece.cube;
     }
     return null;
   }
@@ -170,11 +168,11 @@ enum RobotIndex {
   static RobotIndex? fromString(String value) {
     switch (value) {
       case 'first':
-        return first;
+        return RobotIndex.first;
       case 'second':
-        return second;
+        return RobotIndex.second;
       case 'third':
-        return third;
+        return RobotIndex.third;
     }
     return null;
   }
@@ -188,30 +186,12 @@ enum DefenceRobotIndex {
   static DefenceRobotIndex? fromString(String value) {
     switch (value) {
       case 'almostAll':
-        return almostAll;
+        return DefenceRobotIndex.almostAll;
       case 'half':
-        return half;
+        return DefenceRobotIndex.half;
       case 'null':
       case 'none':
-        return none;
-    }
-    return null;
-  }
-}
-
-enum StartPosition {
-  arenaWall,
-  middle,
-  loadingZone;
-
-  static StartPosition? fromString(String value) {
-    switch (value) {
-      case 'arenaWall':
-        return arenaWall;
-      case 'middle':
-        return middle;
-      case 'loadingZone':
-        return loadingZone;
+        return DefenceRobotIndex.none;
     }
     return null;
   }
@@ -227,9 +207,9 @@ enum PiecePickupPosition {
       case 'doubleFloor':
       case 'single':
       case 'loadingZone':
-        return loadingZone;
+        return PiecePickupPosition.loadingZone;
       case 'floor':
-        return floor;
+        return PiecePickupPosition.floor;
     }
     return null;
   }
@@ -352,32 +332,34 @@ extension ListDropoffCountPieces on List<PieceDropoff> {
 }
 
 enum ClimbingState {
-  none,
+  noAttempt,
   docked,
-  dockedByOther,
+  failed,
   engaged;
 
   static ClimbingState? fromString(String value) {
     switch (value) {
       case 'null':
       case 'none':
-        return none;
-      case 'docked':
-        return docked;
+      case 'noAttempt':
+        return ClimbingState.noAttempt;
+      case 'failed':
+        return ClimbingState.failed;
       case 'dockedByOther':
-        return dockedByOther;
+      case 'docked':
+        return ClimbingState.docked;
       case 'engaged':
-        return engaged;
+        return ClimbingState.engaged;
     }
     return null;
   }
 
   int score({required bool isAuto}) {
     switch (this) {
-      case ClimbingState.none:
+      case ClimbingState.failed:
+      case ClimbingState.noAttempt:
         return 0;
       case ClimbingState.docked:
-      case ClimbingState.dockedByOther:
         return isAuto ? 8 : 6;
       case ClimbingState.engaged:
         return isAuto ? 12 : 10;
@@ -417,28 +399,24 @@ class EndgameClimb {
   const EndgameClimb({
     required this.duration,
     required this.state,
-    required this.robotIndex,
   });
 
   final ActionDuration duration;
   final ClimbingState state;
-  final RobotIndex robotIndex;
 
   static EndgameClimb? fromJson(Json? json) {
     if (json == null) return null;
 
     final duration = ActionDuration.fromString(json['duration']);
     final state = ClimbingState.fromString(json['state']);
-    final robotIndex = RobotIndex.fromString(json['robotIndex']);
 
-    if (duration == null || state == null || robotIndex == null) {
+    if (duration == null || state == null) {
       return null;
     }
 
     return EndgameClimb(
       duration: duration,
       state: state,
-      robotIndex: robotIndex,
     );
   }
 

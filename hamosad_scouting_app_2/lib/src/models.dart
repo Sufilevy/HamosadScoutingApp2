@@ -80,7 +80,8 @@ class AutoClimb {
   }
 
   bool get isFilled {
-    return state != null && (state! == ClimbState.none || duration != null);
+    return state != null &&
+        (state! == ClimbState.noAttempt || duration != null);
   }
 }
 
@@ -99,7 +100,7 @@ class EndgameClimb {
 
   bool get isFilled {
     return state != null &&
-        (state! == ClimbState.none || (index != null && duration != null));
+        (state! == ClimbState.noAttempt || (index != null && duration != null));
   }
 }
 
@@ -192,20 +193,20 @@ enum ActionDuration {
 }
 
 enum ClimbState {
-  none,
+  noAttempt,
+  failed,
   docked,
-  engaged,
   dockedByOther;
 
   @override
   String toString() {
     switch (this) {
-      case ClimbState.none:
-        return 'none';
+      case ClimbState.noAttempt:
+        return 'noAttempt';
+      case ClimbState.failed:
+        return 'failed';
       case ClimbState.docked:
         return 'docked';
-      case ClimbState.engaged:
-        return 'engaged';
       case ClimbState.dockedByOther:
         return 'dockedByOther';
     }

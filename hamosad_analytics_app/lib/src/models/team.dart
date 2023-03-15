@@ -51,18 +51,12 @@ class TeamInfo {
     required this.number,
     required this.name,
     String? location,
-    int? rank,
-    int? won,
-    int? lost,
-    Stat? score,
-    RobotIndexStat? defenceIndex,
-  }) : location = location ?? '';
+  }) : location = location ?? 'Israel';
 }
 
 /// All of the team's autonomous stats and averages.
 class TeamAuto {
   Stat score;
-  StartPositionStat startPosition;
   Rate leftCommunity;
   PiecesPickupsStat pickups;
   PiecesDropoffsStat dropoffs;
@@ -73,7 +67,6 @@ class TeamAuto {
   /// Uses default values for all fields.
   TeamAuto.defaults()
       : score = Stat(),
-        startPosition = StartPositionStat.defaults(),
         leftCommunity = Rate(),
         pickups = PiecesPickupsStat.defaults(),
         dropoffs = PiecesDropoffsStat.defaults(),
@@ -83,7 +76,6 @@ class TeamAuto {
 
   void updateWithReport(ReportAuto report) {
     score.updateWithValue(report.score);
-    startPosition.updateWithPosition(report.startPosition);
     leftCommunity.updateWithValue(report.leftCommunity);
 
     pickups.updateRatesWithPickups(report.pickups);
@@ -246,54 +238,6 @@ class TeamSummary {
     if (report.summary.fouls.isNotEmpty) {
       fouls.add(report.summary.fouls);
     }
-  }
-}
-
-/// Rates of the robot's starting positions.
-class StartPositionStat {
-  /// The robot is the closest to the arena wall out of the 3 robots in his alliance.
-  ///
-  /// Together with [middleRate] and [loadingZoneRate] represents 100% of the starting positions.
-  double arenaWallRate;
-
-  /// The robot is in the middle out of the 3 robots in his alliance.
-  ///
-  /// Together with [arenaWallRate] and [loadingZoneRate] represents 100% of the starting positions.
-  double middleRate;
-
-  /// The robot is the closest to the loading zone out of the 3 robots in his alliance.
-  ///
-  /// Together with [arenaWallRate] and [middleRate] represents 100% of the starting positions.
-  double loadingZoneRate;
-
-  int _arenaWallCount, _middleCount, _loadingZoneCount;
-
-  /// Uses default values for all fields.
-  StartPositionStat.defaults()
-      : arenaWallRate = 0.0,
-        middleRate = 0.0,
-        loadingZoneRate = 0.0,
-        _arenaWallCount = 0,
-        _middleCount = 0,
-        _loadingZoneCount = 0;
-
-  void updateWithPosition(StartPosition position) {
-    switch (position) {
-      case StartPosition.arenaWall:
-        _arenaWallCount++;
-        break;
-      case StartPosition.middle:
-        _middleCount++;
-        break;
-      case StartPosition.loadingZone:
-        _loadingZoneCount++;
-        break;
-    }
-
-    final count = _arenaWallCount + _middleCount + _loadingZoneCount;
-    arenaWallRate = _arenaWallCount / count;
-    middleRate = _middleCount / count;
-    loadingZoneRate = _loadingZoneCount / count;
   }
 }
 
@@ -544,59 +488,58 @@ class PiecesDropoffsStat {
 class ClimbingStateStat {
   /// Rate of not climbed.
   ///
-  /// Together with [dockedRate], [dockedByOtherRate] and [engagedRate] represents 100% of all climbing states.
-  double noneRate;
-
-  /// Rate of the robot being docked by himself.
-  ///
-  /// Together with [noneRate], [dockedByOtherRate] and [engagedRate] represents 100% of all climbing states.
-  double dockedRate;
+  /// Together with [failedRate], [dockedRate] and [engagedRate] represents 100% of all climbing states.
+  double noAttemptRate;
 
   /// Rate of the robot being docked by another robot.
   ///
-  /// Together with [noneRate], [dockedRate] and [engagedRate] represents 100% of all climbing states.
-  double dockedByOtherRate;
+  /// Together with [noAttemptRate], [dockedRate] and [engagedRate] represents 100% of all climbing states.
+  double failedRate;
+
+  /// Rate of the robot being docked by himself.
+  ///
+  /// Together with [noAttemptRate], [failedRate] and [engagedRate] represents 100% of all climbing states.
+  double dockedRate;
 
   /// Rate of the robot being engaged.
   ///
-  /// Together with [noneRate], [dockedRate] and [dockedByOtherRate] represents 100% of all climbing states.
+  /// Together with [noAttemptRate], [failedRate] and [dockedRate] represents 100% of all climbing states.
   double engagedRate;
 
-  int _noneCount, _dockedCount, _dockedByOtherCount, _engagedCount;
+  int _noAttemptCount, _failedCount, _dockedCount, _engagedCount;
 
   /// Uses default values for all fields.
   ClimbingStateStat.defaults()
-      : noneRate = 0.0,
+      : noAttemptRate = 0.0,
         dockedRate = 0.0,
-        dockedByOtherRate = 0.0,
+        failedRate = 0.0,
         engagedRate = 0.0,
-        _noneCount = 0,
+        _noAttemptCount = 0,
         _dockedCount = 0,
-        _dockedByOtherCount = 0,
+        _failedCount = 0,
         _engagedCount = 0;
 
   void updateWithState(ClimbingState? value) {
     switch (value) {
       case null:
-      case ClimbingState.none:
-        _noneCount++;
+      case ClimbingState.noAttempt:
+        _noAttemptCount++;
+        break;
+      case ClimbingState.failed:
+        _failedCount++;
         break;
       case ClimbingState.docked:
         _dockedCount++;
-        break;
-      case ClimbingState.dockedByOther:
-        _dockedByOtherCount++;
         break;
       case ClimbingState.engaged:
         _engagedCount++;
         break;
     }
 
-    final count =
-        _noneCount + _dockedCount + _dockedByOtherCount + _engagedCount;
-    noneRate = _noneCount / count;
+    final count = _noAttemptCount + _dockedCount + _failedCount + _engagedCount;
+    noAttemptRate = _noAttemptCount / count;
+    failedRate = _failedCount / count;
     dockedRate = _dockedCount / count;
-    dockedByOtherRate = _dockedByOtherCount / count;
     engagedRate = _engagedCount / count;
   }
 }
@@ -617,49 +560,6 @@ class AutoClimbStat {
   void updateWithClimb(AutoClimb? climb) {
     states.updateWithState(climb?.state);
     duration.updateWithDuration(climb?.duration);
-  }
-}
-
-class RobotIndexStat {
-  /// The robot climbed first.
-  ///
-  /// Together with [secondRate] and [thirdRate] represents 100% of the climbing indexes.
-  double firstRate;
-
-  /// The robot climbed second.
-  ///
-  /// Together with [firstRate] and [thirdRate] represents 100% of the climbing indexes.
-  double secondRate;
-
-  /// The robot climbed third.
-  ///
-  /// Together with [firstRate] and [secondRate] represents 100% of the climbing indexes.
-  double thirdRate;
-
-  int _firstCount, _secondCount, _thirdCount;
-
-  /// Uses default values for all fields.
-  RobotIndexStat.defaults()
-      : firstRate = 0.0,
-        secondRate = 0.0,
-        thirdRate = 0.0,
-        _firstCount = 0,
-        _secondCount = 0,
-        _thirdCount = 0;
-
-  void updateWithIndex(RobotIndex value) {
-    if (value == RobotIndex.first) {
-      _firstCount++;
-    } else if (value == RobotIndex.second) {
-      _secondCount++;
-    } else if (value == RobotIndex.third) {
-      _thirdCount++;
-    }
-
-    final count = _firstCount + _secondCount + _thirdCount;
-    firstRate = _firstCount / count;
-    secondRate = _secondCount / count;
-    thirdRate = _thirdCount / count;
   }
 }
 
@@ -711,23 +611,18 @@ class EndgameClimbStat {
   /// Rates of climbing states.
   ClimbingStateStat states;
 
-  /// Rates of climbing indexes.
-  RobotIndexStat indexes;
-
   /// Rates of climbing durations.
   ActionDurationStat duration;
 
   /// Uses default values for all fields.
   EndgameClimbStat.defaults()
       : states = ClimbingStateStat.defaults(),
-        indexes = RobotIndexStat.defaults(),
         duration = ActionDurationStat.defaults();
 
   void updateWithClimb(EndgameClimb? climb) {
     if (climb == null) return;
 
     states.updateWithState(climb.state);
-    indexes.updateWithIndex(climb.robotIndex);
     duration.updateWithDuration(climb.duration);
   }
 }

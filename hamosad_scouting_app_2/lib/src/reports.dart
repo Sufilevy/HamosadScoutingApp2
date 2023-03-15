@@ -26,11 +26,6 @@ Widget gameReport(BuildContext context, double size) {
         size: size,
         title: 'Auto',
         children: [
-          ScoutingStartPosition(
-            size: size,
-            onChanged: (index) => gameReport.auto.startPosition.data =
-                StartPosition.values[index],
-          ),
           ScoutingToggleButton(
             size: size,
             cubit: gameReport.auto.leftCommunity,

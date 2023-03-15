@@ -449,14 +449,14 @@ class AnalyticsClimbsStatChip extends StatelessWidget {
       child: Row(
         children: [
           _buildText(
-              'None:\n${data.noneRate.toPercent().toStringAsPrecision(3)}%'),
+              'None:\n${data.noAttemptRate.toPercent().toStringAsPrecision(3)}%'),
           _buildDivider(),
           _buildText(
               'Docked:\n${data.dockedRate.toPercent().toStringAsPrecision(3)}%'),
           if (dockedByOther) ...[
             _buildDivider(),
             _buildText(
-                'By Other:\n${data.dockedByOtherRate.toPercent().toStringAsPrecision(3)}%'),
+                'By Other:\n${data.failedRate.toPercent().toStringAsPrecision(3)}%'),
           ],
           _buildDivider(),
           _buildText(
