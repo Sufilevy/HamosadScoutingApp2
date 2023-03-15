@@ -19,28 +19,19 @@ class TeamsPage extends ConsumerStatefulWidget {
   static final List<String> defaultTeamEntreis = dataEntries.keys.toList();
   static final Map<String, DataEntry> dataEntries = {
     'Name': DataEntry<String>(
-        height: 30.0 * AnalyticsApp.size,
-        getData: (team) => team.info.name,
-        builder: (team) => FittedBox(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 8.0 * AnalyticsApp.size,
-                  vertical: 4.0 * AnalyticsApp.size,
-                ),
-                child: AnalyticsText.data(
-                  team.info.name,
-                  color: AnalyticsTheme.primary.withOpacity(0.8),
-                ),
-              ),
-            )),
-    'Win Rate': DataEntry<double>(
-      height: 35.0 * AnalyticsApp.size,
-      getData: (team) => team.summary.winRate,
-      builder: (team) => AnalyticsTwoRateChip(
-        first: team.summary.won,
-        second: team.summary.lost,
-        inContainer: false,
-        isPercent: false,
+      height: 30.0 * AnalyticsApp.size,
+      getData: (team) => team.info.name,
+      builder: (team) => FittedBox(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 8.0 * AnalyticsApp.size,
+            vertical: 4.0 * AnalyticsApp.size,
+          ),
+          child: AnalyticsText.data(
+            team.info.name,
+            color: AnalyticsTheme.primary.withOpacity(0.8),
+          ),
+        ),
       ),
     ),
     'Score': DataEntry<double>(

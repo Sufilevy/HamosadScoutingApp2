@@ -326,7 +326,7 @@ class AnalyticsTwoRateChip extends StatelessWidget {
                 child: AnalyticsText.data(
                   (isPercent)
                       ? '${first.toDouble().toPercent().toStringAsPrecision(3)}%'
-                      : first.toString(),
+                      : first.toStringAsPrecision(3),
                   color: firstColor,
                   fontSize: 15.0 * AnalyticsApp.size,
                 ),
@@ -346,7 +346,7 @@ class AnalyticsTwoRateChip extends StatelessWidget {
                 child: AnalyticsText.data(
                   (isPercent)
                       ? '${second.toDouble().toPercent().toStringAsPrecision(3)}%'
-                      : second.toString(),
+                      : second.toStringAsPrecision(3),
                   color: secondColor,
                   fontSize: 15.0 * AnalyticsApp.size,
                 ),

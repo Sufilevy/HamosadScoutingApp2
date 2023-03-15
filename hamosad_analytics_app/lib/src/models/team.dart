@@ -1,4 +1,3 @@
-import 'package:dartx/dartx.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
 
 /// All of the team's stats and averages.
@@ -191,7 +190,6 @@ class TeamEndgame {
 
 class TeamSummary {
   Stat score;
-  int won, lost;
   DefenceIndexStat defenceIndex;
   PiecesPickupsStat pickups;
   PiecesDropoffsStat dropoffs;
@@ -201,8 +199,6 @@ class TeamSummary {
   /// Uses default values for all fields.
   TeamSummary.defaults()
       : score = Stat(),
-        won = 0,
-        lost = 0,
         defenceIndex = DefenceIndexStat.defaults(),
         pickups = PiecesPickupsStat.defaults(),
         dropoffs = PiecesDropoffsStat.defaults(),
@@ -210,62 +206,39 @@ class TeamSummary {
         notes = [],
         fouls = [];
 
-  double get winRate {
-    if (won == 0) {
-      return -lost.toDouble() * 100.0;
-    } else if (lost == 0) {
-      return won.toDouble() * 100.0;
-    }
-
-    return (won / (won + lost)) * won;
-  }
-
   void updateWithReport(Report report) {
-    if (report.summary.won) {
-      won += 1;
-    } else {
-      lost += 1;
-    }
-
     score.updateWithValue(report.score);
     defenceIndex.updateWithIndex(report.summary.defenceIndex);
 
-    pickups.updateRatesWithPickups(report.auto.pickups);
-    pickups.updateRatesWithPickups(report.teleop.pickups);
-    pickups.updateRatesWithPickups(report.endgame.pickups);
-
-    pickups.updateAveragesWithPieces(
-      numCones: report.auto.pickups.numCones,
-      numCubes: report.auto.pickups.numCubes,
+    pickups.updateRatesWithPickups(
+      report.auto.pickups + report.teleop.pickups + report.endgame.pickups,
     );
     pickups.updateAveragesWithPieces(
-      numCones: report.teleop.pickups.numCones,
-      numCubes: report.teleop.pickups.numCubes,
-    );
-    pickups.updateAveragesWithPieces(
-      numCones: report.endgame.pickups.numCones,
-      numCubes: report.endgame.pickups.numCubes,
-    );
-
-    dropoffs.updateRatesWithDropoffs(report.auto.dropoffs);
-    dropoffs.updateRatesWithDropoffs(report.teleop.dropoffs);
-    dropoffs.updateRatesWithDropoffs(report.endgame.dropoffs);
-    dropoffs.updateAveragesWithPieces(
-      numCones: report.auto.dropoffs.numCones,
-      numCubes: report.auto.dropoffs.numCubes,
-    );
-    dropoffs.updateAveragesWithPieces(
-      numCones: report.teleop.dropoffs.numCones,
-      numCubes: report.teleop.dropoffs.numCubes,
-    );
-    dropoffs.updateAveragesWithPieces(
-      numCones: report.endgame.dropoffs.numCones,
-      numCubes: report.endgame.dropoffs.numCubes,
+      numCones: report.auto.pickups.numCones +
+          report.teleop.pickups.numCones +
+          report.endgame.pickups.numCones,
+      numCubes: report.auto.pickups.numCubes +
+          report.teleop.pickups.numCubes +
+          report.endgame.pickups.numCubes,
     );
 
-    chargeStationPasses.updateWithValue(report.auto.chargeStationPasses);
-    chargeStationPasses.updateWithValue(report.teleop.chargeStationPasses);
-    chargeStationPasses.updateWithValue(report.endgame.chargeStationPasses);
+    dropoffs.updateRatesWithDropoffs(
+      report.auto.dropoffs + report.teleop.dropoffs + report.endgame.dropoffs,
+    );
+    dropoffs.updateAveragesWithPieces(
+      numCones: report.auto.dropoffs.numCones +
+          report.teleop.dropoffs.numCones +
+          report.endgame.dropoffs.numCones,
+      numCubes: report.auto.dropoffs.numCubes +
+          report.teleop.dropoffs.numCubes +
+          report.endgame.dropoffs.numCubes,
+    );
+
+    chargeStationPasses.updateWithValue(
+      report.auto.chargeStationPasses +
+          report.teleop.chargeStationPasses +
+          report.endgame.chargeStationPasses,
+    );
 
     if (report.summary.notes.isNotEmpty) {
       notes.add(report.summary.notes);
@@ -387,7 +360,7 @@ class PiecesStat {
   double cubesRate;
 
   /// Per-game average.
-  Stat cones, cubes;
+  Stat cones, cubes, pieces;
 
   int _conesCount, _cubesCount;
 
@@ -397,6 +370,7 @@ class PiecesStat {
         cubesRate = 0.0,
         cones = Stat(),
         cubes = Stat(),
+        pieces = Stat(),
         _conesCount = 0,
         _cubesCount = 0;
 
@@ -421,6 +395,7 @@ class PiecesStat {
   }) {
     cones.updateWithValue(numCones);
     cubes.updateWithValue(numCubes);
+    pieces.updateWithValue(numCones + numCubes);
   }
 }
 
@@ -511,12 +486,13 @@ class GridDropoffsStat {
   }
 
   void updateRowsWithDropoffs(List<PieceDropoff> dropoffs) {
+    var rowsCount = [0, 0, 0];
+    for (final dropoff in dropoffs) {
+      rowsCount[dropoff.row]++;
+    }
+
     for (int row = 0; row < 3; row++) {
-      rows[row].updateWithValue(
-        dropoffs.count(
-          (dropoff) => dropoff.row == row,
-        ),
-      );
+      rows[row].updateWithValue(rowsCount[row]);
     }
   }
 }
@@ -524,7 +500,7 @@ class GridDropoffsStat {
 /// Dropoffs made in all grids.
 class PiecesDropoffsStat {
   /// Dropoffs made in all grids.
-  GridDropoffsStat allGrids;
+  GridDropoffsStat grids;
 
   /// Pieces dropoffs rates.
   PiecesStat pieces;
@@ -537,14 +513,13 @@ class PiecesDropoffsStat {
 
   /// Uses default values for all fields.
   PiecesDropoffsStat.defaults()
-      : allGrids = GridDropoffsStat.defaults(),
+      : grids = GridDropoffsStat.defaults(),
         pieces = PiecesStat.defaults(),
         duration = ActionDurationStat.defaults(),
         totalDropoffs = Stat();
 
   void updateRatesWithDropoff(PieceDropoff dropoff) {
-    allGrids.updateWithDropoff(dropoff);
-
+    grids.updateWithDropoff(dropoff);
     pieces.updateRatesWithPiece(dropoff.piece);
     duration.updateWithDuration(dropoff.duration);
   }
@@ -554,7 +529,7 @@ class PiecesDropoffsStat {
       updateRatesWithDropoff(dropoff);
     }
     totalDropoffs.updateWithValue(dropoffs.length);
-    allGrids.updateRowsWithDropoffs(dropoffs);
+    grids.updateRowsWithDropoffs(dropoffs);
   }
 
   void updateAveragesWithPieces({

@@ -100,13 +100,11 @@ class ReportEndgame {
 }
 
 class ReportSummary {
-  bool won;
   DefenceRobotIndex defenceIndex;
   String fouls, notes;
 
   ReportSummary.fromJson(Json json)
-      : won = json['won'],
-        defenceIndex = DefenceRobotIndex.fromString(json['defenceRobotIndex'])!,
+      : defenceIndex = DefenceRobotIndex.fromString(json['defenceRobotIndex'])!,
         fouls = json['fouls'],
         notes = json['notes'];
 }

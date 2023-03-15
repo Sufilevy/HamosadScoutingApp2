@@ -16,16 +16,16 @@ class Stat {
   int _count;
   num _sum;
 
-  num get min => _min;
-  num get max => _max;
+  num get min => _min.isFinite ? _min : 0.0;
+  num get max => _max.isFinite ? _max : 0.0;
   double get average => _average;
 
-  Stat({num? min, num? max, double? average})
+  Stat({num? min, num? max, double? average, int? count, num? sum})
       : _min = min ?? double.infinity,
         _max = max ?? double.negativeInfinity,
         _average = average ?? 0.0,
-        _count = 0,
-        _sum = 0.0;
+        _count = count ?? 0,
+        _sum = sum ?? 0.0;
 
   void updateWithValue(num value) {
     _min = math.min(_min, value);
@@ -33,6 +33,16 @@ class Stat {
     _count++;
     _sum += value;
     _average = _sum / _count;
+  }
+
+  Stat operator &(Stat other) {
+    final min = math.min(_min, other.min);
+    final max = math.max(_max, other.max);
+    final count = _count + other._count;
+    final sum = _sum + other._sum;
+    final average = sum / count;
+
+    return Stat(min: min, max: max, count: count, sum: sum, average: average);
   }
 }
 

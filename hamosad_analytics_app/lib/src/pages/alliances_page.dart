@@ -14,7 +14,6 @@ class AlliancesPage extends ConsumerStatefulWidget {
   const AlliancesPage({Key? key}) : super(key: key);
 
   static final Map<String, double Function(Team)> tableEntries = {
-    'Win Rate': (team) => team.summary.winRate,
     'Score': (team) => team.summary.score.average,
     'Auto Score': (team) => team.auto.score.average,
     'Teleop Score': (team) => team.teleop.score.average,
