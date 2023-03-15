@@ -183,7 +183,6 @@ class _AnalyticsAppBodyState extends ConsumerState<AnalyticsAppBody> {
   }
 }
 
-// TODO: Remove at production.
 T debug<T>(T object) {
   debugPrint(object.toString());
   return object;
