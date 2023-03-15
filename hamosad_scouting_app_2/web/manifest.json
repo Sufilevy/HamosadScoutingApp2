@@ -1,35 +1,11 @@
 {
-    "name": "hamosad_scouting_app_2",
-    "short_name": "hamosad_scouting_app_2",
+    "name": "Hamosad Scouting App",
+    "short_name": "Scouting 1657",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
-    "prefer_related_applications": false,
-    "icons": [
-        {
-            "src": "icons/Icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "icons/Icon-512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        },
-        {
-            "src": "icons/Icon-maskable-192.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "maskable"
-        },
-        {
-            "src": "icons/Icon-maskable-512.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "maskable"
-        }
-    ]
+    "background_color": "#1F1E24",
+    "theme_color": "#1F1E24",
+    "description": "A scouting app for the FRC team Hamosad 1657.",
+    "orientation": "portrait",
+    "prefer_related_applications": false
 }

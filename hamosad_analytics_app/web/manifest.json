@@ -1,11 +1,11 @@
 {
     "name": "Hamosad Analytics App",
-    "short_name": "Hamosad Analytics",
+    "short_name": "Analytics 1657",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#1F1E24",
     "theme_color": "#1F1E24",
     "description": "A scouting analytics app for the FRC team Hamosad 1657.",
-    "orientation": "portrait-primary",
+    "orientation": "landscape",
     "prefer_related_applications": false
 }
