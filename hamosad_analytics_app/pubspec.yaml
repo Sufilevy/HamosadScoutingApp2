@@ -48,6 +48,7 @@ dependencies:
   cloud_firestore: ^4.4.3
   flutter_phoenix: ^1.1.0
   flutter_typeahead: ^4.3.7
+  fl_chart: ^0.61.0
 
 dev_dependencies:
   flutter_test:
