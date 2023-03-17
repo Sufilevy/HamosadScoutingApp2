@@ -36,8 +36,7 @@ class _ScoutingAppState extends State<ScoutingApp> {
         initialRoute: '/',
         routes: {
           '/': _buildHomePage,
-          '/game-report': (context) => gameReport(context, size),
-          '/pit-report': (context) => pitReport(context, size),
+          '/report': (context) => gameReport(context, size),
         },
       ),
     );

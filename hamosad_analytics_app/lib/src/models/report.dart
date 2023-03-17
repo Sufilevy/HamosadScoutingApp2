@@ -99,12 +99,13 @@ class ReportEndgame {
 
 class ReportSummary {
   DefenceRobotIndex defenceIndex;
-  String fouls, notes;
+  String fouls, notes, defenceNotes;
 
   ReportSummary.fromJson(Json json)
       : defenceIndex = DefenceRobotIndex.fromString(json['defenceRobotIndex'])!,
         fouls = json['fouls'],
-        notes = json['notes'];
+        notes = json['notes'],
+        defenceNotes = json['defenceNotes'] ?? '';
 }
 
 enum ActionDuration {

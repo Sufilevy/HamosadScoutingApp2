@@ -193,7 +193,7 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
                 .toList(),
             onChanged: (value) => setState(() {
               if (value != null) {
-                _match = value == 'Eliminations' ? 'elims' : value;
+                _match = value;
                 widget.match.data = value;
               }
             }),

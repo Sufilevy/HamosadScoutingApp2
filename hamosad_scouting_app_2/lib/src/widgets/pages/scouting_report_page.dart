@@ -76,11 +76,10 @@ class ScoutingReportPage extends StatelessWidget {
           if (report.match.data.isNullOrEmpty ||
               report.teamNumber.data.isNullOrEmpty) {
             content = 'Please fill the match and team number.';
-          } else if (report.gameReport.auto.startPosition.data == null) {
-            content = 'Please fill the robot\'s start position.';
-          } else if (!report.gameReport.auto.climb.data.isFilled) {
+          } else if (!report.gameReport.auto.climb.data
+              .isFilled(includeDuration: false)) {
             content = 'Please fill the autonomous climb.';
-          } else if (!report.gameReport.endgame.climb.data.isFilled) {
+          } else if (!report.gameReport.endgame.climb.data.isFilled()) {
             content = 'Please fill the endgame climb.';
           } else if (report.gameReport.summary.defenceFocus.data == null) {
             content = 'Please fill the defence focus.';
@@ -117,10 +116,7 @@ class ScoutingReportPage extends StatelessWidget {
                         (route) => route.isFirst,
                       );
                       final reportData = reportDataProvider(context);
-                      await ScoutingDatabase.sendReport(
-                        reportData.data,
-                        reportType: reportData.reportType.data,
-                      );
+                      await ScoutingDatabase.sendReport(reportData.data);
                       reportData.clear();
                     },
                     child: Padding(

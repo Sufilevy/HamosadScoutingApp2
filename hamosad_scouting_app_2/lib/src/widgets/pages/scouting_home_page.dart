@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 class ScoutingHomePage extends StatelessWidget {
   final String title;
@@ -31,48 +30,8 @@ class ScoutingHomePage extends StatelessWidget {
         ),
       );
     } else {
-      Navigator.pushNamed(context,
-          '/${reportDataProvider(context).reportType.data.name}-report');
+      Navigator.pushNamed(context, '/report');
     }
-  }
-
-  Widget _reportTypeSwitch(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: EdgeInsets.all(8.0 * size),
-          child: ScoutingText.subtitle('Report type:'),
-        ),
-        Padding(
-          padding: EdgeInsets.only(
-            top: 8.0 * size,
-            bottom: 8.0 * size,
-          ),
-          child: ToggleSwitch(
-            cornerRadius: 10.0 * size,
-            inactiveBgColor: ScoutingTheme.background3,
-            inactiveFgColor: ScoutingTheme.foreground2,
-            activeBgColors: const [
-              [ScoutingTheme.cones],
-              [ScoutingTheme.cubes],
-            ],
-            activeFgColor: ScoutingTheme.foreground1,
-            initialLabelIndex: 0,
-            totalSwitches: 2,
-            labels: const ['Game', 'Pit'],
-            fontSize: 28.0 * size,
-            minWidth: 140.0 * size,
-            animate: true,
-            curve: Curves.easeOutQuint,
-            onToggle: (index) {
-              reportDataProvider(context).reportType.data =
-                  ReportType.values[index ?? 0];
-            },
-          ),
-        ),
-      ],
-    );
   }
 
   @override
@@ -159,7 +118,6 @@ class ScoutingHomePage extends StatelessWidget {
                     onlyNumbers: true,
                   ),
                 ),
-                _reportTypeSwitch(context),
               ],
             ),
             ScoutingIconButton(

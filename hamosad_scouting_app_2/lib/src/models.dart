@@ -68,39 +68,21 @@ class Pickups {
   }
 }
 
-class AutoClimb {
+class Climb {
   ClimbState? state;
   ActionDuration? duration;
 
-  Json toJson() {
+  Json toJson({bool includeDuration = true}) {
     return {
       'state': state.toString(),
-      'duration': duration.toString(),
+      if (includeDuration) 'duration': duration.toString(),
     };
   }
 
-  bool get isFilled {
+  bool isFilled({bool includeDuration = true}) {
     return state != null &&
-        (state! == ClimbState.noAttempt || duration != null);
-  }
-}
-
-class EndgameClimb {
-  ClimbState? state;
-  RobotIndex? index;
-  ActionDuration? duration;
-
-  Json toJson() {
-    return {
-      'state': state.toString(),
-      'robotIndex': index.toString(),
-      'duration': duration.toString(),
-    };
-  }
-
-  bool get isFilled {
-    return state != null &&
-        (state! == ClimbState.noAttempt || (index != null && duration != null));
+        (state! == ClimbState.noAttempt ||
+            (!includeDuration || duration != null));
   }
 }
 

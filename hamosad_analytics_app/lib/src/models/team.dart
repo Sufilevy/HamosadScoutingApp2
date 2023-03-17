@@ -186,7 +186,7 @@ class TeamSummary {
   PiecesPickupsStat pickups;
   PiecesDropoffsStat dropoffs;
   Stat chargeStationPasses;
-  List<String> notes, fouls;
+  List<String> notes, fouls, defenceNotes;
 
   /// Uses default values for all fields.
   TeamSummary.defaults()
@@ -196,7 +196,8 @@ class TeamSummary {
         dropoffs = PiecesDropoffsStat.defaults(),
         chargeStationPasses = Stat(),
         notes = [],
-        fouls = [];
+        fouls = [],
+        defenceNotes = [];
 
   void updateWithReport(Report report) {
     score.updateWithValue(report.score);
@@ -237,6 +238,9 @@ class TeamSummary {
     }
     if (report.summary.fouls.isNotEmpty) {
       fouls.add(report.summary.fouls);
+    }
+    if (report.summary.defenceNotes.isNotEmpty) {
+      defenceNotes.add(report.summary.defenceNotes);
     }
   }
 }

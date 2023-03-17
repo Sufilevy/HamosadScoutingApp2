@@ -5,8 +5,6 @@ import 'package:dartx/dartx.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
-enum ReportType { game, pit }
-
 class ScoutingDatabase {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
   static String _districtName = '';
@@ -28,8 +26,9 @@ class ScoutingDatabase {
     await FirebaseAuth.instance.currentUser?.delete();
   }
 
-  static String _generateReportId(String match, String scouter) {
-    return '$match-$scouter-${List.generate(4, (index) => _chars[_random.nextInt(_chars.length)]).join()}';
+  static String _generateReportId(
+      String match, String scouter, String teamNumber) {
+    return '${match == 'Eliminations' ? 'elims' : match}-${scouter.trim().replaceAll(' ', '_')}-$teamNumber-${List.generate(4, (index) => _chars[_random.nextInt(_chars.length)]).join()}';
   }
 
   static Map<String, dynamic> _getDateTime() {
@@ -45,19 +44,17 @@ class ScoutingDatabase {
 
   static Future<void> sendReport(
     Map<String, dynamic> data, {
-    required ReportType reportType,
     String? id,
   }) async {
     data.addAll({'datetime': _getDateTime()});
 
     final reports = _db.collection('reports');
-    final docName =
-        '$_districtName-${reportType == ReportType.pit ? 'pit-' : ''}${data['info']['scouterTeamNumber']}';
+    final docName = '$_districtName-${data['info']['scouterTeamNumber']}';
 
     await reports.doc(docName).update({
       id ??
-          _generateReportId(
-              data['info']['match'] ?? 'pit', data['info']['scouter']): data,
+          _generateReportId(data['info']['match'] ?? 'pit',
+              data['info']['scouter'], data['info']['teamNumber']): data,
     });
   }
 

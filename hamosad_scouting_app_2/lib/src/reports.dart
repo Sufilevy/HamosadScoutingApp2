@@ -50,8 +50,9 @@ Widget gameReport(BuildContext context, double size) {
             initial: 0,
             title: 'Charge Station\npasses',
           ),
-          ScoutingAutoClimb(
+          ScoutingClimb(
             size: size,
+            includeDuration: false,
             cubit: gameReport.auto.climb,
           ),
           ScoutingNotes(
@@ -108,7 +109,7 @@ Widget gameReport(BuildContext context, double size) {
             initial: 0,
             title: 'Charge Station\npasses',
           ),
-          ScoutingEndgameClimb(
+          ScoutingClimb(
             size: size,
             cubit: gameReport.endgame.climb,
           ),
@@ -141,35 +142,11 @@ Widget gameReport(BuildContext context, double size) {
             title: 'Fouls',
             hint: 'Enter the team\'s fouls...',
           ),
-        ],
-      ),
-    ],
-  );
-}
-
-Widget pitReport(BuildContext context, double size) {
-  final report = reportDataProvider(context);
-  final pitReport = report.pitReport;
-  return ScoutingReportPage(
-    size: size,
-    title: 'Pit Report',
-    tabs: [
-      ScoutingReportTab(
-        size: size,
-        title: 'Pit',
-        children: [
-          ScoutingTextField(
-            size: size,
-            cubit: report.teamNumber,
-            title: 'Team number',
-            hint: 'Enter the team\'s number...',
-            onlyNumbers: true,
-          ),
           ScoutingNotes(
             size: size,
-            title: 'Robot info',
-            hint: 'Enter the robots info...',
-            cubit: pitReport.notes,
+            cubit: gameReport.summary.defenceNotes,
+            title: 'Defence Notes',
+            hint: 'Enter your defence notes...',
           ),
         ],
       ),

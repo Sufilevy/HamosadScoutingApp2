@@ -183,7 +183,7 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
               ),
               AnalyticsStatChip.fromStat(
                 team.teleop.chargeStationPasses,
-                title: 'Charge Station Passes',
+                title: 'Charge Station\nPasses',
               ),
             ],
           ),
@@ -230,7 +230,7 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
               ),
               AnalyticsStatChip.fromStat(
                 team.endgame.chargeStationPasses,
-                title: 'Charge Station Passes',
+                title: 'Charge Station\nPasses',
               ),
             ],
           ),

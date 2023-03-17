@@ -449,15 +449,13 @@ class AnalyticsClimbsStatChip extends StatelessWidget {
       child: Row(
         children: [
           _buildText(
-              'None:\n${data.noAttemptRate.toPercent().toStringAsPrecision(3)}%'),
+              'No Attempt:\n${data.noAttemptRate.toPercent().toStringAsPrecision(3)}%'),
+          _buildDivider(),
+          _buildText(
+              'Failed:\n${data.failedRate.toPercent().toStringAsPrecision(3)}%'),
           _buildDivider(),
           _buildText(
               'Docked:\n${data.dockedRate.toPercent().toStringAsPrecision(3)}%'),
-          if (dockedByOther) ...[
-            _buildDivider(),
-            _buildText(
-                'By Other:\n${data.failedRate.toPercent().toStringAsPrecision(3)}%'),
-          ],
           _buildDivider(),
           _buildText(
               'Engaged:\n${data.engagedRate.toPercent().toStringAsPrecision(3)}%'),
@@ -789,6 +787,10 @@ class AnalyticsNotes extends StatelessWidget {
           if (team.summary.fouls.isNotEmpty) ...[
             _buildTitle('Fouls'),
             _buildNotes(team.summary.fouls),
+          ],
+          if (team.summary.defenceNotes.isNotEmpty) ...[
+            _buildTitle('Defence Notes'),
+            _buildNotes(team.summary.defenceNotes),
           ],
           if (team.auto.notes.isNotEmpty) ...[
             _buildTitle('Auto Notes'),

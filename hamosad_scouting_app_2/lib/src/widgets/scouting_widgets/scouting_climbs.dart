@@ -38,10 +38,10 @@ class ScoutingClimbState extends StatelessWidget {
       ],
       fontSize: 24.0 * size,
       customWidths: [
+        180.0 * size,
         110.0 * size,
-        130.0 * size,
-        130.0 * size,
-        130.0 * size,
+        120.0 * size,
+        140.0 * size,
       ],
       animate: true,
       curve: Curves.easeOutQuint,
@@ -50,14 +50,16 @@ class ScoutingClimbState extends StatelessWidget {
   }
 }
 
-class ScoutingAutoClimb extends StatelessWidget {
-  const ScoutingAutoClimb({
+class ScoutingClimb extends StatelessWidget {
+  const ScoutingClimb({
     Key? key,
     required this.cubit,
+    this.includeDuration = true,
     this.size = 1.0,
   }) : super(key: key);
 
-  final Cubit<AutoClimb> cubit;
+  final Cubit<Climb> cubit;
+  final bool includeDuration;
   final double size;
 
   @override
@@ -74,47 +76,14 @@ class ScoutingAutoClimb extends StatelessWidget {
           size: size,
           onChanged: (state) => cubit.data.state = ClimbState.values[state],
         ),
-        SizedBox(height: 30.0 * size),
-        ScoutingDuration(
-          size: size,
-          onChanged: (duration) =>
-              cubit.data.duration = ActionDuration.values[duration],
-        ),
-      ],
-    );
-  }
-}
-
-class ScoutingEndgameClimb extends StatelessWidget {
-  const ScoutingEndgameClimb({
-    Key? key,
-    required this.cubit,
-    this.size = 1.0,
-  }) : super(key: key);
-
-  final Cubit<EndgameClimb> cubit;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.all(12.0) * size,
-            child: ScoutingText.title('Climb:'),
+        if (includeDuration) ...[
+          SizedBox(height: 30.0 * size),
+          ScoutingDuration(
+            size: size,
+            onChanged: (duration) =>
+                cubit.data.duration = ActionDuration.values[duration],
           ),
-        ),
-        ScoutingClimbState(
-          size: size,
-          onChanged: (state) => cubit.data.state = ClimbState.values[state],
-        ),
-        SizedBox(height: 30.0 * size),
-        ScoutingDuration(
-          size: size,
-          onChanged: (duration) =>
-              cubit.data.duration = ActionDuration.values[duration],
-        ),
+        ],
       ],
     );
   }

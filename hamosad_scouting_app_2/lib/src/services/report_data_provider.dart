@@ -9,23 +9,19 @@ class ReportDataProvider {
   final Cubit<String> scouterTeamNumber = Cubit('');
   final Cubit<String?> teamNumber = Cubit(null);
   final Cubit<String?> match = Cubit(null);
-  final Cubit<ReportType> reportType = Cubit(ReportType.game);
 
   final GameReport gameReport = GameReport();
-  final PitReport pitReport = PitReport();
 
   Json get data {
-    final reportData =
-        reportType.data == ReportType.game ? gameReport.data : pitReport.data;
     return {
       'info': {
         'scouter': scouter.data,
         'scouterTeamNumber': scouterTeamNumber.data,
         'teamNumber': teamNumber.data,
         'time': DateFormat('dd/MM HH:mm:ss').format(DateTime.now()),
-        if (reportType.data == ReportType.game) 'match': match.data,
+        'match': match.data,
       },
-      ...reportData,
+      ...gameReport.data,
     };
   }
 
@@ -33,7 +29,6 @@ class ReportDataProvider {
     teamNumber.data = null;
     match.data = null;
     gameReport.clear();
-    pitReport.clear();
   }
 }
 
@@ -61,33 +56,30 @@ class GameReport {
 }
 
 class GameReportAuto {
-  Cubit<StartPosition?> startPosition = Cubit(null);
   Cubit<bool> leftCommunity = Cubit(false);
   Cubit<Pickups> pickups = Cubit(Pickups());
   Cubit<Dropoffs> dropoffs = Cubit(Dropoffs());
   Cubit<int> chargeStationPasses = Cubit(0);
-  Cubit<AutoClimb> climb = Cubit(AutoClimb());
+  Cubit<Climb> climb = Cubit(Climb());
   Cubit<String> notes = Cubit('');
 
   Json get data {
     return {
-      'startPosition': startPosition.data.toString(),
       'leftCommunity': leftCommunity.data,
       'pickups': pickups.data.toJson(),
       'dropoffs': dropoffs.data.toJson(),
       'chargeStationPasses': chargeStationPasses.data,
-      'climb': climb.data.toJson(),
+      'climb': climb.data.toJson(includeDuration: false),
       'notes': notes.data,
     };
   }
 
   void clear() {
-    startPosition.data = null;
     leftCommunity.data = false;
     pickups.data = Pickups();
     dropoffs.data = Dropoffs();
     chargeStationPasses.data = 0;
-    climb.data = AutoClimb();
+    climb.data = Climb();
     notes.data = '';
   }
 }
@@ -119,7 +111,7 @@ class GameReportEndgame {
   Cubit<Pickups> pickups = Cubit(Pickups());
   Cubit<Dropoffs> dropoffs = Cubit(Dropoffs());
   Cubit<int> chargeStationPasses = Cubit(0);
-  Cubit<EndgameClimb> climb = Cubit(EndgameClimb());
+  Cubit<Climb> climb = Cubit(Climb());
   Cubit<String> notes = Cubit('');
 
   Json get data {
@@ -136,7 +128,7 @@ class GameReportEndgame {
     pickups.data = Pickups();
     dropoffs.data = Dropoffs();
     chargeStationPasses.data = 0;
-    climb.data = EndgameClimb();
+    climb.data = Climb();
     notes.data = '';
   }
 }
@@ -146,6 +138,7 @@ class GameReportSummary {
   Cubit<DefenceFocus?> defenceFocus = Cubit(null);
   Cubit<String> fouls = Cubit('');
   Cubit<String> notes = Cubit('');
+  Cubit<String> defenceNotes = Cubit('');
 
   Json get data {
     return {
@@ -153,6 +146,7 @@ class GameReportSummary {
       'defenceRobotIndex': defenceFocus.data.toString(),
       'fouls': fouls.data,
       'notes': notes.data,
+      'defenceNotes': defenceNotes.data,
     };
   }
 
@@ -161,20 +155,7 @@ class GameReportSummary {
     defenceFocus.data = null;
     fouls.data = '';
     notes.data = '';
-  }
-}
-
-class PitReport {
-  final Cubit<String> notes = Cubit('');
-
-  Json get data {
-    return {
-      'notes': notes.data,
-    };
-  }
-
-  void clear() {
-    notes.data = '';
+    defenceNotes.data = '';
   }
 }
 
