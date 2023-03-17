@@ -28,9 +28,8 @@ class ScoutingDatabase {
     await FirebaseAuth.instance.currentUser?.delete();
   }
 
-  static String _generateReportId() {
-    return List.generate(12, (index) => _chars[_random.nextInt(_chars.length)])
-        .join();
+  static String _generateReportId(String match, String scouter) {
+    return '$match-$scouter-${List.generate(4, (index) => _chars[_random.nextInt(_chars.length)]).join()}';
   }
 
   static Map<String, dynamic> _getDateTime() {
@@ -40,7 +39,7 @@ class ScoutingDatabase {
       'day': now.day,
       'month': now.month,
       'year': now.year,
-      'time': DateFormat('dd/MM HH:mm:ss').format(now),
+      'time': DateFormat('dd/MM-HH:mm:ss').format(now),
     };
   }
 
@@ -49,13 +48,17 @@ class ScoutingDatabase {
     required ReportType reportType,
     String? id,
   }) async {
-    data.addAll({'dateTime': _getDateTime()});
+    data.addAll({'datetime': _getDateTime()});
 
     final reports = _db.collection('reports');
     final docName =
         '$_districtName-${reportType == ReportType.pit ? 'pit-' : ''}${data['info']['scouterTeamNumber']}';
 
-    await reports.doc(docName).update({id ?? _generateReportId(): data});
+    await reports.doc(docName).update({
+      id ??
+          _generateReportId(
+              data['info']['match'] ?? 'pit', data['info']['scouter']): data,
+    });
   }
 
   static late Map<String, List<String>> matches;
