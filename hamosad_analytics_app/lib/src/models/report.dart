@@ -52,7 +52,7 @@ class ReportAuto {
         dropoffs = PieceDropoff.list(json['dropoffs']),
         chargeStationPasses = json['chargeStationPasses'],
         climb = AutoClimb.fromJson(json['climb']),
-        notes = json['notes'];
+        notes = json['notes'] ?? '';
 
   int get score {
     return (leftCommunity ? 2 : 0) +
@@ -71,7 +71,7 @@ class ReportTeleop {
       : pickups = PiecePickup.list(json['pickups']),
         dropoffs = PieceDropoff.list(json['dropoffs']),
         chargeStationPasses = json['chargeStationPasses'],
-        notes = json['notes'];
+        notes = json['notes'] ?? '';
 
   int get score {
     return dropoffs.score(isAuto: false);
@@ -90,7 +90,7 @@ class ReportEndgame {
         dropoffs = PieceDropoff.list(json['dropoffs']),
         chargeStationPasses = json['chargeStationPasses'],
         climb = EndgameClimb.fromJson(json['climb']),
-        notes = json['notes'];
+        notes = json['notes'] ?? '';
 
   int get score {
     return dropoffs.score(isAuto: false) + (climb?.score ?? 0);
@@ -103,8 +103,8 @@ class ReportSummary {
 
   ReportSummary.fromJson(Json json)
       : defenceIndex = DefenceRobotIndex.fromString(json['defenceRobotIndex'])!,
-        fouls = json['fouls'],
-        notes = json['notes'],
+        fouls = json['fouls'] ?? '',
+        notes = json['notes'] ?? '',
         defenceNotes = json['defenceNotes'] ?? '';
 }
 
@@ -150,7 +150,7 @@ enum Piece {
 
   const Piece(this.color);
 
-  static Piece? fromString(String value) {
+  static Piece? fromString(String? value) {
     switch (value) {
       case 'cone':
         return Piece.cone;
@@ -166,7 +166,7 @@ enum RobotIndex {
   second,
   third;
 
-  static RobotIndex? fromString(String value) {
+  static RobotIndex? fromString(String? value) {
     switch (value) {
       case 'first':
         return RobotIndex.first;
@@ -184,7 +184,7 @@ enum DefenceRobotIndex {
   half,
   none;
 
-  static DefenceRobotIndex? fromString(String value) {
+  static DefenceRobotIndex? fromString(String? value) {
     switch (value) {
       case 'almostAll':
         return DefenceRobotIndex.almostAll;
@@ -202,7 +202,7 @@ enum PiecePickupPosition {
   loadingZone,
   floor;
 
-  static PiecePickupPosition? fromString(String value) {
+  static PiecePickupPosition? fromString(String? value) {
     switch (value) {
       case 'doubleShelf':
       case 'doubleFloor':
@@ -338,7 +338,7 @@ enum ClimbingState {
   failed,
   engaged;
 
-  static ClimbingState? fromString(String value) {
+  static ClimbingState? fromString(String? value) {
     switch (value) {
       case 'null':
       case 'none':

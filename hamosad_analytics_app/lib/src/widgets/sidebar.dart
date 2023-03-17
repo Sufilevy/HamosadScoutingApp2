@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hamosad_analytics_app/src/app.dart';
 import 'package:hamosad_analytics_app/src/constants.dart';
-import 'package:hamosad_analytics_app/src/database.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:sidebarx/sidebarx.dart';
@@ -168,11 +167,7 @@ class _RefreshDataButtonState extends ConsumerState<RefreshDataButton>
           setState(() {
             _loading = true;
           });
-
-          ref
-              .read(analyticsDatabaseProvider)
-              .updateFromFirestore()
-              .then((value) => Phoenix.rebirth(context));
+          Phoenix.rebirth(context);
         },
       );
 }

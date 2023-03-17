@@ -141,7 +141,7 @@ class _AnalyticsAppState extends ConsumerState<AnalyticsApp> {
         _finishedDialog = true;
       }),
       items: db.districts.map((data) => MultiSelectItem(data, data)).toList(),
-      initialValue: db.selectedDistricts,
+      initialValue: [db.currentDistrict],
     );
   }
 }
@@ -162,7 +162,6 @@ class _AnalyticsAppBodyState extends ConsumerState<AnalyticsAppBody> {
   final List<Widget> _pages = [
     const TeamDetailsPage(),
     const TeamsPage(),
-    // const ReportDetailsPage(),
     const AlliancesPage()
   ];
 

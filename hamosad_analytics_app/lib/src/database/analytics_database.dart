@@ -21,6 +21,7 @@ class TeamNameAndLocation {
 class AnalyticsDatabase {
   AnalyticsDatabase()
       : _selectedDistrcits = [],
+        _currentDistrict = '',
         _db = FirebaseFirestore.instance,
         _districts = [],
         _reports = [],
@@ -28,20 +29,29 @@ class AnalyticsDatabase {
 
   final FirebaseFirestore _db;
   List<String> _selectedDistrcits;
+  String _currentDistrict;
   List<String> _districts;
   List<Report> _reports;
   Map<int, TeamNameAndLocation> _teams;
 
   List<Report> get reports => _reports;
   Map<int, TeamNameAndLocation> get teams => _teams;
+  String get currentDistrict => _currentDistrict;
 
   Future<void> updateFromFirestore() async {
-    _selectedDistrcits.add(await _getCurrentDistrict());
+    _currentDistrict = await _getCurrentDistrict();
     _districts = await _getDistricts();
 
     final reports = await _getReportsFromFirestore();
     _reports = reports
-        .mapEntries((report) => Report.fromJson(report.value, id: report.key))
+        .mapEntries((report) {
+          try {
+            return Report.fromJson(report.value, id: report.key);
+          } catch (e) {
+            return null;
+          }
+        })
+        .filterNotNull()
         .toList();
 
     final teams = await _getTeamsFromFirestore();

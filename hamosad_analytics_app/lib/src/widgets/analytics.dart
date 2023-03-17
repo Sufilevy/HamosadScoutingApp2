@@ -825,16 +825,17 @@ class AnalyticsNotes extends StatelessWidget {
                       const EdgeInsets.only(bottom: 12.0) * AnalyticsApp.size,
                   child: AnalyticsContainer(
                     color: AnalyticsTheme.background1,
-                    width: 800.0 * AnalyticsApp.size,
-                    height: 50.0 * AnalyticsApp.size,
+                    width: 1100.0 * AnalyticsApp.size,
+                    height: 70.0 * AnalyticsApp.size,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                               horizontal: 8.0, vertical: 4.0) *
                           AnalyticsApp.size,
                       child: AnalyticsText.dataSubtitle(
                         note,
-                        maxLines: 2,
+                        maxLines: 3,
                         fittedBox: false,
+                        textAlign: TextAlign.center,
                         fontSize: 15.0 * AnalyticsApp.size,
                       ),
                     ),
@@ -898,6 +899,7 @@ class AnalyticsText {
                 fontSize: fontSize,
               ),
               maxLines: maxLines,
+              softWrap: true,
               textAlign: textAlign,
             ),
           )

@@ -171,6 +171,7 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
             borderRadius: BorderRadius.circular(25.0 * AnalyticsApp.size),
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Padding(
                 padding: EdgeInsets.only(
