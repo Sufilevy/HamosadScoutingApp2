@@ -73,13 +73,13 @@ class _AnalyticsAppState extends ConsumerState<AnalyticsApp> {
                               icon: Icons.groups_outlined,
                               label: 'Teams',
                             ),
-                            // SidebarXItem(
-                            //   icon: Icons.assignment_outlined,
-                            //   label: 'Report Details',
-                            // ),
                             SidebarXItem(
                               icon: Icons.assessment_outlined,
                               label: 'Alliances',
+                            ),
+                            SidebarXItem(
+                              icon: Icons.trending_up_rounded,
+                              label: 'Compare Teams',
                             ),
                           ],
                         ),
@@ -162,7 +162,8 @@ class _AnalyticsAppBodyState extends ConsumerState<AnalyticsAppBody> {
   final List<Widget> _pages = [
     const TeamDetailsPage(),
     const TeamsPage(),
-    const AlliancesPage()
+    const AlliancesPage(),
+    const CompareTeamsPage(),
   ];
 
   @override

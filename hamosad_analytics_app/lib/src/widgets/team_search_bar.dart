@@ -66,11 +66,10 @@ class TeamSearchBar extends StatelessWidget {
         ),
         autocorrect: false,
         maxLines: 1,
-        onSubmitted: onSubmitted,
         cursorRadius: const Radius.circular(1.0) * AnalyticsApp.size,
         cursorWidth: 1.5 * AnalyticsApp.size,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(16.0) * AnalyticsApp.size,
+          contentPadding: const EdgeInsets.all(16.0) * AnalyticsApp.size,
           suffixIcon: IconButton(
             onPressed: searchOnIconPressed
                 ? () => onSubmitted?.call(_controller.text)

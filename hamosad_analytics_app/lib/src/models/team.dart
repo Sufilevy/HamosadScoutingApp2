@@ -634,7 +634,7 @@ class EndgameClimbStat {
 extension TeamsListToTeamNumbersList on List<Team> {
   List<String> toTeamNumbers() {
     return map((team) {
-      if (team.info.name.contains('Team')) {
+      if (team.info.name.contains('Team ')) {
         return team.info.name;
       }
 

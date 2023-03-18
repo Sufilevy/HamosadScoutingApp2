@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 export 'widgets/analytics.dart';
-export 'widgets/graphs.dart';
+export 'widgets/charts.dart';
 export 'widgets/sidebar.dart';
 export 'widgets/tab_selector.dart';
 export 'widgets/team_search_bar.dart';

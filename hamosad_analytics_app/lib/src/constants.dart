@@ -260,7 +260,7 @@ class AnalyticsTheme {
     5113: Color.fromARGB(255, 255, 255, 0),
     5119: Color.fromARGB(255, 0, 0, 0),
     5123: Color.fromARGB(255, 41, 41, 41),
-    5135: Color.fromARGB(255, 153, 153, 153),
+    5135: Color.fromARGB(255, 46, 46, 46),
     5172: Color.fromARGB(255, 107, 156, 75),
     5190: Color.fromARGB(255, 105, 10, 15),
     5291: Color.fromARGB(255, 204, 0, 0),
