@@ -39,9 +39,9 @@ class AnalyticsData {
 
       // Update the team's stats with the current report
       final team = teamsWithNumber[report.teamNumber]!;
-      team.auto.updateWithReport(report.auto);
-      team.teleop.updateWithReport(report.teleop);
-      team.endgame.updateWithReport(report.endgame);
+      team.auto.updateWithReport(report.auto, report.matchAndScouter);
+      team.teleop.updateWithReport(report.teleop, report.matchAndScouter);
+      team.endgame.updateWithReport(report.endgame, report.matchAndScouter);
       team.summary.updateWithReport(report);
     }
 

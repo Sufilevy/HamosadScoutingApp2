@@ -74,7 +74,7 @@ class TeamAuto {
         climb = AutoClimbStat.defaults(),
         notes = [];
 
-  void updateWithReport(ReportAuto report) {
+  void updateWithReport(ReportAuto report, String matchAndScouter) {
     score.updateWithValue(report.score);
     leftCommunity.updateWithValue(report.leftCommunity);
 
@@ -94,7 +94,7 @@ class TeamAuto {
     climb.updateWithClimb(report.climb);
 
     if (report.notes.isNotEmpty) {
-      notes.add(report.notes);
+      notes.add(matchAndScouter + report.notes);
     }
   }
 }
@@ -115,7 +115,7 @@ class TeamTeleop {
         chargeStationPasses = Stat(),
         notes = [];
 
-  void updateWithReport(ReportTeleop report) {
+  void updateWithReport(ReportTeleop report, String matchAndScouter) {
     score.updateWithValue(report.score);
 
     pickups.updateRatesWithPickups(report.pickups);
@@ -133,7 +133,7 @@ class TeamTeleop {
     chargeStationPasses.updateWithValue(report.chargeStationPasses);
 
     if (report.notes.isNotEmpty) {
-      notes.add(report.notes);
+      notes.add(matchAndScouter + report.notes);
     }
   }
 }
@@ -156,7 +156,7 @@ class TeamEndgame {
         climb = EndgameClimbStat.defaults(),
         notes = [];
 
-  void updateWithReport(ReportEndgame report) {
+  void updateWithReport(ReportEndgame report, String matchAndScouter) {
     score.updateWithValue(report.score);
 
     pickups.updateRatesWithPickups(report.pickups);
@@ -175,7 +175,7 @@ class TeamEndgame {
     climb.updateWithClimb(report.climb);
 
     if (report.notes.isNotEmpty) {
-      notes.add(report.notes);
+      notes.add(matchAndScouter + report.notes);
     }
   }
 }
