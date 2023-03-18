@@ -22,9 +22,10 @@ class AnalyticsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: 20.0 * AnalyticsApp.size,
-        vertical: (verticalPadding ?? 30.0) * AnalyticsApp.size,
-      ),
+            horizontal: 20.0,
+            vertical: (verticalPadding ?? 30.0),
+          ) *
+          AnalyticsApp.size,
       child: Column(
         children: [
           title,

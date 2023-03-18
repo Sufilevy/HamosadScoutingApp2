@@ -53,7 +53,7 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20.0 * AnalyticsApp.size),
+      padding: const EdgeInsets.all(20.0) * AnalyticsApp.size,
       child: Column(
         children: [
           _buildSelectAlliancesBar(),
@@ -162,13 +162,13 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
       {VoidCallback? onDeleted}) {
     String title = alliance.teams[index].info.number.toString();
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.0 * AnalyticsApp.size),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0) * AnalyticsApp.size,
       child: Container(
           width: 130.0 * AnalyticsApp.size,
           height: 40.0 * AnalyticsApp.size,
           decoration: BoxDecoration(
             color: alliance.color,
-            borderRadius: BorderRadius.circular(25.0 * AnalyticsApp.size),
+            borderRadius: BorderRadius.circular(25.0) * AnalyticsApp.size,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -216,7 +216,8 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
         .toList();
     return AnalyticsContainer(
       child: ListView.builder(
-        padding: EdgeInsets.symmetric(horizontal: 10.0 * AnalyticsApp.size),
+        padding:
+            const EdgeInsets.symmetric(horizontal: 10.0) * AnalyticsApp.size,
         itemCount: AlliancesPage.tableEntries.length,
         itemBuilder: (context, index) => entries[index],
       ),
@@ -229,13 +230,13 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
         .sortedByDescending((team) => team.second);
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0 * AnalyticsApp.size),
+      padding: const EdgeInsets.symmetric(vertical: 8.0) * AnalyticsApp.size,
       child: AnalyticsContainer(
         height: 60.0 * AnalyticsApp.size,
         color: AnalyticsTheme.background1,
         padding: EdgeInsets.symmetric(
-            vertical: 7.5 * AnalyticsApp.size,
-            horizontal: 10.0 * AnalyticsApp.size),
+                vertical: 7.5 * AnalyticsApp.size, horizontal: 10.0) *
+            AnalyticsApp.size,
         child: Row(
           children: [
             Container(
@@ -244,7 +245,7 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
               child: AnalyticsText.dataTitle(entry.key),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 5.0 * AnalyticsApp.size),
+              padding: const EdgeInsets.only(left: 5.0) * AnalyticsApp.size,
               child: _buildDivider(),
             ),
             Expanded(
@@ -262,7 +263,8 @@ class _AlliancesPageState extends ConsumerState<AlliancesPage> {
   }
 
   Widget _buildTeamEntry(Pair<int, double> team) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0 * AnalyticsApp.size),
+        padding:
+            const EdgeInsets.symmetric(horizontal: 20.0) * AnalyticsApp.size,
         child: Row(
           children: [
             AnalyticsText.dataTitle(
@@ -413,7 +415,8 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
   }
 
   Widget _buildButton() => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10.0 * AnalyticsApp.size),
+        padding:
+            const EdgeInsets.symmetric(horizontal: 10.0) * AnalyticsApp.size,
         child: SizedBox(
           width: 40.0 * AnalyticsApp.size,
           height: 40.0 * AnalyticsApp.size,
@@ -451,11 +454,12 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
 
   Widget _buildAddTeamsPopup() {
     final teams = _currentTeams;
-    final height = math.min(700.0 * AnalyticsApp.size,
-        (11.0 + teams.length * 70.0) * AnalyticsApp.size);
+    final height =
+        math.min(700.0 * AnalyticsApp.size, (11.0 + teams.length * 70.0)) *
+            AnalyticsApp.size;
 
     return Padding(
-      padding: EdgeInsets.all(8.0 * AnalyticsApp.size),
+      padding: const EdgeInsets.all(8.0) * AnalyticsApp.size,
       child: AnalyticsContainer(
         width: 500.0 * AnalyticsApp.size,
         height: height,
@@ -478,11 +482,11 @@ class _AddTeamsButtonState extends State<AddTeamsButton>
   }
 
   Widget _buildAddTeamButton(Team team) => Padding(
-        padding: EdgeInsets.symmetric(vertical: 5.0 * AnalyticsApp.size),
+        padding: const EdgeInsets.symmetric(vertical: 5.0) * AnalyticsApp.size,
         child: AnalyticsContainer(
           height: 60.0 * AnalyticsApp.size,
           color: AnalyticsTheme.background1,
-          padding: EdgeInsets.all(8.0 * AnalyticsApp.size),
+          padding: const EdgeInsets.all(8.0) * AnalyticsApp.size,
           child: Row(
             children: [
               const EmptyExpanded(flex: 10),

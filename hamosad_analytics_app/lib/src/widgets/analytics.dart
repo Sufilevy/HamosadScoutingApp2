@@ -114,7 +114,7 @@ class AnalyticsDataChip extends StatelessWidget {
           Expanded(
             flex: 60,
             child: Padding(
-              padding: EdgeInsets.only(left: 10.0 * AnalyticsApp.size),
+              padding: const EdgeInsets.only(left: 10.0) * AnalyticsApp.size,
               child: AnalyticsText.dataSubtitle(
                 title,
                 textAlign: TextAlign.center,
@@ -162,7 +162,7 @@ class AnalyticsStatChip extends StatelessWidget {
           Expanded(
             flex: 60,
             child: Padding(
-              padding: EdgeInsets.only(left: 10.0 * AnalyticsApp.size),
+              padding: const EdgeInsets.only(left: 10.0) * AnalyticsApp.size,
               child: AnalyticsText.dataSubtitle(
                 title,
                 textAlign: TextAlign.center,
@@ -430,7 +430,7 @@ class AnalyticsClimbsStatChip extends StatelessWidget {
   Widget _buildText(String text) => Expanded(
         flex: 10,
         child: Padding(
-          padding: EdgeInsets.all(12.0 * AnalyticsApp.size),
+          padding: const EdgeInsets.all(12.0) * AnalyticsApp.size,
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: AnalyticsText.data(

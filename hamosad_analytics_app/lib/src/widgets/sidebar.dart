@@ -57,7 +57,7 @@ class _SidebarState extends ConsumerState<Sidebar> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 9.0 * AnalyticsApp.size),
+            padding: EdgeInsets.only(top: 9.0) * AnalyticsApp.size,
             child: AnalyticsText.logo('Hamosad\nAnalytics'),
           ),
         ],
@@ -78,7 +78,7 @@ class _SidebarState extends ConsumerState<Sidebar> {
       );
 
   Widget _buildRefreshDataButton() => Padding(
-        padding: EdgeInsets.all(40.0 * AnalyticsApp.size),
+        padding: EdgeInsets.all(40.0) * AnalyticsApp.size,
         child: const RefreshDataButton(),
       );
 
@@ -96,12 +96,12 @@ class _SidebarState extends ConsumerState<Sidebar> {
           vertical: 10.0 * AnalyticsApp.size,
           horizontal: 10.0 * AnalyticsApp.size,
         ),
-        itemTextPadding: EdgeInsets.only(left: 7.0 * AnalyticsApp.size),
-        selectedItemTextPadding: EdgeInsets.only(left: 7.0 * AnalyticsApp.size),
+        itemTextPadding: EdgeInsets.only(left: 7.0) * AnalyticsApp.size,
+        selectedItemTextPadding: EdgeInsets.only(left: 7.0) * AnalyticsApp.size,
         itemDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5.0 * AnalyticsApp.size)),
+            borderRadius: BorderRadius.circular(5.0) * AnalyticsApp.size),
         selectedItemDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0 * AnalyticsApp.size),
+          borderRadius: BorderRadius.circular(5.0) * AnalyticsApp.size,
           color: AnalyticsTheme.background3,
         ),
         iconTheme: IconThemeData(
@@ -149,7 +149,7 @@ class _RefreshDataButtonState extends ConsumerState<RefreshDataButton>
   }
 
   Widget _buildLoadingIndicator() => Padding(
-        padding: EdgeInsets.all(8.0 * AnalyticsApp.size),
+        padding: EdgeInsets.all(8.0) * AnalyticsApp.size,
         child: LoadingAnimationWidget.staggeredDotsWave(
           color: AnalyticsTheme.primary,
           size: 70.0 * AnalyticsApp.size,
