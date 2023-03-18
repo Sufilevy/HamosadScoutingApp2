@@ -29,6 +29,10 @@ class Report {
     return auto.score + teleop.score + endgame.score;
   }
 
+  String get matchAndScouter {
+    return '$match - $scouter: ';
+  }
+
   static int teamNumberFrom(String teamNumber) {
     if (teamNumber.isEmpty) {
       return 1657;

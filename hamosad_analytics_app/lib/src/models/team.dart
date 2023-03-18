@@ -234,13 +234,13 @@ class TeamSummary {
     );
 
     if (report.summary.notes.isNotEmpty) {
-      notes.add(report.summary.notes);
+      notes.add(report.matchAndScouter + report.summary.notes);
     }
     if (report.summary.fouls.isNotEmpty) {
-      fouls.add(report.summary.fouls);
+      fouls.add(report.matchAndScouter + report.summary.fouls);
     }
     if (report.summary.defenceNotes.isNotEmpty) {
-      defenceNotes.add(report.summary.defenceNotes);
+      defenceNotes.add(report.matchAndScouter + report.summary.defenceNotes);
     }
   }
 }
