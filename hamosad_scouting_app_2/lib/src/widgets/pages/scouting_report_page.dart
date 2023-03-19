@@ -117,12 +117,20 @@ class ScoutingReportPage extends StatelessWidget {
                         (route) => route.isFirst,
                       );
                       final reportData = reportDataProvider(context);
-                      await ScoutingDatabase.sendReport(reportData.data).then(
-                        (_) {
-                          reportData.clear();
-                          Phoenix.rebirth(context);
-                        },
-                      );
+                      try {
+                        ScoutingDatabase.sendReport(reportData.data).then(
+                          (_) {
+                            reportData.clear();
+                            Phoenix.rebirth(context);
+                          },
+                        );
+                      } catch (e) {
+                        showWarningSnackBar(
+                          context,
+                          size,
+                          'Failed to send report.',
+                        );
+                      }
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
@@ -163,7 +171,9 @@ class ScoutingReportPage extends StatelessWidget {
               ScoutingIconButton(
                 icon: Icons.send_rounded,
                 color: ScoutingTheme.blueAlliance,
-                onPressed: () => _onSendButtonPressed(context),
+                onPressed: () {
+                  _onSendButtonPressed(context);
+                },
               ),
             ],
             leading: ScoutingIconButton(
