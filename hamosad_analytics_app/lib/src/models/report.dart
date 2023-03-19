@@ -40,6 +40,10 @@ class Report {
       return int.parse(teamNumber);
     }
   }
+
+  static int compare(Report a, Report b) {
+    return a.time.compareTo(b.time);
+  }
 }
 
 class ReportAuto {
@@ -338,8 +342,8 @@ extension ListDropoffCountPieces on List<PieceDropoff> {
 
 enum ClimbingState {
   noAttempt,
-  docked,
   failed,
+  docked,
   engaged;
 
   static ClimbingState? fromString(String? value) {

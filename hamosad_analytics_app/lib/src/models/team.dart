@@ -1,4 +1,5 @@
 import 'package:hamosad_analytics_app/src/models.dart';
+import 'package:sorted_list/sorted_list.dart';
 
 /// All of the team's stats and averages.
 class Team {
@@ -7,25 +8,30 @@ class Team {
   final TeamTeleop teleop;
   final TeamEndgame endgame;
   final TeamSummary summary;
+  final SortedList<Report> reports;
 
-  Team.defaults({int number = 1657, String name = 'Hamosad'})
-      : info = TeamInfo.defaults(number: number, name: name),
+  Team.defaults({int? number, String? name})
+      : info = TeamInfo(number: number, name: name),
         auto = TeamAuto.defaults(),
         teleop = TeamTeleop.defaults(),
         endgame = TeamEndgame.defaults(),
-        summary = TeamSummary.defaults();
+        summary = TeamSummary.defaults(),
+        reports = SortedList(Report.compare);
 
-  Team.only({
-    TeamInfo? info,
-    TeamAuto? auto,
-    TeamTeleop? teleop,
-    TeamEndgame? endgame,
-    TeamSummary? summary,
-  })  : info = info ?? TeamInfo.defaults(number: 1657, name: 'Hamosad'),
-        auto = auto ?? TeamAuto.defaults(),
-        teleop = teleop ?? TeamTeleop.defaults(),
-        endgame = endgame ?? TeamEndgame.defaults(),
-        summary = summary ?? TeamSummary.defaults();
+  Team({
+    int? number,
+    String? name,
+    String? location,
+  })  : info = TeamInfo(
+          number: number,
+          name: name,
+          location: location,
+        ),
+        auto = TeamAuto.defaults(),
+        teleop = TeamTeleop.defaults(),
+        endgame = TeamEndgame.defaults(),
+        summary = TeamSummary.defaults(),
+        reports = SortedList(Report.compare);
 
   @override
   bool operator ==(Object other) {
@@ -45,13 +51,13 @@ class TeamInfo {
   int number;
   String name, location;
 
-  TeamInfo.defaults({required this.number, required this.name}) : location = '';
-
-  TeamInfo.only({
-    required this.number,
-    required this.name,
+  TeamInfo({
+    int? number,
+    String? name,
     String? location,
-  }) : location = location ?? 'Israel';
+  })  : number = number ?? 1657,
+        name = name ?? 'Hamosad',
+        location = location ?? 'Israel';
 }
 
 /// All of the team's autonomous stats and averages.

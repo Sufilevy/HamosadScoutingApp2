@@ -199,76 +199,89 @@ class _ComparePageChartsState extends State<ComparePageCharts> {
   Widget build(BuildContext context) {
     return AnalyticsContainer(
       child: Row(
-        children: [
-          Expanded(
-            flex: 40,
-            child: CarouselSlider(
-              items: [
-                _buildChart(),
-                _buildChart(),
+        children: widget.teams.isEmpty
+            ? [
+                Expanded(
+                  child: AnalyticsText.dataTitle(
+                    'Please select a team in order to see charts.',
+                  ),
+                ),
+              ]
+            : [
+                Expanded(
+                  flex: 40,
+                  child: CarouselSlider(
+                    items: List.generate(
+                      AnalyticsLineChart.charts.length,
+                      (index) => _buildChart(index),
+                    ),
+                    carouselController: _carouselController,
+                    options: CarouselOptions(
+                      scrollDirection: Axis.vertical,
+                      aspectRatio: 1.0,
+                      viewportFraction: 1.0,
+                      animateToClosest: false,
+                      onPageChanged: (index, reason) => setState(() {
+                        _currentChartIndex = index;
+                      }),
+                    ),
+                  ),
+                ),
+                const EmptyExpanded(flex: 1),
+                Expanded(
+                  flex: 2,
+                  child: DotsIndicator(
+                    dotsCount: AnalyticsLineChart.charts.length,
+                    axis: Axis.vertical,
+                    position: _currentChartIndex.toDouble(),
+                    decorator: const DotsDecorator(),
+                  ),
+                ),
               ],
-              carouselController: _carouselController,
-              options: CarouselOptions(
-                scrollDirection: Axis.vertical,
-                viewportFraction: 1.0,
-                animateToClosest: false,
-                onPageChanged: (index, reason) => setState(() {
-                  _currentChartIndex = index;
-                }),
-              ),
-            ),
-          ),
-          const EmptyExpanded(flex: 1),
-          Expanded(
-            flex: 2,
-            child: DotsIndicator(
-              dotsCount: AnalyticsLineChart.charts.length,
-              axis: Axis.vertical,
-              position: _currentChartIndex.toDouble(),
-              decorator: const DotsDecorator(),
-            ),
-          ),
-        ],
       ),
     );
   }
 
-  Widget _buildChart() => GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onVerticalDragEnd: (details) {
-          final velocity = details.primaryVelocity ?? 0.0;
+  Widget _buildChart(int chartIndex) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 48.0) * AnalyticsApp.size,
+        child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onVerticalDragEnd: (details) {
+            final velocity = details.primaryVelocity ?? 0.0;
 
-          // Swipe up - go one chart down
-          if (velocity < -500.0) {
-            setState(() {
-              if (_currentChartIndex == AnalyticsLineChart.charts.length - 1) {
-                _currentChartIndex = 0;
-              } else {
-                _currentChartIndex += 1;
-              }
-            });
-          }
-          // Swipe down - go one chart up
-          else if (velocity > 500.0) {
-            setState(() {
-              if (_currentChartIndex == 0) {
-                _currentChartIndex = AnalyticsLineChart.charts.length - 1;
-              } else {
-                _currentChartIndex -= 1;
-              }
-            });
-          }
-        },
-        child: widget.chartType == AnalyticsChartType.line
-            ? AnalyticsLineChart(
-                data: widget.data,
-                chartIndex: _currentChartIndex,
-                teams: widget.teams,
-              )
-            : AnalyticsLineChart(
-                data: widget.data,
-                chartIndex: _currentChartIndex,
-                teams: widget.teams,
-              ),
+            // Swipe up - go one chart down
+            if (velocity < -500.0) {
+              setState(() {
+                if (_currentChartIndex ==
+                    AnalyticsLineChart.charts.length - 1) {
+                  _currentChartIndex = 0;
+                } else {
+                  _currentChartIndex += 1;
+                }
+              });
+            }
+            // Swipe down - go one chart up
+            else if (velocity > 500.0) {
+              setState(() {
+                if (_currentChartIndex == 0) {
+                  _currentChartIndex = AnalyticsLineChart.charts.length - 1;
+                } else {
+                  _currentChartIndex -= 1;
+                }
+              });
+            }
+          },
+          child: widget.chartType == AnalyticsChartType.line
+              ? AnalyticsLineChart(
+                  data: widget.data,
+                  chartIndex: chartIndex,
+                  teams: widget.teams,
+                )
+              : AnalyticsLineChart(
+                  data: widget.data,
+                  chartIndex: chartIndex,
+                  teams: widget.teams,
+                ),
+        ),
       );
 }

@@ -28,12 +28,10 @@ class AnalyticsData {
           );
       teamsWithNumber.putIfAbsent(
         report.teamNumber,
-        () => Team.only(
-          info: TeamInfo.only(
-            number: report.teamNumber,
-            name: nameAndLocation.name,
-            location: nameAndLocation.location,
-          ),
+        () => Team(
+          number: report.teamNumber,
+          name: nameAndLocation.name,
+          location: nameAndLocation.location,
         ),
       );
 
@@ -43,6 +41,7 @@ class AnalyticsData {
       team.teleop.updateWithReport(report.teleop, report.matchAndScouter);
       team.endgame.updateWithReport(report.endgame, report.matchAndScouter);
       team.summary.updateWithReport(report);
+      team.reports.add(report);
     }
 
     return _fromTeamsWithNumber(teamsWithNumber);

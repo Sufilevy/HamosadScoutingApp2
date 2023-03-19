@@ -27,6 +27,7 @@ class _SidebarState extends ConsumerState<Sidebar> {
   @override
   Widget build(BuildContext context) {
     return SidebarX(
+      animationDuration: 0.milliseconds,
       controller: widget.sidebarController,
       showToggleButton: false,
       headerBuilder: (context, extended) => _buildSidebarLogo(),
