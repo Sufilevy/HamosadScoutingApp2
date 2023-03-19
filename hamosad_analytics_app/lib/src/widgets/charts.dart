@@ -10,14 +10,74 @@ import 'package:hamosad_analytics_app/src/widgets.dart';
 class AnalyticsChartData {}
 
 class AnalyticsLineChart extends StatelessWidget {
-  static final List<int Function(Report)> _chartsDataFromReport = [
-    (report) => report.auto.climb?.state.index ?? 0,
-  ];
-
   static final List<LineChartData Function(AnalyticsData, List<int>)> charts = [
     (data, teams) => _chartFrom(
           data,
           teams,
+          'Total Game Pieces',
+          (report) => report.totalDropoffs,
+        ),
+    (data, teams) => _chartFrom(
+          data,
+          teams,
+          'Total Cones',
+          (report) => report.totalCones,
+        ),
+    (data, teams) => _chartFrom(
+          data,
+          teams,
+          'Total Cubes',
+          (report) => report.totalCubes,
+        ),
+    (data, teams) => _chartFrom(
+          data,
+          teams,
+          'Total Auto Game Pieces',
+          (report) => report.autoDropoffs,
+        ),
+    (data, teams) => _chartFrom(
+          data,
+          teams,
+          'Total Teleop & Endgame Game Pieces',
+          (report) => report.teleopAndEndgameDropoffs,
+        ),
+    (data, teams) => _chartFrom(
+          data,
+          teams,
+          'Total High Game Pieces',
+          (report) => report.totalHighDropoffs,
+        ),
+    (data, teams) => _chartFrom(
+          data,
+          teams,
+          'Total Mid Game Pieces',
+          (report) => report.totalMidDropoffs,
+        ),
+    (data, teams) => _chartFrom(
+          data,
+          teams,
+          'Total Low Game Pieces',
+          (report) => report.totalLowDropoffs,
+        ),
+    (data, teams) => _chartFrom(
+          data,
+          teams,
+          'Auto Climb',
+          (report) => report.auto.climb?.state.index ?? 0,
+          getTitle: (value) => [
+            'No\nattempt',
+            'Failed',
+            'Docked',
+            'Engaged',
+          ][value.toInt()],
+          titlesSize: 100.0,
+          maxY: 3,
+        ),
+    (data, teams) => _chartFrom(
+          data,
+          teams,
+          'Endgame Climb',
+          (report) => report.endgame.climb?.state.index ?? 0,
           getTitle: (value) => [
             'No\nattempt',
             'Failed',
@@ -31,16 +91,19 @@ class AnalyticsLineChart extends StatelessWidget {
 
   static LineChartData _chartFrom(
     AnalyticsData data,
-    List<int> teams, {
-    required String Function(double) getTitle,
-    required double titlesSize,
+    List<int> teams,
+    String title,
+    int Function(Report) getData, {
+    String Function(double)? getTitle,
+    double? titlesSize,
     double? maxY,
   }) =>
       LineChartData(
         minY: 0,
         maxY: maxY,
         titlesData: _titlesDataFrom(
-          getTitle,
+          title,
+          getTitle ?? (value) => value.toString(),
           size: titlesSize,
         ),
         lineBarsData: teams.map(
@@ -49,21 +112,26 @@ class AnalyticsLineChart extends StatelessWidget {
             return _lineChartDataFrom(
               team.info.number,
               team.reports,
+              getData,
             );
           },
         ).toList(),
       );
 
-  static LineChartBarData _lineChartDataFrom(int team, List<Report> reports) =>
+  static LineChartBarData _lineChartDataFrom(
+    int team,
+    List<Report> reports,
+    int Function(Report) getData,
+  ) =>
       LineChartBarData(
         isCurved: true,
-        curveSmoothness: 0.35 * AnalyticsApp.size,
+        curveSmoothness: 0.25 * AnalyticsApp.size,
         preventCurveOverShooting: true,
         spots: reports
             .mapIndexed(
               (index, report) => FlSpot(
                 index + 1,
-                _chartsDataFromReport[0](report).toDouble(),
+                getData(report).toDouble(),
               ),
             )
             .toList(),
@@ -72,17 +140,22 @@ class AnalyticsLineChart extends StatelessWidget {
       );
 
   static _titlesDataFrom(
+    String title,
     String Function(double) getTitle, {
-    required double size,
+    double? size,
   }) =>
       FlTitlesData(
         bottomTitles: _axisTitlesFrom(
           (value) => value.toInt().toString(),
           48.0,
         ),
-        leftTitles: _axisTitlesFrom(getTitle, size),
+        leftTitles: _axisTitlesFrom(getTitle, size ?? 48.0),
         rightTitles: _noAxisTitles(),
-        topTitles: _noAxisTitles(),
+        topTitles: AxisTitles(
+          axisNameWidget: AnalyticsText.dataTitle(title),
+          axisNameSize: 100.0 * AnalyticsApp.size,
+          sideTitles: SideTitles(showTitles: false),
+        ),
       );
 
   static AxisTitles _axisTitlesFrom(
@@ -129,31 +202,34 @@ class AnalyticsLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LineChart(
-      charts[chartIndex](
-        data,
-        teams,
-      ).copyWith(
-          backgroundColor: AnalyticsTheme.background2,
-          gridData: FlGridData(
-            getDrawingHorizontalLine: (value) => FlLine(
-              color: AnalyticsTheme.foreground2.withOpacity(0.6),
-              dashArray: [8, 5],
-              strokeWidth: 1.25 * AnalyticsApp.size,
+    return AnalyticsFadeSwitcher(
+      child: LineChart(
+        key: ValueKey(chartIndex),
+        charts[chartIndex](
+          data,
+          teams,
+        ).copyWith(
+            backgroundColor: AnalyticsTheme.background2,
+            gridData: FlGridData(
+              getDrawingHorizontalLine: (value) => FlLine(
+                color: AnalyticsTheme.foreground2.withOpacity(0.6),
+                dashArray: [8, 5],
+                strokeWidth: 1.25 * AnalyticsApp.size,
+              ),
+              getDrawingVerticalLine: (value) => FlLine(
+                color: AnalyticsTheme.foreground2.withOpacity(0.6),
+                dashArray: [8, 5],
+                strokeWidth: 1.25 * AnalyticsApp.size,
+              ),
             ),
-            getDrawingVerticalLine: (value) => FlLine(
-              color: AnalyticsTheme.foreground2.withOpacity(0.6),
-              dashArray: [8, 5],
-              strokeWidth: 1.25 * AnalyticsApp.size,
-            ),
-          ),
-          borderData: FlBorderData(
-            border: Border.all(
-              width: 2.5 * AnalyticsApp.size,
-              color: AnalyticsTheme.foreground2.withOpacity(0.6),
-            ),
-          )),
-      swapAnimationDuration: 0.milliseconds,
+            borderData: FlBorderData(
+              border: Border.all(
+                width: 2.5 * AnalyticsApp.size,
+                color: AnalyticsTheme.foreground2.withOpacity(0.6),
+              ),
+            )),
+        swapAnimationDuration: 0.milliseconds,
+      ),
     );
   }
 }

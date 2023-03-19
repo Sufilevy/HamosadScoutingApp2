@@ -29,6 +29,48 @@ class Report {
     return auto.score + teleop.score + endgame.score;
   }
 
+  int get autoDropoffs {
+    return auto.dropoffs.length;
+  }
+
+  int get teleopAndEndgameDropoffs {
+    return teleop.dropoffs.length + endgame.dropoffs.length;
+  }
+
+  int get totalDropoffs {
+    return autoDropoffs + teleopAndEndgameDropoffs;
+  }
+
+  int get totalHighDropoffs {
+    return auto.dropoffs.numHigh +
+        teleop.dropoffs.numHigh +
+        endgame.dropoffs.numHigh;
+  }
+
+  int get totalMidDropoffs {
+    return auto.dropoffs.numMid +
+        teleop.dropoffs.numMid +
+        endgame.dropoffs.numMid;
+  }
+
+  int get totalLowDropoffs {
+    return auto.dropoffs.numLow +
+        teleop.dropoffs.numLow +
+        endgame.dropoffs.numLow;
+  }
+
+  int get totalCones {
+    return auto.dropoffs.numCones +
+        teleop.dropoffs.numCones +
+        endgame.dropoffs.numCones;
+  }
+
+  int get totalCubes {
+    return auto.dropoffs.numCubes +
+        teleop.dropoffs.numCubes +
+        endgame.dropoffs.numCubes;
+  }
+
   String get matchAndScouter {
     return '$match - $scouter: ';
   }
@@ -330,13 +372,25 @@ extension _ListDropoffScoring on List<PieceDropoff> {
   }
 }
 
-extension ListDropoffCountPieces on List<PieceDropoff> {
+extension ListDropoffCounts on List<PieceDropoff> {
   int get numCones {
-    return count((pickup) => pickup.piece == Piece.cone);
+    return count((dropoff) => dropoff.piece == Piece.cone);
   }
 
   int get numCubes {
-    return count((pickup) => pickup.piece == Piece.cube);
+    return count((dropoff) => dropoff.piece == Piece.cube);
+  }
+
+  int get numHigh {
+    return count((dropoff) => dropoff.row == 2);
+  }
+
+  int get numMid {
+    return count((dropoff) => dropoff.row == 1);
+  }
+
+  int get numLow {
+    return count((dropoff) => dropoff.row == 0);
   }
 }
 

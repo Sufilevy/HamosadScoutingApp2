@@ -274,12 +274,12 @@ class _ComparePageChartsState extends State<ComparePageCharts> {
           child: widget.chartType == AnalyticsChartType.line
               ? AnalyticsLineChart(
                   data: widget.data,
-                  chartIndex: chartIndex,
+                  chartIndex: _currentChartIndex,
                   teams: widget.teams,
                 )
               : AnalyticsLineChart(
                   data: widget.data,
-                  chartIndex: chartIndex,
+                  chartIndex: _currentChartIndex,
                   teams: widget.teams,
                 ),
         ),
