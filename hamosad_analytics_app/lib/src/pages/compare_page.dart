@@ -210,6 +210,8 @@ class _ComparePageChartsState extends State<ComparePageCharts> {
               carouselController: _carouselController,
               options: CarouselOptions(
                 scrollDirection: Axis.vertical,
+                viewportFraction: 1.0,
+                animateToClosest: false,
                 onPageChanged: (index, reason) => setState(() {
                   _currentChartIndex = index;
                 }),
@@ -238,23 +240,35 @@ class _ComparePageChartsState extends State<ComparePageCharts> {
 
           // Swipe up - go one chart down
           if (velocity < -500.0) {
-            if (_currentChartIndex < AnalyticsLineChart.charts.length - 1) {
-              setState(() {
+            setState(() {
+              if (_currentChartIndex == AnalyticsLineChart.charts.length - 1) {
+                _currentChartIndex = 0;
+              } else {
                 _currentChartIndex += 1;
-              });
-            }
+              }
+            });
           }
           // Swipe down - go one chart up
           else if (velocity > 500.0) {
-            if (_currentChartIndex > 0) {
-              setState(() {
+            setState(() {
+              if (_currentChartIndex == 0) {
+                _currentChartIndex = AnalyticsLineChart.charts.length - 1;
+              } else {
                 _currentChartIndex -= 1;
-              });
-            }
+              }
+            });
           }
         },
         child: widget.chartType == AnalyticsChartType.line
-            ? AnalyticsLineChart(chartIndex: _currentChartIndex)
-            : AnalyticsLineChart(chartIndex: _currentChartIndex),
+            ? AnalyticsLineChart(
+                data: widget.data,
+                chartIndex: _currentChartIndex,
+                teams: widget.teams,
+              )
+            : AnalyticsLineChart(
+                data: widget.data,
+                chartIndex: _currentChartIndex,
+                teams: widget.teams,
+              ),
       );
 }
