@@ -1,5 +1,6 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
@@ -116,8 +117,12 @@ class ScoutingReportPage extends StatelessWidget {
                         (route) => route.isFirst,
                       );
                       final reportData = reportDataProvider(context);
-                      await ScoutingDatabase.sendReport(reportData.data);
-                      reportData.clear();
+                      await ScoutingDatabase.sendReport(reportData.data).then(
+                        (_) {
+                          reportData.clear();
+                          Phoenix.rebirth(context);
+                        },
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
