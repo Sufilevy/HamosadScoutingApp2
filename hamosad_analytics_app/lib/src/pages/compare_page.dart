@@ -9,8 +9,6 @@ import 'package:hamosad_analytics_app/src/database.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
 import 'package:hamosad_analytics_app/src/widgets.dart';
 
-enum AnalyticsChartType { line, spider }
-
 class CompareTeamsPage extends ConsumerStatefulWidget {
   const CompareTeamsPage({Key? key}) : super(key: key);
 
@@ -21,7 +19,6 @@ class CompareTeamsPage extends ConsumerStatefulWidget {
 class _ComparePageState extends ConsumerState<CompareTeamsPage> {
   late final AnalyticsData _data;
   final List<int> _selectedTeams = [];
-  AnalyticsChartType _chartType = AnalyticsChartType.line;
 
   @override
   void initState() {
@@ -40,7 +37,6 @@ class _ComparePageState extends ConsumerState<CompareTeamsPage> {
           Expanded(
             child: ComparePageCharts(
               teams: _selectedTeams,
-              chartType: _chartType,
               data: _data,
             ),
           ),
@@ -101,11 +97,6 @@ class _ComparePageState extends ConsumerState<CompareTeamsPage> {
               ),
             ),
             const EmptyExpanded(flex: 1),
-            Expanded(
-              flex: 4,
-              child: _buildChartTypeSwitch(),
-            ),
-            const EmptyExpanded(flex: 1),
           ],
         ),
       );
@@ -148,43 +139,16 @@ class _ComparePageState extends ConsumerState<CompareTeamsPage> {
               ],
             )),
       );
-
-  Widget _buildChartTypeSwitch() => Transform.scale(
-        scale: 1.75 * AnalyticsApp.size,
-        child: Switch(
-          value: _chartType == AnalyticsChartType.line,
-          thumbColor: MaterialStateProperty.all(AnalyticsTheme.primary),
-          trackColor: MaterialStateProperty.all(AnalyticsTheme.background1),
-          inactiveThumbColor: AnalyticsTheme.primary,
-          inactiveTrackColor: AnalyticsTheme.background1,
-          thumbIcon: MaterialStateProperty.all(
-            Icon(
-              _chartType == AnalyticsChartType.line
-                  ? Icons.trending_up_rounded
-                  : Icons.donut_large_rounded,
-              size: 14.0 * AnalyticsApp.size,
-              opticalSize: 14.0 * AnalyticsApp.size,
-              color: AnalyticsTheme.background2,
-            ),
-          ),
-          onChanged: (value) => setState(() {
-            _chartType =
-                value ? AnalyticsChartType.line : AnalyticsChartType.spider;
-          }),
-        ),
-      );
 }
 
 class ComparePageCharts extends StatefulWidget {
   const ComparePageCharts({
     super.key,
     required this.teams,
-    required this.chartType,
     required this.data,
   });
 
   final List<int> teams;
-  final AnalyticsChartType chartType;
   final AnalyticsData data;
 
   @override
@@ -271,17 +235,11 @@ class _ComparePageChartsState extends State<ComparePageCharts> {
               });
             }
           },
-          child: widget.chartType == AnalyticsChartType.line
-              ? AnalyticsLineChart(
-                  data: widget.data,
-                  chartIndex: _currentChartIndex,
-                  teams: widget.teams,
-                )
-              : AnalyticsLineChart(
-                  data: widget.data,
-                  chartIndex: _currentChartIndex,
-                  teams: widget.teams,
-                ),
+          child: AnalyticsLineChart(
+            data: widget.data,
+            chartIndex: _currentChartIndex,
+            teams: widget.teams,
+          ),
         ),
       );
 }

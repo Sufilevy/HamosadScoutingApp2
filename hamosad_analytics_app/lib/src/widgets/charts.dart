@@ -168,7 +168,7 @@ class AnalyticsLineChart extends StatelessWidget {
           interval: 1.0,
           showTitles: true,
           getTitlesWidget: (value, meta) => Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 8.0, 12.0, 8.0) *
+            padding: const EdgeInsets.fromLTRB(24.0, 12.0, 12.0, 8.0) *
                 AnalyticsApp.size,
             child: AnalyticsText.dataSubtitle(
               getTitle(value),
