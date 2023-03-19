@@ -178,7 +178,7 @@ enum ClimbState {
   noAttempt,
   failed,
   docked,
-  dockedByOther;
+  engaged;
 
   @override
   String toString() {
@@ -189,8 +189,8 @@ enum ClimbState {
         return 'failed';
       case ClimbState.docked:
         return 'docked';
-      case ClimbState.dockedByOther:
-        return 'dockedByOther';
+      case ClimbState.engaged:
+        return 'engaged';
     }
   }
 }
