@@ -191,6 +191,7 @@ class TeamSummary {
   DefenceIndexStat defenceIndex;
   PiecesPickupsStat pickups;
   PiecesDropoffsStat dropoffs;
+  Stat teleopAndEndgameDropoffs;
   Stat chargeStationPasses;
   List<String> notes, fouls, defenceNotes;
 
@@ -200,6 +201,7 @@ class TeamSummary {
         defenceIndex = DefenceIndexStat.defaults(),
         pickups = PiecesPickupsStat.defaults(),
         dropoffs = PiecesDropoffsStat.defaults(),
+        teleopAndEndgameDropoffs = Stat(),
         chargeStationPasses = Stat(),
         notes = [],
         fouls = [],
@@ -231,6 +233,10 @@ class TeamSummary {
       numCubes: report.auto.dropoffs.numCubes +
           report.teleop.dropoffs.numCubes +
           report.endgame.dropoffs.numCubes,
+    );
+
+    teleopAndEndgameDropoffs.updateWithValue(
+      report.teleop.dropoffs.length + report.endgame.dropoffs.length,
     );
 
     chargeStationPasses.updateWithValue(

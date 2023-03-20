@@ -87,6 +87,12 @@ class AnalyticsLineChart extends StatelessWidget {
           titlesSize: 100.0,
           maxY: 3,
         ),
+    (data, teams) => _chartFrom(
+          data,
+          teams,
+          'Total Score',
+          (report) => report.score,
+        ),
   ];
 
   static LineChartData _chartFrom(

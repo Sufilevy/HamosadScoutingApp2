@@ -21,74 +21,48 @@ class TeamsPage extends ConsumerStatefulWidget {
     'Name': DataEntry<String>(
       height: 30.0 * AnalyticsApp.size,
       getData: (team) => team.info.name,
-      builder: (team) => FittedBox(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 8.0 * AnalyticsApp.size,
-            vertical: 4.0 * AnalyticsApp.size,
-          ),
-          child: AnalyticsText.data(
-            team.info.name,
-            color: AnalyticsTheme.primary.withOpacity(0.8),
-          ),
+      builder: (team) => Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 8.0 * AnalyticsApp.size,
+          vertical: 4.0 * AnalyticsApp.size,
+        ),
+        child: AnalyticsText.data(
+          team.info.name,
+          color: AnalyticsTheme.primary.withOpacity(0.8),
         ),
       ),
     ),
-    'Score': DataEntry<double>(
+    'Total Score': DataEntry<double>(
       height: 30.0 * AnalyticsApp.size,
       getData: (team) => team.summary.score.average,
     ),
-    'Auto Score': DataEntry<double>(
-      height: 30.0 * AnalyticsApp.size,
-      getData: (team) => team.auto.score.average,
-    ),
-    'Teleop Score': DataEntry<double>(
-      height: 30.0 * AnalyticsApp.size,
-      getData: (team) => team.teleop.score.average,
-    ),
-    'Endgame Score': DataEntry<double>(
-      height: 30.0 * AnalyticsApp.size,
-      getData: (team) => team.endgame.score.average,
-    ),
-    'Auto Drops': DataEntry<double>(
-      height: 30.0 * AnalyticsApp.size,
-      getData: (team) => team.auto.dropoffs.totalDropoffs.average,
-    ),
-    'Teleop Drops': DataEntry<double>(
-      height: 30.0 * AnalyticsApp.size,
-      getData: (team) => team.teleop.dropoffs.totalDropoffs.average,
-    ),
-    'Endgame Drops': DataEntry<double>(
-      height: 30.0 * AnalyticsApp.size,
-      getData: (team) => team.endgame.dropoffs.totalDropoffs.average,
-    ),
-    'Cones Drops': DataEntry<double>(
+    'Total Cones': DataEntry<double>(
       height: 30.0 * AnalyticsApp.size,
       getData: (team) => team.summary.dropoffs.pieces.cones.average,
     ),
-    'Cubes Drops': DataEntry<double>(
+    'Total Cubes': DataEntry<double>(
       height: 30.0 * AnalyticsApp.size,
       getData: (team) => team.summary.dropoffs.pieces.cubes.average,
     ),
-    'Mobility Rate': DataEntry<double>(
+    'Total Auto Game Pieces': DataEntry<double>(
       height: 30.0 * AnalyticsApp.size,
-      getData: (team) => team.auto.leftCommunity.trueRate * 100.0,
+      getData: (team) => team.auto.dropoffs.totalDropoffs.average,
     ),
-    'Auto Engaged': DataEntry<double>(
+    'Total Teleop & Endgame Game Pieces': DataEntry<double>(
       height: 30.0 * AnalyticsApp.size,
-      getData: (team) => team.auto.climb.states.engagedRate * 100.0,
+      getData: (team) => team.summary.teleopAndEndgameDropoffs.average,
     ),
-    'Auto Docked': DataEntry<double>(
+    'Total High Game Pieces': DataEntry<double>(
       height: 30.0 * AnalyticsApp.size,
-      getData: (team) => team.auto.climb.states.engagedRate * 100.0,
+      getData: (team) => team.summary.dropoffs.grids.rows[2].average,
     ),
-    'Endagme Engaged': DataEntry<double>(
+    'Total Mid Game Pieces': DataEntry<double>(
       height: 30.0 * AnalyticsApp.size,
-      getData: (team) => team.endgame.climb.states.engagedRate * 100.0,
+      getData: (team) => team.summary.dropoffs.grids.rows[1].average,
     ),
-    'Endagme Docked': DataEntry<double>(
+    'Total Low Game Pieces': DataEntry<double>(
       height: 30.0 * AnalyticsApp.size,
-      getData: (team) => team.endgame.climb.states.dockedRate * 100.0,
+      getData: (team) => team.summary.dropoffs.grids.rows[0].average,
     ),
   };
 

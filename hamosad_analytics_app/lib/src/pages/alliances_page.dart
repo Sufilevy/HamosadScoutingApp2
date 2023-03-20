@@ -14,22 +14,19 @@ class AlliancesPage extends ConsumerStatefulWidget {
   const AlliancesPage({Key? key}) : super(key: key);
 
   static final Map<String, double Function(Team)> tableEntries = {
-    'Score': (team) => team.summary.score.average,
-    'Auto Score': (team) => team.auto.score.average,
-    'Teleop Score': (team) => team.teleop.score.average,
-    'Endgame Score': (team) => team.endgame.score.average,
-    'Auto Drops': (team) => team.auto.dropoffs.totalDropoffs.average,
-    'Teleop Drops': (team) => team.teleop.dropoffs.totalDropoffs.average,
-    'Endgame Drops': (team) => team.endgame.dropoffs.totalDropoffs.average,
-    'Cones Drops': (team) => team.summary.dropoffs.pieces.cones.average,
-    'Cubes Drops': (team) => team.summary.dropoffs.pieces.cubes.average,
-    'Mobility Rate': (team) => team.auto.leftCommunity.trueRate.toPercent(),
-    'Auto Engaged': (team) => team.auto.climb.states.engagedRate.toPercent(),
-    'Auto Docked': (team) => team.auto.climb.states.dockedRate.toPercent(),
-    'Endgame Engaged': (team) =>
-        team.endgame.climb.states.engagedRate.toPercent(),
-    'Endgame Docked': (team) =>
-        team.endgame.climb.states.dockedRate.toPercent(),
+    'Total Score': (team) => team.summary.score.average,
+    'Total Cones': (team) => team.summary.dropoffs.pieces.cones.average,
+    'Total Cubes': (team) => team.summary.dropoffs.pieces.cubes.average,
+    'Total Auto Game Pieces': (team) =>
+        team.auto.dropoffs.totalDropoffs.average,
+    'Total Teleop & Endgame Game Pieces': (team) =>
+        team.summary.teleopAndEndgameDropoffs.average,
+    'Total High Game Pieces': (team) =>
+        team.summary.dropoffs.grids.rows[2].average,
+    'Total Mid Game Pieces': (team) =>
+        team.summary.dropoffs.grids.rows[1].average,
+    'Total Low Game Pieces': (team) =>
+        team.summary.dropoffs.grids.rows[0].average,
   };
 
   @override
