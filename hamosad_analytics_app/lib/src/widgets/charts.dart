@@ -135,7 +135,8 @@ class AnalyticsLineChart extends StatelessWidget {
               ),
             )
             .toList(),
-        color: AnalyticsTheme.teamNumberToColor[team],
+        color: AnalyticsTheme.teamNumberToInfo[team]?[0] ??
+            AnalyticsTheme.primaryVariant,
         barWidth: 3.0 * AnalyticsApp.size,
       );
 
@@ -147,9 +148,9 @@ class AnalyticsLineChart extends StatelessWidget {
       FlTitlesData(
         bottomTitles: _axisTitlesFrom(
           (value) => value.toInt().toString(),
-          48.0,
+          54.0,
         ),
-        leftTitles: _axisTitlesFrom(getTitle, size ?? 48.0),
+        leftTitles: _axisTitlesFrom(getTitle, size ?? 54.0),
         rightTitles: _noAxisTitles(),
         topTitles: AxisTitles(
           axisNameWidget: AnalyticsText.dataTitle(title),

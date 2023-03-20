@@ -108,7 +108,8 @@ class _ComparePageState extends ConsumerState<CompareTeamsPage> {
             width: 130.0 * AnalyticsApp.size,
             height: 40.0 * AnalyticsApp.size,
             decoration: BoxDecoration(
-              color: AnalyticsTheme.teamNumberToColor[teamNumber],
+              color: AnalyticsTheme.teamNumberToInfo[teamNumber]?[0] ??
+                  AnalyticsTheme.primaryVariant,
               borderRadius: BorderRadius.circular(25.0) * AnalyticsApp.size,
             ),
             child: Row(

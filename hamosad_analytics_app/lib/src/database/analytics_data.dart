@@ -1,5 +1,6 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hamosad_analytics_app/src/constants.dart';
 import 'package:hamosad_analytics_app/src/database.dart';
 import 'package:hamosad_analytics_app/src/models.dart';
 
@@ -21,17 +22,12 @@ class AnalyticsData {
 
     for (final report in database.reports) {
       // Add the team the report is about to the teams map if it's not already there
-      final nameAndLocation = database.teams[report.teamNumber] ??
-          TeamNameAndLocation(
-            name: 'Team ${report.teamNumber}',
-            location: 'Israel',
-          );
       teamsWithNumber.putIfAbsent(
         report.teamNumber,
         () => Team(
           number: report.teamNumber,
-          name: nameAndLocation.name,
-          location: nameAndLocation.location,
+          name: AnalyticsTheme.teamNumberToInfo[report.teamNumber]?[1],
+          location: AnalyticsTheme.teamNumberToInfo[report.teamNumber]?[2],
         ),
       );
 
