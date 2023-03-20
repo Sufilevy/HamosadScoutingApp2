@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart' hide SortedList;
 import 'package:hamosad_analytics_app/src/models.dart';
 import 'package:sorted_list/sorted_list.dart';
 
@@ -44,6 +45,23 @@ class Team {
 
   @override
   int get hashCode => info.number.hashCode;
+
+  Trendline calculateTrendlineWith(int Function(Report) getData) {
+    final n = reports.length;
+    final x = List.generate(reports.length, (index) => index + 1.0);
+    final y = reports.map(getData).toList();
+    final sumX = x.sum();
+    final sumY = y.sum();
+
+    final slopeNumerator = n * x.zip(y, (x, y) => x * y).sum() - sumX * sumY;
+    final slopeDenominator = n * x.map((x) => x * x).sum() - sumX * sumX;
+    final slope = slopeNumerator / slopeDenominator;
+
+    final offsetNumerator = sumY - slope * sumX;
+    final offset = offsetNumerator / n;
+
+    return Trendline(slope, offset);
+  }
 }
 
 /// All of the team's general info, stats and averages.
@@ -646,10 +664,6 @@ class EndgameClimbStat {
 extension TeamsListToTeamNumbersList on List<Team> {
   List<String> toTeamNumbers() {
     return map((team) {
-      if (team.info.name.contains('Team ')) {
-        return team.info.name;
-      }
-
       return '${team.info.number} ${team.info.name}';
     }).toList();
   }

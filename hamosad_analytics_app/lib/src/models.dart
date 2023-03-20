@@ -65,6 +65,12 @@ class Rate {
   }
 }
 
+class Trendline {
+  final double slope, offset;
+
+  Trendline(this.slope, this.offset);
+}
+
 extension DoubleRateToPercent on double {
   double toPercent() {
     if (isNaN) {

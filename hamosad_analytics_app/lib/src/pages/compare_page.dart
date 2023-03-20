@@ -56,8 +56,7 @@ class _ComparePageState extends ConsumerState<CompareTeamsPage> {
               child: TeamSearchBar(
                 onSubmitted: (query) => setState(() {
                   final parts = query.split(' ');
-                  final teamNumber = int.parse(
-                      query.contains('Team ') ? parts.second : parts.first);
+                  final teamNumber = int.parse(parts.first);
                   _selectedTeams.add(teamNumber);
                 }),
                 searchOnIconPressed: false,

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:dartx/dartx.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -100,7 +102,7 @@ class AnalyticsLineChart extends StatelessWidget {
     List<int> teams,
     String title,
     int Function(Report) getData, {
-    String Function(double)? getTitle,
+    String Function(int)? getTitle,
     double? titlesSize,
     double? maxY,
   }) =>
@@ -115,13 +117,21 @@ class AnalyticsLineChart extends StatelessWidget {
         lineBarsData: teams.map(
           (teamNumber) {
             final team = data.teamsWithNumber[teamNumber]!;
-            return _lineChartDataFrom(
-              team.info.number,
-              team.reports,
-              getData,
-            );
+            return [
+              _lineChartDataFrom(
+                team.info.number,
+                team.reports,
+                getData,
+              ),
+              _trendlineChartDataFrom(
+                data,
+                teamNumber,
+                team.reports,
+                getData,
+              ),
+            ];
           },
-        ).toList(),
+        ).fold([], (previousValue, element) => (previousValue ?? []) + element),
       );
 
   static LineChartBarData _lineChartDataFrom(
@@ -146,9 +156,34 @@ class AnalyticsLineChart extends StatelessWidget {
         barWidth: 3.0 * AnalyticsApp.size,
       );
 
+  static LineChartBarData _trendlineChartDataFrom(
+    AnalyticsData data,
+    int team,
+    List<Report> reports,
+    int Function(Report) getData,
+  ) {
+    final trendline =
+        data.teamsWithNumber[team]!.calculateTrendlineWith(getData);
+    return LineChartBarData(
+      spots: [
+        FlSpot(1, math.min(trendline.offset, 0.0)),
+        FlSpot(
+          reports.length.toDouble(),
+          trendline.offset + trendline.slope * reports.length,
+        ),
+      ],
+      showingIndicators: [-1],
+      color: (AnalyticsTheme.teamNumberToInfo[team]?[0] as Color? ??
+              AnalyticsTheme.primaryVariant)
+          .withOpacity(0.5),
+      barWidth: 3.0 * AnalyticsApp.size,
+      dashArray: [7, 5],
+    );
+  }
+
   static _titlesDataFrom(
     String title,
-    String Function(double) getTitle, {
+    String Function(int) getTitle, {
     double? size,
   }) =>
       FlTitlesData(
@@ -166,7 +201,7 @@ class AnalyticsLineChart extends StatelessWidget {
       );
 
   static AxisTitles _axisTitlesFrom(
-    String Function(double) getTitle,
+    String Function(int) getTitle,
     double size,
   ) =>
       AxisTitles(
@@ -178,7 +213,7 @@ class AnalyticsLineChart extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(24.0, 12.0, 12.0, 8.0) *
                 AnalyticsApp.size,
             child: AnalyticsText.dataSubtitle(
-              getTitle(value),
+              getTitle(value.toInt()),
               fontSize: 14.0 * AnalyticsApp.size,
               fittedBox: false,
               textAlign: TextAlign.center,
