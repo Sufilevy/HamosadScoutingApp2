@@ -19,14 +19,15 @@ class ScoutingHomePage extends StatelessWidget {
     if (reportData.scouter.data.isEmpty ||
         reportData.scouterTeamNumber.data.isEmpty ||
         (reportData.scouterTeamNumber.data != '1657' &&
-            reportData.scouterTeamNumber.data != '5951')) {
+            reportData.scouterTeamNumber.data != '5951' &&
+            reportData.scouterTeamNumber.data != '3388')) {
       showDialog(
         context: context,
         builder: (context) => const ScoutingAlertDialog(
           titleIcon: Icons.warning_rounded,
           iconColor: ScoutingTheme.warning,
           content:
-              'Please enter your name and team number.\nValid teams are: 1657, 5951',
+              'Please enter your name and team number.\nValid teams are: 1657, 5951, 3388',
         ),
       );
     } else {

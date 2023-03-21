@@ -114,7 +114,7 @@ class _AnalyticsAppState extends ConsumerState<AnalyticsApp> {
         'Select districts:',
         textAlign: TextAlign.center,
         style: AnalyticsTheme.dataTitleTextStyle.copyWith(
-          fontSize: 26.0,
+          fontSize: 26.0 * AnalyticsApp.size,
           color: AnalyticsTheme.foreground2,
         ),
       ),
