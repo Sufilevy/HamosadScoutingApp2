@@ -101,10 +101,6 @@ class _TeamsPageState extends ConsumerState<TeamsPage> {
           if (query.contains(' ')) {
             final queries = query.split(' ');
 
-            if (queries.first == 'team') {
-              return team.info.number.toString().contains(queries.second);
-            }
-
             return team.info.number.toString().contains(queries.first) &&
                 team.info.name.toLowerCase().contains(
                       queries.skip(1).joinToString(separator: ' '),

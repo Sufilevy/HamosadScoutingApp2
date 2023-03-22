@@ -1,4 +1,3 @@
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hamosad_analytics_app/src/app.dart';
@@ -336,8 +335,7 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
         suggestions: _data.teamsByNumber.toTeamNumbers(),
         onSubmitted: (query) => setState(() {
           final parts = query.split(' ');
-          final teamNumber =
-              int.parse(query.contains('Team') ? parts.second : parts.first);
+          final teamNumber = int.parse(parts.first);
           TeamDetailsPage.team = _data.teamsWithNumber[teamNumber];
           _setTabs();
         }),
