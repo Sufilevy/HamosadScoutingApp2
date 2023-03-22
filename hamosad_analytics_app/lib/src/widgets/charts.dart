@@ -123,12 +123,13 @@ class AnalyticsLineChart extends StatelessWidget {
                 team.reports,
                 getData,
               ),
-              _trendlineChartDataFrom(
-                data,
-                teamNumber,
-                team.reports,
-                getData,
-              ),
+              if (team.reports.length > 1)
+                _trendlineChartDataFrom(
+                  data,
+                  teamNumber,
+                  team.reports,
+                  getData,
+                ),
             ];
           },
         ).fold([], (previousValue, element) => (previousValue ?? []) + element),
