@@ -16,8 +16,8 @@ void main() async {
   // Register an observer to finalize the app database (delete the temporary user)
   // when the app is detached, and re-initialize when the app is resumed.
   WidgetsBinding.instance.addObserver(AppLifecycleObserver(
-    detachedCallback: ScoutingDatabase.finalize,
     resumedCallback: ScoutingDatabase.initialize,
+    detachedCallback: ScoutingDatabase.finalize,
   ));
 
   await SystemChrome.setPreferredOrientations([

@@ -13,33 +13,31 @@ class ScoutingTheme {
   static const Color hamosad = Color(0xFF165700);
   static const Color blueAlliance = Color(0xFF1E88E5);
   static const Color redAlliance = Color(0xFFC62828);
-  static const Color cones = Color(0xFFE78907);
-  static const Color cubes = Color(0xFF5323C2);
 
-  static double size = 1.0;
+  static late double appSizeRatio;
 
   static TextStyle get navigationStyle => TextStyle(
         fontFamily: 'Varela Round',
         fontWeight: FontWeight.normal,
-        fontSize: 26.0 * size,
+        fontSize: 26.0 * appSizeRatio,
         color: foreground1,
       );
   static TextStyle get titleStyle => TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.w500,
-        fontSize: 26.0 * size,
+        fontSize: 26.0 * appSizeRatio,
         color: foreground1,
       );
   static TextStyle get subtitleStyle => TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.normal,
-        fontSize: 24.0 * size,
+        fontSize: 24.0 * appSizeRatio,
         color: foreground1,
       );
   static TextStyle get textStyle => TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.w400,
-        fontSize: 23.0 * size,
+        fontSize: 23.0 * appSizeRatio,
         color: foreground1,
       );
 }

@@ -56,79 +56,43 @@ class GameReport {
 }
 
 class GameReportAuto {
-  Cubit<bool> leftCommunity = Cubit(false);
-  Cubit<Pickups> pickups = Cubit(Pickups());
-  Cubit<Dropoffs> dropoffs = Cubit(Dropoffs());
-  Cubit<int> chargeStationPasses = Cubit(0);
-  Cubit<Climb> climb = Cubit(Climb());
   Cubit<String> notes = Cubit('');
 
   Json get data {
     return {
-      'leftCommunity': leftCommunity.data,
-      'pickups': pickups.data.toJson(),
-      'dropoffs': dropoffs.data.toJson(),
-      'chargeStationPasses': chargeStationPasses.data,
-      'climb': climb.data.toJson(includeDuration: false),
       'notes': notes.data,
     };
   }
 
   void clear() {
-    leftCommunity.data = false;
-    pickups.data = Pickups();
-    dropoffs.data = Dropoffs();
-    chargeStationPasses.data = 0;
-    climb.data = Climb();
     notes.data = '';
   }
 }
 
 class GameReportTeleop {
-  Cubit<Pickups> pickups = Cubit(Pickups());
-  Cubit<Dropoffs> dropoffs = Cubit(Dropoffs());
-  Cubit<int> chargeStationPasses = Cubit(0);
   Cubit<String> notes = Cubit('');
 
   Json get data {
     return {
-      'pickups': pickups.data.toJson(),
-      'dropoffs': dropoffs.data.toJson(),
-      'chargeStationPasses': chargeStationPasses.data,
       'notes': notes.data,
     };
   }
 
   void clear() {
-    pickups.data = Pickups();
-    dropoffs.data = Dropoffs();
-    chargeStationPasses.data = 0;
     notes.data = '';
   }
 }
 
 class GameReportEndgame {
-  Cubit<Pickups> pickups = Cubit(Pickups());
-  Cubit<Dropoffs> dropoffs = Cubit(Dropoffs());
-  Cubit<int> chargeStationPasses = Cubit(0);
-  Cubit<Climb> climb = Cubit(Climb());
   Cubit<String> notes = Cubit('');
 
   Json get data {
     return {
-      'pickups': pickups.data.toJson(),
-      'dropoffs': dropoffs.data.toJson(),
-      'chargeStationPasses': chargeStationPasses.data,
-      'climb': climb.data.toJson(),
       'notes': notes.data,
     };
   }
 
   void clear() {
-    pickups.data = Pickups();
-    dropoffs.data = Dropoffs();
-    chargeStationPasses.data = 0;
-    climb.data = Climb();
     notes.data = '';
   }
 }

@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/constants.dart';
+import 'package:hamosad_scouting_app_2/src/theme.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
 
-class ScoutingAlertDialog extends StatelessWidget {
+class ScoutingDialog extends StatelessWidget {
   final String content, title;
-  final double size;
+
   final bool okButton;
   final List actions;
   final IconData? titleIcon;
   final Color? iconColor;
 
-  const ScoutingAlertDialog({
+  const ScoutingDialog({
     Key? key,
     required this.content,
     this.title = '',
-    this.size = 1.0,
     this.okButton = true,
     this.actions = const [],
     this.titleIcon,
@@ -31,7 +30,7 @@ class ScoutingAlertDialog extends StatelessWidget {
           if (titleIcon != null)
             Icon(
               titleIcon!,
-              size: 42.0 * size,
+              size: 42.0 * ScoutingTheme.appSizeRatio,
               color: iconColor ?? ScoutingTheme.primary,
             ),
           if (title.isNotEmpty) ...[
@@ -42,10 +41,10 @@ class ScoutingAlertDialog extends StatelessWidget {
         ],
       ),
       contentPadding: EdgeInsets.fromLTRB(
-        28.0 * size,
-        20.0 * size,
-        28.0 * size,
-        12.0 * size,
+        28.0 * ScoutingTheme.appSizeRatio,
+        20.0 * ScoutingTheme.appSizeRatio,
+        28.0 * ScoutingTheme.appSizeRatio,
+        12.0 * ScoutingTheme.appSizeRatio,
       ),
       content: ScoutingText.text(content, textAlign: TextAlign.center),
       actionsAlignment: MainAxisAlignment.center,
@@ -54,7 +53,7 @@ class ScoutingAlertDialog extends StatelessWidget {
         if (okButton)
           TextButton(
             child: Padding(
-              padding: EdgeInsets.all(8.0 * size),
+              padding: EdgeInsets.all(8.0 * ScoutingTheme.appSizeRatio),
               child: ScoutingText.subtitle(
                 'OK',
                 color: ScoutingTheme.primary,

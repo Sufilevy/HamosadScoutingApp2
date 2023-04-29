@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/constants.dart';
+import 'package:hamosad_scouting_app_2/src/theme.dart';
 
 class ScoutingIconButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onPressed;
-  final double size;
   final double iconSize;
   final String? tooltip;
   final Color? color;
@@ -13,7 +12,6 @@ class ScoutingIconButton extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.onPressed,
-    this.size = 1.0,
     this.iconSize = 24.0,
     this.tooltip,
     this.color,
@@ -21,16 +19,14 @@ class ScoutingIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Center(
-        child: IconButton(
-          onPressed: onPressed,
-          iconSize: iconSize * size,
-          color: color ?? ScoutingTheme.primary,
-          tooltip: tooltip,
-          splashRadius: iconSize / 1.75 * size,
-          icon: Icon(icon),
-        ),
+    return Center(
+      child: IconButton(
+        onPressed: onPressed,
+        iconSize: iconSize * ScoutingTheme.appSizeRatio,
+        color: color ?? ScoutingTheme.primary,
+        tooltip: tooltip,
+        splashRadius: iconSize / 1.75 * ScoutingTheme.appSizeRatio,
+        icon: Icon(icon),
       ),
     );
   }

@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
-import 'package:hamosad_scouting_app_2/src/widgets/scouting_widgets/scouting_text.dart';
+import 'package:hamosad_scouting_app_2/src/theme.dart';
+import 'package:hamosad_scouting_app_2/src/widgets/generic/scouting_text.dart';
 
 class ScoutingToggleButton extends StatefulWidget {
-  final Cubit<bool> cubit;
-  final double size;
-  final String title;
-
   const ScoutingToggleButton({
     Key? key,
     required this.cubit,
     required this.title,
-    this.size = 1,
   }) : super(key: key);
+
+  final Cubit<bool> cubit;
+  final String title;
 
   @override
   State<ScoutingToggleButton> createState() => _ScoutingToggleButtonState();
@@ -23,12 +21,13 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 54.0 * widget.size),
+      padding:
+          EdgeInsets.symmetric(horizontal: 54.0 * ScoutingTheme.appSizeRatio),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Transform.scale(
-            scale: 1.75 * widget.size,
+            scale: 1.75 * ScoutingTheme.appSizeRatio,
             child: Checkbox(
               value: widget.cubit.data,
               onChanged: (value) => setState(
@@ -52,8 +51,8 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  vertical: 4.0 * widget.size,
-                  horizontal: 2.0 * widget.size,
+                  vertical: 4.0 * ScoutingTheme.appSizeRatio,
+                  horizontal: 2.0 * ScoutingTheme.appSizeRatio,
                 ),
                 child: ScoutingText.subtitle(
                   widget.title,

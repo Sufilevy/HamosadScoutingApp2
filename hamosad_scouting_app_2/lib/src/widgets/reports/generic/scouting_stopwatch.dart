@@ -2,24 +2,22 @@ import 'dart:async';
 
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
+import 'package:hamosad_scouting_app_2/src/theme.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
 
 class ScoutingStopwatch extends StatefulWidget {
-  final Cubit<double> cubit;
-  final double size;
-  final int lapLength;
-  final double width, height;
-
   const ScoutingStopwatch({
     Key? key,
     required this.cubit,
-    this.size = 1.0,
     this.lapLength = 5000,
     this.width = 250,
     this.height = 250,
   }) : super(key: key);
+
+  final Cubit<double> cubit;
+  final int lapLength;
+  final double width, height;
 
   @override
   State<ScoutingStopwatch> createState() => _ScoutingStopwatchState();
@@ -37,44 +35,17 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch>
     super.initState();
   }
 
-  void _start() {
-    _timer = Timer.periodic(10.milliseconds, (_) => setState(() {}));
-    _stopwatch.start();
-    _controller.forward();
-  }
-
-  void _stop() {
-    _timer.cancel();
-    _stopwatch.stop();
-    _controller.reverse();
-  }
-
-  void _reset() {
-    setState(() {
-      _stopwatch.reset();
-      _timer.cancel();
-    });
-  }
-
-  @override
-  void dispose() {
-    _stopwatch.stop();
-    _timer.cancel();
-    _controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: widget.width * widget.size,
-      height: widget.height * widget.size,
+      width: widget.width * ScoutingTheme.appSizeRatio,
+      height: widget.height * ScoutingTheme.appSizeRatio,
       child: Stack(
         children: [
           Center(
             child: SizedBox(
-              width: widget.width * widget.size,
-              height: widget.height * widget.size,
+              width: widget.width * ScoutingTheme.appSizeRatio,
+              height: widget.height * ScoutingTheme.appSizeRatio,
               child: CustomPaint(
                 painter: CirclePainter(
                   color: Colors.indigo,
@@ -102,7 +73,7 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch>
                       icon: const Icon(Icons.stop),
                       color: ScoutingTheme.primary
                           .withOpacity(_stopwatch.isRunning ? 1.0 : 0.5),
-                      iconSize: 24.0 * widget.size,
+                      iconSize: 24.0 * ScoutingTheme.appSizeRatio,
                       onPressed: () => _stopwatch.isRunning ? null : _reset(),
                       splashColor: Colors.transparent,
                     ),
@@ -114,7 +85,7 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch>
                         icon: AnimatedIcons.play_pause,
                         progress: _controller,
                         color: ScoutingTheme.foreground2,
-                        size: 24.0 * widget.size,
+                        size: 24.0 * ScoutingTheme.appSizeRatio,
                       ),
                     ),
                   ],
@@ -125,5 +96,32 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch>
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _stopwatch.stop();
+    _timer.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _start() {
+    _timer = Timer.periodic(10.milliseconds, (_) => setState(() {}));
+    _stopwatch.start();
+    _controller.forward();
+  }
+
+  void _stop() {
+    _timer.cancel();
+    _stopwatch.stop();
+    _controller.reverse();
+  }
+
+  void _reset() {
+    setState(() {
+      _stopwatch.reset();
+      _timer.cancel();
+    });
   }
 }

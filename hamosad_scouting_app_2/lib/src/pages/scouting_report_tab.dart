@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/constants.dart';
+import 'package:hamosad_scouting_app_2/src/theme.dart';
 
 class ScoutingReportTab extends StatelessWidget {
   final String title;
   final List children;
-  final double size;
+
   final double seperation;
   final bool seperated;
 
@@ -12,7 +12,6 @@ class ScoutingReportTab extends StatelessWidget {
     Key? key,
     required this.title,
     required children,
-    this.size = 1.0,
     this.seperation = 30.0,
     this.seperated = true,
   })  : children = [...children, Container()],
@@ -25,9 +24,9 @@ class ScoutingReportTab extends StatelessWidget {
     return ListView.separated(
       separatorBuilder: (context, index) => Padding(
         padding: EdgeInsets.only(
-          left: 40.0 * size,
-          right: 40.0 * size,
-          top: 30.0 * size,
+          left: 40.0 * ScoutingTheme.appSizeRatio,
+          right: 40.0 * ScoutingTheme.appSizeRatio,
+          top: 30.0 * ScoutingTheme.appSizeRatio,
         ),
         child: Container(
           height: 1.5,
@@ -40,7 +39,7 @@ class ScoutingReportTab extends StatelessWidget {
         ),
       ),
       itemBuilder: (context, index) => Padding(
-        padding: EdgeInsets.only(top: seperation * size),
+        padding: EdgeInsets.only(top: seperation * ScoutingTheme.appSizeRatio),
         child: Center(child: children[index]),
       ),
       itemCount: children.length,

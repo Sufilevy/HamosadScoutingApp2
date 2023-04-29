@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/constants.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
+import 'package:hamosad_scouting_app_2/src/theme.dart';
 import 'package:intl/intl.dart' as intl;
 
 class ScoutingTextField extends StatefulWidget {
-  final Cubit<String?> cubit;
-  final double size;
-  final String hint;
-  final String title;
-  final bool onlyNumbers, onlyNames;
-  final String? errorHint;
-
   const ScoutingTextField({
     Key? key,
     required this.cubit,
-    this.size = 1,
     this.hint = '',
     this.title = '',
     this.onlyNumbers = false,
     this.onlyNames = false,
     this.errorHint,
   }) : super(key: key);
+
+  final Cubit<String?> cubit;
+  final String hint;
+  final String title;
+  final bool onlyNumbers, onlyNames;
+  final String? errorHint;
 
   @override
   State<ScoutingTextField> createState() => _ScoutingTextFieldState();
@@ -40,33 +38,11 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
     super.initState();
   }
 
-  String? _validateInput(String? value) {
-    if (value == null || value.isEmpty) {
-      String hint = widget.hint.isNotEmpty
-          ? (widget.hint.endsWith('...')
-              ? widget.hint.toLowerCase().substring(0, widget.hint.length - 3)
-              : widget.hint.toLowerCase())
-          : 'enter some text';
-      return widget.errorHint ?? 'Please $hint.';
-    }
-
-    if (widget.onlyNumbers) {
-      if (int.tryParse(value) == null) return 'Only numbers are allowed.';
-    }
-
-    if (widget.onlyNames) {
-      if (!_namesValidator.hasMatch(value)) {
-        return 'Names should only contain English letters.';
-      }
-    }
-
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 32.0 * widget.size),
+      padding:
+          EdgeInsets.symmetric(horizontal: 32.0 * ScoutingTheme.appSizeRatio),
       child: Form(
         key: _formKey,
         child: TextFormField(
@@ -101,31 +77,31 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: ScoutingTheme.primaryVariant,
-                width: 3.5 * widget.size,
+                width: 3.5 * ScoutingTheme.appSizeRatio,
               ),
             ),
             errorBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: ScoutingTheme.background3,
-                width: 2.0 * widget.size,
+                width: 2.0 * ScoutingTheme.appSizeRatio,
               ),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: ScoutingTheme.error,
-                width: 3.5 * widget.size,
+                width: 3.5 * ScoutingTheme.appSizeRatio,
               ),
             ),
             border: OutlineInputBorder(
               borderSide: BorderSide(
                 color: ScoutingTheme.background3,
-                width: 2.0 * widget.size,
+                width: 2.0 * ScoutingTheme.appSizeRatio,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: ScoutingTheme.background3,
-                width: 2.0 * widget.size,
+                width: 2.0 * ScoutingTheme.appSizeRatio,
               ),
             ),
             errorStyle: ScoutingTheme.textStyle.copyWith(
@@ -136,5 +112,28 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
         ),
       ),
     );
+  }
+
+  String? _validateInput(String? value) {
+    if (value == null || value.isEmpty) {
+      String hint = widget.hint.isNotEmpty
+          ? (widget.hint.endsWith('...')
+              ? widget.hint.toLowerCase().substring(0, widget.hint.length - 3)
+              : widget.hint.toLowerCase())
+          : 'enter some text';
+      return widget.errorHint ?? 'Please $hint.';
+    }
+
+    if (widget.onlyNumbers) {
+      if (int.tryParse(value) == null) return 'Only numbers are allowed.';
+    }
+
+    if (widget.onlyNames) {
+      if (!_namesValidator.hasMatch(value)) {
+        return 'Names should only contain English letters.';
+      }
+    }
+
+    return null;
   }
 }

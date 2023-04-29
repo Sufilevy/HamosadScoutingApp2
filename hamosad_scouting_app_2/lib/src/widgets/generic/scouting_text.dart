@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/constants.dart';
+import 'package:hamosad_scouting_app_2/src/theme.dart';
 
 class ScoutingText {
   static Text navigation(

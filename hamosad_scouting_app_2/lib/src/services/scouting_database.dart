@@ -1,18 +1,12 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartx/dartx.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hamosad_scouting_app_2/src/models.dart';
 import 'package:intl/intl.dart';
 
 class ScoutingDatabase {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
   static String _districtName = '';
-  static const _chars =
-      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  static final Random _random = Random();
-
-  ScoutingDatabase();
 
   static Future<void> initialize() async {
     await FirebaseAuth.instance.signInAnonymously();
@@ -27,11 +21,14 @@ class ScoutingDatabase {
   }
 
   static String _generateReportId(
-      String match, String scouter, String teamNumber) {
-    return '${match == 'Eliminations' ? 'elims' : match}-${scouter.trim().replaceAll(' ', '_')}-$teamNumber-${List.generate(4, (index) => _chars[_random.nextInt(_chars.length)]).join()}';
+      String match, String scouter, String teamNumber, Json datetime) {
+    return '${match == 'Eliminations' ? 'elims' : match}'
+        '-${scouter.trim().replaceAll(' ', '_')}'
+        '-$teamNumber'
+        '-${datetime['time']}';
   }
 
-  static Map<String, dynamic> _getDateTime() {
+  static Map<String, dynamic> _getDatetime() {
     DateTime now = DateTime.now();
 
     return {
@@ -46,15 +43,20 @@ class ScoutingDatabase {
     Map<String, dynamic> data, {
     String? id,
   }) async {
-    data.addAll({'datetime': _getDateTime()});
+    final datetime = _getDatetime();
+    data.addAll({'datetime': datetime});
 
     final reports = _db.collection('reports');
     final docName = '$_districtName-${data['info']['scouterTeamNumber']}';
 
     await reports.doc(docName).update({
       id ??
-          _generateReportId(data['info']['match'] ?? 'pit',
-              data['info']['scouter'], data['info']['teamNumber']): data,
+          _generateReportId(
+            data['info']['match'] ?? 'pit',
+            data['info']['scouter'],
+            data['info']['teamNumber'],
+            datetime,
+          ): data,
     });
   }
 
@@ -62,8 +64,14 @@ class ScoutingDatabase {
 
   static Future<void> _getMatches() async {
     final matchesJson = await _db.collection('district').doc('matches').get();
-    matches = matchesJson.data()?.mapValues((match) =>
-            (match.value as List).map((team) => team.toString()).toList()) ??
+
+    matches = matchesJson.data()?.mapValues(
+              (match) => (match.value as List)
+                  .map(
+                    (team) => team.toString(),
+                  )
+                  .toList(),
+            ) ??
         {};
   }
 }
