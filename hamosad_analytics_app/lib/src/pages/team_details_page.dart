@@ -33,9 +33,9 @@ class _TeamDetailsPageState extends ConsumerState<TeamDetailsPage> {
                 team.summary.score,
                 title: 'Total Score',
               ),
-              AnalyticsDefenceStatChip(
-                team.summary.defenceIndex,
-                title: 'Defence',
+              AnalyticsDefenseStatChip(
+                team.summary.defenseIndex,
+                title: 'Defense',
               ),
             ],
           ),

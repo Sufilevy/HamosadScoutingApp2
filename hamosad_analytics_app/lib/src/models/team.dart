@@ -206,28 +206,28 @@ class TeamEndgame {
 
 class TeamSummary {
   Stat score;
-  DefenceIndexStat defenceIndex;
+  DefenseIndexStat defenseIndex;
   PiecesPickupsStat pickups;
   PiecesDropoffsStat dropoffs;
   Stat teleopAndEndgameDropoffs;
   Stat chargeStationPasses;
-  List<String> notes, fouls, defenceNotes;
+  List<String> notes, fouls, defenseNotes;
 
   /// Uses default values for all fields.
   TeamSummary.defaults()
       : score = Stat(),
-        defenceIndex = DefenceIndexStat.defaults(),
+        defenseIndex = DefenseIndexStat.defaults(),
         pickups = PiecesPickupsStat.defaults(),
         dropoffs = PiecesDropoffsStat.defaults(),
         teleopAndEndgameDropoffs = Stat(),
         chargeStationPasses = Stat(),
         notes = [],
         fouls = [],
-        defenceNotes = [];
+        defenseNotes = [];
 
   void updateWithReport(Report report) {
     score.updateWithValue(report.score);
-    defenceIndex.updateWithIndex(report.summary.defenceIndex);
+    defenseIndex.updateWithIndex(report.summary.defenseIndex);
 
     pickups.updateRatesWithPickups(
       report.teleop.pickups + report.endgame.pickups,
@@ -269,8 +269,8 @@ class TeamSummary {
     if (report.summary.fouls.isNotEmpty) {
       fouls.add(report.matchAndScouter + report.summary.fouls);
     }
-    if (report.summary.defenceNotes.isNotEmpty) {
-      defenceNotes.add(report.matchAndScouter + report.summary.defenceNotes);
+    if (report.summary.defenseNotes.isNotEmpty) {
+      defenseNotes.add(report.matchAndScouter + report.summary.defenseNotes);
     }
   }
 }
@@ -597,7 +597,7 @@ class AutoClimbStat {
   }
 }
 
-class DefenceIndexStat {
+class DefenseIndexStat {
   /// The robot climbed first.
   ///
   /// Together with [halfRate] and [noneRate] represents 100% of the climbing indexes.
@@ -616,7 +616,7 @@ class DefenceIndexStat {
   int _almostAllCount, _halfCount, _noneCount;
 
   /// Uses default values for all fields.
-  DefenceIndexStat.defaults()
+  DefenseIndexStat.defaults()
       : almostAllRate = 0.0,
         halfRate = 0.0,
         noneRate = 0.0,
@@ -624,12 +624,12 @@ class DefenceIndexStat {
         _halfCount = 0,
         _noneCount = 0;
 
-  void updateWithIndex(DefenceRobotIndex value) {
-    if (value == DefenceRobotIndex.almostAll) {
+  void updateWithIndex(DefenseRobotIndex value) {
+    if (value == DefenseRobotIndex.almostAll) {
       _almostAllCount++;
-    } else if (value == DefenceRobotIndex.half) {
+    } else if (value == DefenseRobotIndex.half) {
       _halfCount++;
-    } else if (value == DefenceRobotIndex.none) {
+    } else if (value == DefenseRobotIndex.none) {
       _noneCount++;
     }
 

@@ -148,14 +148,14 @@ class ReportEndgame {
 }
 
 class ReportSummary {
-  DefenceRobotIndex defenceIndex;
-  String fouls, notes, defenceNotes;
+  DefenseRobotIndex defenseIndex;
+  String fouls, notes, defenseNotes;
 
   ReportSummary.fromJson(Json json)
-      : defenceIndex = DefenceRobotIndex.fromString(json['defenceRobotIndex'])!,
+      : defenseIndex = DefenseRobotIndex.fromString(json['defenseRobotIndex'])!,
         fouls = json['fouls'] ?? '',
         notes = json['notes'] ?? '',
-        defenceNotes = json['defenceNotes'] ?? '';
+        defenseNotes = json['defenseNotes'] ?? '';
 }
 
 enum ActionDuration {
@@ -229,20 +229,20 @@ enum RobotIndex {
   }
 }
 
-enum DefenceRobotIndex {
+enum DefenseRobotIndex {
   almostAll,
   half,
   none;
 
-  static DefenceRobotIndex? fromString(String? value) {
+  static DefenseRobotIndex? fromString(String? value) {
     switch (value) {
       case 'almostAll':
-        return DefenceRobotIndex.almostAll;
+        return DefenseRobotIndex.almostAll;
       case 'half':
-        return DefenceRobotIndex.half;
+        return DefenseRobotIndex.half;
       case 'null':
       case 'none':
-        return DefenceRobotIndex.none;
+        return DefenseRobotIndex.none;
     }
     return null;
   }

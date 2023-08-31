@@ -615,14 +615,14 @@ class AnalyticsDurationsStatChip extends StatelessWidget {
   }
 }
 
-class AnalyticsDefenceStatChip extends StatelessWidget {
-  const AnalyticsDefenceStatChip(
+class AnalyticsDefenseStatChip extends StatelessWidget {
+  const AnalyticsDefenseStatChip(
     this.data, {
     Key? key,
     required this.title,
   }) : super(key: key);
 
-  final DefenceIndexStat data;
+  final DefenseIndexStat data;
   final String title;
 
   Widget _buildDivider() => SizedBox(
@@ -788,9 +788,9 @@ class AnalyticsNotes extends StatelessWidget {
             _buildTitle('Fouls'),
             _buildNotes(team.summary.fouls),
           ],
-          if (team.summary.defenceNotes.isNotEmpty) ...[
-            _buildTitle('Defence Notes'),
-            _buildNotes(team.summary.defenceNotes),
+          if (team.summary.defenseNotes.isNotEmpty) ...[
+            _buildTitle('Defense Notes'),
+            _buildNotes(team.summary.defenseNotes),
           ],
           if (team.auto.notes.isNotEmpty) ...[
             _buildTitle('Auto Notes'),
