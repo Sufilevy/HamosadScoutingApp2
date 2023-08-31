@@ -16,8 +16,8 @@ class ScoutingStopwatch extends StatefulWidget {
   }) : super(key: key);
 
   final Cubit<double> cubit;
-  final int lapLength;
   final double width, height;
+  final int lapLength;
 
   @override
   State<ScoutingStopwatch> createState() => _ScoutingStopwatchState();
@@ -25,14 +25,41 @@ class ScoutingStopwatch extends StatefulWidget {
 
 class _ScoutingStopwatchState extends State<ScoutingStopwatch>
     with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
   final Stopwatch _stopwatch = Stopwatch();
   Timer _timer = Timer(0.milliseconds, () {});
-  late final AnimationController _controller;
+
+  @override
+  void dispose() {
+    _stopwatch.stop();
+    _timer.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
     _controller = AnimationController(duration: 250.milliseconds, vsync: this);
     super.initState();
+  }
+
+  void _start() {
+    _timer = Timer.periodic(10.milliseconds, (_) => setState(() {}));
+    _stopwatch.start();
+    _controller.forward();
+  }
+
+  void _stop() {
+    _timer.cancel();
+    _stopwatch.stop();
+    _controller.reverse();
+  }
+
+  void _reset() {
+    setState(() {
+      _stopwatch.reset();
+      _timer.cancel();
+    });
   }
 
   @override
@@ -96,32 +123,5 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch>
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _stopwatch.stop();
-    _timer.cancel();
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _start() {
-    _timer = Timer.periodic(10.milliseconds, (_) => setState(() {}));
-    _stopwatch.start();
-    _controller.forward();
-  }
-
-  void _stop() {
-    _timer.cancel();
-    _stopwatch.stop();
-    _controller.reverse();
-  }
-
-  void _reset() {
-    setState(() {
-      _stopwatch.reset();
-      _timer.cancel();
-    });
   }
 }

@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/theme.dart';
 
 class ScoutingIconButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onPressed;
-  final double iconSize;
-  final String? tooltip;
-  final Color? color;
-
   const ScoutingIconButton({
     Key? key,
     required this.icon,
@@ -16,6 +10,12 @@ class ScoutingIconButton extends StatelessWidget {
     this.tooltip,
     this.color,
   }) : super(key: key);
+
+  final Color? color;
+  final IconData icon;
+  final double iconSize;
+  final VoidCallback onPressed;
+  final String? tooltip;
 
   @override
   Widget build(BuildContext context) {

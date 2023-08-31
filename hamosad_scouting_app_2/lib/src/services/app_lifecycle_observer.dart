@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 typedef FutureVoidCallback = Future<void> Function();
 
 class AppLifecycleObserver extends WidgetsBindingObserver {
-  final FutureVoidCallback? detachedCallback, resumedCallback;
-
   AppLifecycleObserver({this.detachedCallback, this.resumedCallback});
+
+  final FutureVoidCallback? detachedCallback, resumedCallback;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {

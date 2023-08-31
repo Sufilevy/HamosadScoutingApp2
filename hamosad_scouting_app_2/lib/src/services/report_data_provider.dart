@@ -5,12 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ReportDataProvider {
+  final GameReport gameReport = GameReport();
+  final Cubit<String?> match = Cubit(null);
   final Cubit<String> scouter = Cubit('');
   final Cubit<String> scouterTeamNumber = Cubit('');
   final Cubit<String?> teamNumber = Cubit(null);
-  final Cubit<String?> match = Cubit(null);
-
-  final GameReport gameReport = GameReport();
 
   Json get data {
     return {
@@ -34,9 +33,9 @@ class ReportDataProvider {
 
 class GameReport {
   final GameReportAuto auto = GameReportAuto();
-  final GameReportTeleop teleop = GameReportTeleop();
   final GameReportEndgame endgame = GameReportEndgame();
   final GameReportSummary summary = GameReportSummary();
+  final GameReportTeleop teleop = GameReportTeleop();
 
   Json get data {
     return {
@@ -98,28 +97,28 @@ class GameReportEndgame {
 }
 
 class GameReportSummary {
-  Cubit<bool> won = Cubit(false);
-  Cubit<DefenceFocus?> defenceFocus = Cubit(null);
+  Cubit<DefenseFocus?> defenseFocus = Cubit(null);
+  Cubit<String> defenseNotes = Cubit('');
   Cubit<String> fouls = Cubit('');
   Cubit<String> notes = Cubit('');
-  Cubit<String> defenceNotes = Cubit('');
+  Cubit<bool> won = Cubit(false);
 
   Json get data {
     return {
       'won': won.data,
-      'defenceRobotIndex': defenceFocus.data.toString(),
+      'defenseRobotIndex': defenseFocus.data.toString(),
       'fouls': fouls.data,
       'notes': notes.data,
-      'defenceNotes': defenceNotes.data,
+      'defenseNotes': defenseNotes.data,
     };
   }
 
   void clear() {
     won.data = false;
-    defenceFocus.data = null;
+    defenseFocus.data = null;
     fouls.data = '';
     notes.data = '';
-    defenceNotes.data = '';
+    defenseNotes.data = '';
   }
 }
 

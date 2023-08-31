@@ -19,27 +19,6 @@ class ScoutingNotes extends StatefulWidget {
 }
 
 class _ScoutingNotesState extends State<ScoutingNotes> {
-  @override
-  Widget build(BuildContext context) {
-    if (widget.title.isNotEmpty) {
-      return Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: 56.0 * ScoutingTheme.appSizeRatio),
-        child: Column(
-          children: [
-            _buildTextField(context),
-          ],
-        ),
-      );
-    } else {
-      return Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: 56.0 * ScoutingTheme.appSizeRatio),
-        child: _buildTextField(context),
-      );
-    }
-  }
-
   Widget _buildTextField(BuildContext context) {
     final normalBorder = OutlineInputBorder(
       borderSide: BorderSide(
@@ -89,5 +68,26 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
         focusedErrorBorder: errorBorder,
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.title.isNotEmpty) {
+      return Padding(
+        padding:
+            EdgeInsets.symmetric(horizontal: 56.0 * ScoutingTheme.appSizeRatio),
+        child: Column(
+          children: [
+            _buildTextField(context),
+          ],
+        ),
+      );
+    } else {
+      return Padding(
+        padding:
+            EdgeInsets.symmetric(horizontal: 56.0 * ScoutingTheme.appSizeRatio),
+        child: _buildTextField(context),
+      );
+    }
   }
 }

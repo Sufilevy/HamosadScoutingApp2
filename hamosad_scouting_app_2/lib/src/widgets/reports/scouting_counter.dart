@@ -20,9 +20,9 @@ class ScoutingCounter extends StatefulWidget {
         super(key: key);
 
   final Cubit<num> cubit;
-  final String title;
-  final num min, max, step;
   final num? initial;
+  final num min, max, step;
+  final String title;
 
   @override
   State<ScoutingCounter> createState() => _ScoutingCounterState();
@@ -36,34 +36,6 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
             ? (widget.min + widget.max) ~/ 2
             : (widget.min + widget.max) / 2);
     super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (widget.title.isNotEmpty) {
-      return Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: 32.0 * ScoutingTheme.appSizeRatio),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Flexible(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 12.0 * ScoutingTheme.appSizeRatio),
-                child: ScoutingText.subtitle(
-                  widget.title,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            _buildCounter(),
-          ],
-        ),
-      );
-    } else {
-      return _buildCounter();
-    }
   }
 
   Widget _buildIconButton(
@@ -142,6 +114,34 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
       setState(() {
         widget.cubit.data -= widget.step;
       });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.title.isNotEmpty) {
+      return Padding(
+        padding:
+            EdgeInsets.symmetric(horizontal: 32.0 * ScoutingTheme.appSizeRatio),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Flexible(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: 12.0 * ScoutingTheme.appSizeRatio),
+                child: ScoutingText.subtitle(
+                  widget.title,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            _buildCounter(),
+          ],
+        ),
+      );
+    } else {
+      return _buildCounter();
     }
   }
 }

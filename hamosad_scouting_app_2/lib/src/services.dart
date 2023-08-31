@@ -4,6 +4,7 @@ export 'services/report_data_provider.dart';
 export 'services/scouting_database.dart';
 
 class Cubit<T> {
-  T data;
   Cubit(this.data);
+
+  T data;
 }

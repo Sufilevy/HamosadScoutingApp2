@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/pages.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/theme.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
@@ -97,8 +98,8 @@ class ScoutingHomePage extends StatelessWidget {
               fontSize: 36.0 * ScoutingTheme.appSizeRatio,
             ),
           ),
-          Stack(
-            children: const [],
+          const Stack(
+            children: [],
           ),
         ],
       ),

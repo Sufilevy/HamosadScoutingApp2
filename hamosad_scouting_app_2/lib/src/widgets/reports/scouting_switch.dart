@@ -12,10 +12,10 @@ class ScoutingSwitch extends StatelessWidget {
     this.customWidths,
   }) : super(key: key);
 
-  final List<String> items;
-  final void Function(int?) onChanged;
-  final double fontSize, minWidth;
   final List<double>? customWidths;
+  final List<String> items;
+  final double fontSize, minWidth;
+  final void Function(int?) onChanged;
 
   @override
   Widget build(BuildContext context) {

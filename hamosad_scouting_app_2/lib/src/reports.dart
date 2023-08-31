@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/src/models.dart';
+import 'package:hamosad_scouting_app_2/src/pages.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/theme.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
@@ -58,8 +59,8 @@ Widget gameReport(BuildContext context) {
               150.0 * ScoutingTheme.appSizeRatio,
               150.0 * ScoutingTheme.appSizeRatio,
             ],
-            onChanged: (index) => gameReport.summary.defenceFocus.data =
-                index == null ? null : DefenceFocus.values[index],
+            onChanged: (index) => gameReport.summary.defenseFocus.data =
+                index == null ? null : DefenseFocus.values[index],
           ),
           ScoutingNotes(
             cubit: gameReport.summary.notes,
@@ -70,9 +71,9 @@ Widget gameReport(BuildContext context) {
             hint: 'Enter the team\'s fouls...',
           ),
           ScoutingNotes(
-            cubit: gameReport.summary.defenceNotes,
-            title: 'Defence Notes',
-            hint: 'Enter your defence notes...',
+            cubit: gameReport.summary.defenseNotes,
+            title: 'Defense Notes',
+            hint: 'Enter your defense notes...',
           ),
         ],
       ),

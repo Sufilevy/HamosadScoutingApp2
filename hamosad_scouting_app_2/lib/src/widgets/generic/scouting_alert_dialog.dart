@@ -3,13 +3,6 @@ import 'package:hamosad_scouting_app_2/src/theme.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
 
 class ScoutingDialog extends StatelessWidget {
-  final String content, title;
-
-  final bool okButton;
-  final List actions;
-  final IconData? titleIcon;
-  final Color? iconColor;
-
   const ScoutingDialog({
     Key? key,
     required this.content,
@@ -19,6 +12,12 @@ class ScoutingDialog extends StatelessWidget {
     this.titleIcon,
     this.iconColor,
   }) : super(key: key);
+
+  final List actions;
+  final Color? iconColor;
+  final bool okButton;
+  final String content, title;
+  final IconData? titleIcon;
 
   @override
   Widget build(BuildContext context) {

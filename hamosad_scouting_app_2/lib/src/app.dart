@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/src/pages/scouting_home_page.dart';
 import 'package:hamosad_scouting_app_2/src/reports.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/theme.dart';
-import 'package:hamosad_scouting_app_2/src/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ScoutingApp extends StatefulWidget {
@@ -15,8 +15,7 @@ class ScoutingApp extends StatefulWidget {
 class _ScoutingAppState extends State<ScoutingApp> {
   @override
   Widget build(BuildContext context) {
-    final screenSize =
-        MediaQueryData.fromWindow(WidgetsBinding.instance.window).size;
+    final screenSize = MediaQueryData.fromView(View.of(context)).size;
     ScoutingTheme.appSizeRatio = screenSize.height / 1350.0;
     return Provider<ReportDataProvider>(
       create: (_) => ReportDataProvider(),

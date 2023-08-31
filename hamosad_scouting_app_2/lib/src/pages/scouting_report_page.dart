@@ -1,6 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:hamosad_scouting_app_2/src/pages.dart';
 import 'package:hamosad_scouting_app_2/src/services.dart';
 import 'package:hamosad_scouting_app_2/src/theme.dart';
 import 'package:hamosad_scouting_app_2/src/widgets.dart';
@@ -78,8 +79,8 @@ class ScoutingReportPage extends StatelessWidget {
               if (report.match.data.isNullOrEmpty ||
                   report.teamNumber.data.isNullOrEmpty) {
                 content = 'Please fill the match and team number.';
-              } else if (report.gameReport.summary.defenceFocus.data == null) {
-                content = 'Please fill the defence focus.';
+              } else if (report.gameReport.summary.defenseFocus.data == null) {
+                content = 'Please fill the defense focus.';
               }
 
               if (content == null) {

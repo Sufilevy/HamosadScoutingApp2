@@ -15,20 +15,20 @@ class ScoutingTextField extends StatefulWidget {
   }) : super(key: key);
 
   final Cubit<String?> cubit;
-  final String hint;
-  final String title;
-  final bool onlyNumbers, onlyNames;
   final String? errorHint;
+  final String hint;
+  final bool onlyNumbers, onlyNames;
+  final String title;
 
   @override
   State<ScoutingTextField> createState() => _ScoutingTextFieldState();
 }
 
 class _ScoutingTextFieldState extends State<ScoutingTextField> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FocusNode _focusNode = FocusNode();
-  final RegExp _namesValidator = RegExp(r'^[a-zA-Z -]{1,30}$');
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _hasErrors = false;
+  final RegExp _namesValidator = RegExp(r'^[a-zA-Z -]{1,30}$');
 
   @override
   void initState() {
@@ -36,6 +36,29 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
       setState(() {});
     });
     super.initState();
+  }
+
+  String? _validateInput(String? value) {
+    if (value == null || value.isEmpty) {
+      String hint = widget.hint.isNotEmpty
+          ? (widget.hint.endsWith('...')
+              ? widget.hint.toLowerCase().substring(0, widget.hint.length - 3)
+              : widget.hint.toLowerCase())
+          : 'enter some text';
+      return widget.errorHint ?? 'Please $hint.';
+    }
+
+    if (widget.onlyNumbers) {
+      if (int.tryParse(value) == null) return 'Only numbers are allowed.';
+    }
+
+    if (widget.onlyNames) {
+      if (!_namesValidator.hasMatch(value)) {
+        return 'Names should only contain English letters.';
+      }
+    }
+
+    return null;
   }
 
   @override
@@ -112,28 +135,5 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
         ),
       ),
     );
-  }
-
-  String? _validateInput(String? value) {
-    if (value == null || value.isEmpty) {
-      String hint = widget.hint.isNotEmpty
-          ? (widget.hint.endsWith('...')
-              ? widget.hint.toLowerCase().substring(0, widget.hint.length - 3)
-              : widget.hint.toLowerCase())
-          : 'enter some text';
-      return widget.errorHint ?? 'Please $hint.';
-    }
-
-    if (widget.onlyNumbers) {
-      if (int.tryParse(value) == null) return 'Only numbers are allowed.';
-    }
-
-    if (widget.onlyNames) {
-      if (!_namesValidator.hasMatch(value)) {
-        return 'Names should only contain English letters.';
-      }
-    }
-
-    return null;
   }
 }

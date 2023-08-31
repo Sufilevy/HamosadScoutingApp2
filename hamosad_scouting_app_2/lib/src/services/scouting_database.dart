@@ -5,38 +5,23 @@ import 'package:hamosad_scouting_app_2/src/models.dart';
 import 'package:intl/intl.dart';
 
 class ScoutingDatabase {
+  static late Map<String, List<String>> matches;
+
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
   static String _districtName = '';
 
   static Future<void> initialize() async {
     await FirebaseAuth.instance.signInAnonymously();
+
     final informationDoc =
         await _db.collection('district').doc('information').get();
     _districtName = informationDoc.get('name');
+
     await _getMatches();
   }
 
   static Future<void> finalize() async {
     await FirebaseAuth.instance.currentUser?.delete();
-  }
-
-  static String _generateReportId(
-      String match, String scouter, String teamNumber, Json datetime) {
-    return '${match == 'Eliminations' ? 'elims' : match}'
-        '-${scouter.trim().replaceAll(' ', '_')}'
-        '-$teamNumber'
-        '-${datetime['time']}';
-  }
-
-  static Map<String, dynamic> _getDatetime() {
-    DateTime now = DateTime.now();
-
-    return {
-      'day': now.day,
-      'month': now.month,
-      'year': now.year,
-      'time': DateFormat('dd/MM HH:mm:ss').format(now),
-    };
   }
 
   static Future<void> sendReport(
@@ -60,7 +45,24 @@ class ScoutingDatabase {
     });
   }
 
-  static late Map<String, List<String>> matches;
+  static String _generateReportId(
+      String match, String scouter, String teamNumber, Json datetime) {
+    return '${match == 'Eliminations' ? 'elims' : match}'
+        '-${scouter.trim().replaceAll(' ', '_')}'
+        '-$teamNumber'
+        '-${datetime['time']}';
+  }
+
+  static Map<String, dynamic> _getDatetime() {
+    DateTime now = DateTime.now();
+
+    return {
+      'day': now.day,
+      'month': now.month,
+      'year': now.year,
+      'time': DateFormat('dd/MM HH:mm:ss').format(now),
+    };
+  }
 
   static Future<void> _getMatches() async {
     final matchesJson = await _db.collection('district').doc('matches').get();

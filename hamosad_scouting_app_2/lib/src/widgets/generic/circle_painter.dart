@@ -3,21 +3,15 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 class CirclePainter extends CustomPainter {
-  final Color color;
-  final double strokeWidth;
-  final double progress;
-
   CirclePainter({
     this.color = Colors.indigo,
     this.strokeWidth = 3,
     this.progress = 0,
   });
 
-  double _mapRange(double value, double inputStart, double inputEnd,
-          double outputStart, double outputEnd) =>
-      outputStart +
-      ((outputEnd - outputStart) / (inputEnd - inputStart)) *
-          (value - inputStart);
+  final Color color;
+  final double progress;
+  final double strokeWidth;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -43,8 +37,14 @@ class CirclePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CirclePainter oldDelegate) => true;
+  bool shouldRebuildSemantics(CirclePainter oldDelegate) => false;
 
   @override
-  bool shouldRebuildSemantics(CirclePainter oldDelegate) => false;
+  bool shouldRepaint(CirclePainter oldDelegate) => true;
+
+  double _mapRange(double value, double inputStart, double inputEnd,
+          double outputStart, double outputEnd) =>
+      outputStart +
+      ((outputEnd - outputStart) / (inputEnd - inputStart)) *
+          (value - inputStart);
 }
