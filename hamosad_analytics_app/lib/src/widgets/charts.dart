@@ -167,7 +167,7 @@ class AnalyticsLineChart extends StatelessWidget {
         data.teamsWithNumber[team]!.calculateTrendlineWith(getData);
     return LineChartBarData(
       spots: [
-        FlSpot(1, math.min(trendline.offset, 0.0)),
+        FlSpot(1, math.max(trendline.offset, 0.0)),
         FlSpot(
           reports.length.toDouble(),
           trendline.offset + trendline.slope * reports.length,
