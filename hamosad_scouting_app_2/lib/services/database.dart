@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartx/dartx.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hamosad_scouting_app_2/src/models.dart';
+import 'package:hamosad_scouting_app_2/models/report.dart';
+import 'package:hamosad_scouting_app_2/services/utilities.dart';
 import 'package:intl/intl.dart';
 
 class ScoutingDatabase {
@@ -13,8 +14,7 @@ class ScoutingDatabase {
   static Future<void> initialize() async {
     await FirebaseAuth.instance.signInAnonymously();
 
-    final informationDoc =
-        await _db.collection('district').doc('information').get();
+    final informationDoc = await _db.collection('district').doc('information').get();
     _districtName = informationDoc.get('name');
 
     await _getMatches();
@@ -46,12 +46,15 @@ class ScoutingDatabase {
   }
 
   static String _generateReportId(
-      String match, String scouter, String teamNumber, Json datetime) {
-    return '${match == 'Eliminations' ? 'elims' : match}'
-        '-${scouter.trim().replaceAll(' ', '_')}'
-        '-$teamNumber'
-        '-${datetime['time']}';
-  }
+    String match,
+    String scouter,
+    String teamNumber,
+    Json datetime,
+  ) =>
+      '${match == 'Eliminations' ? 'elims' : match}'
+      '-${scouter.trim().replaceAll(' ', '_')}'
+      '-$teamNumber'
+      '-${datetime['time']}';
 
   static Map<String, dynamic> _getDatetime() {
     DateTime now = DateTime.now();
@@ -67,13 +70,6 @@ class ScoutingDatabase {
   static Future<void> _getMatches() async {
     final matchesJson = await _db.collection('district').doc('matches').get();
 
-    matches = matchesJson.data()?.mapValues(
-              (match) => (match.value as List)
-                  .map(
-                    (team) => team.toString(),
-                  )
-                  .toList(),
-            ) ??
-        {};
+    matches = matchesJson.data()?.mapValues((match) => (match.value as List).mapToStrings()) ?? {};
   }
 }

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/pages.dart';
-import 'package:hamosad_scouting_app_2/src/services.dart';
-import 'package:hamosad_scouting_app_2/src/theme.dart';
-import 'package:hamosad_scouting_app_2/src/widgets.dart';
+import 'package:hamosad_scouting_app_2/models/report.dart';
+import 'package:hamosad_scouting_app_2/pages/report/report_tab.dart';
+import 'package:hamosad_scouting_app_2/pages/report/scouting_widgets/scouting_text_field.dart';
+import 'package:hamosad_scouting_app_2/theme.dart';
+import 'package:hamosad_scouting_app_2/widgets/alerts.dart';
+import 'package:hamosad_scouting_app_2/widgets/icon_button.dart';
+import 'package:hamosad_scouting_app_2/widgets/image.dart';
+import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 class ScoutingHomePage extends StatelessWidget {
   static final List<String> _allowedTeams = ['1657'];
 
-  const ScoutingHomePage({
-    Key? key,
-    required this.title,
-  }) : super(key: key);
-
-  final String title;
+  const ScoutingHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class ScoutingHomePage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: ScoutingTheme.background2,
           centerTitle: true,
-          title: ScoutingText.navigation(title),
+          title: ScoutingText.navigation(ScoutingTheme.appTitle),
           leading: Builder(
             builder: (context) => IconButton(
               icon: Icon(
@@ -39,8 +38,8 @@ class ScoutingHomePage extends StatelessWidget {
           ),
         ),
         drawer: _buildDrawer(),
-        body: ScoutingReportTab(
-          title: title,
+        body: ReportTab(
+          title: ScoutingTheme.appTitle,
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -107,7 +106,7 @@ class ScoutingHomePage extends StatelessWidget {
   }
 
   void _createReport(BuildContext context) {
-    ReportDataProvider reportData = reportDataProvider(context);
+    final reportData = reportDataProvider(context);
 
     if (reportData.scouter.data.isEmpty ||
         reportData.scouterTeamNumber.data.isEmpty ||
@@ -122,7 +121,7 @@ class ScoutingHomePage extends StatelessWidget {
         ),
       );
     } else {
-      Navigator.pushNamed(context, '/report');
+      Navigator.pushNamed(context, '/game-report');
     }
   }
 }

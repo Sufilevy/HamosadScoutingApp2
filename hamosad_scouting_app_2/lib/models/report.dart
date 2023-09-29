@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/models.dart';
-import 'package:hamosad_scouting_app_2/src/services.dart';
+import 'package:hamosad_scouting_app_2/models/summary.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class ReportDataProvider {
-  final GameReport gameReport = GameReport();
+import 'cubit.dart';
+
+typedef Json = Map<String, dynamic>;
+
+class GameReport {
   final Cubit<String?> match = Cubit(null);
   final Cubit<String> scouter = Cubit('');
   final Cubit<String> scouterTeamNumber = Cubit('');
   final Cubit<String?> teamNumber = Cubit(null);
+
+  final GameReportAuto auto = GameReportAuto();
+  final GameReportEndgame endgame = GameReportEndgame();
+  final GameReportSummary summary = GameReportSummary();
+  final GameReportTeleop teleop = GameReportTeleop();
 
   Json get data {
     return {
@@ -20,25 +27,6 @@ class ReportDataProvider {
         'time': DateFormat('dd/MM HH:mm:ss').format(DateTime.now()),
         'match': match.data,
       },
-      ...gameReport.data,
-    };
-  }
-
-  void clear() {
-    teamNumber.data = null;
-    match.data = null;
-    gameReport.clear();
-  }
-}
-
-class GameReport {
-  final GameReportAuto auto = GameReportAuto();
-  final GameReportEndgame endgame = GameReportEndgame();
-  final GameReportSummary summary = GameReportSummary();
-  final GameReportTeleop teleop = GameReportTeleop();
-
-  Json get data {
-    return {
       'auto': auto.data,
       'teleop': teleop.data,
       'endgame': endgame.data,
@@ -51,6 +39,8 @@ class GameReport {
     teleop.clear();
     endgame.clear();
     summary.clear();
+    teamNumber.data = null;
+    match.data = null;
   }
 }
 
@@ -122,5 +112,5 @@ class GameReportSummary {
   }
 }
 
-ReportDataProvider reportDataProvider(BuildContext context) =>
-    context.read<ReportDataProvider>();
+GameReport reportDataProvider(BuildContext context) =>
+    context.read<GameReport>();

@@ -1,8 +1,8 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/services.dart';
-import 'package:hamosad_scouting_app_2/src/theme.dart';
-import 'package:hamosad_scouting_app_2/src/widgets.dart';
+import 'package:hamosad_scouting_app_2/models/cubit.dart';
+import 'package:hamosad_scouting_app_2/theme.dart';
+import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 class ScoutingCounter extends StatefulWidget {
   const ScoutingCounter({

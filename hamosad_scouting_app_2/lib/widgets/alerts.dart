@@ -1,6 +1,7 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/theme.dart';
-import 'package:hamosad_scouting_app_2/src/widgets.dart';
+import 'package:hamosad_scouting_app_2/theme.dart';
+import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 class ScoutingDialog extends StatelessWidget {
   const ScoutingDialog({
@@ -64,4 +65,28 @@ class ScoutingDialog extends StatelessWidget {
       ],
     );
   }
+}
+
+void showWarningSnackBar(BuildContext context, String title) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Row(
+        children: [
+          Icon(
+            Icons.warning_rounded,
+            color: ScoutingTheme.warning,
+            size: 36.0 * ScoutingTheme.appSizeRatio,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 16.0 * ScoutingTheme.appSizeRatio),
+            child: ScoutingText.subtitle(
+              title,
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: ScoutingTheme.background2,
+      duration: 2.seconds,
+    ),
+  );
 }

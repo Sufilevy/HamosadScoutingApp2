@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/services.dart';
-import 'package:hamosad_scouting_app_2/src/theme.dart';
+import 'package:hamosad_scouting_app_2/models/cubit.dart';
+import 'package:hamosad_scouting_app_2/theme.dart';
 import 'package:intl/intl.dart' as intl;
 
 class ScoutingTextField extends StatefulWidget {

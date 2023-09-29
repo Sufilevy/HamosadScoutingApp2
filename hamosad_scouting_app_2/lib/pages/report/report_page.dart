@@ -1,16 +1,19 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:hamosad_scouting_app_2/src/pages.dart';
-import 'package:hamosad_scouting_app_2/src/services.dart';
-import 'package:hamosad_scouting_app_2/src/theme.dart';
-import 'package:hamosad_scouting_app_2/src/widgets.dart';
+import 'package:hamosad_scouting_app_2/models/report.dart';
+import 'package:hamosad_scouting_app_2/pages/report/report_tab.dart';
+import 'package:hamosad_scouting_app_2/services/database.dart';
+import 'package:hamosad_scouting_app_2/theme.dart';
+import 'package:hamosad_scouting_app_2/widgets/alerts.dart';
+import 'package:hamosad_scouting_app_2/widgets/icon_button.dart';
+import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
-class ScoutingReportPage extends StatelessWidget {
+class ReportPage extends StatelessWidget {
   final String title;
-  final List<ScoutingReportTab> tabs;
+  final List<ReportTab> tabs;
 
-  const ScoutingReportPage({
+  const ReportPage({
     Key? key,
     required this.title,
     required this.tabs,
@@ -79,7 +82,7 @@ class ScoutingReportPage extends StatelessWidget {
               if (report.match.data.isNullOrEmpty ||
                   report.teamNumber.data.isNullOrEmpty) {
                 content = 'Please fill the match and team number.';
-              } else if (report.gameReport.summary.defenseFocus.data == null) {
+              } else if (report.summary.defenseFocus.data == null) {
                 content = 'Please fill the defense focus.';
               }
 

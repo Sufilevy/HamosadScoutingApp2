@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/theme.dart';
+import 'package:hamosad_scouting_app_2/theme.dart';
 
-class ScoutingReportTab extends StatelessWidget {
+class ReportTab extends StatelessWidget {
   final String title;
   final List children;
 
   final double seperation;
   final bool seperated;
 
-  ScoutingReportTab({
+  ReportTab({
     Key? key,
     required this.title,
     required children,

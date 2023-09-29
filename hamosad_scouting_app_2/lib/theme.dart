@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 class ScoutingTheme {
   static late double appSizeRatio;
+
+  static const String appTitle = 'Scouting App';
+
   static const Color background1 = Color(0xFF1F1E24);
   static const Color background2 = Color(0xFF29272F);
   static const Color background3 = Color(0xFF363442);

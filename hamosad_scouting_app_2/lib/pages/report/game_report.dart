@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/models.dart';
-import 'package:hamosad_scouting_app_2/src/pages.dart';
-import 'package:hamosad_scouting_app_2/src/services.dart';
-import 'package:hamosad_scouting_app_2/src/theme.dart';
-import 'package:hamosad_scouting_app_2/src/widgets.dart';
+import 'package:hamosad_scouting_app_2/models/report.dart';
+import 'package:hamosad_scouting_app_2/models/summary.dart';
+import 'package:hamosad_scouting_app_2/pages/report/report_page.dart';
+import 'package:hamosad_scouting_app_2/pages/report/report_tab.dart';
+import 'package:hamosad_scouting_app_2/pages/report/scouting_widgets/scouting_match_and_team.dart';
+import 'package:hamosad_scouting_app_2/pages/report/scouting_widgets/scouting_notes.dart';
+import 'package:hamosad_scouting_app_2/pages/report/scouting_widgets/scouting_switch.dart';
+import 'package:hamosad_scouting_app_2/pages/report/scouting_widgets/scouting_toggle_button.dart';
+import 'package:hamosad_scouting_app_2/services/database.dart';
+import 'package:hamosad_scouting_app_2/theme.dart';
 
-Widget gameReport(BuildContext context) {
+Widget gameReportPage(BuildContext context) {
   final report = reportDataProvider(context);
-  final gameReport = report.gameReport;
-  return ScoutingReportPage(
+  return ReportPage(
     title: 'Game Report',
     tabs: [
-      ScoutingReportTab(
+      ReportTab(
         title: 'Info',
         children: [
           ScoutingMatchAndTeam(
@@ -21,35 +25,35 @@ Widget gameReport(BuildContext context) {
           ),
         ],
       ),
-      ScoutingReportTab(
+      ReportTab(
         title: 'Auto',
         children: [
           ScoutingNotes(
-            cubit: gameReport.auto.notes,
+            cubit: report.auto.notes,
           ),
         ],
       ),
-      ScoutingReportTab(
+      ReportTab(
         title: 'Teleop',
         children: [
           ScoutingNotes(
-            cubit: gameReport.teleop.notes,
+            cubit: report.teleop.notes,
           ),
         ],
       ),
-      ScoutingReportTab(
+      ReportTab(
         title: 'Endgame',
         children: [
           ScoutingNotes(
-            cubit: gameReport.endgame.notes,
+            cubit: report.endgame.notes,
           ),
         ],
       ),
-      ScoutingReportTab(
+      ReportTab(
         title: 'Summary',
         children: [
           ScoutingToggleButton(
-            cubit: gameReport.summary.won,
+            cubit: report.summary.won,
             title: 'Did the robot\'s alliance win?',
           ),
           ScoutingSwitch(
@@ -59,19 +63,19 @@ Widget gameReport(BuildContext context) {
               150.0 * ScoutingTheme.appSizeRatio,
               150.0 * ScoutingTheme.appSizeRatio,
             ],
-            onChanged: (index) => gameReport.summary.defenseFocus.data =
+            onChanged: (index) => report.summary.defenseFocus.data =
                 index == null ? null : DefenseFocus.values[index],
           ),
           ScoutingNotes(
-            cubit: gameReport.summary.notes,
+            cubit: report.summary.notes,
           ),
           ScoutingNotes(
-            cubit: gameReport.summary.fouls,
+            cubit: report.summary.fouls,
             title: 'Fouls',
             hint: 'Enter the team\'s fouls...',
           ),
           ScoutingNotes(
-            cubit: gameReport.summary.defenseNotes,
+            cubit: report.summary.defenseNotes,
             title: 'Defense Notes',
             hint: 'Enter your defense notes...',
           ),

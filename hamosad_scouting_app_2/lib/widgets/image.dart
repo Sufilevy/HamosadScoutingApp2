@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/src/widgets.dart';
+import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 class ScoutingImage extends StatelessWidget {
   /// Only one of [path] or [url] must not be empty.
