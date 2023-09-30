@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/models/cubit.dart';
-import 'package:hamosad_scouting_app_2/theme.dart';
-import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
+import '/models/cubit.dart';
+import '/theme.dart';
+import '/widgets/paddings.dart';
 import 'package:intl/intl.dart' as intl;
 
 class ScoutingNotes extends StatefulWidget {

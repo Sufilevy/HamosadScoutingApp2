@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/models/summary.dart';
+import '/models/summary.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -112,5 +112,4 @@ class GameReportSummary {
   }
 }
 
-GameReport reportDataProvider(BuildContext context) =>
-    context.read<GameReport>();
+GameReport reportDataProvider(BuildContext context) => context.read<GameReport>();

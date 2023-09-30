@@ -1,14 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hamosad_scouting_app_2/models/report.dart';
-import 'package:hamosad_scouting_app_2/pages/home_page.dart';
-import 'package:hamosad_scouting_app_2/pages/reports/game_report.dart';
-import 'package:hamosad_scouting_app_2/services/app_lifecycle_observer.dart';
-import 'package:hamosad_scouting_app_2/services/database.dart';
-import 'package:hamosad_scouting_app_2/services/firebase_options.dart';
-import 'package:hamosad_scouting_app_2/theme.dart';
 import 'package:provider/provider.dart';
+
+import '/models/report.dart';
+import '/pages/home_page.dart';
+import '/pages/reports/game_report.dart';
+import '/services/app_lifecycle_observer.dart';
+import '/services/database.dart';
+import '/services/firebase_options.dart';
+import '/theme.dart';
 
 void main() async {
   // Run a loading screen app until the scouting app itself finishes initializing

@@ -1,8 +1,9 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/theme.dart';
-import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
-import 'package:hamosad_scouting_app_2/widgets/text.dart';
+
+import '/theme.dart';
+import '/widgets/paddings.dart';
+import '/widgets/text.dart';
 
 class ScoutingDialog extends StatelessWidget {
   const ScoutingDialog({

@@ -1,14 +1,15 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:hamosad_scouting_app_2/models/report.dart';
-import 'package:hamosad_scouting_app_2/pages/reports/report_tab.dart';
-import 'package:hamosad_scouting_app_2/services/database.dart';
-import 'package:hamosad_scouting_app_2/theme.dart';
-import 'package:hamosad_scouting_app_2/widgets/alerts.dart';
-import 'package:hamosad_scouting_app_2/widgets/icon_button.dart';
-import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
-import 'package:hamosad_scouting_app_2/widgets/text.dart';
+
+import '/models/report.dart';
+import '/pages/reports/report_tab.dart';
+import '/services/database.dart';
+import '/theme.dart';
+import '/widgets/alerts.dart';
+import '/widgets/icon_button.dart';
+import '/widgets/paddings.dart';
+import '/widgets/text.dart';
 
 class ReportPage extends StatelessWidget {
   final String title;

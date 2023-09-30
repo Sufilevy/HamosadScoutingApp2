@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartx/dartx.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hamosad_scouting_app_2/models/report.dart';
-import 'package:hamosad_scouting_app_2/services/utilities.dart';
 import 'package:intl/intl.dart';
+
+import '/models/report.dart';
+import '/services/utilities.dart';
 
 class ScoutingDatabase {
   static late Map<String, List<String>> matches;

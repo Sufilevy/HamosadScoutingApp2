@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/theme.dart';
+
+import '/theme.dart';
 
 class ScoutingIconButton extends StatelessWidget {
   const ScoutingIconButton({

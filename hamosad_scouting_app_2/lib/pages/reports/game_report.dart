@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/models/report.dart';
-import 'package:hamosad_scouting_app_2/models/summary.dart';
-import 'package:hamosad_scouting_app_2/pages/reports/report_page.dart';
-import 'package:hamosad_scouting_app_2/pages/reports/report_tab.dart';
-import 'package:hamosad_scouting_app_2/pages/reports/scouting_widgets/scouting_match_and_team.dart';
-import 'package:hamosad_scouting_app_2/pages/reports/scouting_widgets/scouting_notes.dart';
-import 'package:hamosad_scouting_app_2/pages/reports/scouting_widgets/scouting_switch.dart';
-import 'package:hamosad_scouting_app_2/pages/reports/scouting_widgets/scouting_toggle_button.dart';
-import 'package:hamosad_scouting_app_2/services/database.dart';
-import 'package:hamosad_scouting_app_2/theme.dart';
+
+import '/models/report.dart';
+import '/models/summary.dart';
+import '/pages/reports/report_page.dart';
+import '/pages/reports/report_tab.dart';
+import '/pages/reports/scouting_widgets/scouting_match_and_team.dart';
+import '/pages/reports/scouting_widgets/scouting_notes.dart';
+import '/pages/reports/scouting_widgets/scouting_switch.dart';
+import '/pages/reports/scouting_widgets/scouting_toggle_button.dart';
+import '/services/database.dart';
+import '/theme.dart';
 
 Widget gameReportPage(BuildContext context) {
   final report = reportDataProvider(context);

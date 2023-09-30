@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/theme.dart';
 
+import '/theme.dart';
 import 'paddings.dart' as paddings;
 
 Widget padLeft(double padding, Widget child) => Padding(

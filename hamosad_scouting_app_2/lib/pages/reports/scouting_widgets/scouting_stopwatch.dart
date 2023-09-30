@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/models/cubit.dart';
-import 'package:hamosad_scouting_app_2/theme.dart';
-import 'package:hamosad_scouting_app_2/widgets/circle_painter.dart';
+
+import '/models/cubit.dart';
+import '/theme.dart';
+import '/widgets/circle_painter.dart';
 
 class ScoutingStopwatch extends StatefulWidget {
   const ScoutingStopwatch({
@@ -23,8 +24,7 @@ class ScoutingStopwatch extends StatefulWidget {
   State<ScoutingStopwatch> createState() => _ScoutingStopwatchState();
 }
 
-class _ScoutingStopwatchState extends State<ScoutingStopwatch>
-    with SingleTickerProviderStateMixin {
+class _ScoutingStopwatchState extends State<ScoutingStopwatch> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   final Stopwatch _stopwatch = Stopwatch();
   Timer _timer = Timer(0.milliseconds, () {});
@@ -77,10 +77,9 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch>
                 painter: CirclePainter(
                   color: Colors.indigo,
                   strokeWidth: 10,
-                  progress:
-                      (_stopwatch.elapsed.inMilliseconds % widget.lapLength) /
-                          widget.lapLength *
-                          100,
+                  progress: (_stopwatch.elapsed.inMilliseconds % widget.lapLength) /
+                      widget.lapLength *
+                      100,
                 ),
               ),
             ),
@@ -98,8 +97,7 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch>
                   children: [
                     IconButton(
                       icon: const Icon(Icons.stop),
-                      color: ScoutingTheme.primary
-                          .withOpacity(_stopwatch.isRunning ? 1.0 : 0.5),
+                      color: ScoutingTheme.primary.withOpacity(_stopwatch.isRunning ? 1.0 : 0.5),
                       iconSize: 24.0 * ScoutingTheme.appSizeRatio,
                       onPressed: () => _stopwatch.isRunning ? null : _reset(),
                       splashColor: Colors.transparent,

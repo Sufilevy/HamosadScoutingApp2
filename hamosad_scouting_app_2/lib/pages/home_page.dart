@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/models/report.dart';
-import 'package:hamosad_scouting_app_2/pages/reports/report_tab.dart';
-import 'package:hamosad_scouting_app_2/pages/reports/scouting_widgets/scouting_text_field.dart';
-import 'package:hamosad_scouting_app_2/theme.dart';
-import 'package:hamosad_scouting_app_2/widgets/alerts.dart';
-import 'package:hamosad_scouting_app_2/widgets/icon_button.dart';
-import 'package:hamosad_scouting_app_2/widgets/image.dart';
-import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
-import 'package:hamosad_scouting_app_2/widgets/text.dart';
+
+import '/models/report.dart';
+import '/pages/reports/report_tab.dart';
+import '/pages/reports/scouting_widgets/scouting_text_field.dart';
+import '/theme.dart';
+import '/widgets/alerts.dart';
+import '/widgets/icon_button.dart';
+import '/widgets/image.dart';
+import '/widgets/paddings.dart';
+import '/widgets/text.dart';
 
 class ScoutingHomePage extends StatelessWidget {
   static final List<String> _allowedTeams = ['1657'];

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/theme.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+
+import '/theme.dart';
 
 class ScoutingSwitch extends StatelessWidget {
   const ScoutingSwitch({
