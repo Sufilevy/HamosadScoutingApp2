@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/models/cubit.dart';
 import 'package:hamosad_scouting_app_2/pages/reports/scouting_widgets/scouting_text_field.dart';
 import 'package:hamosad_scouting_app_2/theme.dart';
+import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
 import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 class ScoutingMatchAndTeam extends StatefulWidget {
@@ -47,13 +48,10 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
                 (match) => DropdownMenuItem<String>(
                   value: match,
                   child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ScoutingText.text(
-                        match,
-                        fontSize: 20.0 * ScoutingTheme.appSizeRatio,
-                      ),
-                    ),
+                    child: ScoutingText.text(
+                      match,
+                      fontSize: 20.0 * ScoutingTheme.appSizeRatio,
+                    ).padAll(8.0),
                   ),
                 ),
               )
@@ -128,9 +126,9 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
     final Color teamColor = index <= 2 ? ScoutingTheme.redAlliance : ScoutingTheme.blueAlliance;
     final bool isSelected = _currentTeamIndex == index;
 
-    return Padding(
-      padding: EdgeInsets.all(12.0 * ScoutingTheme.appSizeRatio),
-      child: Container(
+    return padAll(
+      12.0,
+      Container(
         width: _width * ScoutingTheme.appSizeRatio,
         height: _height * ScoutingTheme.appSizeRatio,
         color: ScoutingTheme.background1,

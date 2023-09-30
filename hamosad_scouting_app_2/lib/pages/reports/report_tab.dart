@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/theme.dart';
+import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
 
 class ReportTab extends StatelessWidget {
   final String title;
@@ -22,13 +23,12 @@ class ReportTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      separatorBuilder: (context, index) => Padding(
-        padding: EdgeInsets.only(
-          left: 40.0 * ScoutingTheme.appSizeRatio,
-          right: 40.0 * ScoutingTheme.appSizeRatio,
-          top: 30.0 * ScoutingTheme.appSizeRatio,
-        ),
-        child: Container(
+      separatorBuilder: (context, index) => padLTRB(
+        40.0,
+        30.0,
+        40.0,
+        0.0,
+        Container(
           height: 1.5,
           decoration: BoxDecoration(
             color: (seperated && index < children.length - 2)
@@ -38,10 +38,7 @@ class ReportTab extends StatelessWidget {
           ),
         ),
       ),
-      itemBuilder: (context, index) => Padding(
-        padding: EdgeInsets.only(top: seperation * ScoutingTheme.appSizeRatio),
-        child: Center(child: children[index]),
-      ),
+      itemBuilder: (context, index) => Center(child: children[index]).padTop(seperation),
       itemCount: children.length,
     );
   }

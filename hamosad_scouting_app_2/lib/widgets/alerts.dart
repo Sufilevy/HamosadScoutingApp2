@@ -1,6 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/theme.dart';
+import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
 import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 class ScoutingDialog extends StatelessWidget {
@@ -52,14 +53,11 @@ class ScoutingDialog extends StatelessWidget {
         ...actions,
         if (okButton)
           TextButton(
-            child: Padding(
-              padding: EdgeInsets.all(8.0 * ScoutingTheme.appSizeRatio),
-              child: ScoutingText.subtitle(
-                'OK',
-                color: ScoutingTheme.primary,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            child: ScoutingText.subtitle(
+              'OK',
+              color: ScoutingTheme.primary,
+              fontWeight: FontWeight.w600,
+            ).padAll(8.0),
             onPressed: () => Navigator.pop(context),
           ),
       ],
@@ -77,12 +75,7 @@ void showWarningSnackBar(BuildContext context, String title) {
             color: ScoutingTheme.warning,
             size: 36.0 * ScoutingTheme.appSizeRatio,
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 16.0 * ScoutingTheme.appSizeRatio),
-            child: ScoutingText.subtitle(
-              title,
-            ),
-          ),
+          ScoutingText.subtitle(title).padLeft(16.0),
         ],
       ),
       backgroundColor: ScoutingTheme.background2,

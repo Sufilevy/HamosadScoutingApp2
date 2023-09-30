@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/models/cubit.dart';
 import 'package:hamosad_scouting_app_2/theme.dart';
+import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
 import 'package:intl/intl.dart' as intl;
 
 class ScoutingTextField extends StatefulWidget {
@@ -63,15 +64,13 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: 32.0 * ScoutingTheme.appSizeRatio),
-      child: Form(
+    return padSymmetric(
+      horizontal: 32.0,
+      Form(
         key: _formKey,
         child: TextFormField(
           focusNode: _focusNode,
-          keyboardType:
-              widget.onlyNumbers ? TextInputType.number : TextInputType.text,
+          keyboardType: widget.onlyNumbers ? TextInputType.number : TextInputType.text,
           validator: _validateInput,
           initialValue: widget.cubit.data,
           onChanged: (value) => setState(
@@ -82,8 +81,7 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
           ),
           style: ScoutingTheme.textStyle,
           textDirection:
-              intl.Bidi.estimateDirectionOfText(widget.cubit.data ?? '') ==
-                      intl.TextDirection.RTL
+              intl.Bidi.estimateDirectionOfText(widget.cubit.data ?? '') == intl.TextDirection.RTL
                   ? TextDirection.rtl
                   : TextDirection.ltr,
           decoration: InputDecoration(

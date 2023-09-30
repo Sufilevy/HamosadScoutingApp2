@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/models/cubit.dart';
 import 'package:hamosad_scouting_app_2/theme.dart';
+import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
 import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 class ScoutingToggleButton extends StatefulWidget {
@@ -20,10 +21,9 @@ class ScoutingToggleButton extends StatefulWidget {
 class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: 54.0 * ScoutingTheme.appSizeRatio),
-      child: Row(
+    return padSymmetric(
+      horizontal: 54.0,
+      Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Transform.scale(
@@ -49,16 +49,10 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
               onPressed: () => setState(
                 () => widget.cubit.data = !widget.cubit.data,
               ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 4.0 * ScoutingTheme.appSizeRatio,
-                  horizontal: 2.0 * ScoutingTheme.appSizeRatio,
-                ),
-                child: ScoutingText.subtitle(
-                  widget.title,
-                  textAlign: TextAlign.center,
-                ),
-              ),
+              child: ScoutingText.subtitle(
+                widget.title,
+                textAlign: TextAlign.center,
+              ).padSymmetric(horizontal: 2.0, vertical: 4.0),
             ),
           ),
         ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/models/cubit.dart';
 import 'package:hamosad_scouting_app_2/theme.dart';
+import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
 import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 class ScoutingSlider extends StatefulWidget {
@@ -50,10 +51,9 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
   }
 
   Widget _buildSlider() {
-    return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: 16 * ScoutingTheme.appSizeRatio),
-      child: RepaintBoundary(
+    return padSymmetric(
+      horizontal: 16,
+      RepaintBoundary(
         child: Slider(
           value: widget.cubit.data.toDouble(),
           onChanged: (value) => setState(() {
@@ -73,33 +73,23 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.title.isNotEmpty || widget.subtitle.isNotEmpty) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (widget.title.isNotEmpty)
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 32 * ScoutingTheme.appSizeRatio),
-              child: ScoutingText.title(
-                widget.title,
-                textAlign: TextAlign.center,
-              ),
-            ),
-          _buildSlider(),
-          if (widget.subtitle.isNotEmpty)
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 32 * ScoutingTheme.appSizeRatio),
-              child: ScoutingText.text(
-                widget.subtitle,
-                textAlign: TextAlign.center,
-              ),
-            ),
-        ],
-      );
-    } else {
-      return _buildSlider();
-    }
+    return widget.title.isEmpty && widget.subtitle.isEmpty
+        ? _buildSlider()
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (widget.title.isNotEmpty)
+                ScoutingText.title(
+                  widget.title,
+                  textAlign: TextAlign.center,
+                ).padSymmetric(horizontal: 32.0),
+              _buildSlider(),
+              if (widget.subtitle.isNotEmpty)
+                ScoutingText.text(
+                  widget.subtitle,
+                  textAlign: TextAlign.center,
+                ).padSymmetric(horizontal: 32.0),
+            ],
+          );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/models/cubit.dart';
 import 'package:hamosad_scouting_app_2/theme.dart';
+import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
 import 'package:intl/intl.dart' as intl;
 
 class ScoutingNotes extends StatefulWidget {
@@ -26,12 +27,14 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
         width: 2.0 * ScoutingTheme.appSizeRatio,
       ),
     );
+
     final selectedBorder = OutlineInputBorder(
       borderSide: BorderSide(
         color: ScoutingTheme.primaryVariant,
         width: 3.5 * ScoutingTheme.appSizeRatio,
       ),
     );
+
     final errorBorder = OutlineInputBorder(
       borderSide: BorderSide(
         color: ScoutingTheme.error,
@@ -44,8 +47,7 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
       minLines: 3,
       maxLines: null,
       style: ScoutingTheme.textStyle,
-      textDirection: intl.Bidi.estimateDirectionOfText(widget.cubit.data) ==
-              intl.TextDirection.RTL
+      textDirection: intl.Bidi.estimateDirectionOfText(widget.cubit.data) == intl.TextDirection.RTL
           ? TextDirection.rtl
           : TextDirection.ltr,
       decoration: InputDecoration(
@@ -72,22 +74,11 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.title.isNotEmpty) {
-      return Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: 56.0 * ScoutingTheme.appSizeRatio),
-        child: Column(
-          children: [
-            _buildTextField(context),
-          ],
-        ),
-      );
-    } else {
-      return Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: 56.0 * ScoutingTheme.appSizeRatio),
-        child: _buildTextField(context),
-      );
-    }
+    return padSymmetric(
+      horizontal: 56.0,
+      widget.title.isNotEmpty
+          ? Column(children: [_buildTextField(context)])
+          : _buildTextField(context),
+    );
   }
 }

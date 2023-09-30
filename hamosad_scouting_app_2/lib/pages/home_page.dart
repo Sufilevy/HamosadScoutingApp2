@@ -6,6 +6,7 @@ import 'package:hamosad_scouting_app_2/theme.dart';
 import 'package:hamosad_scouting_app_2/widgets/alerts.dart';
 import 'package:hamosad_scouting_app_2/widgets/icon_button.dart';
 import 'package:hamosad_scouting_app_2/widgets/image.dart';
+import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
 import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 class ScoutingHomePage extends StatelessWidget {
@@ -50,15 +51,12 @@ class ScoutingHomePage extends StatelessWidget {
                   title: 'Name',
                   onlyNames: true,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: ScoutingTextField(
-                    cubit: reportData.scouterTeamNumber,
-                    hint: 'Enter your team number...',
-                    title: 'Team Number',
-                    onlyNumbers: true,
-                  ),
-                ),
+                ScoutingTextField(
+                  cubit: reportData.scouterTeamNumber,
+                  hint: 'Enter your team number...',
+                  title: 'Team Number',
+                  onlyNumbers: true,
+                ).padSymmetric(vertical: 20.0),
               ],
             ),
             ScoutingIconButton(
@@ -79,17 +77,7 @@ class ScoutingHomePage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-              40.0 * ScoutingTheme.appSizeRatio,
-              20.0 * ScoutingTheme.appSizeRatio,
-              40.0 * ScoutingTheme.appSizeRatio,
-              30.0 * ScoutingTheme.appSizeRatio,
-            ),
-            child: ScoutingImage(
-              path: 'assets/images/hamosad_logo.png',
-            ),
-          ),
+          ScoutingImage(path: 'assets/images/hamosad_logo.png').padLTRB(40.0, 20.0, 40.0, 30.0),
           ScoutingText.navigation(
             'In association with:',
             fontSize: 36.0 * ScoutingTheme.appSizeRatio,
@@ -99,18 +87,15 @@ class ScoutingHomePage extends StatelessWidget {
               children: [],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 20.0 * ScoutingTheme.appSizeRatio),
-            child: Row(
+          padBottom(
+            20.0,
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(right: 10.0 * ScoutingTheme.appSizeRatio),
-                  child: ScoutingText.navigation(
-                    'Made with',
-                    fontSize: 24.0 * ScoutingTheme.appSizeRatio,
-                  ),
-                ),
+                ScoutingText.navigation(
+                  'Made with',
+                  fontSize: 24.0 * ScoutingTheme.appSizeRatio,
+                ).padRight(10.0),
                 const FlutterLogo(),
               ],
             ),

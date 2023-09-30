@@ -7,6 +7,7 @@ import 'package:hamosad_scouting_app_2/services/database.dart';
 import 'package:hamosad_scouting_app_2/theme.dart';
 import 'package:hamosad_scouting_app_2/widgets/alerts.dart';
 import 'package:hamosad_scouting_app_2/widgets/icon_button.dart';
+import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
 import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 class ReportPage extends StatelessWidget {
@@ -53,12 +54,9 @@ class ReportPage extends StatelessWidget {
               ],
             ),
           ),
-          body: Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.0 * ScoutingTheme.appSizeRatio),
-            child: TabBarView(
-              children: tabs,
-            ),
-          ),
+          body: TabBarView(
+            children: tabs,
+          ).padSymmetric(vertical: 16.0),
         ),
       ),
     );
@@ -105,31 +103,22 @@ class ReportPage extends StatelessWidget {
       iconColor: ScoutingTheme.blueAlliance,
       okButton: false,
       actions: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextButton(
+        padAll(
+          8.0,
+          TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: ScoutingText.text(
-                'Cancel',
-                color: ScoutingTheme.primary,
-              ),
-            ),
+            child: ScoutingText.text('Cancel', color: ScoutingTheme.primary).padAll(4.0),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextButton(
+        padAll(
+          8.0,
+          TextButton(
             onPressed: () => _sendReport(context),
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: ScoutingText.text(
-                'Send',
-                color: ScoutingTheme.blueAlliance,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: ScoutingText.text(
+              'Send',
+              color: ScoutingTheme.blueAlliance,
+              fontWeight: FontWeight.bold,
+            ).padAll(4.0),
           ),
         ),
       ],
@@ -155,38 +144,29 @@ class ReportPage extends StatelessWidget {
       iconColor: ScoutingTheme.error,
       okButton: false,
       actions: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextButton(
+        padAll(
+          8.0,
+          TextButton(
             onPressed: () {
               Navigator.popUntil(
                 context,
                 (route) => route.isFirst,
               );
             },
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: ScoutingText.text(
-                'Delete',
-                color: ScoutingTheme.error,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: ScoutingText.text(
+              'Delete',
+              color: ScoutingTheme.error,
+              fontWeight: FontWeight.bold,
+            ).padAll(4.0),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextButton(
+        padAll(
+          8.0,
+          TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: ScoutingText.text(
-                'Cancel',
-                color: ScoutingTheme.primary,
-              ),
-            ),
+            child: ScoutingText.text('Cancel', color: ScoutingTheme.primary).padAll(4.0),
           ),
         ),
       ],

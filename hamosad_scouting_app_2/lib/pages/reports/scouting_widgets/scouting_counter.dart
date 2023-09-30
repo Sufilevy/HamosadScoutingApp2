@@ -2,6 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/models/cubit.dart';
 import 'package:hamosad_scouting_app_2/theme.dart';
+import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
 import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 class ScoutingCounter extends StatefulWidget {
@@ -32,9 +33,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
   @override
   void initState() {
     widget.cubit.data = (widget.initial) ??
-        (widget.step is int
-            ? (widget.min + widget.max) ~/ 2
-            : (widget.min + widget.max) / 2);
+        (widget.step is int ? (widget.min + widget.max) ~/ 2 : (widget.min + widget.max) / 2);
     super.initState();
   }
 
@@ -58,10 +57,9 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
   }
 
   Widget _buildCounterText(BuildContext context) {
-    return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: 16.0 * ScoutingTheme.appSizeRatio),
-      child: Container(
+    return padSymmetric(
+      horizontal: 16.0,
+      Container(
         width: 110.0 * ScoutingTheme.appSizeRatio,
         height: 80.0 * ScoutingTheme.appSizeRatio,
         alignment: Alignment.center,
@@ -120,21 +118,16 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
   @override
   Widget build(BuildContext context) {
     if (widget.title.isNotEmpty) {
-      return Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: 32.0 * ScoutingTheme.appSizeRatio),
-        child: Row(
+      return padSymmetric(
+        horizontal: 32.0,
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Flexible(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 12.0 * ScoutingTheme.appSizeRatio),
-                child: ScoutingText.subtitle(
-                  widget.title,
-                  textAlign: TextAlign.center,
-                ),
-              ),
+              child: ScoutingText.subtitle(
+                widget.title,
+                textAlign: TextAlign.center,
+              ).padSymmetric(horizontal: 12.0),
             ),
             _buildCounter(),
           ],

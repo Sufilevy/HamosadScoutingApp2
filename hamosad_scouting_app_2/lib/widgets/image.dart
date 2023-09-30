@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
 import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 class ScoutingImage extends StatelessWidget {
@@ -31,9 +32,9 @@ class ScoutingImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(12.0 * size),
-      child: title.isNotEmpty
+    return padAll(
+      12.0,
+      title.isNotEmpty
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
