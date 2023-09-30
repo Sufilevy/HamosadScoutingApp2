@@ -39,7 +39,7 @@ class ScoutingTheme {
         color: foreground1,
       );
 
-  static TextStyle get textStyle => TextStyle(
+  static TextStyle get bodyStyle => TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.w400,
         fontSize: 23.0 * appSizeRatio,

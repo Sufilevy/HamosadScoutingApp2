@@ -86,7 +86,7 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
                 ).padSymmetric(horizontal: 32.0),
               _buildSlider(),
               if (widget.subtitle.isNotEmpty)
-                ScoutingText.text(
+                ScoutingText.body(
                   widget.subtitle,
                   textAlign: TextAlign.center,
                 ).padSymmetric(horizontal: 32.0),

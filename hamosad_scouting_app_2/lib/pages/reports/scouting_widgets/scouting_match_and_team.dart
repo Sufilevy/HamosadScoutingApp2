@@ -1,5 +1,6 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+
 import '/models/cubit.dart';
 import '/pages/reports/scouting_widgets/scouting_text_field.dart';
 import '/theme.dart';
@@ -40,7 +41,7 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
           value: _match,
           borderRadius: BorderRadius.circular(5.0 * ScoutingTheme.appSizeRatio),
           dropdownColor: ScoutingTheme.background2,
-          style: ScoutingTheme.textStyle,
+          style: ScoutingTheme.bodyStyle,
           alignment: Alignment.center,
           items: widget.matches.keys
               .prependElement('Eliminations')
@@ -48,7 +49,7 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
                 (match) => DropdownMenuItem<String>(
                   value: match,
                   child: Center(
-                    child: ScoutingText.text(
+                    child: ScoutingText.body(
                       match,
                       fontSize: 20.0 * ScoutingTheme.appSizeRatio,
                     ).padAll(8.0),

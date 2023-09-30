@@ -108,14 +108,14 @@ class ReportPage extends StatelessWidget {
           8.0,
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: ScoutingText.text('Cancel', color: ScoutingTheme.primary).padAll(4.0),
+            child: ScoutingText.body('Cancel', color: ScoutingTheme.primary).padAll(4.0),
           ),
         ),
         padAll(
           8.0,
           TextButton(
             onPressed: () => _sendReport(context),
-            child: ScoutingText.text(
+            child: ScoutingText.body(
               'Send',
               color: ScoutingTheme.blueAlliance,
               fontWeight: FontWeight.bold,
@@ -154,7 +154,7 @@ class ReportPage extends StatelessWidget {
                 (route) => route.isFirst,
               );
             },
-            child: ScoutingText.text(
+            child: ScoutingText.body(
               'Delete',
               color: ScoutingTheme.error,
               fontWeight: FontWeight.bold,
@@ -167,7 +167,7 @@ class ReportPage extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: ScoutingText.text('Cancel', color: ScoutingTheme.primary).padAll(4.0),
+            child: ScoutingText.body('Cancel', color: ScoutingTheme.primary).padAll(4.0),
           ),
         ),
       ],

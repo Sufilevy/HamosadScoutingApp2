@@ -48,7 +48,7 @@ class ScoutingDialog extends StatelessWidget {
         28.0 * ScoutingTheme.appSizeRatio,
         12.0 * ScoutingTheme.appSizeRatio,
       ),
-      content: ScoutingText.text(content, textAlign: TextAlign.center),
+      content: ScoutingText.body(content, textAlign: TextAlign.center),
       actionsAlignment: MainAxisAlignment.center,
       actions: [
         ...actions,

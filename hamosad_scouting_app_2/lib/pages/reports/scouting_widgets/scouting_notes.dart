@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' as intl;
+
 import '/models/cubit.dart';
 import '/theme.dart';
 import '/widgets/paddings.dart';
-import 'package:intl/intl.dart' as intl;
 
 class ScoutingNotes extends StatefulWidget {
   const ScoutingNotes({
@@ -46,20 +47,20 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
       onChanged: (String value) => setState(() => widget.cubit.data = value),
       minLines: 3,
       maxLines: null,
-      style: ScoutingTheme.textStyle,
+      style: ScoutingTheme.bodyStyle,
       textDirection: intl.Bidi.estimateDirectionOfText(widget.cubit.data) == intl.TextDirection.RTL
           ? TextDirection.rtl
           : TextDirection.ltr,
       decoration: InputDecoration(
         hintText: widget.hint,
         labelText: widget.title,
-        hintStyle: ScoutingTheme.textStyle.copyWith(
+        hintStyle: ScoutingTheme.bodyStyle.copyWith(
           color: ScoutingTheme.foreground2,
         ),
-        labelStyle: ScoutingTheme.textStyle.copyWith(
+        labelStyle: ScoutingTheme.bodyStyle.copyWith(
           color: ScoutingTheme.foreground2,
         ),
-        errorStyle: ScoutingTheme.textStyle.copyWith(
+        errorStyle: ScoutingTheme.bodyStyle.copyWith(
           fontSize: 16.0,
           color: ScoutingTheme.error,
         ),

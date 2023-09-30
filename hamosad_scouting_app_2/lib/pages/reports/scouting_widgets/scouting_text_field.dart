@@ -80,18 +80,18 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
               widget.cubit.data = value;
             },
           ),
-          style: ScoutingTheme.textStyle,
+          style: ScoutingTheme.bodyStyle,
           textDirection:
               intl.Bidi.estimateDirectionOfText(widget.cubit.data ?? '') == intl.TextDirection.RTL
                   ? TextDirection.rtl
                   : TextDirection.ltr,
           decoration: InputDecoration(
             hintText: widget.hint,
-            hintStyle: ScoutingTheme.textStyle.copyWith(
+            hintStyle: ScoutingTheme.bodyStyle.copyWith(
               color: ScoutingTheme.foreground2,
             ),
             labelText: widget.title,
-            labelStyle: ScoutingTheme.textStyle.copyWith(
+            labelStyle: ScoutingTheme.bodyStyle.copyWith(
               color: _focusNode.hasFocus
                   ? (_hasErrors ? ScoutingTheme.error : ScoutingTheme.primary)
                   : ScoutingTheme.foreground2,
@@ -126,7 +126,7 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
                 width: 2.0 * ScoutingTheme.appSizeRatio,
               ),
             ),
-            errorStyle: ScoutingTheme.textStyle.copyWith(
+            errorStyle: ScoutingTheme.bodyStyle.copyWith(
               fontSize: 16.0,
               color: ScoutingTheme.error,
             ),

@@ -49,7 +49,7 @@ class ScoutingText {
     );
   }
 
-  static Text text(
+  static Text body(
     String data, {
     double? fontSize,
     Color? color,
@@ -58,7 +58,7 @@ class ScoutingText {
   }) {
     return Text(
       data,
-      style: ScoutingTheme.textStyle.copyWith(
+      style: ScoutingTheme.bodyStyle.copyWith(
         color: color,
         fontSize: fontSize,
         fontWeight: fontWeight,
