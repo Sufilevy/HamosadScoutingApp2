@@ -14,7 +14,7 @@ class ScoutingDatabase {
   static Future<void> initialize() async {
     await FirebaseAuth.instance.signInAnonymously();
 
-    final informationDoc = await _db.collection('district').doc('information').get();
+    final informationDoc = await _db.collection('information').doc('district').get();
     _districtName = informationDoc.get('name');
 
     await _getMatches();
@@ -25,38 +25,34 @@ class ScoutingDatabase {
   }
 
   static Future<void> sendReport(
-    Map<String, dynamic> data, {
-    String? id,
+    Json report, {
+    String? lastId,
   }) async {
     final datetime = _getDatetime();
-    data.addAll({'datetime': datetime});
+    report.addAll({'datetime': datetime});
 
-    final reports = _db.collection('reports');
-    final docName = '$_districtName-${data['info']['scouterTeamNumber']}';
+    final scouterTeamNumber = report['info']['scouterTeamNumber'];
+    final collectionName = '$_districtName-$scouterTeamNumber';
+    final districtReports = _db.collection(collectionName);
 
-    await reports.doc(docName).update({
-      id ??
-          _generateReportId(
-            data['info']['match'] ?? 'pit',
-            data['info']['scouter'],
-            data['info']['teamNumber'],
-            datetime,
-          ): data,
-    });
+    final teamReports = districtReports.doc(report['info']['teamNumber']);
+    final id = lastId ?? _generateReportId(report['info'], datetime);
+
+    await teamReports.update({id: report});
   }
 
-  static String _generateReportId(
-    String match,
-    String scouter,
-    String teamNumber,
-    Json datetime,
-  ) =>
-      '${match == 'Eliminations' ? 'elims' : match}'
-      '-${scouter.trim().replaceAll(' ', '_')}'
-      '-$teamNumber'
-      '-${datetime['time']}';
+  static String _generateReportId(Json reportInfo, Json datetime) {
+    final match = reportInfo['match'];
+    final scouter = reportInfo['scouter'];
+    final teamNumber = reportInfo['teamNumber'];
 
-  static Map<String, dynamic> _getDatetime() {
+    return '${match == 'Eliminations' ? 'elims' : match}'
+        '-${scouter.trim().replaceAll(' ', '_')}'
+        '-$teamNumber'
+        '-${datetime['time']}';
+  }
+
+  static Json _getDatetime() {
     DateTime now = DateTime.now();
 
     return {
