@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/models/report.dart';
 import 'package:hamosad_scouting_app_2/models/summary.dart';
-import 'package:hamosad_scouting_app_2/pages/report/report_page.dart';
-import 'package:hamosad_scouting_app_2/pages/report/report_tab.dart';
-import 'package:hamosad_scouting_app_2/pages/report/scouting_widgets/scouting_match_and_team.dart';
-import 'package:hamosad_scouting_app_2/pages/report/scouting_widgets/scouting_notes.dart';
-import 'package:hamosad_scouting_app_2/pages/report/scouting_widgets/scouting_switch.dart';
-import 'package:hamosad_scouting_app_2/pages/report/scouting_widgets/scouting_toggle_button.dart';
+import 'package:hamosad_scouting_app_2/pages/reports/report_page.dart';
+import 'package:hamosad_scouting_app_2/pages/reports/report_tab.dart';
+import 'package:hamosad_scouting_app_2/pages/reports/scouting_widgets/scouting_match_and_team.dart';
+import 'package:hamosad_scouting_app_2/pages/reports/scouting_widgets/scouting_notes.dart';
+import 'package:hamosad_scouting_app_2/pages/reports/scouting_widgets/scouting_switch.dart';
+import 'package:hamosad_scouting_app_2/pages/reports/scouting_widgets/scouting_toggle_button.dart';
 import 'package:hamosad_scouting_app_2/services/database.dart';
 import 'package:hamosad_scouting_app_2/theme.dart';
 

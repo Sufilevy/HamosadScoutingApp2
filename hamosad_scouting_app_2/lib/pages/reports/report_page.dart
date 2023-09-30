@@ -2,7 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:hamosad_scouting_app_2/models/report.dart';
-import 'package:hamosad_scouting_app_2/pages/report/report_tab.dart';
+import 'package:hamosad_scouting_app_2/pages/reports/report_tab.dart';
 import 'package:hamosad_scouting_app_2/services/database.dart';
 import 'package:hamosad_scouting_app_2/theme.dart';
 import 'package:hamosad_scouting_app_2/widgets/alerts.dart';
@@ -34,19 +34,16 @@ class ReportPage extends StatelessWidget {
               _buildSendButton(context),
             ],
             leading: _buildCloseButton(context),
-            title: ScoutingText.navigation(title,
-                fontSize: 32.0 * ScoutingTheme.appSizeRatio),
+            title: ScoutingText.navigation(title, fontSize: 32.0 * ScoutingTheme.appSizeRatio),
             centerTitle: true,
             bottom: TabBar(
               isScrollable: true,
               indicatorWeight: 2.5 * ScoutingTheme.appSizeRatio,
               indicatorColor: ScoutingTheme.primary,
-              labelPadding: EdgeInsets.symmetric(
-                  horizontal: 24.0 * ScoutingTheme.appSizeRatio),
+              labelPadding: EdgeInsets.symmetric(horizontal: 24.0 * ScoutingTheme.appSizeRatio),
               labelColor: ScoutingTheme.foreground1,
               unselectedLabelColor: ScoutingTheme.foreground2,
-              labelStyle:
-                  ScoutingTheme.navigationStyle.copyWith(fontSize: 16.0),
+              labelStyle: ScoutingTheme.navigationStyle.copyWith(fontSize: 16.0),
               tabs: [
                 for (final tab in tabs)
                   Tab(
@@ -57,8 +54,7 @@ class ReportPage extends StatelessWidget {
             ),
           ),
           body: Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: 16.0 * ScoutingTheme.appSizeRatio),
+            padding: EdgeInsets.symmetric(vertical: 16.0 * ScoutingTheme.appSizeRatio),
             child: TabBarView(
               children: tabs,
             ),
@@ -79,8 +75,7 @@ class ReportPage extends StatelessWidget {
               final report = reportDataProvider(context);
               String? content;
 
-              if (report.match.data.isNullOrEmpty ||
-                  report.teamNumber.data.isNullOrEmpty) {
+              if (report.match.data.isNullOrEmpty || report.teamNumber.data.isNullOrEmpty) {
                 content = 'Please fill the match and team number.';
               } else if (report.summary.defenseFocus.data == null) {
                 content = 'Please fill the defense focus.';

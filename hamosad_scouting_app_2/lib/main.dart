@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hamosad_scouting_app_2/models/report.dart';
 import 'package:hamosad_scouting_app_2/pages/home_page.dart';
-import 'package:hamosad_scouting_app_2/pages/report/game_report.dart';
+import 'package:hamosad_scouting_app_2/pages/reports/game_report.dart';
 import 'package:hamosad_scouting_app_2/services/app_lifecycle_observer.dart';
 import 'package:hamosad_scouting_app_2/services/database.dart';
 import 'package:hamosad_scouting_app_2/services/firebase_options.dart';

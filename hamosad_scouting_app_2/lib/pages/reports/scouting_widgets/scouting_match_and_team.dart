@@ -1,7 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/models/cubit.dart';
-import 'package:hamosad_scouting_app_2/pages/report/scouting_widgets/scouting_text_field.dart';
+import 'package:hamosad_scouting_app_2/pages/reports/scouting_widgets/scouting_text_field.dart';
 import 'package:hamosad_scouting_app_2/theme.dart';
 import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
@@ -125,8 +125,7 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
   }
 
   Widget _buildTeamButton(BuildContext context, int index) {
-    final Color teamColor =
-        index <= 2 ? ScoutingTheme.redAlliance : ScoutingTheme.blueAlliance;
+    final Color teamColor = index <= 2 ? ScoutingTheme.redAlliance : ScoutingTheme.blueAlliance;
     final bool isSelected = _currentTeamIndex == index;
 
     return Padding(
@@ -144,8 +143,7 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
                   duration: _duration,
                   curve: Curves.easeOutQuart,
                   width: isSelected ? _width * ScoutingTheme.appSizeRatio : 0.0,
-                  height:
-                      isSelected ? _height * ScoutingTheme.appSizeRatio : 0.0,
+                  height: isSelected ? _height * ScoutingTheme.appSizeRatio : 0.0,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     color: teamColor,

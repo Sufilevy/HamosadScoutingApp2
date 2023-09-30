@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hamosad_scouting_app_2/models/report.dart';
-import 'package:hamosad_scouting_app_2/pages/report/report_tab.dart';
-import 'package:hamosad_scouting_app_2/pages/report/scouting_widgets/scouting_text_field.dart';
+import 'package:hamosad_scouting_app_2/pages/reports/report_tab.dart';
+import 'package:hamosad_scouting_app_2/pages/reports/scouting_widgets/scouting_text_field.dart';
 import 'package:hamosad_scouting_app_2/theme.dart';
 import 'package:hamosad_scouting_app_2/widgets/alerts.dart';
 import 'package:hamosad_scouting_app_2/widgets/icon_button.dart';
@@ -76,9 +76,8 @@ class ScoutingHomePage extends StatelessWidget {
   Widget _buildDrawer() {
     return Drawer(
       backgroundColor: ScoutingTheme.background2,
-      child: ListView(
-        physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
             padding: EdgeInsets.fromLTRB(
@@ -91,14 +90,30 @@ class ScoutingHomePage extends StatelessWidget {
               path: 'assets/images/hamosad_logo.png',
             ),
           ),
-          Center(
-            child: ScoutingText.navigation(
-              'In association with:',
-              fontSize: 36.0 * ScoutingTheme.appSizeRatio,
+          ScoutingText.navigation(
+            'In association with:',
+            fontSize: 36.0 * ScoutingTheme.appSizeRatio,
+          ),
+          const Expanded(
+            child: Column(
+              children: [],
             ),
           ),
-          const Stack(
-            children: [],
+          Padding(
+            padding: EdgeInsets.only(bottom: 20.0 * ScoutingTheme.appSizeRatio),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(right: 10.0 * ScoutingTheme.appSizeRatio),
+                  child: ScoutingText.navigation(
+                    'Made with',
+                    fontSize: 24.0 * ScoutingTheme.appSizeRatio,
+                  ),
+                ),
+                const FlutterLogo(),
+              ],
+            ),
           ),
         ],
       ),
