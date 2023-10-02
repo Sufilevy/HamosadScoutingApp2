@@ -82,10 +82,8 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
               onPressed: () => setState(() {
                 widget.cubit.data = !widget.cubit.data;
               }),
-              child: ScoutingText.subtitle(
-                widget.title,
-                textAlign: TextAlign.center,
-              ).padSymmetric(horizontal: 2.0, vertical: 4.0),
+              child:
+                  ScoutingText.subtitle(widget.title).padSymmetric(horizontal: 2.0, vertical: 10.0),
             ),
           ),
         ],

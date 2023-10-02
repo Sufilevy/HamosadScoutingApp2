@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/widgets/icon_button.dart';
+import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 import '/models/cubit.dart';
 import '/theme.dart';
@@ -12,12 +14,9 @@ class ScoutingStopwatch extends StatefulWidget {
     Key? key,
     required this.cubit,
     this.lapLength = 5000,
-    this.width = 250,
-    this.height = 250,
   }) : super(key: key);
 
   final Cubit<double> cubit;
-  final double width, height;
   final int lapLength;
 
   @override
@@ -25,6 +24,7 @@ class ScoutingStopwatch extends StatefulWidget {
 }
 
 class _ScoutingStopwatchState extends State<ScoutingStopwatch> with SingleTickerProviderStateMixin {
+  final double _size = 280.0 * ScoutingTheme.appSizeRatio;
   late final AnimationController _controller;
   final Stopwatch _stopwatch = Stopwatch();
   Timer _timer = Timer(0.milliseconds, () {});
@@ -62,61 +62,62 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch> with SingleTicker
     });
   }
 
+  String get _seconds => _stopwatch.elapsed.inSeconds.toString().padLeft(2, '0');
+  String get _milliseconds =>
+      (_stopwatch.elapsed.inMilliseconds ~/ 10 % 100).toString().padLeft(2, '0');
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: widget.width * ScoutingTheme.appSizeRatio,
-      height: widget.height * ScoutingTheme.appSizeRatio,
+      width: _size,
+      height: _size,
       child: Stack(
         children: [
-          Center(
-            child: SizedBox(
-              width: widget.width * ScoutingTheme.appSizeRatio,
-              height: widget.height * ScoutingTheme.appSizeRatio,
-              child: CustomPaint(
-                painter: CirclePainter(
-                  color: Colors.indigo,
-                  strokeWidth: 10,
-                  progress: (_stopwatch.elapsed.inMilliseconds % widget.lapLength) /
-                      widget.lapLength *
-                      100,
-                ),
+          SizedBox(
+            width: _size,
+            height: _size,
+            child: CustomPaint(
+              painter: CirclePainter(
+                color: ScoutingTheme.secondary,
+                strokeWidth: 13.0 * ScoutingTheme.appSizeRatio,
+                progress:
+                    (_stopwatch.elapsed.inMilliseconds % widget.lapLength) / widget.lapLength * 100,
               ),
             ),
           ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '${_stopwatch.elapsed.inSeconds.toString().padLeft(2, '0')}:${(_stopwatch.elapsed.inMilliseconds ~/ 10 % 100).toString().padLeft(2, '0')}',
-                  style: Theme.of(context).textTheme.labelMedium,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.stop),
-                      color: ScoutingTheme.primary.withOpacity(_stopwatch.isRunning ? 1.0 : 0.5),
-                      iconSize: 24.0 * ScoutingTheme.appSizeRatio,
-                      onPressed: () => _stopwatch.isRunning ? null : _reset(),
-                      splashColor: Colors.transparent,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ScoutingText.navigation(
+                '$_seconds:$_milliseconds',
+                fontSize: 50.0 * ScoutingTheme.appSizeRatio,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ScoutingIconButton(
+                    icon: Icons.stop,
+                    color: _stopwatch.isRunning ? ScoutingTheme.foreground2 : ScoutingTheme.primary,
+                    iconSize: 60.0 * ScoutingTheme.appSizeRatio,
+                    isEnabled: !_stopwatch.isRunning,
+                    onPressed: _reset,
+                  ),
+                  ScoutingIconButton(
+                    iconWidget: AnimatedIcon(
+                      icon: AnimatedIcons.play_pause,
+                      progress: _controller,
+                      color: ScoutingTheme.primary,
+                      size: 60.0 * ScoutingTheme.appSizeRatio,
                     ),
-                    GestureDetector(
-                      onTap: () => setState(() {
-                        _stopwatch.isRunning ? _stop() : _start();
-                      }),
-                      child: AnimatedIcon(
-                        icon: AnimatedIcons.play_pause,
-                        progress: _controller,
-                        color: ScoutingTheme.foreground2,
-                        size: 24.0 * ScoutingTheme.appSizeRatio,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                    iconSize: 60.0 * ScoutingTheme.appSizeRatio,
+                    color: _stopwatch.isRunning ? ScoutingTheme.foreground2 : ScoutingTheme.primary,
+                    onPressed: () => setState(() {
+                      _stopwatch.isRunning ? _stop() : _start();
+                    }),
+                  ),
+                ],
+              ),
+            ],
           ),
         ],
       ),

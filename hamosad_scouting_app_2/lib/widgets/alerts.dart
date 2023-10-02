@@ -29,26 +29,30 @@ class ScoutingDialog extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          if (title.isNotEmpty) const Spacer(flex: 8),
           if (titleIcon != null)
             Icon(
               titleIcon!,
-              size: 42.0 * ScoutingTheme.appSizeRatio,
+              size: 54.0 * ScoutingTheme.appSizeRatio,
               color: iconColor ?? ScoutingTheme.primary,
             ),
           if (title.isNotEmpty) ...[
-            const Spacer(flex: 2),
+            const Spacer(flex: 1),
             ScoutingText.title(title),
-            const Spacer(flex: 3),
+            const Spacer(flex: 10),
           ],
         ],
       ),
-      contentPadding: EdgeInsets.fromLTRB(
-        28.0 * ScoutingTheme.appSizeRatio,
-        20.0 * ScoutingTheme.appSizeRatio,
-        28.0 * ScoutingTheme.appSizeRatio,
-        12.0 * ScoutingTheme.appSizeRatio,
+      content: ScoutingText.body(
+        content,
+        height: 2.35 * ScoutingTheme.appSizeRatio,
       ),
-      content: ScoutingText.body(content, textAlign: TextAlign.center),
+      contentPadding: EdgeInsets.fromLTRB(
+        32.0 * ScoutingTheme.appSizeRatio,
+        8.0 * ScoutingTheme.appSizeRatio,
+        32.0 * ScoutingTheme.appSizeRatio,
+        0.0,
+      ),
       actionsAlignment: MainAxisAlignment.center,
       actions: [
         ...actions,

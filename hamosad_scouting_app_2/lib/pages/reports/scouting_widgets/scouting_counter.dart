@@ -1,5 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import '/models/cubit.dart';
 import '/theme.dart';
 import '/widgets/paddings.dart';
@@ -11,7 +13,7 @@ class ScoutingCounter extends StatefulWidget {
     required this.cubit,
     required this.min,
     required this.max,
-    required this.step,
+    this.step = 1,
     this.title = '',
     this.initial,
   })  : assert(min >= -99),
@@ -20,10 +22,10 @@ class ScoutingCounter extends StatefulWidget {
         assert(max > min + step),
         super(key: key);
 
-  final Cubit<num> cubit;
-  final num? initial;
-  final num min, max, step;
+  final Cubit<int> cubit;
+  final int min, max, step;
   final String title;
+  final int? initial;
 
   @override
   State<ScoutingCounter> createState() => _ScoutingCounterState();
@@ -32,8 +34,7 @@ class ScoutingCounter extends StatefulWidget {
 class _ScoutingCounterState extends State<ScoutingCounter> {
   @override
   void initState() {
-    widget.cubit.data = (widget.initial) ??
-        (widget.step is int ? (widget.min + widget.max) ~/ 2 : (widget.min + widget.max) / 2);
+    widget.cubit.data = widget.initial ?? 0;
     super.initState();
   }
 
@@ -74,9 +75,9 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
         padding: EdgeInsets.all(12.0 * ScoutingTheme.appSizeRatio),
         child: RepaintBoundary(
           child: AnimatedSwitcher(
-            duration: 150.milliseconds,
+            duration: 100.milliseconds,
             transitionBuilder: (Widget child, Animation<double> animation) {
-              return FadeTransition(opacity: animation, child: child);
+              return ScaleTransition(scale: animation, child: child);
             },
             child: Container(
               key: ValueKey<String>(widget.cubit.data.toString()),
@@ -92,9 +93,9 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildIconButton(context, _decrement, Icons.remove),
+        _buildIconButton(context, _decrement, FontAwesomeIcons.minus),
         _buildCounterText(context),
-        _buildIconButton(context, _increment, Icons.add),
+        _buildIconButton(context, _increment, FontAwesomeIcons.plus),
       ],
     );
   }

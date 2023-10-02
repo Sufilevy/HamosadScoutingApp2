@@ -47,7 +47,7 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
       onChanged: (String value) => setState(() {
         widget.cubit.data = value;
       }),
-      minLines: 3,
+      minLines: 1,
       maxLines: null,
       style: ScoutingTheme.bodyStyle,
       textDirection: intl.Bidi.estimateDirectionOfText(widget.cubit.data) == intl.TextDirection.RTL
@@ -56,12 +56,8 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
       decoration: InputDecoration(
         hintText: widget.hint,
         labelText: widget.title,
-        hintStyle: ScoutingTheme.bodyStyle.copyWith(
-          color: ScoutingTheme.foreground2,
-        ),
-        labelStyle: ScoutingTheme.bodyStyle.copyWith(
-          color: ScoutingTheme.foreground2,
-        ),
+        labelStyle: ScoutingTheme.bodyStyle.copyWith(color: ScoutingTheme.foreground2),
+        hintStyle: ScoutingTheme.bodyStyle.copyWith(color: ScoutingTheme.foreground2),
         errorStyle: ScoutingTheme.bodyStyle.copyWith(
           fontSize: 16.0,
           color: ScoutingTheme.error,
@@ -77,11 +73,6 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
 
   @override
   Widget build(BuildContext context) {
-    return padSymmetric(
-      horizontal: 56.0,
-      widget.title.isNotEmpty
-          ? Column(children: [_buildTextField(context)])
-          : _buildTextField(context),
-    );
+    return _buildTextField(context).padSymmetric(horizontal: 60.0);
   }
 }

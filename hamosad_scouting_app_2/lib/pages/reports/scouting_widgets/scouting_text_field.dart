@@ -30,7 +30,7 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
   final FocusNode _focusNode = FocusNode();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _hasErrors = false;
-  final RegExp _namesValidator = RegExp(r'^[a-zA-Z -]{1,30}$');
+  final RegExp _namesValidator = RegExp(r'^[a-zA-Z -]+');
 
   @override
   void initState() {
@@ -57,6 +57,9 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
     if (widget.onlyNames) {
       if (!_namesValidator.hasMatch(value)) {
         return 'Names should only contain English letters.';
+      }
+      if (value.length > 30) {
+        return 'Name should be shorter than 30 characters.';
       }
     }
 

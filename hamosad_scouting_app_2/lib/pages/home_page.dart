@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '/models/report.dart';
 import '/pages/reports/report_tab.dart';
@@ -30,8 +31,9 @@ class ScoutingHomePage extends StatelessWidget {
           leading: Builder(
             builder: (context) => IconButton(
               icon: Icon(
-                Icons.info_outline_rounded,
-                size: 35.0 * ScoutingTheme.appSizeRatio,
+                FontAwesomeIcons.circleInfo,
+                size: 32.0 * ScoutingTheme.appSizeRatio,
+                color: ScoutingTheme.primaryVariant,
               ),
               onPressed: () => Scaffold.of(context).openDrawer(),
               splashRadius: 25.0 * ScoutingTheme.appSizeRatio,
@@ -61,8 +63,9 @@ class ScoutingHomePage extends StatelessWidget {
               ],
             ),
             ScoutingIconButton(
-              icon: Icons.add_box_outlined,
-              iconSize: 400.0 * ScoutingTheme.appSizeRatio,
+              icon: FontAwesomeIcons.squarePlus,
+              iconSize: 250.0 * ScoutingTheme.appSizeRatio,
+              splashRadius: 160.0 * ScoutingTheme.appSizeRatio,
               tooltip: 'Create a new report',
               onPressed: () => _createReport(context),
             ),

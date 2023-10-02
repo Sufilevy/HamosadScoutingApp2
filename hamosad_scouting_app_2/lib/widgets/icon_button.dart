@@ -5,29 +5,39 @@ import '/theme.dart';
 class ScoutingIconButton extends StatelessWidget {
   const ScoutingIconButton({
     Key? key,
-    required this.icon,
     required this.onPressed,
-    this.iconSize = 24.0,
+    this.icon,
+    this.iconWidget,
     this.tooltip,
     this.color,
-  }) : super(key: key);
+    this.disabledColor,
+    this.splashRadius,
+    this.iconSize = 24.0,
+    this.isEnabled = true,
+  })  : assert(icon == null || iconWidget == null),
+        super(key: key);
 
-  final Color? color;
-  final IconData icon;
+  final Color? color, disabledColor;
+  final Widget? iconWidget;
+  final IconData? icon;
   final double iconSize;
+  final double? splashRadius;
   final VoidCallback onPressed;
   final String? tooltip;
+  final bool isEnabled;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: IconButton(
-        onPressed: onPressed,
-        iconSize: iconSize * ScoutingTheme.appSizeRatio,
+        onPressed: isEnabled ? onPressed : null,
+        iconSize: iconSize,
+        padding: EdgeInsets.all(12.0 * ScoutingTheme.appSizeRatio),
         color: color ?? ScoutingTheme.primary,
+        disabledColor: disabledColor ?? ScoutingTheme.foreground2,
         tooltip: tooltip,
-        splashRadius: iconSize / 1.75 * ScoutingTheme.appSizeRatio,
-        icon: Icon(icon),
+        splashRadius: splashRadius ?? iconSize / 2.0,
+        icon: iconWidget ?? Icon(icon),
       ),
     );
   }

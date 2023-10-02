@@ -54,6 +54,7 @@ class ScoutingText {
     double? fontSize,
     Color? color,
     FontWeight? fontWeight,
+    double? height,
     TextAlign textAlign = TextAlign.center,
   }) {
     return Text(
@@ -62,6 +63,7 @@ class ScoutingText {
         color: color,
         fontSize: fontSize,
         fontWeight: fontWeight,
+        height: height,
       ),
       textAlign: textAlign,
     );

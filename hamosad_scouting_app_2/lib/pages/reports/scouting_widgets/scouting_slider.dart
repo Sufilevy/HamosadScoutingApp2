@@ -11,7 +11,7 @@ class ScoutingSlider extends StatefulWidget {
     required this.cubit,
     required this.min,
     required this.max,
-    required this.step,
+    this.step = 1,
     this.title = '',
     this.subtitle = '',
     this.initial,
@@ -34,11 +34,7 @@ class ScoutingSlider extends StatefulWidget {
 class _ScoutingSliderState extends State<ScoutingSlider> {
   @override
   void initState() {
-    if (widget.initial != null) {
-      widget.cubit.data = widget.initial!;
-    } else {
-      widget.cubit.data = ((widget.min + widget.max) / 2).ceil();
-    }
+    widget.cubit.data = widget.initial ?? widget.min;
     super.initState();
   }
 
