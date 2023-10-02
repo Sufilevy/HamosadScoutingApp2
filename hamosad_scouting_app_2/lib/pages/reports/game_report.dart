@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import '/models/report.dart';
 import '/models/summary.dart';
 import '/pages/reports/report_page.dart';
-import '/pages/reports/report_tab.dart';
-import '/pages/reports/scouting_widgets/scouting_match_and_team.dart';
-import '/pages/reports/scouting_widgets/scouting_notes.dart';
 import '/services/database.dart';
 import '/theme.dart';
-import 'scouting_widgets/scouting_toggles.dart';
+import 'widgets/report_tab.dart';
+import 'widgets/scouting/scouting_match_and_team.dart';
+import 'widgets/scouting/text/notes.dart';
+import 'widgets/scouting/toggle/switch.dart';
+import 'widgets/scouting/toggle/toggle_button.dart';
 
 Widget gameReportPage(BuildContext context) {
   final report = reportDataProvider(context);

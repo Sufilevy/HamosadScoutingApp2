@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '/models/report.dart';
-import '/pages/reports/report_tab.dart';
-import '/pages/reports/scouting_widgets/scouting_text_field.dart';
 import '/theme.dart';
 import '/widgets/alerts.dart';
 import '/widgets/icon_button.dart';
 import '/widgets/image.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
+import 'reports/widgets/report_tab.dart';
+import 'reports/widgets/scouting/text/text_field.dart';
 
 class ScoutingHomePage extends StatelessWidget {
   static final List<String> _allowedTeams = ['1657'];

@@ -2,7 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 
 import '/models/cubit.dart';
-import '/pages/reports/scouting_widgets/scouting_text_field.dart';
+import 'text/text_field.dart';
 import '/theme.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';

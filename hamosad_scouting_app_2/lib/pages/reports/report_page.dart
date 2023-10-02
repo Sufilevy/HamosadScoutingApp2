@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import '/models/report.dart';
-import '/pages/reports/report_tab.dart';
 import '/services/database.dart';
 import '/theme.dart';
 import '/widgets/alerts.dart';
 import '/widgets/icon_button.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
+import 'widgets/report_tab.dart';
 
 class ReportPage extends StatelessWidget {
   final String title;
