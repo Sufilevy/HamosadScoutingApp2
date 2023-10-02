@@ -103,9 +103,9 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch> with SingleTicker
                       splashColor: Colors.transparent,
                     ),
                     GestureDetector(
-                      onTap: () => setState(
-                        () => _stopwatch.isRunning ? _stop() : _start(),
-                      ),
+                      onTap: () => setState(() {
+                        _stopwatch.isRunning ? _stop() : _start();
+                      }),
                       child: AnimatedIcon(
                         icon: AnimatedIcons.play_pause,
                         progress: _controller,

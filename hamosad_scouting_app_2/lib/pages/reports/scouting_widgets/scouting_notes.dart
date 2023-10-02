@@ -44,7 +44,9 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
     );
 
     return TextField(
-      onChanged: (String value) => setState(() => widget.cubit.data = value),
+      onChanged: (String value) => setState(() {
+        widget.cubit.data = value;
+      }),
       minLines: 3,
       maxLines: null,
       style: ScoutingTheme.bodyStyle,

@@ -74,12 +74,10 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
           keyboardType: widget.onlyNumbers ? TextInputType.number : TextInputType.text,
           validator: _validateInput,
           initialValue: widget.cubit.data,
-          onChanged: (value) => setState(
-            () {
-              _hasErrors = !_formKey.currentState!.validate();
-              widget.cubit.data = value;
-            },
-          ),
+          onChanged: (value) => setState(() {
+            _hasErrors = !_formKey.currentState!.validate();
+            widget.cubit.data = value;
+          }),
           style: ScoutingTheme.bodyStyle,
           textDirection:
               intl.Bidi.estimateDirectionOfText(widget.cubit.data ?? '') == intl.TextDirection.RTL
