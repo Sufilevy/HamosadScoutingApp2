@@ -6,10 +6,9 @@ import '/pages/reports/report_page.dart';
 import '/pages/reports/report_tab.dart';
 import '/pages/reports/scouting_widgets/scouting_match_and_team.dart';
 import '/pages/reports/scouting_widgets/scouting_notes.dart';
-import '/pages/reports/scouting_widgets/scouting_switch.dart';
-import '/pages/reports/scouting_widgets/scouting_toggle_button.dart';
 import '/services/database.dart';
 import '/theme.dart';
+import 'scouting_widgets/scouting_toggles.dart';
 
 Widget gameReportPage(BuildContext context) {
   final report = reportDataProvider(context);
