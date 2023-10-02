@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,11 @@ import '/services/firebase_options.dart';
 import '/theme.dart';
 
 void main() async {
+  if (defaultTargetPlatform == TargetPlatform.windows) {
+    runApp(const ScoutingApp());
+    return;
+  }
+
   // Run a loading screen app until the scouting app itself finishes initializing
   runApp(const LoadingScreen());
 
