@@ -69,8 +69,6 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/hamosad_logo.png
-    - assets/images/ma_logo.png
-    - assets/images/black_unicorns_logo.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
