@@ -32,29 +32,25 @@ class ScoutingDatabase {
     final datetime = _getDatetime();
     report.addAll({'datetime': datetime});
 
-    final scouterTeamNumber = report['info']?['scouterTeamNumber'] ?? 1657;
+    final scouterTeamNumber = report['info']['scouterTeamNumber'];
     final collectionName = '$_districtName-$scouterTeamNumber';
     final districtReports = _db.collection(collectionName);
 
-    final teamNumber = report['info']?['teamNumber'];
-    if (teamNumber == null) return;
-
-    final teamReports = districtReports.doc(teamNumber);
+    final teamReports = districtReports.doc(report['info']['teamNumber']);
     final id = lastId ?? _generateReportId(report['info'], datetime);
 
     await teamReports.update({id: report});
   }
 
-  static String _generateReportId(Json? reportInfo, Json datetime) {
-    final time = datetime['time'];
+  static String _generateReportId(Json reportInfo, Json datetime) {
+    final match = reportInfo['match'];
+    final scouter = reportInfo['scouter'];
+    final teamNumber = reportInfo['teamNumber'];
 
-    if (reportInfo == null) return time;
-
-    final match = reportInfo['match'] ?? '';
-    final scouter = reportInfo['scouter']?.trim()?.replaceAll(' ', '_') ?? '';
-    final scouterTeamNumber = reportInfo['scouterTeamNumber'] ?? '';
-
-    return '${match == 'Eliminations' ? 'elims' : match}-$scouter-$scouterTeamNumber-$time';
+    return '${match == 'Eliminations' ? 'elims' : match}'
+        '-${scouter.trim().replaceAll(' ', '_')}'
+        '-$teamNumber'
+        '-${datetime['time']}';
   }
 
   static Json _getDatetime() {
