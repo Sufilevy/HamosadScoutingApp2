@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-import '/models/summary.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
+import '/models/summary.dart';
 import 'cubit.dart';
 
 typedef Json = Map<String, dynamic>;
@@ -112,4 +111,4 @@ class GameReportSummary {
   }
 }
 
-GameReport reportDataProvider(BuildContext context) => context.read<GameReport>();
+final gameReportProvider = Provider((ref) => GameReport());

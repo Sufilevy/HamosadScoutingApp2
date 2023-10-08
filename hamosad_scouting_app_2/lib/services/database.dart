@@ -3,7 +3,7 @@ import 'package:dartx/dartx.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
-import '/models/report.dart';
+import '/models/game_report.dart';
 import '/services/utilities.dart';
 
 class ScoutingDatabase {

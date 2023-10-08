@@ -1,8 +1,9 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hamosad_scouting_app_2/models/game_report.dart';
 
-import '/models/report.dart';
 import '/services/database.dart';
 import '/theme.dart';
 import '/widgets/alerts.dart';
@@ -11,7 +12,7 @@ import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 import 'widgets/report_tab.dart';
 
-class ReportPage extends StatelessWidget {
+class ReportPage extends ConsumerWidget {
   final String title;
   final List<ReportTab> tabs;
 
@@ -22,7 +23,9 @@ class ReportPage extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final report = ref.read(gameReportProvider);
+
     return DefaultTabController(
       length: tabs.length,
       child: GestureDetector(
@@ -33,7 +36,7 @@ class ReportPage extends StatelessWidget {
             toolbarHeight: 80.0 * ScoutingTheme.appSizeRatio,
             backgroundColor: ScoutingTheme.background2,
             actions: [
-              _buildSendButton(context),
+              _buildSendButton(context, report),
             ],
             leading: _buildCloseButton(context),
             title: ScoutingText.navigation(title, fontSize: 32.0 * ScoutingTheme.appSizeRatio),
@@ -63,7 +66,7 @@ class ReportPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSendButton(BuildContext context) {
+  Widget _buildSendButton(BuildContext context, GameReport report) {
     return ScoutingIconButton(
       icon: Icons.send_rounded,
       color: ScoutingTheme.blueAlliance,
@@ -71,7 +74,6 @@ class ReportPage extends StatelessWidget {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              final report = reportDataProvider(context);
               String? content;
 
               if (report.match.data.isNullOrEmpty || report.teamNumber.data.isNullOrEmpty) {
@@ -81,7 +83,7 @@ class ReportPage extends StatelessWidget {
               }
 
               if (content == null) {
-                return _buildSendReportDialog(context);
+                return _buildSendReportDialog(context, report);
               } else {
                 return ScoutingDialog(
                   content: content,
@@ -95,7 +97,7 @@ class ReportPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSendReportDialog(BuildContext context) {
+  Widget _buildSendReportDialog(BuildContext context, report) {
     return ScoutingDialog(
       content:
           'Sending the report will upload it to the database and bring you back to the home screen.',
@@ -114,7 +116,7 @@ class ReportPage extends StatelessWidget {
         padAll(
           8.0,
           TextButton(
-            onPressed: () => _sendReport(context),
+            onPressed: () => _sendReport(context, report),
             child: ScoutingText.body(
               'Send',
               color: ScoutingTheme.blueAlliance,
@@ -174,18 +176,13 @@ class ReportPage extends StatelessWidget {
     );
   }
 
-  void _sendReport(BuildContext context) async {
-    Navigator.popUntil(
-      context,
-      (route) => route.isFirst,
-    );
-
-    final reportData = reportDataProvider(context);
+  void _sendReport(BuildContext context, GameReport report) async {
+    Navigator.popUntil(context, (route) => route.isFirst);
 
     try {
-      ScoutingDatabase.sendReport(reportData.data).then(
+      ScoutingDatabase.sendReport(report.data).then(
         (_) {
-          reportData.clear();
+          report.clear();
           Phoenix.rebirth(context);
         },
       );

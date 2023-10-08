@@ -2,11 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hamosad_scouting_app_2/pages/reports/game_report_page.dart';
 
-import '/models/report.dart';
 import '/pages/home_page.dart';
-import '/pages/reports/game_report.dart';
 import '/services/app_lifecycle_observer.dart';
 import '/services/database.dart';
 import '/services/firebase_options.dart';
@@ -54,15 +53,14 @@ class _ScoutingAppState extends State<ScoutingApp> {
     final screenSize = MediaQueryData.fromView(View.of(context)).size;
     ScoutingTheme.appSizeRatio = screenSize.height / 1350.0;
 
-    return Provider<GameReport>(
-      create: (_) => GameReport(),
+    return ProviderScope(
       child: MaterialApp(
         title: 'Scouting App',
         themeMode: ThemeMode.dark,
         initialRoute: '/',
         routes: {
-          '/': (context) => const ScoutingHomePage(),
-          '/game-report': gameReportPage,
+          '/': (_) => const ScoutingHomePage(),
+          '/game-report': (_) => const GameReportPage(),
         },
       ),
     );

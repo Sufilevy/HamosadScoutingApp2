@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '/models/report.dart';
+import '/models/game_report.dart';
 import '/theme.dart';
 import '/widgets/alerts.dart';
 import '/widgets/icon_button.dart';
@@ -11,14 +12,14 @@ import '/widgets/text.dart';
 import 'reports/widgets/report_tab.dart';
 import 'reports/widgets/scouting/text/text_field.dart';
 
-class ScoutingHomePage extends StatelessWidget {
+class ScoutingHomePage extends ConsumerWidget {
   static final List<String> _allowedTeams = ['1657'];
 
   const ScoutingHomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final reportData = reportDataProvider(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final report = ref.read(gameReportProvider);
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -49,13 +50,13 @@ class ScoutingHomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ScoutingTextField(
-                  cubit: reportData.scouter,
+                  cubit: report.scouter,
                   hint: 'Enter your name...',
                   title: 'Name',
                   onlyNames: true,
                 ),
                 ScoutingTextField(
-                  cubit: reportData.scouterTeamNumber,
+                  cubit: report.scouterTeamNumber,
                   hint: 'Enter your team number...',
                   title: 'Team Number',
                   onlyNumbers: true,
@@ -67,7 +68,7 @@ class ScoutingHomePage extends StatelessWidget {
               iconSize: 250.0 * ScoutingTheme.appSizeRatio,
               splashRadius: 160.0 * ScoutingTheme.appSizeRatio,
               tooltip: 'Create a new report',
-              onPressed: () => _createReport(context),
+              onPressed: () => _createReport(context, report),
             ),
           ],
         ),
@@ -109,12 +110,10 @@ class ScoutingHomePage extends StatelessWidget {
     );
   }
 
-  void _createReport(BuildContext context) {
-    final reportData = reportDataProvider(context);
-
-    if (reportData.scouter.data.isEmpty ||
-        reportData.scouterTeamNumber.data.isEmpty ||
-        !_allowedTeams.contains(reportData.scouterTeamNumber.data)) {
+  void _createReport(BuildContext context, GameReport report) {
+    if (report.scouter.data.isEmpty ||
+        report.scouterTeamNumber.data.isEmpty ||
+        !_allowedTeams.contains(report.scouterTeamNumber.data)) {
       showDialog(
         context: context,
         builder: (context) => ScoutingDialog(
