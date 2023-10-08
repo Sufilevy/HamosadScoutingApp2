@@ -2,10 +2,10 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 
 import '/models/cubit.dart';
-import 'text/text_field.dart';
 import '/theme.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
+import 'text/text_field.dart';
 
 class ScoutingMatchAndTeam extends StatefulWidget {
   const ScoutingMatchAndTeam({
@@ -73,7 +73,7 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
         ? ScoutingTextField(
             cubit: widget.team,
             onlyNumbers: true,
-            hint: 'Enter the team\'s number...',
+            hint: "Enter the team's number...",
             title: 'Team number',
             errorHint: 'Please enter a team number.',
           )

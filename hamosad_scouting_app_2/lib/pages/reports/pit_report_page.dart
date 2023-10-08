@@ -21,7 +21,7 @@ class PitReportPage extends ConsumerWidget {
           children: [
             ScoutingTextField(
               title: 'Team Number',
-              hint: 'Enter the team\'s number...',
+              hint: "Enter the team's number...",
               cubit: report.scouter,
             ),
           ],

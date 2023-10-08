@@ -61,7 +61,7 @@ class GameReportPage extends ConsumerWidget {
           children: [
             ScoutingToggleButton(
               cubit: report.summary.won,
-              title: 'Did the robot\'s alliance win?',
+              title: "Did the robot's alliance win?",
             ),
             ScoutingSwitch(
               items: const ['Almost only', 'Half', 'None'],
@@ -79,7 +79,7 @@ class GameReportPage extends ConsumerWidget {
             ScoutingNotes(
               cubit: report.summary.fouls,
               title: 'Fouls',
-              hint: 'Enter the team\'s fouls...',
+              hint: "Enter the team's fouls...",
             ),
             ScoutingNotes(
               cubit: report.summary.defenseNotes,
