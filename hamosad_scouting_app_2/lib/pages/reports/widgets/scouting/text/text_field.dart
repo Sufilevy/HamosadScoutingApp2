@@ -27,10 +27,10 @@ class ScoutingTextField extends StatefulWidget {
 }
 
 class _ScoutingTextFieldState extends State<ScoutingTextField> {
-  final FocusNode _focusNode = FocusNode();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _hasErrors = false;
-  final RegExp _namesValidator = RegExp(r'^[a-zA-Z -]+');
+  final _focusNode = FocusNode();
+  final _formKey = GlobalKey<FormState>();
+  final _namesValidator = RegExp(r'^[a-zA-Z -]+');
+  var _hasErrors = false;
 
   @override
   void initState() {

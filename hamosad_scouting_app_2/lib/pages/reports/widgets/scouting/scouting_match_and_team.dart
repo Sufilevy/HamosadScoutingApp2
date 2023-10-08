@@ -111,9 +111,7 @@ class ScoutingTeamNumber extends StatefulWidget {
 }
 
 class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
-  int _currentTeamIndex = -1;
-  final Duration _duration = 400.milliseconds;
-  final double _width = 120.0, _height = 80.0, _radius = 7.5;
+  var _currentTeamIndex = -1;
 
   @override
   void initState() {
@@ -124,14 +122,16 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
   }
 
   Widget _buildTeamButton(BuildContext context, int index) {
-    final Color teamColor = index <= 2 ? ScoutingTheme.redAlliance : ScoutingTheme.blueAlliance;
-    final bool isSelected = _currentTeamIndex == index;
+    const width = 120.0, height = 80.0, radius = 7.5;
+    final duration = 400.milliseconds;
+    final teamColor = index <= 2 ? ScoutingTheme.redAlliance : ScoutingTheme.blueAlliance;
+    final isSelected = _currentTeamIndex == index;
 
     return padAll(
       12.0,
       Container(
-        width: _width * ScoutingTheme.appSizeRatio,
-        height: _height * ScoutingTheme.appSizeRatio,
+        width: width * ScoutingTheme.appSizeRatio,
+        height: height * ScoutingTheme.appSizeRatio,
         color: ScoutingTheme.background1,
         child: RepaintBoundary(
           child: Stack(
@@ -139,20 +139,20 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
               Align(
                 alignment: Alignment.center,
                 child: AnimatedContainer(
-                  duration: _duration,
+                  duration: duration,
                   curve: Curves.easeOutQuart,
-                  width: isSelected ? _width * ScoutingTheme.appSizeRatio : 0.0,
-                  height: isSelected ? _height * ScoutingTheme.appSizeRatio : 0.0,
+                  width: isSelected ? width * ScoutingTheme.appSizeRatio : 0.0,
+                  height: isSelected ? height * ScoutingTheme.appSizeRatio : 0.0,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     color: teamColor,
-                    borderRadius: BorderRadius.circular(_radius),
+                    borderRadius: BorderRadius.circular(radius),
                   ),
                 ),
               ),
               SizedBox(
-                width: _width * ScoutingTheme.appSizeRatio,
-                height: _height * ScoutingTheme.appSizeRatio,
+                width: width * ScoutingTheme.appSizeRatio,
+                height: height * ScoutingTheme.appSizeRatio,
                 child: TextButton(
                   onPressed: () {
                     setState(() {
@@ -171,12 +171,12 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
                     ),
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(_radius),
+                        borderRadius: BorderRadius.circular(radius),
                       ),
                     ),
                   ),
                   child: AnimatedDefaultTextStyle(
-                    duration: _duration * 1.5,
+                    duration: duration * 1.5,
                     curve: Curves.decelerate,
                     style: ScoutingTheme.titleStyle.copyWith(
                       fontSize: 30.0 * ScoutingTheme.appSizeRatio,

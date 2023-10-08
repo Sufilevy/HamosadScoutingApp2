@@ -42,9 +42,12 @@ class CirclePainter extends CustomPainter {
   @override
   bool shouldRepaint(CirclePainter oldDelegate) => true;
 
-  double _mapRange(double value, double inputStart, double inputEnd,
-          double outputStart, double outputEnd) =>
-      outputStart +
-      ((outputEnd - outputStart) / (inputEnd - inputStart)) *
-          (value - inputStart);
+  double _mapRange(
+    double value,
+    double inputStart,
+    double inputEnd,
+    double outputStart,
+    double outputEnd,
+  ) =>
+      outputStart + ((outputEnd - outputStart) / (inputEnd - inputStart)) * (value - inputStart);
 }

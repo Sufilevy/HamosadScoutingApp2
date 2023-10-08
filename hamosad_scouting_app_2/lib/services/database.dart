@@ -9,8 +9,8 @@ import '/services/utilities.dart';
 class ScoutingDatabase {
   static late Map<String, List<String>> matches;
 
-  static final FirebaseFirestore _db = FirebaseFirestore.instance;
-  static String _districtName = '';
+  static final _db = FirebaseFirestore.instance;
+  static var _districtName = '';
 
   static Future<void> initialize() async {
     await FirebaseAuth.instance.signInAnonymously();
@@ -54,7 +54,7 @@ class ScoutingDatabase {
   }
 
   static Json _getDatetime() {
-    DateTime now = DateTime.now();
+    final now = DateTime.now();
 
     return {
       'day': now.day,

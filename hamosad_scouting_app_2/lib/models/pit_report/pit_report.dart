@@ -4,9 +4,9 @@ import 'package:intl/intl.dart';
 import '/models/cubit.dart';
 
 class PitReport {
-  final Cubit<String> scouter = Cubit('');
-  final Cubit<String> scouterTeamNumber = Cubit('');
-  final Cubit<String?> teamNumber = Cubit(null);
+  final scouter = Cubit('');
+  final scouterTeamNumber = Cubit('');
+  final teamNumber = Cubit<String?>(null);
 
   Json get data {
     return {

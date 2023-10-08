@@ -1,7 +1,7 @@
 import '/models/cubit.dart';
 
 class GameReportTeleop {
-  Cubit<String> notes = Cubit('');
+  final notes = Cubit('');
 
   Json get data {
     return {

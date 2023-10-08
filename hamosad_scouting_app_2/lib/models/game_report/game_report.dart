@@ -8,15 +8,15 @@ import 'summary.dart';
 import 'teleop.dart';
 
 class GameReport {
-  final Cubit<String?> match = Cubit(null);
-  final Cubit<String> scouter = Cubit('');
-  final Cubit<String> scouterTeamNumber = Cubit('');
-  final Cubit<String?> teamNumber = Cubit(null);
+  final match = Cubit<String?>(null);
+  final scouter = Cubit('');
+  final scouterTeamNumber = Cubit('');
+  final teamNumber = Cubit<String?>(null);
 
-  final GameReportAuto auto = GameReportAuto();
-  final GameReportEndgame endgame = GameReportEndgame();
-  final GameReportSummary summary = GameReportSummary();
-  final GameReportTeleop teleop = GameReportTeleop();
+  final auto = GameReportAuto();
+  final endgame = GameReportEndgame();
+  final summary = GameReportSummary();
+  final teleop = GameReportTeleop();
 
   Json get data {
     return {

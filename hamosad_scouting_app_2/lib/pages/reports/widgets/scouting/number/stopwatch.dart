@@ -24,10 +24,10 @@ class ScoutingStopwatch extends StatefulWidget {
 }
 
 class _ScoutingStopwatchState extends State<ScoutingStopwatch> with SingleTickerProviderStateMixin {
-  final double _size = 280.0 * ScoutingTheme.appSizeRatio;
   late final AnimationController _controller;
-  final Stopwatch _stopwatch = Stopwatch();
-  Timer _timer = Timer(0.milliseconds, () {});
+
+  final _stopwatch = Stopwatch();
+  var _timer = Timer(0.milliseconds, () {});
 
   @override
   void dispose() {
@@ -68,14 +68,16 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
+    final size = 280.0 * ScoutingTheme.appSizeRatio;
+
     return SizedBox(
-      width: _size,
-      height: _size,
+      width: size,
+      height: size,
       child: Stack(
         children: [
           SizedBox(
-            width: _size,
-            height: _size,
+            width: size,
+            height: size,
             child: CustomPaint(
               painter: CirclePainter(
                 color: ScoutingTheme.secondary,

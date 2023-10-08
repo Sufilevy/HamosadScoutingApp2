@@ -1,11 +1,11 @@
 import '/models/cubit.dart';
 
 class GameReportSummary {
-  Cubit<DefenseFocus?> defenseFocus = Cubit(null);
-  Cubit<String> defenseNotes = Cubit('');
-  Cubit<String> fouls = Cubit('');
-  Cubit<String> notes = Cubit('');
-  Cubit<bool> won = Cubit(false);
+  final defenseFocus = Cubit<DefenseFocus?>(null);
+  final defenseNotes = Cubit('');
+  final fouls = Cubit('');
+  final notes = Cubit('');
+  final won = Cubit(false);
 
   Json get data {
     return {

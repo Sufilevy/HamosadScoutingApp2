@@ -13,7 +13,7 @@ import 'reports/widgets/report_tab.dart';
 import 'reports/widgets/scouting/text/text_field.dart';
 
 class ScoutingHomePage extends ConsumerWidget {
-  static final List<String> _allowedTeams = ['1657'];
+  static final _allowedTeams = ['1657'];
 
   const ScoutingHomePage({super.key});
 
