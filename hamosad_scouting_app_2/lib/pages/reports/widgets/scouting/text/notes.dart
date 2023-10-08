@@ -21,7 +21,8 @@ class ScoutingNotes extends StatefulWidget {
 }
 
 class _ScoutingNotesState extends State<ScoutingNotes> {
-  Widget _buildTextField(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     final normalBorder = OutlineInputBorder(
       borderSide: BorderSide(
         color: ScoutingTheme.background3,
@@ -43,36 +44,35 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
       ),
     );
 
-    return TextField(
-      onChanged: (String value) => setState(() {
-        widget.cubit.data = value;
-      }),
-      minLines: 1,
-      maxLines: null,
-      style: ScoutingTheme.bodyStyle,
-      textDirection: intl.Bidi.estimateDirectionOfText(widget.cubit.data) == intl.TextDirection.RTL
-          ? TextDirection.rtl
-          : TextDirection.ltr,
-      decoration: InputDecoration(
-        hintText: widget.hint,
-        labelText: widget.title,
-        labelStyle: ScoutingTheme.bodyStyle.copyWith(color: ScoutingTheme.foreground2),
-        hintStyle: ScoutingTheme.bodyStyle.copyWith(color: ScoutingTheme.foreground2),
-        errorStyle: ScoutingTheme.bodyStyle.copyWith(
-          fontSize: 16.0,
-          color: ScoutingTheme.error,
+    return padSymmetric(
+      horizontal: 60.0,
+      TextField(
+        onChanged: (String value) => setState(() {
+          widget.cubit.data = value;
+        }),
+        minLines: 1,
+        maxLines: null,
+        style: ScoutingTheme.bodyStyle,
+        textDirection:
+            intl.Bidi.estimateDirectionOfText(widget.cubit.data) == intl.TextDirection.RTL
+                ? TextDirection.rtl
+                : TextDirection.ltr,
+        decoration: InputDecoration(
+          hintText: widget.hint,
+          labelText: widget.title,
+          labelStyle: ScoutingTheme.bodyStyle.copyWith(color: ScoutingTheme.foreground2),
+          hintStyle: ScoutingTheme.bodyStyle.copyWith(color: ScoutingTheme.foreground2),
+          errorStyle: ScoutingTheme.bodyStyle.copyWith(
+            fontSize: 16.0,
+            color: ScoutingTheme.error,
+          ),
+          errorBorder: normalBorder,
+          border: normalBorder,
+          enabledBorder: normalBorder,
+          focusedBorder: selectedBorder,
+          focusedErrorBorder: errorBorder,
         ),
-        errorBorder: normalBorder,
-        border: normalBorder,
-        enabledBorder: normalBorder,
-        focusedBorder: selectedBorder,
-        focusedErrorBorder: errorBorder,
       ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _buildTextField(context).padSymmetric(horizontal: 60.0);
   }
 }

@@ -19,18 +19,6 @@ class ScoutingImage extends StatelessWidget {
   final double scale, size;
   final String path, url, title;
 
-  Widget _buildImage() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(5.0 * scale),
-      child: path.isNotEmpty
-          ? Image.asset(path, scale: scale)
-          : Image.network(
-              url,
-              scale: scale,
-            ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return padAll(
@@ -44,6 +32,18 @@ class ScoutingImage extends StatelessWidget {
               ],
             )
           : _buildImage(),
+    );
+  }
+
+  Widget _buildImage() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(5.0 * scale),
+      child: path.isNotEmpty
+          ? Image.asset(path, scale: scale)
+          : Image.network(
+              url,
+              scale: scale,
+            ),
     );
   }
 }

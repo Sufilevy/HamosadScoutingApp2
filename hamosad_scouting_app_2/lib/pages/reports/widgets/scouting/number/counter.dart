@@ -38,6 +38,29 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
     super.initState();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    if (widget.title.isNotEmpty) {
+      return padSymmetric(
+        horizontal: 32.0,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Flexible(
+              child: ScoutingText.subtitle(
+                widget.title,
+                textAlign: TextAlign.center,
+              ).padSymmetric(horizontal: 12.0),
+            ),
+            _buildCounter(),
+          ],
+        ),
+      );
+    } else {
+      return _buildCounter();
+    }
+  }
+
   Widget _buildIconButton(
     BuildContext context,
     void Function() onPressed,
@@ -113,29 +136,6 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
       setState(() {
         widget.cubit.data -= widget.step;
       });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (widget.title.isNotEmpty) {
-      return padSymmetric(
-        horizontal: 32.0,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Flexible(
-              child: ScoutingText.subtitle(
-                widget.title,
-                textAlign: TextAlign.center,
-              ).padSymmetric(horizontal: 12.0),
-            ),
-            _buildCounter(),
-          ],
-        ),
-      );
-    } else {
-      return _buildCounter();
     }
   }
 }

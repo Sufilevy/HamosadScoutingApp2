@@ -31,6 +31,17 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
     super.initState();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _buildSelectMatch(),
+        SizedBox(height: 25.0 * ScoutingTheme.appSizeRatio),
+        if (_match != null) _buildSelectTeam(),
+      ],
+    );
+  }
+
   Widget _buildSelectMatch() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -82,17 +93,6 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
             teams: widget.matches[_match]!,
           );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildSelectMatch(),
-        SizedBox(height: 25.0 * ScoutingTheme.appSizeRatio),
-        if (_match != null) _buildSelectTeam(),
-      ],
-    );
-  }
 }
 
 class ScoutingTeamNumber extends StatefulWidget {
@@ -119,6 +119,36 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
       _currentTeamIndex = widget.teams.indexOf(widget.cubit.data!);
     }
     super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildTeamButton(context, 0),
+            _buildTeamButton(context, 3),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildTeamButton(context, 1),
+            _buildTeamButton(context, 4),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildTeamButton(context, 2),
+            _buildTeamButton(context, 5),
+          ],
+        ),
+      ],
+    );
   }
 
   Widget _buildTeamButton(BuildContext context, int index) {
@@ -191,36 +221,6 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
           ),
         ),
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildTeamButton(context, 0),
-            _buildTeamButton(context, 3),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildTeamButton(context, 1),
-            _buildTeamButton(context, 4),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildTeamButton(context, 2),
-            _buildTeamButton(context, 5),
-          ],
-        ),
-      ],
     );
   }
 }
