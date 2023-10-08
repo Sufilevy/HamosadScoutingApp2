@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '/models/game_report.dart';
-import '/models/summary.dart';
+import '/models/game_report/game_report.dart';
+import '/models/game_report/summary.dart';
 import '/pages/reports/report_page.dart';
 import '/services/database.dart';
 import '/theme.dart';

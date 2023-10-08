@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '/models/game_report.dart';
+import '/models/game_report/game_report.dart';
 import '/theme.dart';
 import '/widgets/alerts.dart';
 import '/widgets/icon_button.dart';

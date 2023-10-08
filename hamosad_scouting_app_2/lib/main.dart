@@ -3,9 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hamosad_scouting_app_2/pages/reports/game_report_page.dart';
 
 import '/pages/home_page.dart';
+import '/pages/reports/game_report_page.dart';
 import '/services/app_lifecycle_observer.dart';
 import '/services/database.dart';
 import '/services/firebase_options.dart';

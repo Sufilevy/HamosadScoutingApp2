@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/widgets/icon_button.dart';
-import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 import '/models/cubit.dart';
 import '/theme.dart';
 import '/widgets/circle_painter.dart';
+import '/widgets/icon_button.dart';
+import '/widgets/text.dart';
 
 class ScoutingStopwatch extends StatefulWidget {
   const ScoutingStopwatch({

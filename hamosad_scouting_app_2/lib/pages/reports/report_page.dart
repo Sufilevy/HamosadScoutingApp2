@@ -2,8 +2,8 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hamosad_scouting_app_2/models/game_report.dart';
 
+import '/models/game_report/game_report.dart';
 import '/services/database.dart';
 import '/theme.dart';
 import '/widgets/alerts.dart';
