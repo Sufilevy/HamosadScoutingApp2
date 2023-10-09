@@ -2,14 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '/pages/home_page.dart';
-import '/pages/reports/game_report_page.dart';
+import '/app.dart';
 import '/services/app_lifecycle_observer.dart';
 import '/services/database.dart';
 import '/services/firebase_options.dart';
-import '/theme.dart';
 
 void main() async {
   if (defaultTargetPlatform == TargetPlatform.windows) {
@@ -38,47 +35,4 @@ void main() async {
   ]);
 
   runApp(const ScoutingApp());
-}
-
-class ScoutingApp extends StatefulWidget {
-  const ScoutingApp({Key? key}) : super(key: key);
-
-  @override
-  State<ScoutingApp> createState() => _ScoutingAppState();
-}
-
-class _ScoutingAppState extends State<ScoutingApp> {
-  @override
-  Widget build(BuildContext context) {
-    final screenSize = MediaQueryData.fromView(View.of(context)).size;
-    ScoutingTheme.appSizeRatio = screenSize.height / 1350.0;
-
-    return ProviderScope(
-      child: MaterialApp(
-        title: 'Scouting App',
-        themeMode: ThemeMode.dark,
-        initialRoute: '/',
-        routes: {
-          '/': (_) => const ScoutingHomePage(),
-          '/game-report': (_) => const GameReportPage(),
-        },
-      ),
-    );
-  }
-}
-
-class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: ScoutingTheme.background1,
-      child: const Center(
-        child: CircularProgressIndicator(
-          color: ScoutingTheme.primary,
-        ),
-      ),
-    );
-  }
 }
