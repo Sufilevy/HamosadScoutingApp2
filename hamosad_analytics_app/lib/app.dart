@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '/pages/team_details/team_details_page.dart';
+import '/pages/teams/teams_page.dart';
 import '/theme.dart';
 
 class AnalyticsApp extends StatelessWidget {
@@ -23,13 +24,20 @@ class AnalyticsApp extends StatelessWidget {
   }
 
   final _router = GoRouter(
-    initialLocation: '/team/1657',
+    initialLocation: '/teams',
     routes: [
       GoRoute(
         path: '/team/:teamNumber',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: TeamDetailsPage(state.pathParameters['teamNumber']!),
+        ),
+      ),
+      GoRoute(
+        path: '/teams',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const TeamsPage(),
         ),
       )
     ],

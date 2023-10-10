@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '/services/utilities.dart';
+
 /* spell-checker: disable */
 
 class AnalyticsTheme {
@@ -9,12 +11,13 @@ class AnalyticsTheme {
 
   static late double appSizeRatio;
   static void setAppSizeRatio(BuildContext context) {
-    final screenSize = MediaQueryData.fromView(View.of(context)).size;
-    appSizeRatio = screenSize.height / 1350.0;
+    final screenHeight = getScreenSize(context).height;
+    appSizeRatio = screenHeight / 1140.0;
   }
 
   static const appTitle = 'Analytics App';
 
+  static const darkBackground = Color(0xFF16151A);
   static const background1 = Color(0xFF1F1E24);
   static const background2 = Color(0xFF29272F);
   static const background3 = Color(0xFF363442);
@@ -28,63 +31,69 @@ class AnalyticsTheme {
   static const blueAlliance = Color(0xFF1E88E5);
   static const redAlliance = Color(0xFFC62828);
 
-  static final logoTextStyle = TextStyle(
-    fontFamily: 'Fira Code',
-    fontWeight: FontWeight.w700,
-    fontSize: 20.0 * appSizeRatio,
-    color: primary,
-  );
+  static TextStyle get navigationStyle => TextStyle(
+        fontFamily: 'Varela Round',
+        fontWeight: FontWeight.normal,
+        fontSize: 18.0 * appSizeRatio,
+        color: foreground1,
+      );
 
-  static final navigationStyle = TextStyle(
-    fontFamily: 'Varela Round',
-    fontWeight: FontWeight.normal,
-    fontSize: 16.0 * appSizeRatio,
-    color: foreground1,
-  );
+  static TextStyle get dataTitleStyle => TextStyle(
+        fontFamily: 'Open Sans',
+        fontWeight: FontWeight.w500,
+        fontSize: 20.0 * appSizeRatio,
+        color: foreground1,
+      );
 
-  static final dataTitleStyle = TextStyle(
-    fontFamily: 'Open Sans',
-    fontWeight: FontWeight.w500,
-    fontSize: 19.0 * appSizeRatio,
-    color: foreground1,
-  );
+  static TextStyle get dataSubtitleStyle => TextStyle(
+        fontFamily: 'Open Sans',
+        fontWeight: FontWeight.normal,
+        fontSize: 18.0 * appSizeRatio,
+        color: foreground1,
+      );
 
-  static final dataSubtitleStyle = TextStyle(
-    fontFamily: 'Open Sans',
-    fontWeight: FontWeight.normal,
-    fontSize: 17.0 * appSizeRatio,
-    color: foreground1,
-  );
+  static TextStyle get dataBodyStyle => TextStyle(
+        fontFamily: 'Open Sans',
+        fontWeight: FontWeight.w600,
+        fontSize: 22.0 * appSizeRatio,
+        color: primary,
+      );
 
-  static final dataBodyStyle = TextStyle(
-    fontFamily: 'Open Sans',
-    fontWeight: FontWeight.w600,
-    fontSize: 20.0 * appSizeRatio,
-    color: primary,
-  );
+  static TextStyle get logoTextStyle => TextStyle(
+        fontFamily: 'Fira Code',
+        fontWeight: FontWeight.w700,
+        fontSize: 24.0 * appSizeRatio,
+        color: primary,
+        height: 1.1,
+      );
 
   static final darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: primary,
-      brightness: Brightness.dark,
+    colorScheme: const ColorScheme.dark(
+      primary: primary,
+      onPrimary: background3,
+      secondary: primaryVariant,
+      onSecondary: background3,
+      background: background1,
+      onBackground: foreground1,
+      surface: background2,
+      onSurface: foreground1,
+      error: error,
+      onError: foreground1,
+      outline: foreground2,
     ),
-    // colorScheme: const ColorScheme.dark(
-    //   primary: primary,
-    //   onPrimary: background3,
-    //   secondary: primaryVariant,
-    //   onSecondary: background3,
-    //   background: background1,
-    //   onBackground: foreground1,
-    //   surface: background2,
-    //   onSurface: foreground1,
-    //   error: error,
-    //   onError: foreground1,
-    //   outline: foreground2,
-    // ),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: darkBackground,
+      surfaceTintColor: Colors.transparent,
+      shadowColor: Colors.black87,
+      elevation: 8.0,
+    ),
+    drawerTheme: const DrawerThemeData(
+      backgroundColor: background1,
+      surfaceTintColor: Colors.transparent,
+    ),
     fontFamily: 'Open Sans',
-    textTheme: const TextTheme(),
   );
 
   /// [Color, Name, Location]

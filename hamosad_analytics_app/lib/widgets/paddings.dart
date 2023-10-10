@@ -4,19 +4,19 @@ import '/theme.dart';
 import 'paddings.dart' as paddings;
 
 Widget padLeft(double padding, Widget child) => Padding(
-      padding: EdgeInsets.only(left: padding * ScoutingTheme.appSizeRatio),
+      padding: EdgeInsets.only(left: padding * AnalyticsTheme.appSizeRatio),
       child: child,
     );
 Widget padTop(double padding, Widget child) => Padding(
-      padding: EdgeInsets.only(top: padding * ScoutingTheme.appSizeRatio),
+      padding: EdgeInsets.only(top: padding * AnalyticsTheme.appSizeRatio),
       child: child,
     );
 Widget padRight(double padding, Widget child) => Padding(
-      padding: EdgeInsets.only(right: padding * ScoutingTheme.appSizeRatio),
+      padding: EdgeInsets.only(right: padding * AnalyticsTheme.appSizeRatio),
       child: child,
     );
 Widget padBottom(double padding, Widget child) => Padding(
-      padding: EdgeInsets.only(bottom: padding * ScoutingTheme.appSizeRatio),
+      padding: EdgeInsets.only(bottom: padding * AnalyticsTheme.appSizeRatio),
       child: child,
     );
 
@@ -28,7 +28,7 @@ Widget pad(
   double bottom = 0.0,
 }) =>
     Padding(
-      padding: EdgeInsets.fromLTRB(left, top, right, bottom) * ScoutingTheme.appSizeRatio,
+      padding: EdgeInsets.fromLTRB(left, top, right, bottom) * AnalyticsTheme.appSizeRatio,
       child: child,
     );
 
@@ -39,7 +39,7 @@ Widget padSymmetric(
 }) =>
     Padding(
       padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical) *
-          ScoutingTheme.appSizeRatio,
+          AnalyticsTheme.appSizeRatio,
       child: child,
     );
 
@@ -51,12 +51,12 @@ Widget padLTRB(
   Widget child,
 ) =>
     Padding(
-      padding: EdgeInsets.fromLTRB(left, top, right, bottom) * ScoutingTheme.appSizeRatio,
+      padding: EdgeInsets.fromLTRB(left, top, right, bottom) * AnalyticsTheme.appSizeRatio,
       child: child,
     );
 
 Widget padAll(double padding, Widget child) => Padding(
-      padding: EdgeInsets.all(padding * ScoutingTheme.appSizeRatio),
+      padding: EdgeInsets.all(padding * AnalyticsTheme.appSizeRatio),
       child: child,
     );
 
