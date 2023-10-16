@@ -15,8 +15,8 @@ class ScoutingDatabase {
   static Future<void> initialize() async {
     await FirebaseAuth.instance.signInAnonymously();
 
-    final informationDoc = await _db.collection('information').doc('district').get();
-    _districtName = informationDoc.get('name');
+    final informationDoc = await _db.collection('information').doc('districts').get();
+    _districtName = informationDoc.get('current');
 
     await _getMatches();
   }
@@ -40,16 +40,15 @@ class ScoutingDatabase {
     final id = lastId ?? _generateReportId(report['info'], datetime);
 
     await teamReports.update({id: report});
+    await _db.waitForPendingWrites();
   }
 
   static String _generateReportId(Json reportInfo, Json datetime) {
-    final match = reportInfo['match'];
-    final scouter = reportInfo['scouter'];
-    final teamNumber = reportInfo['teamNumber'];
+    final match = reportInfo['match'].toString();
+    final scouter = reportInfo['scouter'].toString().trim().replaceAll(' ', '_').toLowerCase();
 
     return '${match == 'Eliminations' ? 'elims' : match}'
-        '-${scouter.trim().replaceAll(' ', '_')}'
-        '-$teamNumber'
+        '-$scouter'
         '-${datetime['time']}';
   }
 
@@ -60,7 +59,7 @@ class ScoutingDatabase {
       'day': now.day,
       'month': now.month,
       'year': now.year,
-      'time': DateFormat('dd/MM HH:mm:ss').format(now),
+      'time': DateFormat('HH:mm:ss-dd/MM ').format(now),
     };
   }
 
