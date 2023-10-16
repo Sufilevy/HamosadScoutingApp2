@@ -5,9 +5,10 @@ import 'package:flutter/widgets.dart';
 
 import '/app.dart';
 import '/services/database/firebase_options.dart';
+import '/widgets/loading_screen.dart';
 
 void main() async {
-  if (defaultTargetPlatform == TargetPlatform.windows) {
+  if (!kIsWeb && defaultTargetPlatform == TargetPlatform.windows) {
     runApp(AnalyticsApp());
     return;
   }

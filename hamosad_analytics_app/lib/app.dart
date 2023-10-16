@@ -24,7 +24,7 @@ class AnalyticsApp extends StatelessWidget {
   }
 
   final _router = GoRouter(
-    initialLocation: '/teams',
+    initialLocation: '/team/1577',
     routes: [
       GoRoute(
         path: '/team/:teamNumber',
@@ -42,15 +42,4 @@ class AnalyticsApp extends StatelessWidget {
       )
     ],
   );
-}
-
-class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
-  }
 }

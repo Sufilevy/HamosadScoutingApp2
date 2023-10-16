@@ -38,6 +38,13 @@ class AnalyticsTheme {
         color: foreground1,
       );
 
+  static TextStyle get navigationTitleStyle => TextStyle(
+        fontFamily: 'Varela Round',
+        fontWeight: FontWeight.normal,
+        fontSize: 20.0 * appSizeRatio,
+        color: foreground1,
+      );
+
   static TextStyle get dataTitleStyle => TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.w500,
@@ -70,6 +77,7 @@ class AnalyticsTheme {
   static final darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
+    fontFamily: 'Open Sans',
     colorScheme: const ColorScheme.dark(
       primary: primary,
       onPrimary: background3,
@@ -93,7 +101,9 @@ class AnalyticsTheme {
       backgroundColor: background1,
       surfaceTintColor: Colors.transparent,
     ),
-    fontFamily: 'Open Sans',
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: primary,
+    ),
   );
 
   /// [Color, Name, Location]

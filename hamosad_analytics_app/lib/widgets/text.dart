@@ -7,6 +7,11 @@ Widget navigationText(String data) => Text(
       style: AnalyticsTheme.navigationStyle,
     );
 
+Widget navigationTitleText(String data) => Text(
+      data,
+      style: AnalyticsTheme.navigationTitleStyle,
+    );
+
 Widget dataTitleText(String data) => Text(
       data,
       style: AnalyticsTheme.dataTitleStyle,

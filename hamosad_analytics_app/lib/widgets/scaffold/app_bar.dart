@@ -17,18 +17,18 @@ class AnalyticsAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      title: navigationText(title).padTop(8.0),
+      title: navigationTitleText(title),
       leading: _buildMenuButton(context),
-      leadingWidth: 60.0 * AnalyticsTheme.appSizeRatio,
     );
   }
 
   Widget _buildMenuButton(BuildContext context) {
-    return Container(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(100.0),
       child: IconButton(
         icon: const FaIcon(FontAwesomeIcons.barsStaggered),
         onPressed: Scaffold.of(context).openDrawer,
-      ).pad(left: 20.0, top: 10.0, bottom: 8.0),
+      ).pad(left: 20.0),
     );
   }
 }
