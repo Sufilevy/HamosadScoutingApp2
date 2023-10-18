@@ -2,32 +2,32 @@ import 'package:flutter/material.dart';
 
 import '/theme.dart';
 
-Widget navigationText(String data) => Text(
-      data,
+Widget navigationText(dynamic data) => Text(
+      data.toString(),
       style: AnalyticsTheme.navigationStyle,
     );
 
-Widget navigationTitleText(String data) => Text(
-      data,
+Widget navigationTitleText(dynamic data) => Text(
+      data.toString(),
       style: AnalyticsTheme.navigationTitleStyle,
     );
 
-Widget dataTitleText(String data) => Text(
-      data,
+Widget dataTitleText(dynamic data) => Text(
+      data.toString(),
       style: AnalyticsTheme.dataTitleStyle,
     );
 
-Widget dataSubtitleText(String data) => Text(
-      data,
+Widget dataSubtitleText(dynamic data) => Text(
+      data.toString(),
       style: AnalyticsTheme.dataSubtitleStyle,
     );
 
-Widget dataBodyText(String data) => Text(
-      data,
+Widget dataBodyText(dynamic data) => Text(
+      data.toString(),
       style: AnalyticsTheme.dataBodyStyle,
     );
 
-Widget logoText(String data) => Text(
-      data,
+Widget logoText(dynamic data) => Text(
+      data.toString(),
       style: AnalyticsTheme.logoTextStyle,
     );

@@ -17,8 +17,10 @@ class AnalyticsDatabase {
     return districtsSnapshot.get('all');
   }
 
-  Stream<DocumentSnapshot<Json>> reportsOfTeamFromDistrict(String teamNumber, String district) =>
-      _firestore.collection(district).doc(teamNumber).snapshots();
+  Stream<DocumentSnapshot<Json>> reportsOfTeamFromDistrict(String teamNumber, String district) {
+    if (!district.contains('-')) district += '-1657';
+    return _firestore.collection(district).doc(teamNumber).snapshots();
+  }
 }
 
 final databaseProvider = Provider<AnalyticsDatabase>((ref) => AnalyticsDatabase());
@@ -28,12 +30,11 @@ typedef DistrictName = String;
 
 final teamProvider = StreamProvider.autoDispose.family<Team, (TeamNumber, DistrictName)>(
   (ref, args) {
-    final database = ref.watch(databaseProvider);
+    final db = ref.watch(databaseProvider);
 
     final (teamNumber, districtName) = args;
-    final team = Team(teamNumber);
-    return database
-        .reportsOfTeamFromDistrict(teamNumber, districtName)
-        .map((event) => team.updateWithReports(event.data()));
+    final snapshots = db.reportsOfTeamFromDistrict(teamNumber, districtName);
+
+    return snapshots.map((doc) => Team(teamNumber).updateWithReports(doc.data()));
   },
 );
