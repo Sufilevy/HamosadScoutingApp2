@@ -14,13 +14,11 @@ class TeamDetailsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final database = ref.watch(databaseProvider);
-
     return Scaffold(
       appBar: AnalyticsAppBar(title: 'Team $teamNumber'),
       drawer: const AnalyticsDrawer(),
       body: FutureBuilder(
-        future: database.currentDistrictName(),
+        future: AnalyticsDatabase.currentDistrictName(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return navigationText('An error has ocurred.');
