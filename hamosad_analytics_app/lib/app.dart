@@ -24,7 +24,7 @@ class AnalyticsApp extends StatelessWidget {
   }
 
   final _router = GoRouter(
-    initialLocation: '/team/1577',
+    initialLocation: '/teams',
     routes: [
       GoRoute(
         path: '/team/:teamNumber',

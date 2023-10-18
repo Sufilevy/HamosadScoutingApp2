@@ -16,16 +16,36 @@ class AnalyticsDrawer extends StatelessWidget {
       width: getScreenSize(context).width / 2.0,
       child: ListView(
         padding: EdgeInsets.zero,
-        children: [
-          _buildDrawerHeader(context),
+        children: const [
+          DrawerHeader(),
         ],
       ),
     );
   }
+}
 
-  Widget _buildDrawerHeader(BuildContext context) {
+class DrawerHeader extends StatelessWidget {
+  const DrawerHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      height: 100.0 * AnalyticsTheme.appSizeRatio,
+      decoration: _headerDecoration,
+      child: padSymmetric(
+        vertical: 8.0,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildLogo(),
+            _buildMenuButton(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  BoxDecoration get _headerDecoration => const BoxDecoration(
         color: AnalyticsTheme.darkBackground,
         boxShadow: [
           BoxShadow(
@@ -33,44 +53,37 @@ class AnalyticsDrawer extends StatelessWidget {
             blurRadius: 4.0,
             spreadRadius: 2.0,
             offset: Offset.zero,
-          )
+          ),
         ],
-      ),
-      child: padSymmetric(
-        vertical: 8.0,
-        Stack(
-          children: [
-            _buildLogo(),
-            Align(
-              alignment: Alignment.topRight,
-              child: _buildMenuButton(context),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+      );
 
   Widget _buildLogo() {
     return Row(
       children: [
-        padSymmetric(
-          horizontal: 20.0,
+        pad(
+          left: 20.0,
+          right: 10.0,
           SvgPicture.asset(
             'assets/svg/logo.svg',
-            width: 50.0 * AnalyticsTheme.appSizeRatio,
-            height: 50.0 * AnalyticsTheme.appSizeRatio,
+            width: 50.0 * AnalyticsTheme.appSizeRatioSquared,
+            height: 50.0 * AnalyticsTheme.appSizeRatioSquared,
           ),
         ),
-        logoText('Hamosad\nAnalytics'),
+        logoText('Hamosad\n Analytics'),
       ],
     );
   }
 
   Widget _buildMenuButton(BuildContext context) {
-    return IconButton(
-      icon: const FaIcon(FontAwesomeIcons.barsStaggered),
-      onPressed: Scaffold.of(context).closeDrawer,
-    ).padRight(20.0);
+    return padRight(
+      20.0 * AnalyticsTheme.appSizeRatio,
+      IconButton(
+        iconSize: 26.0 * AnalyticsTheme.appSizeRatio,
+        icon: const FaIcon(
+          FontAwesomeIcons.barsStaggered,
+        ),
+        onPressed: Scaffold.of(context).closeDrawer,
+      ),
+    );
   }
 }

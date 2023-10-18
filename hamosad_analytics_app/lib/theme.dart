@@ -10,6 +10,7 @@ class AnalyticsTheme {
   AnalyticsTheme._();
 
   static late double appSizeRatio;
+  static double get appSizeRatioSquared => appSizeRatio * appSizeRatio;
   static void setAppSizeRatio(BuildContext context) {
     final screenHeight = getScreenSize(context).height;
     appSizeRatio = screenHeight / 1140.0;
@@ -69,7 +70,7 @@ class AnalyticsTheme {
   static TextStyle get logoTextStyle => TextStyle(
         fontFamily: 'Fira Code',
         fontWeight: FontWeight.w700,
-        fontSize: 24.0 * appSizeRatio,
+        fontSize: 24.0 * appSizeRatioSquared,
         color: primary,
         height: 1.1,
       );

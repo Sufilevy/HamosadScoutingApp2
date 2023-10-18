@@ -11,7 +11,7 @@ class AnalyticsAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
   @override
-  Size get preferredSize => Size.fromHeight(60.0 * AnalyticsTheme.appSizeRatio);
+  Size get preferredSize => Size.fromHeight(55.0 * AnalyticsTheme.appSizeRatio);
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +19,22 @@ class AnalyticsAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: navigationTitleText(title),
       leading: _buildMenuButton(context),
+      leadingWidth: 66.0 * AnalyticsTheme.appSizeRatio,
     );
   }
 
   Widget _buildMenuButton(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(100.0),
-      child: IconButton(
-        icon: const FaIcon(FontAwesomeIcons.barsStaggered),
+    return pad(
+      left: 20.0,
+      top: 6.0,
+      bottom: 6.0,
+      IconButton(
+        iconSize: 24.0 * AnalyticsTheme.appSizeRatio,
+        icon: const FaIcon(
+          FontAwesomeIcons.barsStaggered,
+        ),
         onPressed: Scaffold.of(context).openDrawer,
-      ).pad(left: 20.0),
+      ),
     );
   }
 }
