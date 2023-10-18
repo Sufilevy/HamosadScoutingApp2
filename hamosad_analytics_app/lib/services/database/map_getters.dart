@@ -8,4 +8,12 @@ extension TypedGetters on Json {
       return null;
     }
   }
+
+  List<T>? getList<T>(String key) {
+    try {
+      return this[key] as List<T>?;
+    } catch (e) {
+      return null;
+    }
+  }
 }

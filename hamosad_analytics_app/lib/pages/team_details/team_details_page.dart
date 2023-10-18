@@ -18,18 +18,19 @@ class TeamDetailsPage extends ConsumerWidget {
       appBar: AnalyticsAppBar(title: 'Team $teamNumber'),
       drawer: const AnalyticsDrawer(),
       body: FutureBuilder(
-        future: AnalyticsDatabase.currentDistrictName(),
+        future: AnalyticsDatabase.currentDistrict(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return navigationText('An error has ocurred.');
+            return navigationText('An error has ocurred.\n\n${snapshot.error}');
           }
 
           if (!snapshot.hasData) {
             return const LoadingScreen();
           }
 
-          final districtName = snapshot.data!;
-          final teamStream = ref.watch(teamProvider((teamNumber, districtName)));
+          final district = snapshot.data!;
+          final identifier = ReportsIdentifier(teamNumber, {district});
+          final teamStream = ref.watch(teamProvider(identifier));
 
           return teamStream.when(
             data: (team) => Column(
