@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/models/analytics.dart';
 import '/models/team/team.dart';
 import '/services/database/map_getters.dart';
-import '/services/utilities.dart';
 
 class AnalyticsDatabase {
   static final _firestore = FirebaseFirestore.instance;
@@ -32,7 +31,8 @@ class AnalyticsDatabase {
     String district,
   ) {
     if (!district.contains('-')) district += '-1657';
-    return _firestore.collection(debug(district)).doc(teamNumber).snapshots();
+
+    return _firestore.collection(district).doc(teamNumber).snapshots();
   }
 }
 
@@ -49,6 +49,7 @@ class ReportsIdentifier extends Equatable {
 final teamProvider = StreamProvider.autoDispose.family<Team, ReportsIdentifier>(
   (ref, args) {
     final ReportsIdentifier(:teamNumber, :districts) = args;
+
     final snapshots = AnalyticsDatabase.reportsOfTeamFromDistrict(teamNumber, districts.first);
 
     return snapshots.map((doc) => Team(teamNumber).updateWithReports(doc.data()));

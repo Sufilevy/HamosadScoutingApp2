@@ -12,6 +12,7 @@ class Team {
     for (final MapEntry(key: reportId, value: report) in reports.entries) {
       reportsIds.add(reportId);
     }
+
     return this;
   }
 }
