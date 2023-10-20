@@ -103,9 +103,9 @@ flutter:
     - family: Fira Code
       fonts:
         - asset: assets/fonts/FiraCode-VariableFont.ttf
-    - family: Varela Round
+    - family: Cairo
       fonts:
-        - asset: assets/fonts/VarelaRound-Regular.ttf
+        - asset: assets/fonts/Cairo-VariableFont.ttf
     - family: Open Sans
       fonts:
         - asset: assets/fonts/OpenSans-VariableFont.ttf

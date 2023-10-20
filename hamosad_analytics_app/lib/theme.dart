@@ -34,16 +34,16 @@ class AnalyticsTheme {
   static const redAlliance = Color(0xFFC62828);
 
   static TextStyle get navigationStyle => TextStyle(
-        fontFamily: 'Varela Round',
-        fontWeight: FontWeight.normal,
-        fontSize: 18.0 * appSizeRatio,
+        fontFamily: 'Cairo',
+        fontWeight: FontWeight.w600,
+        fontSize: 22.0 * appSizeRatio,
         color: foreground1,
       );
 
   static TextStyle get navigationTitleStyle => TextStyle(
-        fontFamily: 'Varela Round',
-        fontWeight: FontWeight.normal,
-        fontSize: 20.0 * appSizeRatio,
+        fontFamily: 'Cairo',
+        fontWeight: FontWeight.bold,
+        fontSize: 25.0 * appSizeRatio,
         color: foreground1,
       );
 
