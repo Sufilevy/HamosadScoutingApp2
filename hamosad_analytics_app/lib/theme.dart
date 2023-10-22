@@ -11,6 +11,7 @@ class AnalyticsTheme {
 
   static late double appSizeRatio;
   static double get appSizeRatioSquared => appSizeRatio * appSizeRatio;
+
   static void setAppSizeRatio(BuildContext context) {
     final screenHeight = getScreenSize(context).height;
     appSizeRatio = screenHeight / 1140.0;
@@ -22,7 +23,7 @@ class AnalyticsTheme {
   static const darkBackground = Color(0xFF16151A);
   static const background1 = Color(0xFF1F1E24);
   static const background2 = Color(0xFF29272F);
-  static const background3 = Color(0xFF363442);
+  static const background3 = Color(0xFF423F50);
   static const foreground1 = Color(0xFFFFFFFF);
   static const foreground2 = Color(0xFFADADB1);
   static const primary = Color(0xFF0DBF78);
@@ -49,14 +50,14 @@ class AnalyticsTheme {
 
   static TextStyle get dataTitleStyle => TextStyle(
         fontFamily: 'Open Sans',
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         fontSize: 20.0 * appSizeRatio,
         color: foreground1,
       );
 
   static TextStyle get dataSubtitleStyle => TextStyle(
         fontFamily: 'Open Sans',
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w500,
         fontSize: 18.0 * appSizeRatio,
         color: foreground1,
       );

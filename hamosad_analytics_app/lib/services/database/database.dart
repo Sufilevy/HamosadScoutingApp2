@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/models/analytics.dart';
-import '/models/team/team.dart';
+import '/models/team/team_model.dart';
 import '/services/database/map_getters.dart';
 
 class AnalyticsDatabase {
