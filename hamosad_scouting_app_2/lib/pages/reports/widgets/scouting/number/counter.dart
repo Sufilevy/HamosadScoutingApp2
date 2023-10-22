@@ -9,7 +9,7 @@ import '/widgets/text.dart';
 
 class ScoutingCounter extends StatefulWidget {
   const ScoutingCounter({
-    Key? key,
+    super.key,
     required this.cubit,
     required this.min,
     required this.max,
@@ -19,8 +19,7 @@ class ScoutingCounter extends StatefulWidget {
   })  : assert(min >= -99),
         assert(max <= 999),
         assert(step > 0),
-        assert(max > min + step),
-        super(key: key);
+        assert(max > min + step);
 
   final Cubit<int> cubit;
   final int min, max, step;

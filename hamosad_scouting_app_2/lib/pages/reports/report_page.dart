@@ -17,10 +17,10 @@ class ReportPage extends ConsumerWidget {
   final List<ReportTab> tabs;
 
   const ReportPage({
-    Key? key,
+    super.key,
     required this.title,
     required this.tabs,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -4,7 +4,7 @@ import '/theme.dart';
 
 class ScoutingIconButton extends StatelessWidget {
   const ScoutingIconButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     this.icon,
     this.iconWidget,
@@ -14,8 +14,7 @@ class ScoutingIconButton extends StatelessWidget {
     this.splashRadius,
     this.iconSize = 24.0,
     this.isEnabled = true,
-  })  : assert(icon == null || iconWidget == null),
-        super(key: key);
+  }) : assert(icon == null || iconWidget == null);
 
   final Color? color, disabledColor;
   final Widget? iconWidget;

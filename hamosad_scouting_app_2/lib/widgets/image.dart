@@ -6,15 +6,14 @@ import '/widgets/text.dart';
 class ScoutingImage extends StatelessWidget {
   /// Only one of [path] or [url] must not be empty.
   ScoutingImage({
-    Key? key,
+    super.key,
     this.title = '',
     this.path = '',
     this.url = '',
     this.scale = 1.0,
     this.size = 1.0,
   })  : assert(path.isNotEmpty || url.isNotEmpty),
-        assert(path.isEmpty || url.isEmpty),
-        super(key: key);
+        assert(path.isEmpty || url.isEmpty);
 
   final double scale, size;
   final String path, url, title;

@@ -7,7 +7,7 @@ import '/widgets/text.dart';
 
 class ScoutingSlider extends StatefulWidget {
   const ScoutingSlider({
-    Key? key,
+    super.key,
     required this.cubit,
     required this.min,
     required this.max,
@@ -19,8 +19,7 @@ class ScoutingSlider extends StatefulWidget {
         assert(min >= -100),
         assert(step > 0),
         assert(max > min + step),
-        assert(initial == null || (initial >= min && initial <= max)),
-        super(key: key);
+        assert(initial == null || (initial >= min && initial <= max));
 
   final Cubit<int> cubit;
   final int? initial;

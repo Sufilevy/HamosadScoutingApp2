@@ -5,13 +5,13 @@ import '/theme.dart';
 
 class ScoutingSwitch extends StatelessWidget {
   const ScoutingSwitch({
-    Key? key,
+    super.key,
     required this.items,
     required this.onChanged,
     this.fontSize = 24.0,
     this.minWidth = 140.0,
     this.customWidths,
-  }) : super(key: key);
+  });
 
   final List<double>? customWidths;
   final List<String> items;

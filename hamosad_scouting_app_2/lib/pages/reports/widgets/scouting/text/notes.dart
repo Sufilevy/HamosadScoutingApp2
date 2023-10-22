@@ -7,11 +7,11 @@ import '/widgets/paddings.dart';
 
 class ScoutingNotes extends StatefulWidget {
   const ScoutingNotes({
-    Key? key,
+    super.key,
     required this.cubit,
     this.title = 'Notes',
     this.hint = 'Enter your notes...',
-  }) : super(key: key);
+  });
 
   final Cubit<String> cubit;
   final String title, hint;

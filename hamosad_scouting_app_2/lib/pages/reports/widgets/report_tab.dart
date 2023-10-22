@@ -11,13 +11,12 @@ class ReportTab extends StatelessWidget {
   final bool seperated;
 
   ReportTab({
-    Key? key,
+    super.key,
     required this.title,
     required children,
     this.seperation = 30.0,
     this.seperated = true,
-  })  : children = [...children, Container()],
-        super(key: key) {
+  }) : children = [...children, Container()] {
     assert(children.isNotEmpty);
   }
 

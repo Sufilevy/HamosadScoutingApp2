@@ -7,14 +7,14 @@ import '/widgets/paddings.dart';
 
 class ScoutingTextField extends StatefulWidget {
   const ScoutingTextField({
-    Key? key,
+    super.key,
     required this.cubit,
     this.hint = '',
     this.title = '',
     this.onlyNumbers = false,
     this.onlyNames = false,
     this.errorHint,
-  }) : super(key: key);
+  });
 
   final Cubit<String?> cubit;
   final String? errorHint;

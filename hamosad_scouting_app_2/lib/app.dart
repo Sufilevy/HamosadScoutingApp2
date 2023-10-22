@@ -6,7 +6,7 @@ import '/pages/reports/game_report_page.dart';
 import '/theme.dart';
 
 class ScoutingApp extends StatefulWidget {
-  const ScoutingApp({Key? key}) : super(key: key);
+  const ScoutingApp({super.key});
 
   @override
   State<ScoutingApp> createState() => _ScoutingAppState();
@@ -33,7 +33,7 @@ class _ScoutingAppState extends State<ScoutingApp> {
 }
 
 class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({Key? key}) : super(key: key);
+  const LoadingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

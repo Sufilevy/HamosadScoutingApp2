@@ -7,14 +7,14 @@ import '/widgets/text.dart';
 
 class ScoutingDialog extends StatelessWidget {
   const ScoutingDialog({
-    Key? key,
+    super.key,
     required this.content,
     this.title = '',
     this.okButton = true,
     this.actions = const [],
     this.titleIcon,
     this.iconColor,
-  }) : super(key: key);
+  });
 
   final List actions;
   final Color? iconColor;

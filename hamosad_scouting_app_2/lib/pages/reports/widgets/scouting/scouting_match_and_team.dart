@@ -97,11 +97,10 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
 
 class ScoutingTeamNumber extends StatefulWidget {
   const ScoutingTeamNumber({
-    Key? key,
+    super.key,
     required this.cubit,
     required this.teams,
-  })  : assert(teams.length == 6),
-        super(key: key);
+  }) : assert(teams.length == 6);
 
   final Cubit<String?> cubit;
   final List<String> teams;

@@ -7,10 +7,10 @@ import '/widgets/text.dart';
 
 class ScoutingToggleButton extends StatefulWidget {
   const ScoutingToggleButton({
-    Key? key,
+    super.key,
     required this.cubit,
     required this.title,
-  }) : super(key: key);
+  });
 
   final Cubit<bool> cubit;
   final String title;

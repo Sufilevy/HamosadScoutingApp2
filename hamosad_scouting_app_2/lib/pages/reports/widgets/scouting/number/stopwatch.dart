@@ -11,10 +11,10 @@ import '/widgets/text.dart';
 
 class ScoutingStopwatch extends StatefulWidget {
   const ScoutingStopwatch({
-    Key? key,
+    super.key,
     required this.cubit,
     this.lapLength = 5000,
-  }) : super(key: key);
+  });
 
   final Cubit<double> cubit;
   final int lapLength;
