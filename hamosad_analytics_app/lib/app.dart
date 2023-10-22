@@ -7,7 +7,7 @@ import '/pages/teams/teams_page.dart';
 import '/theme.dart';
 
 class AnalyticsApp extends StatelessWidget {
-  AnalyticsApp({Key? key}) : super(key: key);
+  AnalyticsApp({super.key});
 
   @override
   Widget build(BuildContext context) {
