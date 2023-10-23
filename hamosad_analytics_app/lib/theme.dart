@@ -113,6 +113,13 @@ class AnalyticsTheme {
       ),
       side: const BorderSide(style: BorderStyle.none),
     ),
+    dividerTheme: DividerThemeData(
+      color: background3,
+      thickness: 2.0 * appSizeRatio,
+      space: 0.0,
+      indent: 10.0 * appSizeRatio,
+      endIndent: 10.0 * appSizeRatio,
+    ),
     progressIndicatorTheme: const ProgressIndicatorThemeData(
       color: primary,
     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hamosad_analytics_app/pages/team_details/widgets/number_chip.dart';
 
 import '/services/database/database.dart';
 import '/widgets/loading_screen.dart';
@@ -22,14 +23,20 @@ class TeamDetailsPage extends ConsumerWidget {
       body: padSymmetric(
         horizontal: 12.0,
         vertical: 12.0,
-        const Column(
+        Column(
           children: [
-            Row(
-              children: <Widget>[
+            const Row(
+              children: [
                 TeamInfoChip('Steampunk', icon: Icons.people_rounded),
                 TeamInfoChip('Binyamina', icon: Icons.location_city_rounded),
               ],
-            )
+            ).padBottom(10.0),
+            const Row(
+              children: [
+                NumberChip('Average Score', data: 64.15),
+                NumberChip('Average RP', data: 2.3),
+              ],
+            ).padBottom(10.0),
           ],
         ),
       ),

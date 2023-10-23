@@ -12,20 +12,22 @@ Widget navigationTitleText(dynamic data) => Text(
       style: AnalyticsTheme.navigationTitleStyle,
     );
 
-Widget dataTitleText(dynamic data, {TextAlign? textAlign}) => Text(
+Widget dataTitleText(dynamic data, {TextAlign textAlign = TextAlign.center}) => Text(
       data.toString(),
       style: AnalyticsTheme.dataTitleStyle,
       textAlign: textAlign,
     );
 
-Widget dataSubtitleText(dynamic data) => Text(
+Widget dataSubtitleText(dynamic data, {TextAlign textAlign = TextAlign.center}) => Text(
       data.toString(),
       style: AnalyticsTheme.dataSubtitleStyle,
+      textAlign: textAlign,
     );
 
-Widget dataBodyText(dynamic data) => Text(
+Widget dataBodyText(dynamic data, {TextAlign textAlign = TextAlign.center}) => Text(
       data.toString(),
       style: AnalyticsTheme.dataBodyStyle,
+      textAlign: textAlign,
     );
 
 Widget logoText(dynamic data) => Text(
