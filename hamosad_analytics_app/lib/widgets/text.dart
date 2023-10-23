@@ -12,9 +12,10 @@ Widget navigationTitleText(dynamic data) => Text(
       style: AnalyticsTheme.navigationTitleStyle,
     );
 
-Widget dataTitleText(dynamic data) => Text(
+Widget dataTitleText(dynamic data, {TextAlign? textAlign}) => Text(
       data.toString(),
       style: AnalyticsTheme.dataTitleStyle,
+      textAlign: textAlign,
     );
 
 Widget dataSubtitleText(dynamic data) => Text(

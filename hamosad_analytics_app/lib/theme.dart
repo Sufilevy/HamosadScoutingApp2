@@ -50,7 +50,7 @@ class AnalyticsTheme {
 
   static TextStyle get dataTitleStyle => TextStyle(
         fontFamily: 'Open Sans',
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w500,
         fontSize: 20.0 * appSizeRatio,
         color: foreground1,
       );
@@ -97,12 +97,21 @@ class AnalyticsTheme {
     appBarTheme: const AppBarTheme(
       backgroundColor: darkBackground,
       surfaceTintColor: Colors.transparent,
-      shadowColor: Colors.black87,
-      elevation: 8.0,
+      elevation: 4.0,
+      shadowColor: Colors.black,
     ),
     drawerTheme: const DrawerThemeData(
       backgroundColor: background1,
       surfaceTintColor: Colors.transparent,
+    ),
+    chipTheme: ChipThemeData(
+      backgroundColor: background2,
+      elevation: 3.0,
+      shadowColor: Colors.black,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5.0 * appSizeRatio),
+      ),
+      side: const BorderSide(style: BorderStyle.none),
     ),
     progressIndicatorTheme: const ProgressIndicatorThemeData(
       color: primary,
