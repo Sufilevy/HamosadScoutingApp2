@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '/pages/team_details/widgets/team_info_chips.dart';
 import '/services/database/database.dart';
 import '/widgets/loading_screen.dart';
 import '/widgets/paddings.dart';
 import '/widgets/scaffold/app_bar.dart';
 import '/widgets/scaffold/drawer.dart';
 import '/widgets/text.dart';
+import 'widgets/team_info_chip.dart';
 
 class TeamDetailsPage extends ConsumerWidget {
   const TeamDetailsPage(this.teamNumber, {super.key});
