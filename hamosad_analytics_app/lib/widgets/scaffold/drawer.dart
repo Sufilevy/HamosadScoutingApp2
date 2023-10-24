@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,7 +15,7 @@ class AnalyticsDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: getScreenSize(context).width / 2.0,
+      width: _drawerWidth(getScreenSize(context).width),
       child: ListView(
         padding: EdgeInsets.zero,
         children: const [
@@ -22,6 +24,8 @@ class AnalyticsDrawer extends StatelessWidget {
       ),
     );
   }
+
+  double _drawerWidth(double screenWidth) => math.max(screenWidth / 2.0, 300.0);
 }
 
 class DrawerHeader extends StatelessWidget {
@@ -32,15 +36,12 @@ class DrawerHeader extends StatelessWidget {
     return Container(
       height: 100.0 * AnalyticsTheme.appSizeRatio,
       decoration: _headerDecoration,
-      child: padSymmetric(
-        vertical: 8.0,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildLogo(),
-            _buildMenuButton(context),
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _buildLogo(),
+          _buildMenuButton(context),
+        ],
       ),
     );
   }
@@ -61,8 +62,8 @@ class DrawerHeader extends StatelessWidget {
     return Row(
       children: [
         pad(
-          left: 20.0,
-          right: 10.0,
+          left: 16.0,
+          right: 8.0,
           SvgPicture.asset(
             'assets/svg/logo.svg',
             width: 50.0 * AnalyticsTheme.appSizeRatioSquared,
@@ -76,7 +77,7 @@ class DrawerHeader extends StatelessWidget {
 
   Widget _buildMenuButton(BuildContext context) {
     return padRight(
-      20.0 * AnalyticsTheme.appSizeRatio,
+      16.0 * AnalyticsTheme.appSizeRatio,
       IconButton(
         iconSize: 26.0 * AnalyticsTheme.appSizeRatio,
         icon: const FaIcon(
