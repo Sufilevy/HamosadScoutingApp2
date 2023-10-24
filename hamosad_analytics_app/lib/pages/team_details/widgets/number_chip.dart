@@ -5,11 +5,11 @@ import '/widgets/text.dart';
 
 /// Expanded: flex 1
 class NumberChip extends StatelessWidget {
-  const NumberChip(this.title, {super.key, this.data = 0.0, this.isSmall = false});
+  const NumberChip(this.title, {super.key, this.data = 0.0, this.small = false});
 
   final String title;
   final double data;
-  final bool isSmall;
+  final bool small;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class NumberChip extends StatelessWidget {
         children: [
           Expanded(
             flex: 5,
-            child: isSmall ? dataSubtitleText(title) : dataTitleText(title),
+            child: small ? dataSubtitleText(title) : dataTitleText(title),
           ),
           const VerticalDivider(),
           Expanded(
