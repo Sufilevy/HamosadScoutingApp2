@@ -5,7 +5,7 @@ import '/widgets/paddings.dart';
 
 class AnalyticsChip extends StatelessWidget {
   const AnalyticsChip({super.key, this.label, this.avatar, this.children, this.height = 54.0})
-      : assert(label != null || children != null);
+      : assert((label != null) ^ (children != null));
 
   final Widget? label, avatar;
   final List<Widget>? children;
@@ -13,20 +13,17 @@ class AnalyticsChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return padSymmetric(
-      horizontal: 8.0,
-      Chip(
-        label: SizedBox(
-          height: height * AnalyticsTheme.appSizeRatio,
-          width: double.infinity,
-          child: (label != null)
-              ? Row(children: [label!.padSymmetric(horizontal: 12.0)])
-              : Row(children: children!),
-        ),
-        avatar: avatar,
-        labelPadding: EdgeInsets.zero,
-        padding: EdgeInsets.zero,
+    return Chip(
+      label: SizedBox(
+        height: height * AnalyticsTheme.appSizeRatio,
+        width: double.infinity,
+        child: (label != null)
+            ? Row(children: [label!.padSymmetric(horizontal: 6.0)])
+            : Row(children: children!),
       ),
+      avatar: avatar,
+      labelPadding: EdgeInsets.zero,
+      padding: EdgeInsets.zero,
     );
   }
 }

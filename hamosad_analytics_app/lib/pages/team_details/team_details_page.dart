@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hamosad_analytics_app/pages/team_details/widgets/number_chip.dart';
 
 import '/services/database/database.dart';
 import '/widgets/loading_screen.dart';
@@ -8,6 +7,8 @@ import '/widgets/paddings.dart';
 import '/widgets/scaffold/app_bar.dart';
 import '/widgets/scaffold/drawer.dart';
 import '/widgets/text.dart';
+import 'widgets/chip_row.dart';
+import 'widgets/number_chip.dart';
 import 'widgets/team_info_chip.dart';
 
 class TeamDetailsPage extends ConsumerWidget {
@@ -23,20 +24,28 @@ class TeamDetailsPage extends ConsumerWidget {
       body: padSymmetric(
         horizontal: 12.0,
         vertical: 12.0,
-        Column(
+        const Column(
           children: [
-            const Row(
+            ChipRow(
               children: [
                 TeamInfoChip('Steampunk', icon: Icons.people_rounded),
                 TeamInfoChip('Binyamina', icon: Icons.location_city_rounded),
               ],
-            ).padBottom(10.0),
-            const Row(
+            ),
+            ChipRow(
               children: [
                 NumberChip('Average Score', data: 64.15),
                 NumberChip('Average RP', data: 2.3),
               ],
-            ).padBottom(10.0),
+            ),
+            ChipRow(
+              smallChips: false,
+              children: [
+                NumberChip('Top Row', data: 12.3, small: true),
+                NumberChip('Middle Row', data: 42.3, small: true),
+                NumberChip('Bottom Row', data: 5.13, small: true),
+              ],
+            ),
           ],
         ),
       ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '/widgets/data/analytics_chip.dart';
+import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 
-/// Expanded: flex 1
 class NumberChip extends StatelessWidget {
   const NumberChip(this.title, {super.key, this.data = 0.0, this.small = false});
 
@@ -13,21 +13,24 @@ class NumberChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 1,
-      child: AnalyticsChip(
-        children: [
-          Expanded(
-            flex: 5,
-            child: small ? dataSubtitleText(title) : dataTitleText(title),
+    return AnalyticsChip(
+      children: [
+        Expanded(
+          flex: small ? 20 : 5,
+          child: padSymmetric(
+            horizontal: 8.0,
+            small ? dataSubtitleText(title) : dataTitleText(title),
           ),
-          const VerticalDivider(),
-          Expanded(
-            flex: 2,
-            child: dataBodyText(_dataAsString),
+        ),
+        const VerticalDivider(),
+        Expanded(
+          flex: small ? 11 : 2,
+          child: padSymmetric(
+            horizontal: 8.0,
+            dataBodyText(_dataAsString),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
