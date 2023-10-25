@@ -78,12 +78,15 @@ class DrawerHeader extends StatelessWidget {
   Widget _buildMenuButton(BuildContext context) {
     return padRight(
       16.0 * AnalyticsTheme.appSizeRatio,
-      IconButton(
-        iconSize: 26.0 * AnalyticsTheme.appSizeRatio,
-        icon: const FaIcon(
-          FontAwesomeIcons.barsStaggered,
+      Transform.rotate(
+        angle: math.pi / 2,
+        child: IconButton(
+          iconSize: 26.0 * AnalyticsTheme.appSizeRatio,
+          icon: const FaIcon(
+            FontAwesomeIcons.barsStaggered,
+          ),
+          onPressed: Scaffold.of(context).closeDrawer,
         ),
-        onPressed: Scaffold.of(context).closeDrawer,
       ),
     );
   }
