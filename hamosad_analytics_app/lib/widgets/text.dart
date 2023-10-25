@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 
 import '/theme.dart';
 
-Widget navigationText(dynamic data) => FittedBox(
+Widget navigationText(dynamic data, {TextAlign textAlign = TextAlign.center}) => FittedBox(
       fit: BoxFit.scaleDown,
       child: Text(
         data.toString(),
         style: AnalyticsTheme.navigationStyle,
+        textAlign: textAlign,
       ),
     );
 
-Widget navigationTitleText(dynamic data) => FittedBox(
+Widget navigationTitleText(dynamic data, {TextAlign textAlign = TextAlign.center}) => FittedBox(
       fit: BoxFit.scaleDown,
       child: Text(
         data.toString(),
         style: AnalyticsTheme.navigationTitleStyle,
+        textAlign: textAlign,
       ),
     );
 

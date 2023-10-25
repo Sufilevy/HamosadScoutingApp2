@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hamosad_analytics_app/theme.dart';
 
+import '/pages/team_details/widgets/section_title.dart';
 import '/services/database/database.dart';
 import '/widgets/loading_screen.dart';
 import '/widgets/paddings.dart';
@@ -18,28 +20,44 @@ class TeamDetailsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final teamInfo = TeamInfo.fromNumber(teamNumber);
+
     return Scaffold(
-      appBar: AnalyticsAppBar(title: 'Team $teamNumber'),
+      appBar: AnalyticsAppBar(
+        title: 'Team $teamNumber',
+        titleAvatar: _teamColorAvatar(teamInfo.color),
+      ),
       drawer: const AnalyticsDrawer(),
       body: padSymmetric(
         horizontal: 12.0,
         vertical: 12.0,
-        const Column(
+        Column(
           children: [
             ChipRow(
               children: [
-                TeamInfoChip('Steampunk', icon: Icons.people_rounded),
-                TeamInfoChip('Binyamina', icon: Icons.location_city_rounded),
+                TeamInfoChip(teamInfo.name, icon: Icons.people_rounded),
+                TeamInfoChip(teamInfo.location, icon: Icons.location_city_rounded),
               ],
             ),
-            ChipRow(
+            const SectionDivider(),
+            const ChipRow(
               children: [
                 NumberChip('Average Score', data: 64.15),
                 NumberChip('Average RP', data: 2.3),
               ],
             ),
-            ChipRow(
-              smallChips: false,
+            const SectionTitle(icon: Icons.code_rounded, title: 'Auto'),
+            const ChipRow(
+              smallChips: true,
+              children: [
+                NumberChip('Top Row', data: 12.3, small: true),
+                NumberChip('Middle Row', data: 42.3, small: true),
+                NumberChip('Bottom Row', data: 5.13, small: true),
+              ],
+            ),
+            const SectionTitle(icon: Icons.person_rounded, title: 'Teleop'),
+            const ChipRow(
+              smallChips: true,
               children: [
                 NumberChip('Top Row', data: 12.3, small: true),
                 NumberChip('Middle Row', data: 42.3, small: true),
@@ -47,6 +65,21 @@ class TeamDetailsPage extends ConsumerWidget {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _teamColorAvatar(Color color) {
+    return pad(
+      right: 10.0,
+      top: 5.0,
+      Container(
+        width: 16.0 * AnalyticsTheme.appSizeRatio,
+        height: 16.0 * AnalyticsTheme.appSizeRatio,
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.circle,
         ),
       ),
     );

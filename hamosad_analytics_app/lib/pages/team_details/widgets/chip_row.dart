@@ -24,15 +24,17 @@ class ChipRow extends StatelessWidget {
       Row(
         children: children
             .mapIndexed(
-              (index, child) => Expanded(
-                flex: flexes?[index] ?? 1,
-                child: _padChild(index, child),
-              ),
+              (index, child) => _expandChild(index, _padChild(index, child)),
             )
             .toList(),
       ),
     );
   }
+
+  Widget _expandChild(int index, Widget child) => Expanded(
+        flex: flexes?.elementAtOrNull(index) ?? 1,
+        child: child,
+      );
 
   Widget _padChild(int index, Widget child) =>
       (index == children.lastIndex) ? child : child.padRight(padding ?? _chipPadding);
