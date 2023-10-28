@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/theme.dart';
-import '/widgets/paddings.dart';
+import '/widgets/padding.dart';
 import '/widgets/text.dart';
 
 class SectionTitle extends StatelessWidget {

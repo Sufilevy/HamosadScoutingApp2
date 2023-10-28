@@ -58,14 +58,16 @@ class Rate {
 }
 
 extension DoubleRateToPercent on double {
-  double toPercent() {
+  String toPercent() {
     if (isNaN) {
-      return 0.0;
+      return '0.0%';
     }
     if (isInfinite) {
-      return 100.0;
+      return '100.0%';
     }
 
-    return this * 100.0;
+    final percent = this * 100.0;
+    final string = percent.toStringAsPrecision(3);
+    return '$string%';
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '/widgets/data/analytics_chip.dart';
-import '/widgets/paddings.dart';
+import '/widgets/analytics/analytics_chip.dart';
+import '/widgets/padding.dart';
 import '/widgets/text.dart';
 
 class NumberChip extends StatelessWidget {

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hamosad_analytics_app/theme.dart';
 
-import '/pages/team_details/widgets/section_title.dart';
+import '/models/team/stats/duration_models.dart';
 import '/services/database/database.dart';
+import '/theme.dart';
 import '/widgets/loading_screen.dart';
-import '/widgets/paddings.dart';
+import '/widgets/padding.dart';
 import '/widgets/scaffold/app_bar.dart';
 import '/widgets/scaffold/drawer.dart';
 import '/widgets/text.dart';
 import 'widgets/chip_row.dart';
+import 'widgets/durations_chip.dart';
 import 'widgets/number_chip.dart';
+import 'widgets/section_title.dart';
 import 'widgets/team_info_chip.dart';
 
 class TeamDetailsPage extends ConsumerWidget {
@@ -21,6 +23,14 @@ class TeamDetailsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final teamInfo = TeamInfo.fromNumber(teamNumber);
+
+    final durations = ActionDurationsStat.defaults();
+    durations.updateWithDuration(ActionDuration.zeroToTwo);
+    durations.updateWithDuration(ActionDuration.twoToFive);
+    durations.updateWithDuration(ActionDuration.twoToFive);
+    durations.updateWithDuration(ActionDuration.twoToFive);
+    durations.updateWithDuration(ActionDuration.fivePlus);
+    durations.updateWithDuration(ActionDuration.fivePlus);
 
     return Scaffold(
       appBar: AnalyticsAppBar(
@@ -64,6 +74,14 @@ class TeamDetailsPage extends ConsumerWidget {
                 NumberChip('Bottom Row', data: 5.13, small: true),
               ],
             ),
+            ChipRow(
+              children: [
+                DurationsChip(
+                  title: 'Dropoffs',
+                  durations: durations,
+                ),
+              ],
+            )
           ],
         ),
       ),

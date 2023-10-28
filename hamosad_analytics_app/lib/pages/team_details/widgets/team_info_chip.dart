@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/theme.dart';
-import '/widgets/data/analytics_chip.dart';
+import '/widgets/analytics/analytics_chip.dart';
 import '/widgets/text.dart';
 
 class TeamInfoChip extends StatelessWidget {

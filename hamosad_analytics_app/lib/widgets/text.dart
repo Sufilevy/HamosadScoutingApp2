@@ -6,8 +6,8 @@ Widget navigationText(dynamic data, {TextAlign textAlign = TextAlign.center}) =>
       fit: BoxFit.scaleDown,
       child: Text(
         data.toString(),
-        style: AnalyticsTheme.navigationStyle,
         textAlign: textAlign,
+        style: AnalyticsTheme.navigationStyle,
       ),
     );
 
@@ -15,8 +15,8 @@ Widget navigationTitleText(dynamic data, {TextAlign textAlign = TextAlign.center
       fit: BoxFit.scaleDown,
       child: Text(
         data.toString(),
-        style: AnalyticsTheme.navigationTitleStyle,
         textAlign: textAlign,
+        style: AnalyticsTheme.navigationTitleStyle,
       ),
     );
 
@@ -24,17 +24,22 @@ Widget dataTitleText(dynamic data, {TextAlign textAlign = TextAlign.center}) => 
       fit: BoxFit.scaleDown,
       child: Text(
         data.toString(),
-        style: AnalyticsTheme.dataTitleStyle,
         textAlign: textAlign,
+        style: AnalyticsTheme.dataTitleStyle,
       ),
     );
 
-Widget dataSubtitleText(dynamic data, {TextAlign textAlign = TextAlign.center}) => FittedBox(
+Widget dataSubtitleText(
+  dynamic data, {
+  TextAlign textAlign = TextAlign.center,
+  Color color = AnalyticsTheme.foreground1,
+}) =>
+    FittedBox(
       fit: BoxFit.scaleDown,
       child: Text(
         data.toString(),
-        style: AnalyticsTheme.dataSubtitleStyle,
         textAlign: textAlign,
+        style: AnalyticsTheme.dataSubtitleStyle.copyWith(color: color),
       ),
     );
 
@@ -42,8 +47,8 @@ Widget dataBodyText(dynamic data, {TextAlign textAlign = TextAlign.center}) => F
       fit: BoxFit.scaleDown,
       child: Text(
         data.toString(),
-        style: AnalyticsTheme.dataBodyStyle,
         textAlign: textAlign,
+        style: AnalyticsTheme.dataBodyStyle,
       ),
     );
 
