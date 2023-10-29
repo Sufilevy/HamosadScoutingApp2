@@ -10,10 +10,10 @@ import '/widgets/scaffold/app_bar.dart';
 import '/widgets/scaffold/drawer.dart';
 import '/widgets/text.dart';
 import 'widgets/chip_row.dart';
-import 'widgets/durations_chip.dart';
-import 'widgets/number_chip.dart';
+import 'widgets/chips/durations_chip.dart';
+import 'widgets/chips/number_chip.dart';
+import 'widgets/chips/team_info_chip.dart';
 import 'widgets/section_title.dart';
-import 'widgets/team_info_chip.dart';
 
 class TeamDetailsPage extends ConsumerWidget {
   const TeamDetailsPage(this.teamNumber, {super.key});
