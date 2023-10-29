@@ -4,10 +4,10 @@ import '/theme.dart';
 import '/widgets/padding.dart';
 
 class AnalyticsChip extends StatelessWidget {
-  const AnalyticsChip({super.key, this.label, this.avatar, this.children, this.height = 54.0})
-      : assert((label != null) ^ (children != null));
+  const AnalyticsChip({super.key, this.child, this.avatar, this.children, this.height = 54.0})
+      : assert((child != null) ^ (children != null));
 
-  final Widget? label, avatar;
+  final Widget? child, avatar;
   final List<Widget>? children;
   final double height;
 
@@ -17,8 +17,8 @@ class AnalyticsChip extends StatelessWidget {
       label: SizedBox(
         height: height * AnalyticsTheme.appSizeRatio,
         width: double.infinity,
-        child: (label != null)
-            ? Row(children: [label!.padSymmetric(horizontal: 6.0)])
+        child: (child != null)
+            ? Row(children: [child!.padSymmetric(horizontal: 6.0)])
             : Row(children: children!),
       ),
       avatar: avatar,

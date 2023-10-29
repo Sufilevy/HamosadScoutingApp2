@@ -13,7 +13,7 @@ class TeamInfoChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnalyticsChip(
-      label: dataTitleText(
+      child: dataTitleText(
         info,
         textAlign: TextAlign.left,
       ),

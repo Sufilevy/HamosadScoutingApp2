@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hamosad_analytics_app/pages/team_details/widgets/chips/four_rates_chip.dart';
 
 import '/models/team/stats/duration_models.dart';
 import '/services/database/database.dart';
@@ -81,7 +82,13 @@ class TeamDetailsPage extends ConsumerWidget {
                   durations: durations,
                 ),
               ],
-            )
+            ),
+            ChipRow(children: [
+              FourRatesChip(
+                titles: const ['Not Attempt', 'Failed', 'Docked', 'Engaged'],
+                rates: const [0.3, 0.25, 0.1, 0.35],
+              ),
+            ])
           ],
         ),
       ),
