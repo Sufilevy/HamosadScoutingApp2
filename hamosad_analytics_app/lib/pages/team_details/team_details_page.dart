@@ -44,16 +44,16 @@ class TeamDetailsPage extends ConsumerWidget {
         horizontal: 12.0,
         vertical: 12.0,
         Column(
-          children: [
+          children: <Widget>[
             ChipRow(
-              children: [
+              children: <Widget>[
                 TeamInfoChip(teamInfo.name, icon: Icons.people_rounded),
                 TeamInfoChip(teamInfo.location, icon: Icons.location_city_rounded),
               ],
             ),
             const SectionDivider(),
             const ChipRow(
-              children: [
+              children: <Widget>[
                 NumberChip('Average Score', data: 64.15),
                 NumberChip('Average RP', data: 2.3),
               ],
@@ -61,7 +61,7 @@ class TeamDetailsPage extends ConsumerWidget {
             const SectionTitle(icon: Icons.code_rounded, title: 'Auto'),
             const ChipRow(
               smallChips: true,
-              children: [
+              children: <Widget>[
                 NumberChip('Top Row', data: 12.3, small: true),
                 NumberChip('Middle Row', data: 42.3, small: true),
                 NumberChip('Bottom Row', data: 5.13, small: true),
@@ -70,14 +70,14 @@ class TeamDetailsPage extends ConsumerWidget {
             const SectionTitle(icon: Icons.person_rounded, title: 'Teleop'),
             const ChipRow(
               smallChips: true,
-              children: [
+              children: <Widget>[
                 NumberChip('Top Row', data: 12.3, small: true),
                 NumberChip('Middle Row', data: 42.3, small: true),
                 NumberChip('Bottom Row', data: 5.13, small: true),
               ],
             ),
             ChipRow(
-              children: [
+              children: <Widget>[
                 DurationsChip(
                   title: 'Dropoffs',
                   durations: durations,
@@ -85,7 +85,7 @@ class TeamDetailsPage extends ConsumerWidget {
               ],
             ),
             ChipRow(
-              children: [
+              children: <Widget>[
                 FourRatesChip(
                   titles: const ['Not Attempt', 'Failed', 'Docked', 'Engaged'],
                   rates: const [0.3, 0.25, 0.1, 0.35],
@@ -94,7 +94,7 @@ class TeamDetailsPage extends ConsumerWidget {
             ),
             const ChipRow(
               flexes: [2, 1],
-              children: [
+              children: <Widget>[
                 SuccessRateChip(
                   title: 'Docked',
                   successRate: 0.7,

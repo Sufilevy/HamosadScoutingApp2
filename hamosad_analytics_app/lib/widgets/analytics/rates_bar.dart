@@ -43,7 +43,7 @@ class RatesBar extends StatelessWidget {
     return SizedBox(
       height: 8.0 * AnalyticsTheme.appSizeRatio,
       child: Row(
-        children: [
+        children: <Widget>[
           Expanded(
             child: Container(
               height: 3.0,

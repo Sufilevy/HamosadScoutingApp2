@@ -15,7 +15,7 @@ class NumberChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnalyticsChip(
-      children: [
+      children: <Widget>[
         Expanded(
           flex: small ? 20 : 5,
           child: padSymmetric(

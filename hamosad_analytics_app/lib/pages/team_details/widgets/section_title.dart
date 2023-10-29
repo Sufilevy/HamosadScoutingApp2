@@ -15,10 +15,10 @@ class SectionTitle extends StatelessWidget {
     return padTop(
       10.0,
       Column(
-        children: [
+        children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: <Widget>[
               Icon(icon, size: 28.0 * AnalyticsTheme.appSizeRatio),
               navigationTitleText(title).padLeft(8.0),
             ],

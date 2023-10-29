@@ -38,7 +38,7 @@ class DrawerHeader extends StatelessWidget {
       decoration: _headerDecoration,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+        children: <Widget>[
           _buildLogo(),
           _buildMenuButton(context),
         ],
@@ -60,7 +60,7 @@ class DrawerHeader extends StatelessWidget {
 
   Widget _buildLogo() {
     return Row(
-      children: [
+      children: <Widget>[
         pad(
           left: 16.0,
           right: 8.0,

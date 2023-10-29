@@ -21,11 +21,11 @@ class FourRatesChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnalyticsChip(
       height: 80.0,
-      children: [
+      children: <Widget>[
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: <Widget>[
               _ratesAndTitles().padBottom(2.0),
               RatesBar(rates: rates).padBottom(2.0),
             ],
@@ -50,7 +50,7 @@ class FourRatesChip extends StatelessWidget {
 
   Widget _rateAndTitle(int index) {
     return Column(
-      children: [
+      children: <Widget>[
         dataSubtitleText(titles[index]),
         dataSubtitleText(
           rates[index].toPercent(),

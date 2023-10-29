@@ -31,7 +31,7 @@ class AnalyticsAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+      children: <Widget>[
         titleAvatar!,
         navigationTitleText(title),
       ],
