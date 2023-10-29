@@ -31,13 +31,16 @@ class ChipRow extends StatelessWidget {
     );
   }
 
-  Widget _expandChild(int index, Widget child) => Expanded(
-        flex: flexes?.elementAtOrNull(index) ?? 1,
-        child: child,
-      );
+  Widget _expandChild(int index, Widget child) {
+    return Expanded(
+      flex: flexes?.elementAtOrNull(index) ?? 1,
+      child: child,
+    );
+  }
 
-  Widget _padChild(int index, Widget child) =>
-      (index == children.lastIndex) ? child : child.padRight(padding ?? _chipPadding);
+  Widget _padChild(int index, Widget child) {
+    return (index == children.lastIndex) ? child : child.padRight(padding ?? _chipPadding);
+  }
 
   double get _chipPadding => smallChips ? 5 : 8;
 }

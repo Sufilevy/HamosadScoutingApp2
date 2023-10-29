@@ -46,17 +46,19 @@ class DrawerHeader extends StatelessWidget {
     );
   }
 
-  BoxDecoration get _headerDecoration => const BoxDecoration(
-        color: AnalyticsTheme.darkBackground,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black45,
-            blurRadius: 4,
-            spreadRadius: 2,
-            offset: Offset.zero,
-          ),
-        ],
-      );
+  BoxDecoration get _headerDecoration {
+    return const BoxDecoration(
+      color: AnalyticsTheme.darkBackground,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black45,
+          blurRadius: 4,
+          spreadRadius: 2,
+          offset: Offset.zero,
+        ),
+      ],
+    );
+  }
 
   Widget _buildLogo() {
     return Row(
