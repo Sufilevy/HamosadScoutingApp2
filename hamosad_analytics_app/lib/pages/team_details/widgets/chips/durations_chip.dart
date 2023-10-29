@@ -23,9 +23,10 @@ class DurationsChip extends StatelessWidget {
         Expanded(
           flex: 2,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _durationsTitles().padTop(8.0),
-              _durationsBar().padTop(0.0),
+              _durationsTitles().padBottom(2.0),
+              _durationsBar().padBottom(2.0),
             ],
           ),
         ),

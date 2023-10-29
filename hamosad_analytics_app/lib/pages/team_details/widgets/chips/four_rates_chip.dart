@@ -25,8 +25,8 @@ class FourRatesChip extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _ratesAndTitles(),
-              RatesBar(rates: rates).padTop(2.0),
+              _ratesAndTitles().padBottom(2.0),
+              RatesBar(rates: rates).padBottom(2.0),
             ],
           ),
         ),
