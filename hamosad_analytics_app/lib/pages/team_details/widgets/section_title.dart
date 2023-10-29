@@ -13,17 +13,17 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return padTop(
-      10.0,
+      10,
       Column(
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(icon, size: 28.0 * AnalyticsTheme.appSizeRatio),
-              navigationTitleText(title).padLeft(8.0),
+              Icon(icon, size: 28 * AnalyticsTheme.appSizeRatio),
+              navigationTitleText(title).padLeft(8),
             ],
           ),
-          const SectionDivider(bottomPadding: 10.0),
+          const SectionDivider(bottomPadding: 10),
         ],
       ),
     );
@@ -31,20 +31,20 @@ class SectionTitle extends StatelessWidget {
 }
 
 class SectionDivider extends StatelessWidget {
-  const SectionDivider({super.key, this.bottomPadding = 15.0});
+  const SectionDivider({super.key, this.bottomPadding = 15});
 
   final double bottomPadding;
 
   @override
   Widget build(BuildContext context) {
     return pad(
-      top: 5.0,
+      top: 5,
       bottom: bottomPadding,
       _addShadow(
         const Divider(
           thickness: 2.5,
-          indent: 0.0,
-          endIndent: 0.0,
+          indent: 0,
+          endIndent: 0,
         ),
       ),
     );

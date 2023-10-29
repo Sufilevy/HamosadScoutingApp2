@@ -6,7 +6,7 @@ import '/widgets/text.dart';
 
 /// Takes 1/3 of a [ChipRow] if [small] is true, otherwise takes 1/2.
 class NumberChip extends StatelessWidget {
-  const NumberChip(this.title, {super.key, this.data = 0.0, this.small = false});
+  const NumberChip(this.title, {super.key, this.data = 0, this.small = false});
 
   final String title;
   final double data;
@@ -19,7 +19,7 @@ class NumberChip extends StatelessWidget {
         Expanded(
           flex: small ? 20 : 5,
           child: padSymmetric(
-            horizontal: 8.0,
+            horizontal: 8,
             small ? dataSubtitleText(title) : dataTitleText(title),
           ),
         ),
@@ -27,7 +27,7 @@ class NumberChip extends StatelessWidget {
         Expanded(
           flex: small ? 11 : 2,
           child: padSymmetric(
-            horizontal: 8.0,
+            horizontal: 8,
             dataBodyText(_dataAsString),
           ),
         ),

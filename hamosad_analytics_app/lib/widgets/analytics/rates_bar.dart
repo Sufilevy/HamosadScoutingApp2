@@ -14,16 +14,16 @@ class RatesBar extends StatelessWidget {
   final List<double> rates;
   final Color secondaryColor;
 
-  bool get hasOnlyOneRate => rates.any((rate) => rate == 1.0);
+  bool get hasOnlyOneRate => rates.any((rate) => rate == 1);
 
   @override
   Widget build(BuildContext context) {
     return padSymmetric(
-      horizontal: 12.0,
+      horizontal: 12,
       Row(
         children: rates.mapIndexed(
           (index, rate) {
-            if (rate == 0.0) {
+            if (rate == 0) {
               return const SizedBox.shrink();
             }
 
@@ -37,16 +37,16 @@ class RatesBar extends StatelessWidget {
     );
   }
 
-  int _rateToFlex(double rate) => (rate * 10.0).toInt();
+  int _rateToFlex(double rate) => (rate * 10).toInt();
 
   Widget _bar(int index) {
     return SizedBox(
-      height: 8.0 * AnalyticsTheme.appSizeRatio,
+      height: 8 * AnalyticsTheme.appSizeRatio,
       child: Row(
         children: <Widget>[
           Expanded(
             child: Container(
-              height: 3.0,
+              height: 3,
               decoration: BoxDecoration(
                 color: index.isEven ? AnalyticsTheme.primary : secondaryColor,
                 borderRadius: _barBorderRadius(index),
@@ -60,14 +60,14 @@ class RatesBar extends StatelessWidget {
   }
 
   BorderRadius _barBorderRadius(int index) {
-    const rounding = Radius.circular(2.0);
-    var borderRadius = BorderRadius.circular(0.0);
+    const rounding = Radius.circular(2);
+    var borderRadius = BorderRadius.circular(0);
 
-    if (index == 0 || rates[index - 1] == 0.0) {
+    if (index == 0 || rates[index - 1] == 0) {
       borderRadius = borderRadius.copyWith(topLeft: rounding, bottomLeft: rounding);
     }
 
-    if (index == rates.length - 1 || rates[index + 1] == 0.0) {
+    if (index == rates.length - 1 || rates[index + 1] == 0) {
       borderRadius = borderRadius.copyWith(topRight: rounding, bottomRight: rounding);
     }
 
@@ -76,8 +76,8 @@ class RatesBar extends StatelessWidget {
 
   Widget _separator() {
     return Container(
-      height: 8.0 * AnalyticsTheme.appSizeRatio,
-      width: 2.0,
+      height: 8 * AnalyticsTheme.appSizeRatio,
+      width: 2,
       decoration: const BoxDecoration(
         color: AnalyticsTheme.foreground2,
       ),

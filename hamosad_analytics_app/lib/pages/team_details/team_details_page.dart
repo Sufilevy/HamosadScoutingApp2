@@ -41,8 +41,8 @@ class TeamDetailsPage extends ConsumerWidget {
       ),
       drawer: const AnalyticsDrawer(),
       body: padSymmetric(
-        horizontal: 12.0,
-        vertical: 12.0,
+        horizontal: 12,
+        vertical: 12,
         Column(
           children: <Widget>[
             ChipRow(
@@ -111,11 +111,11 @@ class TeamDetailsPage extends ConsumerWidget {
 
   Widget _teamColorAvatar(Color color) {
     return pad(
-      right: 10.0,
-      top: 5.0,
+      right: 10,
+      top: 5,
       Container(
-        width: 16.0 * AnalyticsTheme.appSizeRatio,
-        height: 16.0 * AnalyticsTheme.appSizeRatio,
+        width: 16 * AnalyticsTheme.appSizeRatio,
+        height: 16 * AnalyticsTheme.appSizeRatio,
         decoration: BoxDecoration(
           color: color,
           shape: BoxShape.circle,

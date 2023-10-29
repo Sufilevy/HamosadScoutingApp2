@@ -48,9 +48,9 @@ class ActionDurationsStat {
 
   /// Uses default values for all fields.
   ActionDurationsStat.defaults()
-      : zeroToTwoRate = 0.0,
-        twoToFiveRate = 0.0,
-        fivePlusRate = 0.0,
+      : zeroToTwoRate = 0,
+        twoToFiveRate = 0,
+        fivePlusRate = 0,
         _zeroToTwoCount = 0,
         _twoToFiveCount = 0,
         _fivePlusCount = 0;

@@ -30,11 +30,11 @@ class SuccessRateChip extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _rates().padBottom(2.0),
+              _rates().padBottom(2),
               RatesBar(
                 rates: [successRate, failRate],
                 secondaryColor: AnalyticsTheme.error,
-              ).padBottom(2.0),
+              ).padBottom(2),
             ],
           ),
         ),
@@ -50,7 +50,7 @@ class SuccessRateChip extends StatelessWidget {
           successRate.toPercent(),
           color: AnalyticsTheme.primary,
         ),
-        const DotDivider().padSymmetric(horizontal: 8.0),
+        const DotDivider().padSymmetric(horizontal: 8),
         dataSubtitleText(
           failRate.toPercent(),
           color: AnalyticsTheme.error,

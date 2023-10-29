@@ -26,8 +26,8 @@ class DurationsChip extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _durationsTitles().padBottom(2.0),
-              _durationsBar().padBottom(2.0),
+              _durationsTitles().padBottom(2),
+              _durationsBar().padBottom(2),
             ],
           ),
         ),
@@ -39,8 +39,8 @@ class DurationsChip extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        _durationTitle('0-2', durations.zeroToTwoRate).padRight(16.0),
-        _durationTitle('2-5', durations.twoToFiveRate, secondaryColor: true).padRight(16.0),
+        _durationTitle('0-2', durations.zeroToTwoRate).padRight(16),
+        _durationTitle('2-5', durations.twoToFiveRate, secondaryColor: true).padRight(16),
         _durationTitle('5+', durations.fivePlusRate),
       ],
     );
@@ -50,7 +50,7 @@ class DurationsChip extends StatelessWidget {
     return Row(
       children: <Widget>[
         dataSubtitleText(duration),
-        const DotDivider().padSymmetric(horizontal: 6.0),
+        const DotDivider().padSymmetric(horizontal: 6),
         dataSubtitleText(
           rate.toPercent(),
           color: secondaryColor ? AnalyticsTheme.secondary : AnalyticsTheme.primary,

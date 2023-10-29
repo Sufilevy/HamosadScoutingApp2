@@ -25,7 +25,7 @@ class AnalyticsDrawer extends StatelessWidget {
     );
   }
 
-  double _drawerWidth(double screenWidth) => math.max(screenWidth / 2.0, 300.0);
+  double _drawerWidth(double screenWidth) => math.max(screenWidth / 2, 300);
 }
 
 class DrawerHeader extends StatelessWidget {
@@ -34,7 +34,7 @@ class DrawerHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100.0 * AnalyticsTheme.appSizeRatio,
+      height: 100 * AnalyticsTheme.appSizeRatio,
       decoration: _headerDecoration,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,8 +51,8 @@ class DrawerHeader extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.black45,
-            blurRadius: 4.0,
-            spreadRadius: 2.0,
+            blurRadius: 4,
+            spreadRadius: 2,
             offset: Offset.zero,
           ),
         ],
@@ -62,12 +62,12 @@ class DrawerHeader extends StatelessWidget {
     return Row(
       children: <Widget>[
         pad(
-          left: 16.0,
-          right: 8.0,
+          left: 16,
+          right: 8,
           SvgPicture.asset(
             'assets/svg/logo.svg',
-            width: 50.0 * AnalyticsTheme.appSizeRatioSquared,
-            height: 50.0 * AnalyticsTheme.appSizeRatioSquared,
+            width: 50 * AnalyticsTheme.appSizeRatioSquared,
+            height: 50 * AnalyticsTheme.appSizeRatioSquared,
           ),
         ),
         logoText('Hamosad\n Analytics'),
@@ -77,11 +77,11 @@ class DrawerHeader extends StatelessWidget {
 
   Widget _buildMenuButton(BuildContext context) {
     return padRight(
-      16.0 * AnalyticsTheme.appSizeRatio,
+      16 * AnalyticsTheme.appSizeRatio,
       Transform.rotate(
         angle: math.pi / 2,
         child: IconButton(
-          iconSize: 26.0 * AnalyticsTheme.appSizeRatio,
+          iconSize: 26 * AnalyticsTheme.appSizeRatio,
           icon: const FaIcon(
             FontAwesomeIcons.barsStaggered,
           ),

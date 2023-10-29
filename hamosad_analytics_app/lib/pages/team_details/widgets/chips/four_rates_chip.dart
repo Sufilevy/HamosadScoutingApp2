@@ -20,14 +20,14 @@ class FourRatesChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnalyticsChip(
-      height: 80.0,
+      height: 80,
       children: <Widget>[
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _ratesAndTitles().padBottom(2.0),
-              RatesBar(rates: rates).padBottom(2.0),
+              _ratesAndTitles().padBottom(2),
+              RatesBar(rates: rates).padBottom(2),
             ],
           ),
         ),
