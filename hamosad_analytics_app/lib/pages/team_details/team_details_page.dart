@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/models/team/stats/duration_models.dart';
-import '/services/database/database.dart';
+import '/services/database/analytics_database.dart';
+import '/services/providers/team_provider.dart';
 import '/theme.dart';
 import '/widgets/loading_screen.dart';
 import '/widgets/padding.dart';
