@@ -4,6 +4,7 @@ import '/widgets/analytics/analytics_chip.dart';
 import '/widgets/padding.dart';
 import '/widgets/text.dart';
 
+/// Takes 1/3 of a [ChipRow] if [small] is true, otherwise takes 1/2.
 class NumberChip extends StatelessWidget {
   const NumberChip(this.title, {super.key, this.data = 0.0, this.small = false});
 

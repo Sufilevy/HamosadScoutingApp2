@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hamosad_analytics_app/pages/team_details/widgets/chips/success_rate_chip.dart';
 
 import '/models/team/stats/duration_models.dart';
 import '/services/database/database.dart';
@@ -14,6 +13,7 @@ import 'widgets/chip_row.dart';
 import 'widgets/chips/durations_chip.dart';
 import 'widgets/chips/four_rates_chip.dart';
 import 'widgets/chips/number_chip.dart';
+import 'widgets/chips/success_rate_chip.dart';
 import 'widgets/chips/team_info_chip.dart';
 import 'widgets/section_title.dart';
 

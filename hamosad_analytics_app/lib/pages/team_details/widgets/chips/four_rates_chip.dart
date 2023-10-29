@@ -8,6 +8,7 @@ import '/widgets/analytics/rates_bar.dart';
 import '/widgets/padding.dart';
 import '/widgets/text.dart';
 
+/// Takes and entire [ChipRow].
 class FourRatesChip extends StatelessWidget {
   const FourRatesChip({super.key, required this.titles, required this.rates})
       : assert(titles.length == 4),

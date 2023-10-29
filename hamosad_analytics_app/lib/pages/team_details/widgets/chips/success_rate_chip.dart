@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_analytics_app/models/analytics.dart';
 
+import '/models/analytics.dart';
 import '/theme.dart';
 import '/widgets/analytics/analytics_chip.dart';
 import '/widgets/analytics/rates_bar.dart';
 import '/widgets/padding.dart';
 import '/widgets/text.dart';
 
+/// Takes 2/3 of a [ChipRow].
 class SuccessRateChip extends StatelessWidget {
   const SuccessRateChip({
     super.key,

@@ -8,6 +8,7 @@ import '/widgets/analytics/rates_bar.dart';
 import '/widgets/padding.dart';
 import '/widgets/text.dart';
 
+/// Takes an entire [ChipRow].
 class DurationsChip extends StatelessWidget {
   const DurationsChip({super.key, required this.title, required this.durations});
 
