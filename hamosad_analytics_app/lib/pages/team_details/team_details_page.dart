@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hamosad_analytics_app/pages/team_details/widgets/chips/four_rates_chip.dart';
+import 'package:hamosad_analytics_app/pages/team_details/widgets/chips/success_rate_chip.dart';
 
 import '/models/team/stats/duration_models.dart';
 import '/services/database/database.dart';
@@ -12,6 +12,7 @@ import '/widgets/scaffold/drawer.dart';
 import '/widgets/text.dart';
 import 'widgets/chip_row.dart';
 import 'widgets/chips/durations_chip.dart';
+import 'widgets/chips/four_rates_chip.dart';
 import 'widgets/chips/number_chip.dart';
 import 'widgets/chips/team_info_chip.dart';
 import 'widgets/section_title.dart';
@@ -83,12 +84,25 @@ class TeamDetailsPage extends ConsumerWidget {
                 ),
               ],
             ),
-            ChipRow(children: [
-              FourRatesChip(
-                titles: const ['Not Attempt', 'Failed', 'Docked', 'Engaged'],
-                rates: const [0.3, 0.25, 0.1, 0.35],
-              ),
-            ])
+            ChipRow(
+              children: [
+                FourRatesChip(
+                  titles: const ['Not Attempt', 'Failed', 'Docked', 'Engaged'],
+                  rates: const [0.3, 0.25, 0.1, 0.35],
+                ),
+              ],
+            ),
+            const ChipRow(
+              flexes: [2, 1],
+              children: [
+                SuccessRateChip(
+                  title: 'Docked',
+                  successRate: 0.7,
+                  failRate: 0.3,
+                ),
+                NumberChip('Bottom Row', data: 5.13, small: true),
+              ],
+            ),
           ],
         ),
       ),

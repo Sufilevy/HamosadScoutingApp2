@@ -5,9 +5,14 @@ import '/theme.dart';
 import '/widgets/padding.dart';
 
 class RatesBar extends StatelessWidget {
-  const RatesBar({super.key, required this.rates});
+  const RatesBar({
+    super.key,
+    required this.rates,
+    this.secondaryColor = AnalyticsTheme.secondary,
+  });
 
   final List<double> rates;
+  final Color secondaryColor;
 
   bool get hasOnlyOneRate => rates.any((rate) => rate == 1.0);
 
@@ -43,7 +48,7 @@ class RatesBar extends StatelessWidget {
             child: Container(
               height: 3.0,
               decoration: BoxDecoration(
-                color: index.isEven ? AnalyticsTheme.primary : AnalyticsTheme.secondary,
+                color: index.isEven ? AnalyticsTheme.primary : secondaryColor,
                 borderRadius: _barBorderRadius(index),
               ),
             ),

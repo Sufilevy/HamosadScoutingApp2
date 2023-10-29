@@ -25,7 +25,7 @@ class AnalyticsTheme {
   static const background2 = Color(0xFF29272F);
   static const background3 = Color(0xFF423F50);
   static const foreground1 = Color(0xFFFFFFFF);
-  static const foreground2 = Color(0xFFADADB1);
+  static const foreground2 = Color(0xFFA5A5A5);
   static const primary = Color(0xFF0DBF78);
   static const primaryVariant = Color(0xFF075F3C);
   static const secondary = Color(0xFF53B8B2);

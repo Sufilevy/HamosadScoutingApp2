@@ -38,9 +38,14 @@ class DotDivider extends StatelessWidget {
       height: 4.0,
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
-        color: AnalyticsTheme.background3,
+        color: AnalyticsTheme.foreground2,
         boxShadow: [
-          AnalyticsTheme.defaultShadow,
+          BoxShadow(
+            offset: Offset(1.0, 1.0),
+            color: Color.fromRGBO(0, 0, 0, 0.3),
+            blurRadius: 2.0,
+            spreadRadius: 1.0,
+          ),
         ],
       ),
     );
