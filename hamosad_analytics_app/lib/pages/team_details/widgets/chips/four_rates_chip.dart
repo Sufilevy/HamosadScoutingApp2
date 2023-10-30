@@ -20,14 +20,14 @@ class FourRatesChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnalyticsChip(
-      height: 80.0,
-      children: [
+      height: 80,
+      children: <Widget>[
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _ratesAndTitles().padBottom(2.0),
-              RatesBar(rates: rates).padBottom(2.0),
+            children: <Widget>[
+              _ratesAndTitles().padBottom(2),
+              RatesBar(rates: rates).padBottom(2),
             ],
           ),
         ),
@@ -50,7 +50,7 @@ class FourRatesChip extends StatelessWidget {
 
   Widget _rateAndTitle(int index) {
     return Column(
-      children: [
+      children: <Widget>[
         dataSubtitleText(titles[index]),
         dataSubtitleText(
           rates[index].toPercent(),

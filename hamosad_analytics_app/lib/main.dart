@@ -13,10 +13,8 @@ void main() async {
     return;
   }
 
-  // Run a loading screen app until the scouting app itself finishes initializing
   runApp(const LoadingScreen());
 
-  // Initialize Firebase and app database (create a temporary user and connect to database)
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 

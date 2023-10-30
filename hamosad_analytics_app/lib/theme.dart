@@ -14,7 +14,7 @@ class AnalyticsTheme {
 
   static void setAppSizeRatio(BuildContext context) {
     final screenHeight = getScreenSize(context).height;
-    appSizeRatio = screenHeight / 1000.0;
+    appSizeRatio = screenHeight / 1000;
     debug('Screen size: ${getScreenSize(context)} | App size ratio: $appSizeRatio');
   }
 
@@ -38,42 +38,42 @@ class AnalyticsTheme {
   static TextStyle get navigationStyle => TextStyle(
         fontFamily: 'Cairo',
         fontWeight: FontWeight.w600,
-        fontSize: 22.0 * appSizeRatio,
+        fontSize: 22 * appSizeRatio,
         color: foreground1,
       );
 
   static TextStyle get navigationTitleStyle => TextStyle(
         fontFamily: 'Cairo',
         fontWeight: FontWeight.bold,
-        fontSize: 25.0 * appSizeRatio,
+        fontSize: 25 * appSizeRatio,
         color: foreground1,
       );
 
   static TextStyle get dataTitleStyle => TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.w500,
-        fontSize: 20.0 * appSizeRatio,
+        fontSize: 20 * appSizeRatio,
         color: foreground1,
       );
 
   static TextStyle get dataSubtitleStyle => TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.w500,
-        fontSize: 18.0 * appSizeRatio,
+        fontSize: 18 * appSizeRatio,
         color: foreground1,
       );
 
   static TextStyle get dataBodyStyle => TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.w600,
-        fontSize: 22.0 * appSizeRatio,
+        fontSize: 22 * appSizeRatio,
         color: primary,
       );
 
   static TextStyle get logoTextStyle => TextStyle(
         fontFamily: 'Fira Code',
         fontWeight: FontWeight.w700,
-        fontSize: 24.0 * appSizeRatioSquared,
+        fontSize: 24 * appSizeRatioSquared,
         color: primary,
         height: 1.1,
       );
@@ -98,24 +98,24 @@ class AnalyticsTheme {
     appBarTheme: const AppBarTheme(
       backgroundColor: darkBackground,
       surfaceTintColor: Colors.transparent,
-      elevation: 4.0,
+      elevation: 4,
       shadowColor: Colors.black,
     ),
     chipTheme: ChipThemeData(
       backgroundColor: background2,
-      elevation: 3.0,
+      elevation: 3,
       shadowColor: Colors.black,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5.0 * appSizeRatio),
+        borderRadius: BorderRadius.circular(5 * appSizeRatio),
       ),
       side: const BorderSide(style: BorderStyle.none),
     ),
     dividerTheme: DividerThemeData(
       color: background3,
-      thickness: 2.0,
-      space: 0.0,
-      indent: 10.0 * appSizeRatio,
-      endIndent: 10.0 * appSizeRatio,
+      thickness: 2,
+      space: 0,
+      indent: 10 * appSizeRatio,
+      endIndent: 10 * appSizeRatio,
     ),
     drawerTheme: const DrawerThemeData(
       backgroundColor: background1,
@@ -128,8 +128,8 @@ class AnalyticsTheme {
 
   static const defaultShadow = BoxShadow(
     color: Color.fromRGBO(0, 0, 0, 0.3),
-    blurRadius: 3.0,
-    spreadRadius: 2.0,
+    blurRadius: 3,
+    spreadRadius: 2,
   );
 }
 

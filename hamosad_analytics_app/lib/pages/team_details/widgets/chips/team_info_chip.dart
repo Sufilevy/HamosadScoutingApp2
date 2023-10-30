@@ -16,7 +16,7 @@ class TeamInfoChip extends StatelessWidget {
     return AnalyticsChip(
       avatar: Icon(
         icon,
-        size: 35.0 * AnalyticsTheme.appSizeRatio,
+        size: 35 * AnalyticsTheme.appSizeRatio,
         color: AnalyticsTheme.primaryVariant,
       ),
       child: dataTitleText(

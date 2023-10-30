@@ -4,7 +4,7 @@ import '/theme.dart';
 import '/widgets/padding.dart';
 
 class AnalyticsChip extends StatelessWidget {
-  const AnalyticsChip({super.key, this.child, this.avatar, this.children, this.height = 54.0})
+  const AnalyticsChip({super.key, this.child, this.avatar, this.children, this.height = 54})
       : assert((child != null) ^ (children != null));
 
   final Widget? child, avatar;
@@ -18,7 +18,7 @@ class AnalyticsChip extends StatelessWidget {
         height: height * AnalyticsTheme.appSizeRatio,
         width: double.infinity,
         child: (child != null)
-            ? Row(children: [child!.padSymmetric(horizontal: 6.0)])
+            ? Row(children: [child!.padSymmetric(horizontal: 6)])
             : Row(children: children!),
       ),
       avatar: avatar,
@@ -34,17 +34,17 @@ class DotDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 4.0,
-      height: 4.0,
+      width: 4,
+      height: 4,
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
         color: AnalyticsTheme.foreground2,
         boxShadow: [
           BoxShadow(
-            offset: Offset(1.0, 1.0),
+            offset: Offset(1, 1),
             color: Color.fromRGBO(0, 0, 0, 0.3),
-            blurRadius: 2.0,
-            spreadRadius: 1.0,
+            blurRadius: 2,
+            spreadRadius: 1,
           ),
         ],
       ),
