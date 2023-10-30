@@ -1,3 +1,4 @@
+import 'package:async/async.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,17 +31,18 @@ class AnalyticsDatabase {
     return districtsSnapshot.data()?.getList<String>('all') ?? [];
   }
 
-  static Stream<DocumentSnapshot<Json>> reportsOfTeamFromDistrict(
-    String teamNumber,
-    String district,
-  ) {
+  static Stream<DocumentSnapshot<Json>> reportStreamOfTeam(String teamNumber, String district) {
     if (!district.contains('-')) district += '-1657';
 
     return _firestore.collection(district).doc(teamNumber).snapshots();
   }
 
-  static Stream<QuerySnapshot<Json>> reportsFromDistricts(Set<String> districts){
-    return districts.map(((district) => _firestore.collectionGroup(collectionPath)));
+  static Future<Json> reportsOfTeam(String teamNumber, String district) async {
+    if (!district.contains('-')) district += '-1657';
+
+    final doc = await _firestore.collection(district).doc(teamNumber).get();
+
+    return doc.data() ?? {};
   }
 }
 
@@ -58,11 +60,26 @@ final teamProvider = StreamProvider.autoDispose.family<Team, ReportsIdentifier>(
   (ref, args) {
     final ReportsIdentifier(:teamNumber, :districts) = args;
 
-    final snapshots = AnalyticsDatabase.reportsOfTeamFromDistrict(
-        teamNumber, districts.first);
+    final snapshots = districts.map(
+      (district) => AnalyticsDatabase.reportStreamOfTeam(teamNumber, district),
+    );
 
-    return snapshots
-        .map((doc) => Team(teamNumber).updateWithReports(doc.data()));
+    return StreamGroup.merge(snapshots).asyncMap(
+      (doc) async {
+        final docDistrict = doc.reference.parent.id;
+        final team = Team(teamNumber);
+
+        for (final district in districts) {
+          final reports = (district == docDistrict)
+              ? doc.data()
+              : await AnalyticsDatabase.reportsOfTeam(teamNumber, district);
+
+          team.updateWithReports(reports);
+        }
+
+        return team;
+      },
+    );
   },
 );
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/theme.dart';
-import 'paddings.dart' as paddings;
+import 'padding.dart' as paddings;
 
 Widget padLeft(double padding, Widget child) => Padding(
       padding: EdgeInsets.only(left: padding * AnalyticsTheme.appSizeRatio),

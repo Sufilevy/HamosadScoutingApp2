@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '/theme.dart';
-import '/widgets/paddings.dart';
+import '/widgets/padding.dart';
 import '/widgets/text.dart';
 
 class AnalyticsAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const AnalyticsAppBar({super.key, required this.title});
+  const AnalyticsAppBar({super.key, required this.title, this.titleAvatar});
 
   final String title;
+  final Widget? titleAvatar;
 
   @override
   Size get preferredSize => Size.fromHeight(55.0 * AnalyticsTheme.appSizeRatio);
@@ -17,9 +18,23 @@ class AnalyticsAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      title: navigationTitleText(title),
+      title: _buildTitle().padRight(titleAvatar == null ? 0.0 : 50.0),
       leading: _buildMenuButton(context),
       leadingWidth: 66.0 * AnalyticsTheme.appSizeRatio,
+    );
+  }
+
+  Widget _buildTitle() {
+    if (titleAvatar == null) {
+      return navigationTitleText(title);
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        titleAvatar!,
+        navigationTitleText(title),
+      ],
     );
   }
 
