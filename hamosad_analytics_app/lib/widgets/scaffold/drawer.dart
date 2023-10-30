@@ -15,7 +15,7 @@ class AnalyticsDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: _drawerWidth(getScreenSize(context).width),
+      width: _drawerWidth(context.screenSize.width),
       child: ListView(
         padding: EdgeInsets.zero,
         children: const [

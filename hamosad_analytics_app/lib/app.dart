@@ -43,3 +43,12 @@ class AnalyticsApp extends StatelessWidget {
     ],
   );
 }
+
+class RotatePhoneApp extends StatelessWidget {
+  const RotatePhoneApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}

@@ -5,4 +5,6 @@ T debug<T>(T value) {
   return value;
 }
 
-Size getScreenSize(BuildContext context) => MediaQueryData.fromView(View.of(context)).size;
+extension ScreenSize on BuildContext {
+  Size get screenSize => MediaQueryData.fromView(View.of(this)).size;
+}

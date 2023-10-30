@@ -13,9 +13,9 @@ class AnalyticsTheme {
   static double get appSizeRatioSquared => appSizeRatio * appSizeRatio;
 
   static void setAppSizeRatio(BuildContext context) {
-    final screenHeight = getScreenSize(context).height;
+    final screenHeight = context.screenSize.height;
     appSizeRatio = screenHeight / 1000;
-    debug('Screen size: ${getScreenSize(context)} | App size ratio: $appSizeRatio');
+    debug('Screen size: ${context.screenSize} | App size ratio: $appSizeRatio');
   }
 
   static const appTitle = 'Analytics App';
