@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hamosad_analytics_app/pages/compare/compare_page.dart';
 
 import '/pages/team_details/team_details_page.dart';
 import '/pages/teams/teams_page.dart';
@@ -24,7 +25,7 @@ class AnalyticsApp extends StatelessWidget {
   }
 
   final _router = GoRouter(
-    initialLocation: '/team/1577',
+    initialLocation: '/compare',
     routes: <GoRoute>[
       GoRoute(
         path: '/team/:teamNumber',
@@ -34,12 +35,22 @@ class AnalyticsApp extends StatelessWidget {
         ),
       ),
       GoRoute(
+        path: '/compare',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: ComparePage(
+            graph: state.uri.queryParameters['graph'],
+            teams: state.uri.queryParameters['teams']?.split(','),
+          ),
+        ),
+      ),
+      GoRoute(
         path: '/teams',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const TeamsPage(),
         ),
-      )
+      ),
     ],
   );
 }
