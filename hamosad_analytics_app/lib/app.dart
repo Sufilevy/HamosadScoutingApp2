@@ -40,7 +40,7 @@ class AnalyticsApp extends StatelessWidget {
           key: state.pageKey,
           child: ComparePage(
             graph: state.uri.queryParameters['graph'],
-            teams: state.uri.queryParameters['teams']?.split(','),
+            selectedTeams: state.uri.queryParameters['teams']?.split(','),
           ),
         ),
       ),

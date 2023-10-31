@@ -124,6 +124,9 @@ class AnalyticsTheme {
     progressIndicatorTheme: const ProgressIndicatorThemeData(
       color: primary,
     ),
+    listTileTheme: const ListTileThemeData(
+      tileColor: AnalyticsTheme.background2,
+    ),
   );
 
   static const defaultShadow = BoxShadow(
