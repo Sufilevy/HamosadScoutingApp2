@@ -5,13 +5,16 @@ import '/theme.dart';
 Widget navigationText(
   dynamic data, {
   TextAlign textAlign = TextAlign.center,
+  double? fontSize,
 }) {
   return FittedBox(
     fit: BoxFit.scaleDown,
     child: Text(
       data.toString(),
       textAlign: textAlign,
-      style: AnalyticsTheme.navigationStyle,
+      style: AnalyticsTheme.navigationStyle.copyWith(
+        fontSize: fontSize != null ? fontSize * AnalyticsTheme.appSizeRatio : null,
+      ),
     ),
   );
 }

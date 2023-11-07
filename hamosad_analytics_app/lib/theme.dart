@@ -124,8 +124,14 @@ class AnalyticsTheme {
     progressIndicatorTheme: const ProgressIndicatorThemeData(
       color: primary,
     ),
-    listTileTheme: const ListTileThemeData(
+    listTileTheme: ListTileThemeData(
       tileColor: AnalyticsTheme.background2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      surfaceTintColor: background1,
     ),
   );
 
@@ -143,6 +149,8 @@ class TeamInfo {
 
   final String name, location;
   final Color color;
+
+  static List<String> get teams => _teamNumberToInfo.keys.toList();
 
   /// [Color, Name, Location]
   static const _teamNumberToInfo = {

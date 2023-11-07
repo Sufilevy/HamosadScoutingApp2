@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hamosad_analytics_app/pages/compare/compare_page.dart';
 
+import '/pages/compare/compare_page.dart';
 import '/pages/team_details/team_details_page.dart';
 import '/pages/teams/teams_page.dart';
 import '/theme.dart';
