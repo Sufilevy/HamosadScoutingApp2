@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '/theme.dart';
 import '/widgets/padding.dart';
 
-class SelectTeams extends StatelessWidget {
-  const SelectTeams({
+class TeamsSelect extends StatelessWidget {
+  const TeamsSelect({
     super.key,
     required this.teams,
     required this.onSelectionChange,

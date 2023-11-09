@@ -7,8 +7,8 @@ import '/widgets/padding.dart';
 import '/widgets/scaffold/app_bar.dart';
 import '/widgets/scaffold/drawer.dart';
 import '/widgets/text.dart';
-import 'widgets/select_teams.dart';
 import 'widgets/selected_teams_chips.dart';
+import 'widgets/teams_select.dart';
 
 class ComparePage extends StatelessWidget {
   const ComparePage({super.key, this.selectedTeams, this.graph});
@@ -26,7 +26,7 @@ class ComparePage extends StatelessWidget {
         vertical: 12,
         Column(
           children: <Widget>[
-            SelectTeams(
+            TeamsSelect(
               teams: TeamInfo.teams,
               selectedTeams: selectedTeams,
               onSelectionChange: (teams) {
