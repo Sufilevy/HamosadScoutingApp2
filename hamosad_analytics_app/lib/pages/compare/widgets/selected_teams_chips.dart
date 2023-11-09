@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -8,17 +9,14 @@ import '/widgets/padding.dart';
 import '/widgets/text.dart';
 
 class SelectedTeamsChips extends StatelessWidget {
-  const SelectedTeamsChips({super.key, required this.onSelectionChange, this.selectedTeams});
+  const SelectedTeamsChips(
+      {super.key, required this.onSelectionChange, required this.selectedTeams});
 
-  final List<String>? selectedTeams;
+  final List<String> selectedTeams;
   final void Function(List<String>) onSelectionChange;
 
   @override
   Widget build(BuildContext context) {
-    if (selectedTeams == null) {
-      return SizedBox(height: 40 * AnalyticsTheme.appSizeRatio);
-    }
-
     return GridView(
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 100 * AnalyticsTheme.appSizeRatio,
@@ -28,22 +26,53 @@ class SelectedTeamsChips extends StatelessWidget {
       ),
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
-      children: selectedTeams!.map(_teamChip).toList(),
+      children: selectedTeams
+          .map((teamNumber) => _TeamChip(
+                teamNumber,
+                onRemoved: (teamNumber) => onSelectionChange(selectedTeams - [teamNumber]),
+              ))
+          .toList(),
     );
   }
+}
 
-  Widget _teamChip(String teamNumber) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AnalyticsTheme.background2,
-        borderRadius: BorderRadius.circular(20 * AnalyticsTheme.appSizeRatio),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _teamColorAvatar(teamNumber),
-          navigationText(teamNumber, fontSize: 14).padRight(8),
-        ],
+class _TeamChip extends StatefulWidget {
+  const _TeamChip(this.teamNumber, {required this.onRemoved});
+
+  final String teamNumber;
+  final void Function(String) onRemoved;
+
+  @override
+  State<_TeamChip> createState() => _TeamChipState();
+}
+
+class _TeamChipState extends State<_TeamChip> {
+  double _scale = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(10.milliseconds, () => setState(() => _scale = 1));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedScale(
+      duration: 150.milliseconds,
+      scale: _scale,
+      child: Container(
+        decoration: BoxDecoration(
+          color: AnalyticsTheme.background2,
+          borderRadius: BorderRadius.circular(20 * AnalyticsTheme.appSizeRatio),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _teamColorAvatar(widget.teamNumber),
+            navigationText(widget.teamNumber, fontSize: 14).padRight(8),
+          ],
+        ),
       ),
     );
   }
@@ -66,7 +95,7 @@ class SelectedTeamsChips extends StatelessWidget {
         iconColor: Colors.transparent,
         iconHoverColor: iconHoverColor,
         onPressed: () {
-          onSelectionChange(selectedTeams! - [teamNumber]);
+          widget.onRemoved(teamNumber);
         },
       ),
     );

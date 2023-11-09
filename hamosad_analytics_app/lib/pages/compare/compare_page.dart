@@ -6,15 +6,15 @@ import '/theme.dart';
 import '/widgets/padding.dart';
 import '/widgets/scaffold/app_bar.dart';
 import '/widgets/scaffold/drawer.dart';
-import 'widgets/graphs.dart';
+import 'graphs.dart';
+import 'widgets/graph_with_selection.dart';
 import 'widgets/selected_teams_chips.dart';
 import 'widgets/teams_select.dart';
 
 class ComparePage extends StatelessWidget {
-  const ComparePage({super.key, this.selectedTeams, this.graph});
+  const ComparePage({super.key, this.selectedTeams});
 
   final List<String>? selectedTeams;
-  final String? graph;
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +34,27 @@ class ComparePage extends StatelessWidget {
                   context.go(_newPageUri(teams).toString());
                 }
               },
-            ).padBottom(5),
-            SelectedTeamsChips(
-              selectedTeams: selectedTeams,
-              onSelectionChange: (teams) {
-                context.go(_newPageUri(teams).toString());
-              },
-            ).padBottom(15),
-            Graphs(selectedTeams: selectedTeams ?? []),
+            ).padBottom(10),
+            if (selectedTeams != null)
+              SelectedTeamsChips(
+                selectedTeams: selectedTeams!,
+                onSelectionChange: (teams) {
+                  context.go(_newPageUri(teams).toString());
+                },
+              ).padBottom(12),
+            const Divider().padBottom(8),
+            Expanded(
+              child: ListView.builder(
+                itemCount: Graph.allGraphs.length,
+                itemBuilder: (context, index) => padBottom(
+                  16,
+                  GraphWithSelection(
+                    initialGraphIndex: index,
+                    selectedTeams: selectedTeams ?? [],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -52,7 +65,6 @@ class ComparePage extends StatelessWidget {
     return Uri(
       path: '/compare',
       queryParameters: {
-        if (graph != null) 'graph': graph,
         if (teams.isNotEmpty) 'teams': teams.join(','),
       },
     );

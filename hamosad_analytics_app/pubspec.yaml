@@ -45,6 +45,7 @@ dependencies:
   awesome_select: ^6.0.0
   gap: ^3.0.1
   animations: ^2.0.8
+  fl_chart: ^0.64.0
 
 dev_dependencies:
   flutter_test:

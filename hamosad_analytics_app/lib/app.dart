@@ -39,7 +39,6 @@ class AnalyticsApp extends StatelessWidget {
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: ComparePage(
-            graph: state.uri.queryParameters['graph'],
             selectedTeams: state.uri.queryParameters['teams']?.split(','),
           ),
         ),
