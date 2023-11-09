@@ -43,7 +43,7 @@ class TeamsSelect extends StatelessWidget {
         modalFilterToggle: _modalFilterToggle,
         modalHeader: _modalHeader,
         tile: (context, state) => Material(
-          elevation: 4,
+          elevation: Theme.of(context).cardTheme.elevation ?? 2,
           child: S2Tile.fromState(
             state,
             hideValue: true,

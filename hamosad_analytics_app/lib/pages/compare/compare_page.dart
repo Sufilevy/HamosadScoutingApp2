@@ -6,7 +6,7 @@ import '/theme.dart';
 import '/widgets/padding.dart';
 import '/widgets/scaffold/app_bar.dart';
 import '/widgets/scaffold/drawer.dart';
-import '/widgets/text.dart';
+import 'widgets/graphs.dart';
 import 'widgets/selected_teams_chips.dart';
 import 'widgets/teams_select.dart';
 
@@ -41,7 +41,7 @@ class ComparePage extends StatelessWidget {
                 context.go(_newPageUri(teams).toString());
               },
             ).padBottom(15),
-            navigationText('Graph :)')
+            Graphs(selectedTeams: selectedTeams ?? []),
           ],
         ),
       ),

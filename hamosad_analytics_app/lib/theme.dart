@@ -133,6 +133,13 @@ class AnalyticsTheme {
     bottomSheetTheme: const BottomSheetThemeData(
       surfaceTintColor: background1,
     ),
+    cardTheme: CardTheme(
+      elevation: 2,
+      surfaceTintColor: background2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ),
   );
 
   static const defaultShadow = BoxShadow(
