@@ -42,14 +42,11 @@ class TeamsSelect extends StatelessWidget {
         ),
         modalFilterToggle: _modalFilterToggle,
         modalHeader: _modalHeader,
-        tile: (context, state) => Material(
-          elevation: Theme.of(context).cardTheme.elevation ?? 2,
-          child: S2Tile.fromState(
-            state,
-            hideValue: true,
-            loadingText: '',
-            trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-          ),
+        tile: (context, state) => S2Tile.fromState(
+          state,
+          hideValue: true,
+          loadingText: '',
+          trailing: const Icon(Icons.keyboard_arrow_right_rounded),
         ),
       ),
     );
@@ -115,7 +112,7 @@ class TeamsSelect extends StatelessWidget {
           : Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 state.modalTitle,
                 state.modalError,
               ],

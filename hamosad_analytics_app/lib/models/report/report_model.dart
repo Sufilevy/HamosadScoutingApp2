@@ -4,6 +4,14 @@ class Report {
   static final _random = math.Random();
 
   static double randomData(double range) {
-    return (_random.nextDouble() * range * 10).roundToDouble() / 10;
+    return (_random.nextDouble() * range).floorToDouble();
+  }
+
+  const Report(this.range);
+
+  final double range;
+
+  double data() {
+    return randomData(range);
   }
 }

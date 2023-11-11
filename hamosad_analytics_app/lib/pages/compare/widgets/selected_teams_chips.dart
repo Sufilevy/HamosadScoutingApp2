@@ -27,10 +27,12 @@ class SelectedTeamsChips extends StatelessWidget {
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       children: selectedTeams
-          .map((teamNumber) => _TeamChip(
-                teamNumber,
-                onRemoved: (teamNumber) => onSelectionChange(selectedTeams - [teamNumber]),
-              ))
+          .map(
+            (teamNumber) => _TeamChip(
+              teamNumber,
+              onRemoved: (teamNumber) => onSelectionChange(selectedTeams - [teamNumber]),
+            ),
+          )
           .toList(),
     );
   }
@@ -68,7 +70,7 @@ class _TeamChipState extends State<_TeamChip> {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
+          children: <Widget>[
             _teamColorAvatar(widget.teamNumber),
             navigationText(widget.teamNumber, fontSize: 14).padRight(8),
           ],

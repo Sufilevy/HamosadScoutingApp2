@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamosad_analytics_app/services/utilities.dart';
 
 import '/pages/compare/charts.dart';
 import '/widgets/horizontal_switcher.dart';
@@ -7,19 +8,25 @@ import '/widgets/text.dart';
 import 'analytics_chart.dart';
 
 class ChartWithSelection extends StatefulWidget {
-  const ChartWithSelection({super.key, required this.selectedTeams, this.initialChartIndex = 0});
+  const ChartWithSelection({
+    super.key,
+    required this.selectedTeams,
+    required this.teamsWithReports,
+    this.initialChartIndex = 0,
+  });
 
   final List<String> selectedTeams;
+  final TeamsWithReports teamsWithReports;
   final int initialChartIndex;
 
   static int decreaseIndex(int currentIndex) {
     final newIndex = currentIndex - 1;
-    return newIndex < 0 ? Charts.charts.length - 1 : newIndex;
+    return newIndex < 0 ? Charts.length - 1 : newIndex;
   }
 
   static int increaseIndex(int currentIndex) {
     final newIndex = currentIndex + 1;
-    return newIndex >= Charts.charts.length ? 0 : newIndex;
+    return newIndex >= Charts.length ? 0 : newIndex;
   }
 
   @override
@@ -32,31 +39,51 @@ class _ChartWithSelectionState extends State<ChartWithSelection> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onHorizontalDragEnd: _onHorizontalSwipe,
-      child: Column(
-        children: [
-          _ChartSelect(
-            currentChartIndex: _currentChartIndex,
-            reverseAnimation: _reverseAnimation,
-            onSelectionChanged: (newChartIndex, reverseAnimation) => setState(() {
-              _currentChartIndex = newChartIndex;
-              _reverseAnimation = reverseAnimation;
-            }),
-          ).padBottom(4),
-          HorizontalSwitcher(
-            data: _currentChartIndex,
-            reverseAnimation: _reverseAnimation,
-            child: const AnalyticsChart(),
-          ),
-        ],
+    return Column(
+      children: <Widget>[
+        GestureDetector(
+          onHorizontalDragEnd: _onHorizontalSwipe,
+          child: _chartSelect().padBottom(4),
+        ),
+        GestureDetector(
+          onHorizontalDragEnd: _isChartSwipeEnabled(context)
+              ? (details) => _onHorizontalSwipe(details, sensitivity: 300)
+              : null,
+          child: _chart(),
+        ),
+      ],
+    );
+  }
+
+  bool _isChartSwipeEnabled(BuildContext context) {
+    final screenWidth = context.screenSize.width;
+    final maxWidth = AnalyticsChart.maxChartWidth(screenWidth, widget.teamsWithReports);
+    return maxWidth == screenWidth - 32;
+  }
+
+  Widget _chartSelect() {
+    return _ChartSelect(
+      currentChartIndex: _currentChartIndex,
+      reverseAnimation: _reverseAnimation,
+      onSelectionChanged: (newChartIndex, reverseAnimation) => setState(() {
+        _currentChartIndex = newChartIndex;
+        _reverseAnimation = reverseAnimation;
+      }),
+    );
+  }
+
+  Widget _chart() {
+    return HorizontalSwitcher(
+      data: _currentChartIndex,
+      reverseAnimation: _reverseAnimation,
+      child: AnalyticsChart(
+        dataFromReport: Charts.index(_currentChartIndex).dataFromReport,
+        teamsWithReports: widget.teamsWithReports,
       ),
     );
   }
 
-  void _onHorizontalSwipe(DragEndDetails? details) {
-    const sensitivity = 250.0;
-
+  void _onHorizontalSwipe(DragEndDetails? details, {double sensitivity = 250.0}) {
     if (details == null) return;
 
     if (details.primaryVelocity! > sensitivity) {
@@ -74,10 +101,11 @@ class _ChartWithSelectionState extends State<ChartWithSelection> {
 }
 
 class _ChartSelect extends StatefulWidget {
-  const _ChartSelect(
-      {required this.currentChartIndex,
-      required this.reverseAnimation,
-      required this.onSelectionChanged});
+  const _ChartSelect({
+    required this.currentChartIndex,
+    required this.reverseAnimation,
+    required this.onSelectionChanged,
+  });
 
   final int currentChartIndex;
   final bool reverseAnimation;
@@ -90,12 +118,12 @@ class _ChartSelect extends StatefulWidget {
 class _ChartSelectState extends State<_ChartSelect> {
   @override
   Widget build(BuildContext context) {
-    final chartName = Charts.charts[widget.currentChartIndex].title;
+    final chartName = Charts.index(widget.currentChartIndex).title;
 
     return Card(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+        children: <Widget>[
           _changeSelectionButton(isDecreaseButton: true),
           HorizontalSwitcher(
             data: chartName,

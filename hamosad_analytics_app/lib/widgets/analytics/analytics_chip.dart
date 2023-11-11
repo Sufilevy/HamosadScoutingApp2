@@ -18,7 +18,7 @@ class AnalyticsChip extends StatelessWidget {
         height: height * AnalyticsTheme.appSizeRatio,
         width: double.infinity,
         child: (child != null)
-            ? Row(children: [child!.padSymmetric(horizontal: 6)])
+            ? Row(children: <Widget>[child!.padSymmetric(horizontal: 6)])
             : Row(children: children!),
       ),
       avatar: avatar,
