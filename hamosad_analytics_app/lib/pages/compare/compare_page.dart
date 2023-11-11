@@ -45,7 +45,7 @@ class ComparePage extends StatelessWidget {
             const Divider().padBottom(8),
             Expanded(
               child: ListView.builder(
-                itemCount: Chart.allCharts.length,
+                itemCount: Charts.charts.length,
                 itemBuilder: (context, index) => padBottom(
                   16,
                   ChartWithSelection(

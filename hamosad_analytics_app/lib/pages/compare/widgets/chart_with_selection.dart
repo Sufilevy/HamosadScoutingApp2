@@ -14,12 +14,12 @@ class ChartWithSelection extends StatefulWidget {
 
   static int decreaseIndex(int currentIndex) {
     final newIndex = currentIndex - 1;
-    return newIndex < 0 ? Chart.allCharts.length - 1 : newIndex;
+    return newIndex < 0 ? Charts.charts.length - 1 : newIndex;
   }
 
   static int increaseIndex(int currentIndex) {
     final newIndex = currentIndex + 1;
-    return newIndex >= Chart.allCharts.length ? 0 : newIndex;
+    return newIndex >= Charts.charts.length ? 0 : newIndex;
   }
 
   @override
@@ -90,7 +90,7 @@ class _ChartSelect extends StatefulWidget {
 class _ChartSelectState extends State<_ChartSelect> {
   @override
   Widget build(BuildContext context) {
-    final chartName = Chart.allCharts[widget.currentChartIndex].title;
+    final chartName = Charts.charts[widget.currentChartIndex].title;
 
     return Card(
       child: Row(
