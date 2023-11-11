@@ -6,8 +6,8 @@ import '/theme.dart';
 import '/widgets/padding.dart';
 import '/widgets/scaffold/app_bar.dart';
 import '/widgets/scaffold/drawer.dart';
-import 'graphs.dart';
-import 'widgets/graph_with_selection.dart';
+import 'charts.dart';
+import 'widgets/chart_with_selection.dart';
 import 'widgets/selected_teams_chips.dart';
 import 'widgets/teams_select.dart';
 
@@ -45,11 +45,11 @@ class ComparePage extends StatelessWidget {
             const Divider().padBottom(8),
             Expanded(
               child: ListView.builder(
-                itemCount: Graph.allGraphs.length,
+                itemCount: Chart.allCharts.length,
                 itemBuilder: (context, index) => padBottom(
                   16,
-                  GraphWithSelection(
-                    initialGraphIndex: index,
+                  ChartWithSelection(
+                    initialChartIndex: index,
                     selectedTeams: selectedTeams ?? [],
                   ),
                 ),

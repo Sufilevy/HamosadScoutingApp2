@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AnalyticsGraph extends StatelessWidget {
-  const AnalyticsGraph({super.key});
+class AnalyticsChart extends StatelessWidget {
+  const AnalyticsChart({super.key});
 
   @override
   Widget build(BuildContext context) {

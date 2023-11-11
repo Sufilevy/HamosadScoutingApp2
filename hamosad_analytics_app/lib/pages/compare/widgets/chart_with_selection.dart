@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 
-import '/pages/compare/graphs.dart';
-import '/widgets/analytics/analytics_graph.dart';
+import '/pages/compare/charts.dart';
+import '/widgets/analytics/analytics_chart.dart';
 import '/widgets/horizontal_switcher.dart';
 import '/widgets/padding.dart';
 import '/widgets/text.dart';
 
-class GraphWithSelection extends StatefulWidget {
-  const GraphWithSelection({super.key, required this.selectedTeams, this.initialGraphIndex = 0});
+class ChartWithSelection extends StatefulWidget {
+  const ChartWithSelection({super.key, required this.selectedTeams, this.initialChartIndex = 0});
 
   final List<String> selectedTeams;
-  final int initialGraphIndex;
+  final int initialChartIndex;
 
   static int decreaseIndex(int currentIndex) {
     final newIndex = currentIndex - 1;
-    return newIndex < 0 ? Graph.allGraphs.length - 1 : newIndex;
+    return newIndex < 0 ? Chart.allCharts.length - 1 : newIndex;
   }
 
   static int increaseIndex(int currentIndex) {
     final newIndex = currentIndex + 1;
-    return newIndex >= Graph.allGraphs.length ? 0 : newIndex;
+    return newIndex >= Chart.allCharts.length ? 0 : newIndex;
   }
 
   @override
-  State<GraphWithSelection> createState() => _GraphWithSelectionState();
+  State<ChartWithSelection> createState() => _ChartWithSelectionState();
 }
 
-class _GraphWithSelectionState extends State<GraphWithSelection> {
-  late int _currentGraphIndex = widget.initialGraphIndex;
+class _ChartWithSelectionState extends State<ChartWithSelection> {
+  late int _currentChartIndex = widget.initialChartIndex;
   bool _reverseAnimation = false;
 
   @override
@@ -36,18 +36,18 @@ class _GraphWithSelectionState extends State<GraphWithSelection> {
       onHorizontalDragEnd: _onHorizontalSwipe,
       child: Column(
         children: [
-          _GraphSelect(
-            currentGraphIndex: _currentGraphIndex,
+          _ChartSelect(
+            currentChartIndex: _currentChartIndex,
             reverseAnimation: _reverseAnimation,
-            onSelectionChanged: (newGraphIndex, reverseAnimation) => setState(() {
-              _currentGraphIndex = newGraphIndex;
+            onSelectionChanged: (newChartIndex, reverseAnimation) => setState(() {
+              _currentChartIndex = newChartIndex;
               _reverseAnimation = reverseAnimation;
             }),
           ).padBottom(4),
           HorizontalSwitcher(
-            data: _currentGraphIndex,
+            data: _currentChartIndex,
             reverseAnimation: _reverseAnimation,
-            child: const AnalyticsGraph(),
+            child: const AnalyticsChart(),
           ),
         ],
       ),
@@ -62,35 +62,35 @@ class _GraphWithSelectionState extends State<GraphWithSelection> {
     if (details.primaryVelocity! > sensitivity) {
       setState(() {
         _reverseAnimation = true;
-        _currentGraphIndex = GraphWithSelection.decreaseIndex(_currentGraphIndex);
+        _currentChartIndex = ChartWithSelection.decreaseIndex(_currentChartIndex);
       });
     } else if (details.primaryVelocity! < -sensitivity) {
       setState(() {
         _reverseAnimation = false;
-        _currentGraphIndex = GraphWithSelection.increaseIndex(_currentGraphIndex);
+        _currentChartIndex = ChartWithSelection.increaseIndex(_currentChartIndex);
       });
     }
   }
 }
 
-class _GraphSelect extends StatefulWidget {
-  const _GraphSelect(
-      {required this.currentGraphIndex,
+class _ChartSelect extends StatefulWidget {
+  const _ChartSelect(
+      {required this.currentChartIndex,
       required this.reverseAnimation,
       required this.onSelectionChanged});
 
-  final int currentGraphIndex;
+  final int currentChartIndex;
   final bool reverseAnimation;
-  final void Function(int newGraphIndex, bool reverseAnimation) onSelectionChanged;
+  final void Function(int newChartIndex, bool reverseAnimation) onSelectionChanged;
 
   @override
-  State<_GraphSelect> createState() => _GraphSelectState();
+  State<_ChartSelect> createState() => _ChartSelectState();
 }
 
-class _GraphSelectState extends State<_GraphSelect> {
+class _ChartSelectState extends State<_ChartSelect> {
   @override
   Widget build(BuildContext context) {
-    final graphName = Graph.allGraphs[widget.currentGraphIndex].title;
+    final chartName = Chart.allCharts[widget.currentChartIndex].title;
 
     return Card(
       child: Row(
@@ -98,9 +98,9 @@ class _GraphSelectState extends State<_GraphSelect> {
         children: [
           _changeSelectionButton(isDecreaseButton: true),
           HorizontalSwitcher(
-            data: graphName,
+            data: chartName,
             reverseAnimation: widget.reverseAnimation,
-            child: dataTitleText(graphName),
+            child: dataTitleText(chartName),
           ),
           _changeSelectionButton(isDecreaseButton: false),
         ],
@@ -115,8 +115,8 @@ class _GraphSelectState extends State<_GraphSelect> {
       ),
       onPressed: () {
         var newIndex = isDecreaseButton
-            ? GraphWithSelection.decreaseIndex(widget.currentGraphIndex)
-            : GraphWithSelection.increaseIndex(widget.currentGraphIndex);
+            ? ChartWithSelection.decreaseIndex(widget.currentChartIndex)
+            : ChartWithSelection.increaseIndex(widget.currentChartIndex);
 
         widget.onSelectionChanged(newIndex, isDecreaseButton);
       },
