@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '/pages/compare/charts.dart';
-import '/widgets/analytics/analytics_chart.dart';
 import '/widgets/horizontal_switcher.dart';
 import '/widgets/padding.dart';
 import '/widgets/text.dart';
+import 'analytics_chart.dart';
 
 class ChartWithSelection extends StatefulWidget {
   const ChartWithSelection({super.key, required this.selectedTeams, this.initialChartIndex = 0});
