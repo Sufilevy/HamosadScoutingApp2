@@ -16,7 +16,7 @@ class ScoutingSwitch extends StatelessWidget {
   final List<double>? customWidths;
   final List<String> items;
   final double fontSize, minWidth;
-  final void Function(int?) onChanged;
+  final void Function(int? index) onChanged;
 
   @override
   Widget build(BuildContext context) {

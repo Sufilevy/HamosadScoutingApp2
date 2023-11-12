@@ -14,7 +14,7 @@ class TeamsSelect extends StatelessWidget {
 
   final List<String> teams;
   final List<String>? selectedTeams;
-  final void Function(List<String>) onSelectionChange;
+  final void Function(List<String> teams) onSelectionChange;
 
   @override
   Widget build(BuildContext context) {

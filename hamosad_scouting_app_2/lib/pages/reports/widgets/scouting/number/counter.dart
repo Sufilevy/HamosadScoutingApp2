@@ -62,7 +62,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
 
   Widget _buildIconButton(
     BuildContext context,
-    void Function() onPressed,
+    VoidCallback onPressed,
     IconData icon,
   ) {
     return CircleAvatar(

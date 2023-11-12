@@ -1,6 +1,6 @@
 import '/models/report/report_model.dart';
 
-typedef DataFromReport = double Function(Report);
+typedef DataFromReport = double Function(Report report);
 
 class Chart {
   const Chart({required this.title, required this.dataFromReport});

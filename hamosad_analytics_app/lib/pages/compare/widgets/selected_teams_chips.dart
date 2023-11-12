@@ -13,7 +13,7 @@ class SelectedTeamsChips extends StatelessWidget {
       {super.key, required this.onSelectionChange, required this.selectedTeams});
 
   final List<String> selectedTeams;
-  final void Function(List<String>) onSelectionChange;
+  final void Function(List<String> teams) onSelectionChange;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _TeamChip extends StatefulWidget {
   const _TeamChip(this.teamNumber, {required this.onRemoved});
 
   final String teamNumber;
-  final void Function(String) onRemoved;
+  final void Function(String teamNumber) onRemoved;
 
   @override
   State<_TeamChip> createState() => _TeamChipState();
