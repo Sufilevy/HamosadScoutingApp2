@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/theme.dart';
-import 'padding.dart' as paddings;
+import 'paddings.dart' as paddings;
 
 Widget padLeft(double padding, Widget child) {
   return Padding(

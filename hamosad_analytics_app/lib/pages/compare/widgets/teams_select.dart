@@ -2,7 +2,7 @@ import 'package:awesome_select/awesome_select.dart';
 import 'package:flutter/material.dart';
 
 import '/theme.dart';
-import '/widgets/padding.dart';
+import '/widgets/paddings.dart';
 
 class TeamsSelect extends StatelessWidget {
   const TeamsSelect({

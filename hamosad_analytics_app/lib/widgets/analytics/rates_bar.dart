@@ -2,7 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 
 import '/theme.dart';
-import '/widgets/padding.dart';
+import '/widgets/paddings.dart';
 
 class RatesBar extends StatelessWidget {
   const RatesBar({

@@ -5,7 +5,7 @@ import '/models/team/stats/duration_models.dart';
 import '/theme.dart';
 import '/widgets/analytics/analytics_chip.dart';
 import '/widgets/analytics/rates_bar.dart';
-import '/widgets/padding.dart';
+import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 
 /// Takes an entire [ChipRow].

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hamosad_analytics_app/services/utilities.dart';
 
 import '/pages/compare/charts.dart';
+import '/services/utilities.dart';
 import '/widgets/horizontal_switcher.dart';
-import '/widgets/padding.dart';
+import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 import 'analytics_chart.dart';
 

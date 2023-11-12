@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/theme.dart';
-import '/widgets/padding.dart';
+import '/widgets/paddings.dart';
 
 class AnalyticsChip extends StatelessWidget {
   const AnalyticsChip({super.key, this.child, this.avatar, this.children, this.height = 54})

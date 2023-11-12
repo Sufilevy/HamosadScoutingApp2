@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '/theme.dart';
-import '/widgets/padding.dart';
+import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 
 class AnalyticsAppBar extends StatelessWidget implements PreferredSizeWidget {

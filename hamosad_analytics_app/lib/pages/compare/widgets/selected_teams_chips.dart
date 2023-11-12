@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '/services/utilities.dart';
 import '/theme.dart';
 import '/widgets/input/buttons.dart';
-import '/widgets/padding.dart';
+import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 
 class SelectedTeamsChips extends StatelessWidget {

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '/models/report/report_model.dart';
 import '/theme.dart';
-import '/widgets/padding.dart';
+import '/widgets/paddings.dart';
 import '/widgets/scaffold/app_bar.dart';
 import '/widgets/scaffold/drawer.dart';
 import 'charts.dart';

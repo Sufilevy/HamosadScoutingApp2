@@ -9,7 +9,7 @@ import '/pages/compare/charts.dart';
 import '/services/utilities.dart';
 import '/theme.dart';
 import '/widgets/colors.dart';
-import '/widgets/padding.dart';
+import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 
 typedef TeamsWithReports = Map<String, List<Report>>;

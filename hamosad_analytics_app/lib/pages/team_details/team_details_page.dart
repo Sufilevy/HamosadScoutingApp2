@@ -6,7 +6,7 @@ import '/services/database/analytics_database.dart';
 import '/services/providers/team_provider.dart';
 import '/theme.dart';
 import '/widgets/loading_screen.dart';
-import '/widgets/padding.dart';
+import '/widgets/paddings.dart';
 import '/widgets/scaffold/app_bar.dart';
 import '/widgets/scaffold/drawer.dart';
 import '/widgets/text.dart';

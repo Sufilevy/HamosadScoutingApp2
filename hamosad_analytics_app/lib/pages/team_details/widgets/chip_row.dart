@@ -1,7 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 
-import '/widgets/padding.dart';
+import '/widgets/paddings.dart';
 
 class ChipRow extends StatelessWidget {
   const ChipRow({
