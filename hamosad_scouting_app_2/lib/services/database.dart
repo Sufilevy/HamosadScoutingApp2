@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import '/models/cubit.dart';
 import '/services/utilities.dart';
 
-class ScoutingDatabase {
+abstract class ScoutingDatabase {
   static late Map<String, List<String>> matches;
 
   static final _db = FirebaseFirestore.instance;

@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '/models/analytics.dart';
 import '/services/database/map_getters.dart';
 
-class AnalyticsDatabase {
+abstract class AnalyticsDatabase {
   static final _firestore = FirebaseFirestore.instance;
 
   static Future<String> currentDistrict() async {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ScoutingTheme {
+abstract class ScoutingTheme {
   static late double appSizeRatio;
 
   static const appTitle = 'Scouting App';

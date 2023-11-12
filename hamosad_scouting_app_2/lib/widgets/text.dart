@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '/theme.dart';
 
-class ScoutingText {
+abstract class ScoutingText {
   static Text navigation(
     String data, {
     double? fontSize,

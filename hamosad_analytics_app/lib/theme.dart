@@ -4,7 +4,7 @@ import '/services/utilities.dart';
 
 /* spell-checker: disable */
 
-class AnalyticsTheme {
+abstract class AnalyticsTheme {
   // This class is not meant to be instantiated or extended;
   // this constructor prevents instantiation and extension.
   AnalyticsTheme._();
