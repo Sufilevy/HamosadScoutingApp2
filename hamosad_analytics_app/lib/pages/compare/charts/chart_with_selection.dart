@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '/pages/compare/charts.dart';
 import '/services/utilities.dart';
-import '/widgets/horizontal_switcher.dart';
+import '/widgets/analytics.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 import 'analytics_chart.dart';
+import 'charts.dart';
 
 class ChartWithSelection extends StatefulWidget {
   const ChartWithSelection({

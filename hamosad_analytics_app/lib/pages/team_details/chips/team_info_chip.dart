@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/theme.dart';
-import '/widgets/analytics/analytics_chip.dart';
+import '/widgets/analytics.dart';
 import '/widgets/text.dart';
 
 /// Takes 1/2 of a [ChipRow].

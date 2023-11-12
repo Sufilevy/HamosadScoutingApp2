@@ -5,18 +5,16 @@ import '/models/team/stats/duration_models.dart';
 import '/services/database/analytics_database.dart';
 import '/services/providers/team_provider.dart';
 import '/theme.dart';
-import '/widgets/loading_screen.dart';
 import '/widgets/paddings.dart';
-import '/widgets/scaffold/app_bar.dart';
-import '/widgets/scaffold/drawer.dart';
+import '/widgets/scaffold.dart';
 import '/widgets/text.dart';
-import 'widgets/chip_row.dart';
-import 'widgets/chips/durations_chip.dart';
-import 'widgets/chips/four_rates_chip.dart';
-import 'widgets/chips/number_chip.dart';
-import 'widgets/chips/success_rate_chip.dart';
-import 'widgets/chips/team_info_chip.dart';
-import 'widgets/section_title.dart';
+import 'chips/durations_chip.dart';
+import 'chips/four_rates_chip.dart';
+import 'chips/number_chip.dart';
+import 'chips/success_rate_chip.dart';
+import 'chips/team_info_chip.dart';
+import 'layout/chip_row.dart';
+import 'layout/section_title.dart';
 
 class TeamDetailsPage extends ConsumerWidget {
   const TeamDetailsPage(this.teamNumber, {super.key});

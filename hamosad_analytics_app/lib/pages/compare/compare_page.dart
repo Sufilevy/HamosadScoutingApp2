@@ -5,13 +5,12 @@ import 'package:go_router/go_router.dart';
 import '/models/report/report_model.dart';
 import '/theme.dart';
 import '/widgets/paddings.dart';
-import '/widgets/scaffold/app_bar.dart';
-import '/widgets/scaffold/drawer.dart';
-import 'charts.dart';
-import 'widgets/analytics_chart.dart';
-import 'widgets/chart_with_selection.dart';
-import 'widgets/selected_teams_chips.dart';
-import 'widgets/teams_select.dart';
+import '/widgets/scaffold.dart';
+import 'charts/analytics_chart.dart';
+import 'charts/chart_with_selection.dart';
+import 'charts/charts.dart';
+import 'teams/selected_teams_chips.dart';
+import 'teams/teams_select.dart';
 
 class ComparePage extends StatelessWidget {
   const ComparePage({super.key, this.selectedTeams});

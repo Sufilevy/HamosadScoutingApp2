@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '/models/analytics.dart';
 import '/models/team/stats/duration_models.dart';
 import '/theme.dart';
-import '/widgets/analytics/analytics_chip.dart';
-import '/widgets/analytics/rates_bar.dart';
+import '/widgets/analytics.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
+import 'rates_bar.dart';
 
 /// Takes an entire [ChipRow].
 class DurationsChip extends StatelessWidget {

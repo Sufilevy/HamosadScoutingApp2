@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '/widgets/analytics/analytics_chip.dart';
+import '/widgets/analytics.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 

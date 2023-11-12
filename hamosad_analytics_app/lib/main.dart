@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 
 import '/app.dart';
 import '/services/database/firebase_options.dart';
-import '/widgets/loading_screen.dart';
+import '/widgets/scaffold.dart';
 
 void main() async {
   if (!kIsWeb && defaultTargetPlatform == TargetPlatform.windows) {

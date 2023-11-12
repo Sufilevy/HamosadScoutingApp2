@@ -5,12 +5,12 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '/models/report/report_model.dart';
-import '/pages/compare/charts.dart';
 import '/services/utilities.dart';
 import '/theme.dart';
 import '/widgets/colors.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
+import 'charts.dart';
 
 typedef TeamsWithReports = Map<String, List<Report>>;
 

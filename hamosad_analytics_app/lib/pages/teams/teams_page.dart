@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '/widgets/scaffold/app_bar.dart';
-import '/widgets/scaffold/drawer.dart';
+import '/widgets/scaffold.dart';
 import '/widgets/text.dart';
 
 class TeamsPage extends StatelessWidget {
