@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 import '/models/report/report_model.dart';
@@ -27,9 +28,11 @@ class ComparePage extends StatelessWidget {
         vertical: 12,
         Column(
           children: <Widget>[
-            _teamsSelect(context).padBottom(10),
+            _teamsSelect(context),
+            Gap(10 * AnalyticsTheme.appSizeRatio),
             if (selectedTeams != null) _selectedTeamsChips(context).padBottom(12),
-            const Divider().padBottom(8),
+            const Divider(),
+            Gap(8 * AnalyticsTheme.appSizeRatio),
             Expanded(
               child: _charts({
                 '1577': [

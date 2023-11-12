@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import '/theme.dart';
 import '/widgets/paddings.dart';
@@ -20,7 +21,8 @@ class SectionTitle extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(icon, size: 28 * AnalyticsTheme.appSizeRatio),
-              navigationTitleText(title).padLeft(8),
+              Gap(8 * AnalyticsTheme.appSizeRatio),
+              navigationTitleText(title),
             ],
           ),
           const SectionDivider(bottomPadding: 10),

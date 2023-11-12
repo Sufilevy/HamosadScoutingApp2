@@ -1,5 +1,6 @@
 import 'package:awesome_select/awesome_select.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import '/theme.dart';
 import '/widgets/paddings.dart';
@@ -89,7 +90,8 @@ class TeamsSelect extends StatelessWidget {
 
     return Row(
       children: <Widget>[
-        clearSelection.padRight(8),
+        clearSelection,
+        Gap(8 * AnalyticsTheme.appSizeRatio),
         searchIcon.padRight(12),
       ],
     );

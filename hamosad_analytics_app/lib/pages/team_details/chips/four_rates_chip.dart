@@ -1,5 +1,6 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import '/models/analytics.dart';
 import '/theme.dart';
@@ -26,7 +27,8 @@ class FourRatesChip extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _ratesAndTitles().padBottom(2),
+              _ratesAndTitles(),
+              Gap(2 * AnalyticsTheme.appSizeRatio),
               RatesBar(rates: rates).padBottom(2),
             ],
           ),

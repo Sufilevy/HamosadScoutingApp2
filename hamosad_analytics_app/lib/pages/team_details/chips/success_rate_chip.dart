@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import '/models/analytics.dart';
 import '/theme.dart';
@@ -30,7 +31,8 @@ class SuccessRateChip extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _rates().padBottom(2),
+              _rates(),
+              Gap(2 * AnalyticsTheme.appSizeRatio),
               RatesBar(
                 rates: [successRate, failRate],
                 secondaryColor: AnalyticsTheme.error,

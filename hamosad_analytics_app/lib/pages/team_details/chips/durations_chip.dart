@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import '/models/analytics.dart';
 import '/models/team/stats/duration_models.dart';
@@ -26,7 +27,8 @@ class DurationsChip extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _durationsTitles().padBottom(2),
+              _durationsTitles(),
+              Gap(2 * AnalyticsTheme.appSizeRatio),
               _durationsBar().padBottom(2),
             ],
           ),
@@ -39,8 +41,10 @@ class DurationsChip extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        _durationTitle('0-2', durations.zeroToTwoRate).padRight(16),
-        _durationTitle('2-5', durations.twoToFiveRate, secondaryColor: true).padRight(16),
+        _durationTitle('0-2', durations.zeroToTwoRate),
+        Gap(16 * AnalyticsTheme.appSizeRatio),
+        _durationTitle('2-5', durations.twoToFiveRate, secondaryColor: true),
+        Gap(16 * AnalyticsTheme.appSizeRatio),
         _durationTitle('5+', durations.fivePlusRate),
       ],
     );

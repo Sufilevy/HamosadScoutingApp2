@@ -128,6 +128,8 @@ class DrawerHeader extends StatelessWidget {
 
   Widget _buildMenuButton(BuildContext context) {
     return padRight(
+      // Because [padRight] already multiplies by [appSizeRatio], this
+      // second multiplication essentially makes it [appSizeRatioSquared].
       16 * AnalyticsTheme.appSizeRatio,
       Transform.rotate(
         angle: math.pi / 2,
