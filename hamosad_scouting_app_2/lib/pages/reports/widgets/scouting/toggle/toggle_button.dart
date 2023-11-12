@@ -23,7 +23,7 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
   @override
   Widget build(BuildContext context) {
     return padSymmetric(
-      horizontal: 54.0,
+      horizontal: 54,
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -32,8 +32,8 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
             child: Checkbox(
               activeColor: ScoutingTheme.primary,
               checkColor: ScoutingTheme.background1,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.0)),
-              side: const BorderSide(color: ScoutingTheme.foreground2, width: 2.0),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
+              side: const BorderSide(color: ScoutingTheme.foreground2, width: 2),
               value: widget.cubit.data,
               onChanged: (value) => setState(() {
                 widget.cubit.data = value ?? !widget.cubit.data;
@@ -45,8 +45,7 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
               onPressed: () => setState(() {
                 widget.cubit.data = !widget.cubit.data;
               }),
-              child:
-                  ScoutingText.subtitle(widget.title).padSymmetric(horizontal: 2.0, vertical: 10.0),
+              child: ScoutingText.subtitle(widget.title).padSymmetric(horizontal: 2, vertical: 10),
             ),
           ),
         ],

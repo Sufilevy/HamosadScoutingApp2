@@ -41,7 +41,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
   Widget build(BuildContext context) {
     if (widget.title.isNotEmpty) {
       return padSymmetric(
-        horizontal: 32.0,
+        horizontal: 32,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -49,7 +49,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
               child: ScoutingText.subtitle(
                 widget.title,
                 textAlign: TextAlign.center,
-              ).padSymmetric(horizontal: 12.0),
+              ).padSymmetric(horizontal: 12),
             ),
             _buildCounter(),
           ],
@@ -67,34 +67,34 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
   ) {
     return CircleAvatar(
       backgroundColor: ScoutingTheme.primary,
-      radius: 32.0 * ScoutingTheme.appSizeRatio,
+      radius: 32 * ScoutingTheme.appSizeRatio,
       child: IconButton(
         onPressed: onPressed,
         padding: EdgeInsets.zero,
         icon: Icon(icon),
         color: ScoutingTheme.background1,
-        iconSize: 32.0 * ScoutingTheme.appSizeRatio,
-        splashRadius: 42.0 * ScoutingTheme.appSizeRatio,
+        iconSize: 32 * ScoutingTheme.appSizeRatio,
+        splashRadius: 42 * ScoutingTheme.appSizeRatio,
       ),
     );
   }
 
   Widget _buildCounterText(BuildContext context) {
     return padSymmetric(
-      horizontal: 16.0,
+      horizontal: 16,
       Container(
-        width: 110.0 * ScoutingTheme.appSizeRatio,
-        height: 80.0 * ScoutingTheme.appSizeRatio,
+        width: 110 * ScoutingTheme.appSizeRatio,
+        height: 80 * ScoutingTheme.appSizeRatio,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(8.0 * ScoutingTheme.appSizeRatio),
+          borderRadius: BorderRadius.circular(8 * ScoutingTheme.appSizeRatio),
           border: Border.all(
             color: ScoutingTheme.primary,
-            width: 2.0,
+            width: 2,
           ),
         ),
-        padding: EdgeInsets.all(12.0 * ScoutingTheme.appSizeRatio),
+        padding: EdgeInsets.all(12 * ScoutingTheme.appSizeRatio),
         child: RepaintBoundary(
           child: AnimatedSwitcher(
             duration: 100.milliseconds,

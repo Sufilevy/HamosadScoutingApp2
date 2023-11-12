@@ -33,7 +33,7 @@ class ScoutingDialog extends StatelessWidget {
           if (titleIcon != null)
             Icon(
               titleIcon!,
-              size: 54.0 * ScoutingTheme.appSizeRatio,
+              size: 54 * ScoutingTheme.appSizeRatio,
               color: iconColor ?? ScoutingTheme.primary,
             ),
           if (title.isNotEmpty) ...[
@@ -48,10 +48,10 @@ class ScoutingDialog extends StatelessWidget {
         height: 2.35 * ScoutingTheme.appSizeRatio,
       ),
       contentPadding: EdgeInsets.fromLTRB(
-        32.0 * ScoutingTheme.appSizeRatio,
-        8.0 * ScoutingTheme.appSizeRatio,
-        32.0 * ScoutingTheme.appSizeRatio,
-        0.0,
+        32 * ScoutingTheme.appSizeRatio,
+        8 * ScoutingTheme.appSizeRatio,
+        32 * ScoutingTheme.appSizeRatio,
+        0,
       ),
       actionsAlignment: MainAxisAlignment.center,
       actions: [
@@ -62,7 +62,7 @@ class ScoutingDialog extends StatelessWidget {
               'OK',
               color: ScoutingTheme.primary,
               fontWeight: FontWeight.w600,
-            ).padAll(8.0),
+            ).padAll(8),
             onPressed: () => Navigator.pop(context),
           ),
       ],
@@ -78,9 +78,9 @@ void showWarningSnackBar(BuildContext context, String title) {
           Icon(
             Icons.warning_rounded,
             color: ScoutingTheme.warning,
-            size: 36.0 * ScoutingTheme.appSizeRatio,
+            size: 36 * ScoutingTheme.appSizeRatio,
           ),
-          ScoutingText.subtitle(title).padLeft(16.0),
+          ScoutingText.subtitle(title).padLeft(16),
         ],
       ),
       backgroundColor: ScoutingTheme.background2,

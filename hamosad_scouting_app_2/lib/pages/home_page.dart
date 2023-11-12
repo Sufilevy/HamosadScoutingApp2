@@ -33,11 +33,11 @@ class ScoutingHomePage extends ConsumerWidget {
             builder: (context) => IconButton(
               icon: Icon(
                 FontAwesomeIcons.circleInfo,
-                size: 32.0 * ScoutingTheme.appSizeRatio,
+                size: 32 * ScoutingTheme.appSizeRatio,
                 color: ScoutingTheme.primaryVariant,
               ),
               onPressed: () => Scaffold.of(context).openDrawer(),
-              splashRadius: 25.0 * ScoutingTheme.appSizeRatio,
+              splashRadius: 25 * ScoutingTheme.appSizeRatio,
               tooltip: 'About',
             ),
           ),
@@ -60,13 +60,13 @@ class ScoutingHomePage extends ConsumerWidget {
                   hint: 'Enter your team number...',
                   title: 'Team Number',
                   onlyNumbers: true,
-                ).padSymmetric(vertical: 20.0),
+                ).padSymmetric(vertical: 20),
               ],
             ),
             ScoutingIconButton(
               icon: FontAwesomeIcons.squarePlus,
-              iconSize: 250.0 * ScoutingTheme.appSizeRatio,
-              splashRadius: 160.0 * ScoutingTheme.appSizeRatio,
+              iconSize: 250 * ScoutingTheme.appSizeRatio,
+              splashRadius: 160 * ScoutingTheme.appSizeRatio,
               tooltip: 'Create a new report',
               onPressed: () => _createReport(context, report),
             ),
@@ -82,10 +82,10 @@ class ScoutingHomePage extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ScoutingImage(path: 'assets/images/hamosad_logo.png').padLTRB(40.0, 20.0, 40.0, 30.0),
+          ScoutingImage(path: 'assets/images/hamosad_logo.png').padLTRB(40, 20, 40, 30),
           ScoutingText.navigation(
             'In association with:',
-            fontSize: 36.0 * ScoutingTheme.appSizeRatio,
+            fontSize: 36 * ScoutingTheme.appSizeRatio,
           ),
           const Expanded(
             child: Column(
@@ -93,14 +93,14 @@ class ScoutingHomePage extends ConsumerWidget {
             ),
           ),
           padBottom(
-            20.0,
+            20,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ScoutingText.navigation(
                   'Made with',
-                  fontSize: 24.0 * ScoutingTheme.appSizeRatio,
-                ).padRight(10.0),
+                  fontSize: 24 * ScoutingTheme.appSizeRatio,
+                ).padRight(10),
                 const FlutterLogo(),
               ],
             ),

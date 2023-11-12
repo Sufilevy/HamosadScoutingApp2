@@ -22,10 +22,10 @@ Widget padBottom(double padding, Widget child) => Padding(
 
 Widget pad(
   Widget child, {
-  double left = 0.0,
-  double top = 0.0,
-  double right = 0.0,
-  double bottom = 0.0,
+  double left = 0,
+  double top = 0,
+  double right = 0,
+  double bottom = 0,
 }) =>
     Padding(
       padding: EdgeInsets.fromLTRB(left, top, right, bottom) * ScoutingTheme.appSizeRatio,
@@ -34,8 +34,8 @@ Widget pad(
 
 Widget padSymmetric(
   Widget child, {
-  double horizontal = 0.0,
-  double vertical = 0.0,
+  double horizontal = 0,
+  double vertical = 0,
 }) =>
     Padding(
       padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical) *
@@ -67,16 +67,16 @@ extension Paddings on Widget {
   Widget padBottom(double padding) => paddings.padBottom(padding, this);
 
   Widget pad({
-    double left = 0.0,
-    double top = 0.0,
-    double right = 0.0,
-    double bottom = 0.0,
+    double left = 0,
+    double top = 0,
+    double right = 0,
+    double bottom = 0,
   }) =>
       paddings.pad(left: left, top: top, right: right, bottom: bottom, this);
 
   Widget padSymmetric({
-    double horizontal = 0.0,
-    double vertical = 0.0,
+    double horizontal = 0,
+    double vertical = 0,
   }) =>
       paddings.padSymmetric(horizontal: horizontal, vertical: vertical, this);
 

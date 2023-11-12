@@ -22,28 +22,28 @@ class ScoutingTheme {
   static TextStyle get navigationStyle => TextStyle(
         fontFamily: 'Varela Round',
         fontWeight: FontWeight.normal,
-        fontSize: 27.0 * appSizeRatio,
+        fontSize: 27 * appSizeRatio,
         color: foreground1,
       );
 
   static TextStyle get titleStyle => TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.w600,
-        fontSize: 27.0 * appSizeRatio,
+        fontSize: 27 * appSizeRatio,
         color: foreground1,
       );
 
   static TextStyle get subtitleStyle => TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.normal,
-        fontSize: 25.0 * appSizeRatio,
+        fontSize: 25 * appSizeRatio,
         color: foreground1,
       );
 
   static TextStyle get bodyStyle => TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.w400,
-        fontSize: 23.0 * appSizeRatio,
+        fontSize: 23 * appSizeRatio,
         color: foreground1,
       );
 }

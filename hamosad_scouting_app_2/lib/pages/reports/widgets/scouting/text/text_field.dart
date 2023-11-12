@@ -69,7 +69,7 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
   @override
   Widget build(BuildContext context) {
     return padSymmetric(
-      horizontal: 32.0,
+      horizontal: 32,
       Form(
         key: _formKey,
         child: TextFormField(
@@ -106,7 +106,7 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
             errorBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: ScoutingTheme.background3,
-                width: 2.0 * ScoutingTheme.appSizeRatio,
+                width: 2 * ScoutingTheme.appSizeRatio,
               ),
             ),
             focusedErrorBorder: OutlineInputBorder(
@@ -118,17 +118,17 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
             border: OutlineInputBorder(
               borderSide: BorderSide(
                 color: ScoutingTheme.background3,
-                width: 2.0 * ScoutingTheme.appSizeRatio,
+                width: 2 * ScoutingTheme.appSizeRatio,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: ScoutingTheme.background3,
-                width: 2.0 * ScoutingTheme.appSizeRatio,
+                width: 2 * ScoutingTheme.appSizeRatio,
               ),
             ),
             errorStyle: ScoutingTheme.bodyStyle.copyWith(
-              fontSize: 16.0,
+              fontSize: 16,
               color: ScoutingTheme.error,
             ),
           ),

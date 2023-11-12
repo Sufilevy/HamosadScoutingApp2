@@ -33,34 +33,34 @@ class ReportPage extends ConsumerWidget {
         child: Scaffold(
           backgroundColor: ScoutingTheme.background1,
           appBar: AppBar(
-            toolbarHeight: 80.0 * ScoutingTheme.appSizeRatio,
+            toolbarHeight: 80 * ScoutingTheme.appSizeRatio,
             backgroundColor: ScoutingTheme.background2,
             actions: [
               _buildSendButton(context, report),
             ],
             leading: _buildCloseButton(context),
-            title: ScoutingText.navigation(title, fontSize: 32.0 * ScoutingTheme.appSizeRatio),
+            title: ScoutingText.navigation(title, fontSize: 32 * ScoutingTheme.appSizeRatio),
             centerTitle: true,
             bottom: TabBar(
               isScrollable: true,
               indicatorWeight: 2.5 * ScoutingTheme.appSizeRatio,
               indicatorColor: ScoutingTheme.primary,
-              labelPadding: EdgeInsets.symmetric(horizontal: 24.0 * ScoutingTheme.appSizeRatio),
+              labelPadding: EdgeInsets.symmetric(horizontal: 24 * ScoutingTheme.appSizeRatio),
               labelColor: ScoutingTheme.foreground1,
               unselectedLabelColor: ScoutingTheme.foreground2,
-              labelStyle: ScoutingTheme.navigationStyle.copyWith(fontSize: 16.0),
+              labelStyle: ScoutingTheme.navigationStyle.copyWith(fontSize: 16),
               tabs: [
                 for (final tab in tabs)
                   Tab(
                     text: tab.title,
-                    height: 52.0 * ScoutingTheme.appSizeRatio,
+                    height: 52 * ScoutingTheme.appSizeRatio,
                   ),
               ],
             ),
           ),
           body: TabBarView(
             children: tabs,
-          ).padSymmetric(vertical: 16.0),
+          ).padSymmetric(vertical: 16),
         ),
       ),
     );
@@ -107,21 +107,21 @@ class ReportPage extends ConsumerWidget {
       okButton: false,
       actions: [
         padAll(
-          8.0,
+          8,
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: ScoutingText.body('Cancel', color: ScoutingTheme.primary).padAll(4.0),
+            child: ScoutingText.body('Cancel', color: ScoutingTheme.primary).padAll(4),
           ),
         ),
         padAll(
-          8.0,
+          8,
           TextButton(
             onPressed: () => _sendReport(context, report),
             child: ScoutingText.body(
               'Send',
               color: ScoutingTheme.blueAlliance,
               fontWeight: FontWeight.bold,
-            ).padAll(4.0),
+            ).padAll(4),
           ),
         ),
       ],
@@ -131,7 +131,7 @@ class ReportPage extends ConsumerWidget {
   Widget _buildCloseButton(BuildContext context) {
     return ScoutingIconButton(
       icon: Icons.close_rounded,
-      iconSize: 26.0,
+      iconSize: 26,
       color: ScoutingTheme.foreground2,
       onPressed: () async {
         showDialog(context: context, builder: _buildCloseReportDialog);
@@ -148,7 +148,7 @@ class ReportPage extends ConsumerWidget {
       okButton: false,
       actions: [
         padAll(
-          8.0,
+          8,
           TextButton(
             onPressed: () {
               Navigator.popUntil(
@@ -160,16 +160,16 @@ class ReportPage extends ConsumerWidget {
               'Delete',
               color: ScoutingTheme.error,
               fontWeight: FontWeight.bold,
-            ).padAll(4.0),
+            ).padAll(4),
           ),
         ),
         padAll(
-          8.0,
+          8,
           TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: ScoutingText.body('Cancel', color: ScoutingTheme.primary).padAll(4.0),
+            child: ScoutingText.body('Cancel', color: ScoutingTheme.primary).padAll(4),
           ),
         ),
       ],

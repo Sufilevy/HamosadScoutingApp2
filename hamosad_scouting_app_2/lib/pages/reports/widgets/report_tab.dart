@@ -14,7 +14,7 @@ class ReportTab extends StatelessWidget {
     super.key,
     required this.title,
     required children,
-    this.seperation = 30.0,
+    this.seperation = 30,
     this.seperated = true,
   }) : children = [...children, Container()] {
     assert(children.isNotEmpty);
@@ -24,17 +24,17 @@ class ReportTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       separatorBuilder: (context, index) => padLTRB(
-        40.0,
-        30.0,
-        40.0,
-        0.0,
+        40,
+        30,
+        40,
+        0,
         Container(
           height: 1.5,
           decoration: BoxDecoration(
             color: (seperated && index < children.length - 2)
                 ? ScoutingTheme.background3
                 : Colors.transparent,
-            borderRadius: BorderRadius.circular(1.0),
+            borderRadius: BorderRadius.circular(1),
           ),
         ),
       ),

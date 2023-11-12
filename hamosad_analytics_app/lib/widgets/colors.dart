@@ -5,7 +5,7 @@ extension LightenDarkenColor on Color {
     assert(amount >= 0 && amount <= 1);
 
     final hsl = HSLColor.fromColor(this);
-    final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
+    final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0, 1));
 
     return hslDark.toColor();
   }
@@ -14,7 +14,7 @@ extension LightenDarkenColor on Color {
     assert(amount >= 0 && amount <= 1);
 
     final hsl = HSLColor.fromColor(this);
-    final hslLight = hsl.withLightness((hsl.lightness + amount).clamp(0.0, 1.0));
+    final hslLight = hsl.withLightness((hsl.lightness + amount).clamp(0, 1));
 
     return hslLight.toColor();
   }

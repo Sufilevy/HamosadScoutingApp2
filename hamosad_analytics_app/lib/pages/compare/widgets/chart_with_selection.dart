@@ -83,7 +83,7 @@ class _ChartWithSelectionState extends State<ChartWithSelection> {
     );
   }
 
-  void _onHorizontalSwipe(DragEndDetails? details, {double sensitivity = 250.0}) {
+  void _onHorizontalSwipe(DragEndDetails? details, {double sensitivity = 250}) {
     if (details == null) return;
 
     if (details.primaryVelocity! > sensitivity) {

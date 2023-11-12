@@ -16,7 +16,7 @@ class _ScoutingAppState extends State<ScoutingApp> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQueryData.fromView(View.of(context)).size;
-    ScoutingTheme.appSizeRatio = screenSize.height / 1350.0;
+    ScoutingTheme.appSizeRatio = screenSize.height / 1350;
 
     return ProviderScope(
       child: MaterialApp(

@@ -70,7 +70,7 @@ class AnalyticsChart extends StatelessWidget {
           isCurved: true,
           curveSmoothness: 0.3,
           preventCurveOverShooting: true,
-          preventCurveOvershootingThreshold: 20.0,
+          preventCurveOvershootingThreshold: 20,
           barWidth: 3.5 * AnalyticsTheme.appSizeRatio,
           spots: reports
               .mapIndexed((index, report) => FlSpot(index.toDouble(), dataFromReport(report)))
@@ -159,14 +159,14 @@ class AnalyticsChart extends StatelessWidget {
         getTooltipItems: _tooltipsItems,
         tooltipBorder: const BorderSide(
           color: AnalyticsTheme.background3,
-          width: 1.0,
+          width: 1,
         ),
       ),
     );
   }
 
   List<LineTooltipItem> _tooltipsItems(List<LineBarSpot> touchedSpots) {
-    Color teamColorToTextColor(Color color) => color.lighten((1.0 - color.computeLuminance()) / 4);
+    Color teamColorToTextColor(Color color) => color.lighten((1 - color.computeLuminance()) / 4);
 
     return touchedSpots.map((LineBarSpot touchedSpot) {
       return LineTooltipItem(

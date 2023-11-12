@@ -68,7 +68,7 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
-    final size = 280.0 * ScoutingTheme.appSizeRatio;
+    final size = 280 * ScoutingTheme.appSizeRatio;
 
     return SizedBox(
       width: size,
@@ -81,7 +81,7 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch> with SingleTicker
             child: CustomPaint(
               painter: CirclePainter(
                 color: ScoutingTheme.secondary,
-                strokeWidth: 13.0 * ScoutingTheme.appSizeRatio,
+                strokeWidth: 13 * ScoutingTheme.appSizeRatio,
                 progress:
                     (_stopwatch.elapsed.inMilliseconds % widget.lapLength) / widget.lapLength * 100,
               ),
@@ -92,7 +92,7 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch> with SingleTicker
             children: [
               ScoutingText.navigation(
                 '$_seconds:$_milliseconds',
-                fontSize: 50.0 * ScoutingTheme.appSizeRatio,
+                fontSize: 50 * ScoutingTheme.appSizeRatio,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -100,7 +100,7 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch> with SingleTicker
                   ScoutingIconButton(
                     icon: Icons.stop,
                     color: _stopwatch.isRunning ? ScoutingTheme.foreground2 : ScoutingTheme.primary,
-                    iconSize: 60.0 * ScoutingTheme.appSizeRatio,
+                    iconSize: 60 * ScoutingTheme.appSizeRatio,
                     isEnabled: !_stopwatch.isRunning,
                     onPressed: _reset,
                   ),
@@ -109,9 +109,9 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch> with SingleTicker
                       icon: AnimatedIcons.play_pause,
                       progress: _controller,
                       color: ScoutingTheme.primary,
-                      size: 60.0 * ScoutingTheme.appSizeRatio,
+                      size: 60 * ScoutingTheme.appSizeRatio,
                     ),
-                    iconSize: 60.0 * ScoutingTheme.appSizeRatio,
+                    iconSize: 60 * ScoutingTheme.appSizeRatio,
                     color: _stopwatch.isRunning ? ScoutingTheme.foreground2 : ScoutingTheme.primary,
                     onPressed: () => setState(() {
                       _stopwatch.isRunning ? _stop() : _start();

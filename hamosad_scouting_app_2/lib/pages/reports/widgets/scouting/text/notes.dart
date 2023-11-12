@@ -26,7 +26,7 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
     final normalBorder = OutlineInputBorder(
       borderSide: BorderSide(
         color: ScoutingTheme.background3,
-        width: 2.0 * ScoutingTheme.appSizeRatio,
+        width: 2 * ScoutingTheme.appSizeRatio,
       ),
     );
 
@@ -45,7 +45,7 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
     );
 
     return padSymmetric(
-      horizontal: 60.0,
+      horizontal: 60,
       TextField(
         onChanged: (String value) => setState(() {
           widget.cubit.data = value;
@@ -63,7 +63,7 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
           labelStyle: ScoutingTheme.bodyStyle.copyWith(color: ScoutingTheme.foreground2),
           hintStyle: ScoutingTheme.bodyStyle.copyWith(color: ScoutingTheme.foreground2),
           errorStyle: ScoutingTheme.bodyStyle.copyWith(
-            fontSize: 16.0,
+            fontSize: 16,
             color: ScoutingTheme.error,
           ),
           errorBorder: normalBorder,

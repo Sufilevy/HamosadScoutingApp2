@@ -66,9 +66,9 @@ class GameReportPage extends ConsumerWidget {
             ScoutingSwitch(
               items: const ['Almost only', 'Half', 'None'],
               customWidths: [
-                200.0 * ScoutingTheme.appSizeRatio,
-                150.0 * ScoutingTheme.appSizeRatio,
-                150.0 * ScoutingTheme.appSizeRatio,
+                200 * ScoutingTheme.appSizeRatio,
+                150 * ScoutingTheme.appSizeRatio,
+                150 * ScoutingTheme.appSizeRatio,
               ],
               onChanged: (index) => report.summary.defenseFocus.data =
                   index == null ? null : DefenseFocus.values[index],

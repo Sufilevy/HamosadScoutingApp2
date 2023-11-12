@@ -89,8 +89,8 @@ class TeamsSelect extends StatelessWidget {
 
     return Row(
       children: <Widget>[
-        clearSelection.padRight(8.0),
-        searchIcon.padRight(12.0),
+        clearSelection.padRight(8),
+        searchIcon.padRight(12),
       ],
     );
   }

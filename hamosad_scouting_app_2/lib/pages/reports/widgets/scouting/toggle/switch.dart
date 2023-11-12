@@ -8,8 +8,8 @@ class ScoutingSwitch extends StatelessWidget {
     super.key,
     required this.items,
     required this.onChanged,
-    this.fontSize = 24.0,
-    this.minWidth = 140.0,
+    this.fontSize = 24,
+    this.minWidth = 140,
     this.customWidths,
   });
 
@@ -23,7 +23,7 @@ class ScoutingSwitch extends StatelessWidget {
     return ToggleSwitch(
       customWidths: customWidths?.map((w) => w * ScoutingTheme.appSizeRatio).toList(),
       minWidth: minWidth * ScoutingTheme.appSizeRatio,
-      cornerRadius: 10.0 * ScoutingTheme.appSizeRatio,
+      cornerRadius: 10 * ScoutingTheme.appSizeRatio,
       fontSize: fontSize * ScoutingTheme.appSizeRatio,
       activeBgColors: List.filled(items.length, [ScoutingTheme.primaryVariant]),
       activeFgColor: ScoutingTheme.foreground1,

@@ -12,7 +12,7 @@ class ScoutingIconButton extends StatelessWidget {
     this.color,
     this.disabledColor,
     this.splashRadius,
-    this.iconSize = 24.0,
+    this.iconSize = 24,
     this.isEnabled = true,
   }) : assert(icon == null || iconWidget == null);
 
@@ -31,11 +31,11 @@ class ScoutingIconButton extends StatelessWidget {
       child: IconButton(
         onPressed: isEnabled ? onPressed : null,
         iconSize: iconSize,
-        padding: EdgeInsets.all(12.0 * ScoutingTheme.appSizeRatio),
+        padding: EdgeInsets.all(12 * ScoutingTheme.appSizeRatio),
         color: color ?? ScoutingTheme.primary,
         disabledColor: disabledColor ?? ScoutingTheme.foreground2,
         tooltip: tooltip,
-        splashRadius: splashRadius ?? iconSize / 2.0,
+        splashRadius: splashRadius ?? iconSize / 2,
         icon: iconWidget ?? Icon(icon),
       ),
     );

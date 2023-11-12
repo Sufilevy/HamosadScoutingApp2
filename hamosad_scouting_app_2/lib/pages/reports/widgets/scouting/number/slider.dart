@@ -57,13 +57,13 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
                 ScoutingText.title(
                   widget.title,
                   textAlign: TextAlign.center,
-                ).padSymmetric(horizontal: 32.0),
+                ).padSymmetric(horizontal: 32),
               _buildSlider(),
               if (widget.subtitle.isNotEmpty)
                 ScoutingText.body(
                   widget.subtitle,
                   textAlign: TextAlign.center,
-                ).padSymmetric(horizontal: 32.0),
+                ).padSymmetric(horizontal: 32),
             ],
           );
   }
