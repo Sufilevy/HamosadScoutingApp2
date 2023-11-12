@@ -52,7 +52,7 @@ class _ScoutingSliderState extends State<ScoutingSlider> {
         ? _buildSlider()
         : Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: <Widget>[
               if (widget.title.isNotEmpty)
                 ScoutingText.title(
                   widget.title,

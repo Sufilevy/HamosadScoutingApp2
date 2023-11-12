@@ -24,7 +24,7 @@ class GameReportPage extends ConsumerWidget {
       tabs: [
         ReportTab(
           title: 'Info',
-          children: [
+          children: <Widget>[
             ScoutingMatchAndTeam(
               matches: ScoutingDatabase.matches,
               match: report.match,
@@ -34,7 +34,7 @@ class GameReportPage extends ConsumerWidget {
         ),
         ReportTab(
           title: 'Auto',
-          children: [
+          children: <Widget>[
             ScoutingNotes(
               cubit: report.auto.notes,
             ),
@@ -42,7 +42,7 @@ class GameReportPage extends ConsumerWidget {
         ),
         ReportTab(
           title: 'Teleop',
-          children: [
+          children: <Widget>[
             ScoutingNotes(
               cubit: report.teleop.notes,
             ),
@@ -50,7 +50,7 @@ class GameReportPage extends ConsumerWidget {
         ),
         ReportTab(
           title: 'Endgame',
-          children: [
+          children: <Widget>[
             ScoutingNotes(
               cubit: report.endgame.notes,
             ),
@@ -58,7 +58,7 @@ class GameReportPage extends ConsumerWidget {
         ),
         ReportTab(
           title: 'Summary',
-          children: [
+          children: <Widget>[
             ScoutingToggleButton(
               cubit: report.summary.won,
               title: "Did the robot's alliance win?",

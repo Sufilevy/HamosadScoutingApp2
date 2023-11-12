@@ -28,7 +28,7 @@ class ScoutingDialog extends StatelessWidget {
       backgroundColor: ScoutingTheme.background2,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           if (title.isNotEmpty) const Spacer(flex: 8),
           if (titleIcon != null)
             Icon(
@@ -74,7 +74,7 @@ void showWarningSnackBar(BuildContext context, String title) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Row(
-        children: [
+        children: <Widget>[
           Icon(
             Icons.warning_rounded,
             color: ScoutingTheme.warning,

@@ -18,7 +18,7 @@ class PitReportPage extends ConsumerWidget {
       tabs: [
         ReportTab(
           title: 'Info',
-          children: [
+          children: <Widget>[
             ScoutingTextField(
               title: 'Team Number',
               hint: "Enter the team's number...",

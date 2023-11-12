@@ -25,7 +25,7 @@ class ScoutingImage extends StatelessWidget {
       title.isNotEmpty
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 ScoutingText.subtitle(title),
                 _buildImage(),
               ],

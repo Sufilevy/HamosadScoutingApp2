@@ -34,7 +34,7 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         _buildSelectMatch(),
         SizedBox(height: 25 * ScoutingTheme.appSizeRatio),
         if (_match != null) _buildSelectTeam(),
@@ -45,7 +45,7 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
   Widget _buildSelectMatch() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+      children: <Widget>[
         ScoutingText.title('Match:'),
         SizedBox(width: 50 * ScoutingTheme.appSizeRatio),
         DropdownButton<String>(
@@ -124,24 +124,24 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
+      children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             _buildTeamButton(context, 0),
             _buildTeamButton(context, 3),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             _buildTeamButton(context, 1),
             _buildTeamButton(context, 4),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             _buildTeamButton(context, 2),
             _buildTeamButton(context, 5),
           ],
@@ -164,7 +164,7 @@ class _ScoutingTeamNumberState extends State<ScoutingTeamNumber> {
         color: ScoutingTheme.background1,
         child: RepaintBoundary(
           child: Stack(
-            children: [
+            children: <Widget>[
               Align(
                 alignment: Alignment.center,
                 child: AnimatedContainer(

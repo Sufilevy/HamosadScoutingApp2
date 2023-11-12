@@ -74,7 +74,7 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch> with SingleTicker
       width: size,
       height: size,
       child: Stack(
-        children: [
+        children: <Widget>[
           SizedBox(
             width: size,
             height: size,
@@ -89,14 +89,14 @@ class _ScoutingStopwatchState extends State<ScoutingStopwatch> with SingleTicker
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: <Widget>[
               ScoutingText.navigation(
                 '$_seconds:$_milliseconds',
                 fontSize: 50 * ScoutingTheme.appSizeRatio,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   ScoutingIconButton(
                     icon: Icons.stop,
                     color: _stopwatch.isRunning ? ScoutingTheme.foreground2 : ScoutingTheme.primary,

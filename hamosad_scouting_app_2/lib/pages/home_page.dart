@@ -45,10 +45,10 @@ class ScoutingHomePage extends ConsumerWidget {
         drawer: _buildDrawer(),
         body: ReportTab(
           title: ScoutingTheme.appTitle,
-          children: [
+          children: <Widget>[
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
+              children: <Widget>[
                 ScoutingTextField(
                   cubit: report.scouter,
                   hint: 'Enter your name...',
@@ -81,7 +81,7 @@ class ScoutingHomePage extends ConsumerWidget {
       backgroundColor: ScoutingTheme.background2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           ScoutingImage(path: 'assets/images/hamosad_logo.png').padLTRB(40, 20, 40, 30),
           ScoutingText.navigation(
             'In association with:',
@@ -89,14 +89,14 @@ class ScoutingHomePage extends ConsumerWidget {
           ),
           const Expanded(
             child: Column(
-              children: [],
+              children: <Widget>[],
             ),
           ),
           padBottom(
             20,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 ScoutingText.navigation(
                   'Made with',
                   fontSize: 24 * ScoutingTheme.appSizeRatio,

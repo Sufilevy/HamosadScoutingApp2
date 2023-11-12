@@ -44,7 +44,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
         horizontal: 32,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
+          children: <Widget>[
             Flexible(
               child: ScoutingText.subtitle(
                 widget.title,
@@ -114,7 +114,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
   Widget _buildCounter() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+      children: <Widget>[
         _buildIconButton(context, _decrement, FontAwesomeIcons.minus),
         _buildCounterText(context),
         _buildIconButton(context, _increment, FontAwesomeIcons.plus),

@@ -26,7 +26,7 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
       horizontal: 54,
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           Transform.scale(
             scale: 1.75 * ScoutingTheme.appSizeRatio,
             child: Checkbox(
