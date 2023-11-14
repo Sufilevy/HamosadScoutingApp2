@@ -15,7 +15,7 @@ class ChartWithSelection extends StatefulWidget {
     this.initialChartIndex = 0,
   });
 
-  final List<String> selectedTeams;
+  final Set<String> selectedTeams;
   final TeamsWithReports teamsWithReports;
   final int initialChartIndex;
 

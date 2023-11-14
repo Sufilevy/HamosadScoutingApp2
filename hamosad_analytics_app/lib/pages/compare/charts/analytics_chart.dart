@@ -15,7 +15,11 @@ import 'charts.dart';
 typedef TeamsWithReports = Map<String, List<Report>>;
 
 class AnalyticsChart extends StatelessWidget {
-  AnalyticsChart({super.key, required this.dataFromReport, required this.teamsWithReports});
+  AnalyticsChart({
+    super.key,
+    required this.dataFromReport,
+    required this.teamsWithReports,
+  });
 
   final DataFromReport dataFromReport;
   final TeamsWithReports teamsWithReports;

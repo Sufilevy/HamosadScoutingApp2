@@ -38,9 +38,7 @@ class AnalyticsApp extends StatelessWidget {
         path: '/compare',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
-          child: ComparePage(
-            selectedTeams: state.uri.queryParameters['teams']?.split(','),
-          ),
+          child: const ComparePage(),
         ),
       ),
       GoRoute(

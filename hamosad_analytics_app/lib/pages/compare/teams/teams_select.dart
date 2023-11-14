@@ -13,8 +13,8 @@ class TeamsSelect extends StatelessWidget {
     this.selectedTeams,
   });
 
-  final List<String> teams;
-  final List<String>? selectedTeams;
+  final Set<String> teams;
+  final Set<String>? selectedTeams;
   final void Function(List<String> teams) onSelectionChange;
 
   @override

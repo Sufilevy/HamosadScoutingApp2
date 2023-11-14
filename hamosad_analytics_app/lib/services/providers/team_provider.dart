@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/models/team/team_model.dart';
 import '/services/database/analytics_database.dart';
 
-class ReportsIdentifier extends Equatable {
-  const ReportsIdentifier(this.teamNumber, this.districts);
+class TeamReportsIdentifier extends Equatable {
+  const TeamReportsIdentifier(this.teamNumber, this.districts);
 
   final String teamNumber;
   final Set<String> districts;
@@ -15,12 +15,12 @@ class ReportsIdentifier extends Equatable {
   List<Object?> get props => [teamNumber, districts];
 }
 
-final teamProvider = StreamProvider.autoDispose.family<Team, ReportsIdentifier>(
-  (ref, args) {
-    final ReportsIdentifier(:teamNumber, :districts) = args;
+final teamProvider = StreamProvider.autoDispose.family<Team, TeamReportsIdentifier>(
+  (_, identifier) {
+    final TeamReportsIdentifier(:teamNumber, :districts) = identifier;
 
     final snapshots = districts.map(
-      (district) => AnalyticsDatabase.reportStreamOfTeam(teamNumber, district),
+      (district) => AnalyticsDatabase.reportsStreamOfTeam(teamNumber, district),
     );
 
     return StreamGroup.merge(snapshots).asyncMap(

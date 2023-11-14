@@ -157,7 +157,7 @@ class TeamInfo {
   final String name, location;
   final Color color;
 
-  static List<String> get teams => _teamNumberToInfo.keys.toList();
+  static Set<String> get teams => _teamNumberToInfo.keys.toSet();
 
   /// [Color, Name, Location]
   static const _teamNumberToInfo = {

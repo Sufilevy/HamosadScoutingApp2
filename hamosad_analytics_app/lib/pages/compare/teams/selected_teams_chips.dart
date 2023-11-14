@@ -2,18 +2,20 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '/services/utilities.dart';
 import '/theme.dart';
 import '/widgets/inputs.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 
 class SelectedTeamsChips extends StatelessWidget {
-  const SelectedTeamsChips(
-      {super.key, required this.onSelectionChange, required this.selectedTeams});
+  const SelectedTeamsChips({
+    super.key,
+    required this.onSelectionChange,
+    required this.selectedTeams,
+  });
 
-  final List<String> selectedTeams;
-  final void Function(List<String> teams) onSelectionChange;
+  final Set<String> selectedTeams;
+  final void Function(Set<String> teams) onSelectionChange;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class SelectedTeamsChips extends StatelessWidget {
           .map(
             (teamNumber) => _TeamChip(
               teamNumber,
-              onRemoved: (teamNumber) => onSelectionChange(selectedTeams - [teamNumber]),
+              onRemoved: (teamNumber) => onSelectionChange(selectedTeams..remove(teamNumber)),
             ),
           )
           .toList(),

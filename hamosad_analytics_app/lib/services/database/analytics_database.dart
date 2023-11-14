@@ -23,7 +23,21 @@ abstract class AnalyticsDatabase {
     return districtsSnapshot.data()?.getList<String>('all') ?? [];
   }
 
-  static Stream<DocumentSnapshot<Json>> reportStreamOfTeam(String teamNumber, String district) {
+  static Stream<QuerySnapshot<Json>> teamsStreamOfDistrict(String district) {
+    if (!district.contains('-')) district += '-1657';
+
+    return _firestore.collection(district).snapshots();
+  }
+
+  static Future<Set<String>> teamsOfDistrict(String district) async {
+    if (!district.contains('-')) district += '-1657';
+
+    final query = await _firestore.collection(district).get();
+
+    return query.docs.map((doc) => doc.id).toSet();
+  }
+
+  static Stream<DocumentSnapshot<Json>> reportsStreamOfTeam(String teamNumber, String district) {
     if (!district.contains('-')) district += '-1657';
 
     return _firestore.collection(district).doc(teamNumber).snapshots();

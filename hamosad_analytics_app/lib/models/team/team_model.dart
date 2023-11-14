@@ -4,7 +4,7 @@ class Team {
   Team(this.teamNumber);
 
   final String teamNumber;
-  final List<String> reportsIds = [];
+  final Set<String> reportsIds = {};
 
   Team updateWithReports(Json? reports) {
     if (reports == null) return this;

@@ -136,7 +136,7 @@ class TeamDetailsPage extends ConsumerWidget {
         }
 
         final district = snapshot.data!;
-        final identifier = ReportsIdentifier(teamNumber, {district});
+        final identifier = TeamReportsIdentifier(teamNumber, {district});
         final teamStream = ref.watch(teamProvider(identifier));
 
         return teamStream.when(
