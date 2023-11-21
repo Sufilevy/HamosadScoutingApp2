@@ -8,3 +8,7 @@ T debug<T>(T value) {
 extension ScreenSize on BuildContext {
   Size get screenSize => MediaQueryData.fromView(View.of(this)).size;
 }
+
+extension IsNullOrEmpty on Map? {
+  bool get isNullOrEmpty => this == null || this!.isEmpty;
+}

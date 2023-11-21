@@ -140,6 +140,10 @@ abstract class AnalyticsTheme {
         borderRadius: BorderRadius.circular(8),
       ),
     ),
+    snackBarTheme: const SnackBarThemeData(
+      backgroundColor: background2,
+      behavior: SnackBarBehavior.floating,
+    ),
   );
 
   static const defaultShadow = BoxShadow(

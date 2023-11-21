@@ -15,29 +15,29 @@ class TeamReportsIdentifier extends Equatable {
   List<Object?> get props => [teamNumber, districts];
 }
 
-final teamProvider = StreamProvider.autoDispose.family<Team, TeamReportsIdentifier>(
-  (_, identifier) {
+final teamReportsProvider = StreamProvider.autoDispose.family<Team, TeamReportsIdentifier>(
+  (_, identifier) async* {
     final TeamReportsIdentifier(:teamNumber, :districts) = identifier;
 
     final snapshots = districts.map(
       (district) => AnalyticsDatabase.reportsStreamOfTeam(teamNumber, district),
     );
 
-    return StreamGroup.merge(snapshots).asyncMap(
-      (doc) async {
-        final docDistrict = doc.reference.parent.id;
-        final team = Team(teamNumber);
+    final stream = StreamGroup.merge(snapshots);
 
-        for (final district in districts) {
-          final reports = (district == docDistrict)
-              ? doc.data()
-              : await AnalyticsDatabase.reportsOfTeam(teamNumber, district);
+    await for (final doc in stream) {
+      final docDistrict = doc.reference.parent.id;
+      final team = Team(teamNumber);
 
-          team.updateWithReports(reports);
-        }
+      for (final district in districts) {
+        final reports = (district == docDistrict)
+            ? doc.data()
+            : await AnalyticsDatabase.reportsOfTeam(teamNumber, district);
 
-        return team;
-      },
-    );
+        team.updateWithReports(reports);
+      }
+
+      yield team;
+    }
   },
 );

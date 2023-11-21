@@ -10,12 +10,10 @@ import 'charts.dart';
 class ChartWithSelection extends StatefulWidget {
   const ChartWithSelection({
     super.key,
-    required this.selectedTeams,
     required this.teamsWithReports,
     this.initialChartIndex = 0,
   });
 
-  final Set<String> selectedTeams;
   final TeamsWithReports teamsWithReports;
   final int initialChartIndex;
 

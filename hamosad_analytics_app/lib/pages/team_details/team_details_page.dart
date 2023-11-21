@@ -123,7 +123,7 @@ class TeamDetailsPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildBody(BuildContext context, WidgetRef ref) {
+  Widget _body(BuildContext context, WidgetRef ref) {
     return FutureBuilder(
       future: AnalyticsDatabase.currentDistrict(),
       builder: (context, snapshot) {
@@ -137,7 +137,7 @@ class TeamDetailsPage extends ConsumerWidget {
 
         final district = snapshot.data!;
         final identifier = TeamReportsIdentifier(teamNumber, {district});
-        final teamStream = ref.watch(teamProvider(identifier));
+        final teamStream = ref.watch(teamReportsProvider(identifier));
 
         return teamStream.when(
           data: (team) => Column(
