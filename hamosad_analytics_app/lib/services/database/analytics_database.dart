@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '/models/analytics.dart';
-import '/services/database/map_getters.dart';
+import 'json_typed_getters.dart';
 
 abstract class AnalyticsDatabase {
   static final _firestore = FirebaseFirestore.instance;

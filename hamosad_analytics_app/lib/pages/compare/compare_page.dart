@@ -10,8 +10,8 @@ import '/widgets/scaffold.dart';
 import '/widgets/text.dart';
 import 'charts/chart_with_selection.dart';
 import 'charts/charts.dart';
-import 'teams/selected_teams_chips.dart';
-import 'teams/teams_select.dart';
+import 'teams_selection/selected_teams_chips.dart';
+import 'teams_selection/teams_select.dart';
 
 class ComparePage extends ConsumerStatefulWidget {
   const ComparePage({super.key});

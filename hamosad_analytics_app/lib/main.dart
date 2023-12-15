@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform;
+import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome;
 import 'package:flutter/widgets.dart';
 
 import '/app.dart';

@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import '/pages/compare/compare_page.dart';
 import '/pages/team_details/team_details_page.dart';
-import '/pages/teams/teams_page.dart';
 import '/theme.dart';
 
 class AnalyticsApp extends StatelessWidget {
@@ -39,13 +38,6 @@ class AnalyticsApp extends StatelessWidget {
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const ComparePage(),
-        ),
-      ),
-      GoRoute(
-        path: '/teams',
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const TeamsPage(),
         ),
       ),
     ],
