@@ -3,6 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 import '/services/utilities.dart';
 import '/theme.dart';
@@ -22,13 +24,13 @@ class AnalyticsAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      title: _buildTitle().padRight(titleAvatar == null ? 0 : 50),
-      leading: _buildMenuButton(context),
+      title: _title().padRight(titleAvatar == null ? 0 : 50),
+      leading: _menuButton(context),
       leadingWidth: 66 * AnalyticsTheme.appSizeRatio,
     );
   }
 
-  Widget _buildTitle() {
+  Widget _title() {
     if (titleAvatar == null) {
       return navigationTitleText(title);
     }
@@ -42,7 +44,7 @@ class AnalyticsAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget _buildMenuButton(BuildContext context) {
+  Widget _menuButton(BuildContext context) {
     return pad(
       left: 20,
       top: 6,
@@ -67,14 +69,45 @@ class AnalyticsDrawer extends StatelessWidget {
       width: _drawerWidth(context.screenSize.width),
       child: ListView(
         padding: EdgeInsets.zero,
-        children: const [
-          DrawerHeader(),
+        children: [
+          const DrawerHeader(),
+          Gap(5 * AnalyticsTheme.appSizeRatio),
+          _pageTile(
+            context,
+            'Team Details',
+            FontAwesomeIcons.peopleGroup,
+            '/team',
+          ),
+          _pageTile(
+            context,
+            'Compare Teams',
+            FontAwesomeIcons.chartLine,
+            '/compare',
+          ),
         ],
       ),
     );
   }
 
   double _drawerWidth(double screenWidth) => math.max(screenWidth / 2, 300);
+
+  Widget _pageTile(BuildContext context, String title, IconData icon, String pageUri) {
+    return padSymmetric(
+      vertical: 5,
+      horizontal: 12,
+      ListTile(
+        leading: Icon(
+          icon,
+          color: AnalyticsTheme.primaryVariant,
+        ),
+        title: navigationTitleText(title),
+        onTap: () {
+          Scaffold.of(context).closeDrawer();
+          context.go(pageUri);
+        },
+      ),
+    );
+  }
 }
 
 class DrawerHeader extends StatelessWidget {
@@ -86,10 +119,18 @@ class DrawerHeader extends StatelessWidget {
       height: 100 * AnalyticsTheme.appSizeRatio,
       decoration: _headerDecoration,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          _buildLogo(),
-          _buildMenuButton(context),
+          _logo(),
+          Gap(12 * AnalyticsTheme.appSizeRatio),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              logoText('Hamosad Analytics'),
+              _titleUnderline(),
+            ],
+          ),
+          Gap(6 * AnalyticsTheme.appSizeRatio),
         ],
       ),
     );
@@ -109,37 +150,21 @@ class DrawerHeader extends StatelessWidget {
     );
   }
 
-  Widget _buildLogo() {
-    return Row(
-      children: <Widget>[
-        pad(
-          left: 16,
-          right: 8,
-          SvgPicture.asset(
-            'assets/svg/logo.svg',
-            width: 50 * AnalyticsTheme.appSizeRatioSquared,
-            height: 50 * AnalyticsTheme.appSizeRatioSquared,
-          ),
-        ),
-        logoText('Hamosad\n Analytics'),
-      ],
+  Widget _logo() {
+    return SvgPicture.asset(
+      'assets/svg/logo.svg',
+      width: 50 * AnalyticsTheme.appSizeRatioSquared,
+      height: 50 * AnalyticsTheme.appSizeRatioSquared,
     );
   }
 
-  Widget _buildMenuButton(BuildContext context) {
-    return padRight(
-      // Because [padRight] already multiplies by [appSizeRatio], this
-      // second multiplication essentially makes it [appSizeRatioSquared].
-      16 * AnalyticsTheme.appSizeRatio,
-      Transform.rotate(
-        angle: math.pi / 2,
-        child: IconButton(
-          iconSize: 26 * AnalyticsTheme.appSizeRatio,
-          icon: const FaIcon(
-            FontAwesomeIcons.barsStaggered,
-          ),
-          onPressed: Scaffold.of(context).closeDrawer,
-        ),
+  Widget _titleUnderline() {
+    return Container(
+      width: 240 * AnalyticsTheme.appSizeRatio,
+      height: 2 * AnalyticsTheme.appSizeRatio,
+      decoration: BoxDecoration(
+        color: AnalyticsTheme.primary.withOpacity(0.7),
+        borderRadius: BorderRadius.circular(4),
       ),
     );
   }

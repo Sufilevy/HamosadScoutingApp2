@@ -19,19 +19,31 @@ import 'layout/section_title.dart';
 class TeamDetailsPage extends ConsumerWidget {
   const TeamDetailsPage(this.teamNumber, {super.key});
 
-  final String teamNumber;
+  final String? teamNumber;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final teamInfo = TeamInfo.fromNumber(teamNumber);
+    return teamNumber == null ? _selectTeamPage(context) : _teamDetailsPage(context);
+  }
 
-    final durations = ActionDurationsStat.defaults();
-    durations.updateWithDuration(ActionDuration.zeroToTwo);
-    durations.updateWithDuration(ActionDuration.twoToFive);
-    durations.updateWithDuration(ActionDuration.twoToFive);
-    durations.updateWithDuration(ActionDuration.twoToFive);
-    durations.updateWithDuration(ActionDuration.fivePlus);
-    durations.updateWithDuration(ActionDuration.fivePlus);
+  Widget _selectTeamPage(BuildContext context) {
+    return Scaffold(
+      appBar: const AnalyticsAppBar(
+        title: 'Team Details',
+      ),
+      drawer: const AnalyticsDrawer(),
+      body: padSymmetric(
+        horizontal: 12,
+        vertical: 12,
+        Center(
+          child: navigationText('Search for a team to view details.', fontSize: 32),
+        ),
+      ),
+    );
+  }
+
+  Widget _teamDetailsPage(BuildContext context) {
+    final teamInfo = TeamInfo.fromNumber(teamNumber!);
 
     return Scaffold(
       appBar: AnalyticsAppBar(
@@ -42,68 +54,7 @@ class TeamDetailsPage extends ConsumerWidget {
       body: padSymmetric(
         horizontal: 12,
         vertical: 12,
-        Column(
-          children: <Widget>[
-            ChipRow(
-              children: <Widget>[
-                TeamInfoChip(teamInfo.name, icon: Icons.people_rounded),
-                TeamInfoChip(teamInfo.location, icon: Icons.location_city_rounded),
-              ],
-            ),
-            const SectionDivider(),
-            const ChipRow(
-              children: <Widget>[
-                NumberChip('Average Score', data: 64.15),
-                NumberChip('Average RP', data: 2.3),
-              ],
-            ),
-            const SectionTitle(icon: Icons.code_rounded, title: 'Auto'),
-            const ChipRow(
-              smallChips: true,
-              children: <Widget>[
-                NumberChip('Top Row', data: 12.3, small: true),
-                NumberChip('Middle Row', data: 42.3, small: true),
-                NumberChip('Bottom Row', data: 5.13, small: true),
-              ],
-            ),
-            const SectionTitle(icon: Icons.person_rounded, title: 'Teleop'),
-            const ChipRow(
-              smallChips: true,
-              children: <Widget>[
-                NumberChip('Top Row', data: 12.3, small: true),
-                NumberChip('Middle Row', data: 42.3, small: true),
-                NumberChip('Bottom Row', data: 5.13, small: true),
-              ],
-            ),
-            ChipRow(
-              children: <Widget>[
-                DurationsChip(
-                  title: 'Dropoffs',
-                  durations: durations,
-                ),
-              ],
-            ),
-            ChipRow(
-              children: <Widget>[
-                FourRatesChip(
-                  titles: const ['Not Attempt', 'Failed', 'Docked', 'Engaged'],
-                  rates: const [0.3, 0.25, 0.1, 0.35],
-                ),
-              ],
-            ),
-            const ChipRow(
-              flexes: [2, 1],
-              children: <Widget>[
-                SuccessRateChip(
-                  title: 'Docked',
-                  successRate: 0.7,
-                  failRate: 0.3,
-                ),
-                NumberChip('Bottom Row', data: 5.13, small: true),
-              ],
-            ),
-          ],
-        ),
+        _detailsView(teamInfo),
       ),
     );
   }
@@ -136,7 +87,7 @@ class TeamDetailsPage extends ConsumerWidget {
         }
 
         final district = snapshot.data!;
-        final identifier = TeamReportsIdentifier(teamNumber, {district});
+        final identifier = TeamReportsIdentifier(teamNumber!, {district});
         final teamStream = ref.watch(teamReportsProvider(identifier));
 
         return teamStream.when(
@@ -147,6 +98,79 @@ class TeamDetailsPage extends ConsumerWidget {
           loading: () => const LoadingScreen(),
         );
       },
+    );
+  }
+
+  Widget _detailsView(TeamInfo teamInfo) {
+    final durations = ActionDurationsStat.defaults();
+    durations.updateWithDuration(ActionDuration.zeroToTwo);
+    durations.updateWithDuration(ActionDuration.twoToFive);
+    durations.updateWithDuration(ActionDuration.twoToFive);
+    durations.updateWithDuration(ActionDuration.twoToFive);
+    durations.updateWithDuration(ActionDuration.fivePlus);
+    durations.updateWithDuration(ActionDuration.fivePlus);
+
+    return Column(
+      children: <Widget>[
+        ChipRow(
+          children: <Widget>[
+            TeamInfoChip(teamInfo.name, icon: Icons.people_rounded),
+            TeamInfoChip(teamInfo.location, icon: Icons.location_city_rounded),
+          ],
+        ),
+        const SectionDivider(),
+        const ChipRow(
+          children: <Widget>[
+            NumberChip('Average Score', data: 64.15),
+            NumberChip('Average RP', data: 2.3),
+          ],
+        ),
+        const SectionTitle(icon: Icons.code_rounded, title: 'Auto'),
+        const ChipRow(
+          smallChips: true,
+          children: <Widget>[
+            NumberChip('Top Row', data: 12.3, small: true),
+            NumberChip('Middle Row', data: 42.3, small: true),
+            NumberChip('Bottom Row', data: 5.13, small: true),
+          ],
+        ),
+        const SectionTitle(icon: Icons.person_rounded, title: 'Teleop'),
+        const ChipRow(
+          smallChips: true,
+          children: <Widget>[
+            NumberChip('Top Row', data: 12.3, small: true),
+            NumberChip('Middle Row', data: 42.3, small: true),
+            NumberChip('Bottom Row', data: 5.13, small: true),
+          ],
+        ),
+        ChipRow(
+          children: <Widget>[
+            DurationsChip(
+              title: 'Dropoffs',
+              durations: durations,
+            ),
+          ],
+        ),
+        ChipRow(
+          children: <Widget>[
+            FourRatesChip(
+              titles: const ['Not Attempt', 'Failed', 'Docked', 'Engaged'],
+              rates: const [0.3, 0.25, 0.1, 0.35],
+            ),
+          ],
+        ),
+        const ChipRow(
+          flexes: [2, 1],
+          children: <Widget>[
+            SuccessRateChip(
+              title: 'Docked',
+              successRate: 0.7,
+              failRate: 0.3,
+            ),
+            NumberChip('Bottom Row', data: 5.13, small: true),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -27,6 +27,13 @@ class AnalyticsApp extends StatelessWidget {
     initialLocation: '/compare',
     routes: <GoRoute>[
       GoRoute(
+        path: '/team',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const TeamDetailsPage(null),
+        ),
+      ),
+      GoRoute(
         path: '/team/:teamNumber',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,

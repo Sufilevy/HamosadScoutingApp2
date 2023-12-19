@@ -72,10 +72,9 @@ abstract class AnalyticsTheme {
 
   static TextStyle get logoTextStyle => TextStyle(
         fontFamily: 'Fira Code',
-        fontWeight: FontWeight.w700,
-        fontSize: 24 * appSizeRatioSquared,
+        fontWeight: FontWeight.w800,
+        fontSize: 26 * appSizeRatioSquared,
         color: primary,
-        height: 1.1,
       );
 
   static final darkTheme = ThemeData(
