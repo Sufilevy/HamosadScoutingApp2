@@ -1,5 +1,7 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '/models/team/stats/duration_models.dart';
 import '/services/database/analytics_database.dart';
@@ -17,9 +19,13 @@ import 'layout/chip_row.dart';
 import 'layout/section_title.dart';
 
 class TeamDetailsPage extends ConsumerWidget {
-  const TeamDetailsPage(this.teamNumber, {super.key});
+  TeamDetailsPage({super.key, this.teamNumber});
 
   final String? teamNumber;
+  final List<GlobalKey> _sectionKeys = [
+    GlobalKey(debugLabel: 'Auto'),
+    GlobalKey(debugLabel: 'Teleop'),
+  ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -51,11 +57,33 @@ class TeamDetailsPage extends ConsumerWidget {
         titleAvatar: _teamColorAvatar(teamInfo.color),
       ),
       drawer: const AnalyticsDrawer(),
+      bottomNavigationBar: _bottomNavigationBar(),
       body: padSymmetric(
         horizontal: 12,
         vertical: 12,
         _detailsView(teamInfo),
       ),
+    );
+  }
+
+  AnalyticsBottomNavigationBar _bottomNavigationBar() {
+    return AnalyticsBottomNavigationBar(
+      onTap: (newIndex) {
+        final sectionContext = _sectionKeys[newIndex].currentContext;
+        Scrollable.ensureVisible(sectionContext!, duration: 250.milliseconds);
+      },
+      items: const [
+        BottomNavigationBarItem(
+          icon: FaIcon(FontAwesomeIcons.code),
+          label: 'Auto',
+          backgroundColor: AnalyticsTheme.background1,
+        ),
+        BottomNavigationBarItem(
+          icon: FaIcon(FontAwesomeIcons.solidUser),
+          label: 'Teleop',
+          backgroundColor: AnalyticsTheme.background1,
+        ),
+      ],
     );
   }
 
@@ -110,67 +138,69 @@ class TeamDetailsPage extends ConsumerWidget {
     durations.updateWithDuration(ActionDuration.fivePlus);
     durations.updateWithDuration(ActionDuration.fivePlus);
 
-    return Column(
-      children: <Widget>[
-        ChipRow(
-          children: <Widget>[
-            TeamInfoChip(teamInfo.name, icon: Icons.people_rounded),
-            TeamInfoChip(teamInfo.location, icon: Icons.location_city_rounded),
-          ],
-        ),
-        const SectionDivider(),
-        const ChipRow(
-          children: <Widget>[
-            NumberChip('Average Score', data: 64.15),
-            NumberChip('Average RP', data: 2.3),
-          ],
-        ),
-        const SectionTitle(icon: Icons.code_rounded, title: 'Auto'),
-        const ChipRow(
-          smallChips: true,
-          children: <Widget>[
-            NumberChip('Top Row', data: 12.3, small: true),
-            NumberChip('Middle Row', data: 42.3, small: true),
-            NumberChip('Bottom Row', data: 5.13, small: true),
-          ],
-        ),
-        const SectionTitle(icon: Icons.person_rounded, title: 'Teleop'),
-        const ChipRow(
-          smallChips: true,
-          children: <Widget>[
-            NumberChip('Top Row', data: 12.3, small: true),
-            NumberChip('Middle Row', data: 42.3, small: true),
-            NumberChip('Bottom Row', data: 5.13, small: true),
-          ],
-        ),
-        ChipRow(
-          children: <Widget>[
-            DurationsChip(
-              title: 'Dropoffs',
-              durations: durations,
-            ),
-          ],
-        ),
-        ChipRow(
-          children: <Widget>[
-            FourRatesChip(
-              titles: const ['Not Attempt', 'Failed', 'Docked', 'Engaged'],
-              rates: const [0.3, 0.25, 0.1, 0.35],
-            ),
-          ],
-        ),
-        const ChipRow(
-          flexes: [2, 1],
-          children: <Widget>[
-            SuccessRateChip(
-              title: 'Docked',
-              successRate: 0.7,
-              failRate: 0.3,
-            ),
-            NumberChip('Bottom Row', data: 5.13, small: true),
-          ],
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          ChipRow(
+            children: <Widget>[
+              TeamInfoChip(teamInfo.name, icon: FontAwesomeIcons.users),
+              TeamInfoChip(teamInfo.location, icon: FontAwesomeIcons.city),
+            ],
+          ),
+          const SectionDivider(),
+          const ChipRow(
+            children: <Widget>[
+              NumberChip('Average Score', data: 64.15),
+              NumberChip('Average RP', data: 2.3),
+            ],
+          ),
+          SectionTitle(key: _sectionKeys[0], icon: FontAwesomeIcons.code, title: 'Auto'),
+          const ChipRow(
+            smallChips: true,
+            children: <Widget>[
+              NumberChip('Top Row', data: 12.3, small: true),
+              NumberChip('Middle Row', data: 42.3, small: true),
+              NumberChip('Bottom Row', data: 5.13, small: true),
+            ],
+          ),
+          SectionTitle(key: _sectionKeys[1], icon: FontAwesomeIcons.solidUser, title: 'Teleop'),
+          const ChipRow(
+            smallChips: true,
+            children: <Widget>[
+              NumberChip('Top Row', data: 12.3, small: true),
+              NumberChip('Middle Row', data: 42.3, small: true),
+              NumberChip('Bottom Row', data: 5.13, small: true),
+            ],
+          ),
+          ChipRow(
+            children: <Widget>[
+              DurationsChip(
+                title: 'Dropoffs',
+                durations: durations,
+              ),
+            ],
+          ),
+          ChipRow(
+            children: <Widget>[
+              FourRatesChip(
+                titles: const ['Not Attempt', 'Failed', 'Docked', 'Engaged'],
+                rates: const [0.3, 0.25, 0.1, 0.35],
+              ),
+            ],
+          ),
+          const ChipRow(
+            flexes: [2, 1],
+            children: <Widget>[
+              SuccessRateChip(
+                title: 'Docked',
+                successRate: 0.7,
+                failRate: 0.3,
+              ),
+              NumberChip('Bottom Row', data: 5.13, small: true),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

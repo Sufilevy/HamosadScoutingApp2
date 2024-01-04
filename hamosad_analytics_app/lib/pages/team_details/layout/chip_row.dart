@@ -20,7 +20,7 @@ class ChipRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return padBottom(
-      10,
+      14,
       Row(
         children: children
             .mapIndexed(
@@ -42,5 +42,5 @@ class ChipRow extends StatelessWidget {
     return (index == children.lastIndex) ? child : child.padRight(padding ?? _chipPadding);
   }
 
-  double get _chipPadding => smallChips ? 5 : 8;
+  double get _chipPadding => smallChips ? 8 : 12;
 }

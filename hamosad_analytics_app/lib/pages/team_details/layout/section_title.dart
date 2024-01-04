@@ -6,7 +6,11 @@ import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 
 class SectionTitle extends StatelessWidget {
-  const SectionTitle({super.key, required this.icon, required this.title});
+  const SectionTitle({
+    super.key,
+    required this.icon,
+    required this.title,
+  });
 
   final IconData icon;
   final String title;
@@ -20,8 +24,8 @@ class SectionTitle extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(icon, size: 28 * AnalyticsTheme.appSizeRatio),
-              Gap(8 * AnalyticsTheme.appSizeRatio),
+              Icon(icon, size: 20 * AnalyticsTheme.appSizeRatio),
+              Gap(16 * AnalyticsTheme.appSizeRatio),
               navigationTitleText(title),
             ],
           ),

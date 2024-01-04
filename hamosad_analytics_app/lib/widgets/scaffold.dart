@@ -185,3 +185,53 @@ class LoadingScreen extends StatelessWidget {
     );
   }
 }
+
+class AnalyticsBottomNavigationBar extends StatefulWidget {
+  const AnalyticsBottomNavigationBar({
+    super.key,
+    required this.items,
+    this.onTap,
+    this.showLabels = true,
+  });
+
+  final List<BottomNavigationBarItem> items;
+  final void Function(int newIndex)? onTap;
+  final bool showLabels;
+
+  @override
+  State<AnalyticsBottomNavigationBar> createState() => _AnalyticsBottomNavigationBarState();
+}
+
+class _AnalyticsBottomNavigationBarState extends State<AnalyticsBottomNavigationBar> {
+  int _currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      items: widget.items,
+      currentIndex: _currentIndex,
+      onTap: (newIndex) {
+        setState(() {
+          _currentIndex = newIndex;
+        });
+        widget.onTap?.call(newIndex);
+      },
+      showSelectedLabels: widget.showLabels,
+      showUnselectedLabels: widget.showLabels,
+      backgroundColor: AnalyticsTheme.background1,
+      selectedIconTheme: const IconThemeData(color: AnalyticsTheme.primary),
+      unselectedIconTheme: const IconThemeData(color: AnalyticsTheme.foreground2),
+      selectedLabelStyle: AnalyticsTheme.navigationStyle.copyWith(
+        fontSize: 22 * AnalyticsTheme.appSizeRatio,
+        fontWeight: FontWeight.w700,
+      ),
+      unselectedLabelStyle: AnalyticsTheme.navigationStyle.copyWith(
+        fontSize: 22 * AnalyticsTheme.appSizeRatio,
+        fontWeight: FontWeight.w400,
+      ),
+      selectedItemColor: AnalyticsTheme.primary,
+      unselectedItemColor: AnalyticsTheme.foreground2,
+      type: BottomNavigationBarType.shifting,
+    );
+  }
+}

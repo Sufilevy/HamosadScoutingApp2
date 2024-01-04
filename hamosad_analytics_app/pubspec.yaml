@@ -37,7 +37,7 @@ dependencies:
   flutter_riverpod: ^2.2.0
   firebase_core: ^2.7.0
   cloud_firestore: ^4.4.3
-  go_router: ^12.0.0
+  go_router: ^13.0.1
   font_awesome_flutter: ^10.5.0
   flutter_svg: ^2.0.7
   async: ^2.11.0
@@ -45,7 +45,7 @@ dependencies:
   awesome_select: ^6.0.0
   gap: ^3.0.1
   animations: ^2.0.8
-  fl_chart: ^0.65.0
+  fl_chart: ^0.66.0
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

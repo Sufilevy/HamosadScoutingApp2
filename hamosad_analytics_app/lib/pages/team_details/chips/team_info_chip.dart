@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '/theme.dart';
 import '/widgets/analytics.dart';
@@ -14,9 +15,9 @@ class TeamInfoChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnalyticsChip(
-      avatar: Icon(
+      avatar: FaIcon(
         icon,
-        size: 35 * AnalyticsTheme.appSizeRatio,
+        size: 26 * AnalyticsTheme.appSizeRatio,
         color: AnalyticsTheme.primaryVariant,
       ),
       child: dataTitleText(

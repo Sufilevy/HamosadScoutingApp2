@@ -30,14 +30,14 @@ class AnalyticsApp extends StatelessWidget {
         path: '/team',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
-          child: const TeamDetailsPage(null),
+          child: TeamDetailsPage(),
         ),
       ),
       GoRoute(
         path: '/team/:teamNumber',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
-          child: TeamDetailsPage(state.pathParameters['teamNumber']!),
+          child: TeamDetailsPage(teamNumber: state.pathParameters['teamNumber']!),
         ),
       ),
       GoRoute(
