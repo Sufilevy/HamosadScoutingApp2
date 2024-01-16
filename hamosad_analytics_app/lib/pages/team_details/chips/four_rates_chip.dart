@@ -10,10 +10,9 @@ import '/widgets/text.dart';
 import 'rates_bar.dart';
 
 /// Takes and entire [ChipRow].
-class FourRatesChip extends StatelessWidget {
-  const FourRatesChip({super.key, required this.titles, required this.rates})
-      : assert(titles.length == 4),
-        assert(rates.length == 4);
+class RatesChip extends StatelessWidget {
+  const RatesChip({super.key, required this.titles, required this.rates})
+      : assert(titles.length == rates.length);
 
   final List<String> titles;
   final List<double> rates;
@@ -28,7 +27,7 @@ class FourRatesChip extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _ratesAndTitles(),
-              Gap(2 * AnalyticsTheme.appSizeRatio),
+              Gap(4 * AnalyticsTheme.appSizeRatio),
               RatesBar(rates: rates).padBottom(2),
             ],
           ),
@@ -39,14 +38,8 @@ class FourRatesChip extends StatelessWidget {
 
   Widget _ratesAndTitles() {
     return Row(
-      children: titles
-          .mapIndexed(
-            (index, title) => Expanded(
-              flex: 1,
-              child: _rateAndTitle(index),
-            ),
-          )
-          .toList(),
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: titles.mapIndexed((index, title) => _rateAndTitle(index)).toList(),
     );
   }
 

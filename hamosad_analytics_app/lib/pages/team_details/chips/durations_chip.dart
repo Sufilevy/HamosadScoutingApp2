@@ -19,6 +19,7 @@ class DurationsChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnalyticsChip(
+      height: 80,
       children: <Widget>[
         Expanded(flex: 1, child: dataTitleText(title)),
         const VerticalDivider(),
@@ -28,7 +29,7 @@ class DurationsChip extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _durationsTitles(),
-              Gap(2 * AnalyticsTheme.appSizeRatio),
+              Gap(4 * AnalyticsTheme.appSizeRatio),
               _durationsBar().padBottom(2),
             ],
           ),
@@ -39,22 +40,19 @@ class DurationsChip extends StatelessWidget {
 
   Widget _durationsTitles() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         _durationTitle('0-2', durations.zeroToTwoRate),
-        Gap(16 * AnalyticsTheme.appSizeRatio),
         _durationTitle('2-5', durations.twoToFiveRate, secondaryColor: true),
-        Gap(16 * AnalyticsTheme.appSizeRatio),
         _durationTitle('5+', durations.fivePlusRate),
       ],
     );
   }
 
   Widget _durationTitle(String duration, double rate, {bool secondaryColor = false}) {
-    return Row(
+    return Column(
       children: <Widget>[
         dataSubtitleText(duration),
-        const DotDivider().padSymmetric(horizontal: 6),
         dataSubtitleText(
           rate.toPercent(),
           color: secondaryColor ? AnalyticsTheme.secondary : AnalyticsTheme.primary,

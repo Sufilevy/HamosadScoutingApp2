@@ -51,13 +51,17 @@ Widget dataSubtitleText(
   dynamic data, {
   TextAlign textAlign = TextAlign.center,
   Color color = AnalyticsTheme.foreground1,
+  double? fontSize,
 }) {
   return FittedBox(
     fit: BoxFit.scaleDown,
     child: Text(
       data.toString(),
       textAlign: textAlign,
-      style: AnalyticsTheme.dataSubtitleStyle.copyWith(color: color),
+      style: AnalyticsTheme.dataSubtitleStyle.copyWith(
+        color: color,
+        fontSize: fontSize != null ? fontSize * AnalyticsTheme.appSizeRatio : null,
+      ),
     ),
   );
 }

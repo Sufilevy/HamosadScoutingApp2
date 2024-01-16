@@ -241,8 +241,8 @@ class TeamDetailsPage extends ConsumerWidget {
           ),
           ChipRow(
             children: <Widget>[
-              FourRatesChip(
-                titles: const ['Not Attempt', 'Failed', 'Docked', 'Engaged'],
+              RatesChip(
+                titles: const ['No Attempt', 'Failed', 'Docked', 'Engaged'],
                 rates: const [0.3, 0.25, 0.1, 0.35],
               ),
             ],
