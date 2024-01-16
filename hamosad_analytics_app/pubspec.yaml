@@ -46,6 +46,7 @@ dependencies:
   gap: ^3.0.1
   animations: ^2.0.8
   fl_chart: ^0.66.0
+  search_page: ^2.3.0
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

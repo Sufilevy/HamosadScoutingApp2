@@ -53,7 +53,7 @@ class _ComparePageState extends ConsumerState<ComparePage> {
 
   Widget _teamsSelect(BuildContext context) {
     return TeamsSelect(
-      teams: TeamInfo.teams,
+      teams: TeamInfo.teamsNumbers,
       selectedTeams: _selectedTeams,
       onSelectionChange: (teamsList) {
         final teams = teamsList.toSet();

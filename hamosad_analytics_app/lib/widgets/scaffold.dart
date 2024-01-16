@@ -12,10 +12,16 @@ import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 
 class AnalyticsAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const AnalyticsAppBar({super.key, required this.title, this.titleAvatar});
+  const AnalyticsAppBar({
+    super.key,
+    required this.title,
+    this.titleAvatar,
+    this.actions = const <Widget>[],
+  });
 
   final String title;
   final Widget? titleAvatar;
+  final List<Widget> actions;
 
   @override
   Size get preferredSize => Size.fromHeight(55 * AnalyticsTheme.appSizeRatio);
@@ -27,6 +33,10 @@ class AnalyticsAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: _title().padRight(titleAvatar == null ? 0 : 50),
       leading: _menuButton(context),
       leadingWidth: 66 * AnalyticsTheme.appSizeRatio,
+      actions: [
+        ...actions,
+        Gap(10 * AnalyticsTheme.appSizeRatio),
+      ],
     );
   }
 

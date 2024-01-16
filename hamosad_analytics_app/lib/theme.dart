@@ -155,15 +155,15 @@ abstract class AnalyticsTheme {
 class TeamInfo {
   const TeamInfo._(this.name, this.location, this.color);
 
-  static TeamInfo fromNumber(String number) => _teamNumberToInfo[number]!;
+  static TeamInfo fromNumber(String number) => teams[number]!;
 
   final String name, location;
   final Color color;
 
-  static Set<String> get teams => _teamNumberToInfo.keys.toSet();
+  static Set<String> get teamsNumbers => teams.keys.toSet();
 
   /// [Color, Name, Location]
-  static const _teamNumberToInfo = {
+  static const teams = {
     '1574': TeamInfo._('MisCar', 'Misgav', Color.fromARGB(255, 126, 12, 43)),
     '1576': TeamInfo._('Voltrix', 'Tel-Aviv', Color.fromARGB(255, 252, 124, 23)),
     '1577': TeamInfo._('Steampunk', 'Binyamina', Color.fromARGB(255, 255, 165, 0)),

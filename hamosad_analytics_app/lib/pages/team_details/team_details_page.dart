@@ -2,6 +2,10 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hamosad_analytics_app/widgets/analytics.dart';
+import 'package:search_page/search_page.dart';
 
 import '/models/team/stats/duration_models.dart';
 import '/services/database/analytics_database.dart';
@@ -33,9 +37,12 @@ class TeamDetailsPage extends ConsumerWidget {
   }
 
   Widget _selectTeamPage(BuildContext context) {
-    return Scaffold(
-      appBar: const AnalyticsAppBar(
+    final body = Scaffold(
+      appBar: AnalyticsAppBar(
         title: 'Team Details',
+        actions: [
+          _searchTeamButton(context),
+        ],
       ),
       drawer: const AnalyticsDrawer(),
       body: padSymmetric(
@@ -46,6 +53,8 @@ class TeamDetailsPage extends ConsumerWidget {
         ),
       ),
     );
+    Future.delayed(50.milliseconds, () => _showSearchTeamPage(context));
+    return body;
   }
 
   Widget _teamDetailsPage(BuildContext context) {
@@ -55,6 +64,9 @@ class TeamDetailsPage extends ConsumerWidget {
       appBar: AnalyticsAppBar(
         title: 'Team $teamNumber',
         titleAvatar: _teamColorAvatar(teamInfo.color),
+        actions: [
+          _searchTeamButton(context),
+        ],
       ),
       drawer: const AnalyticsDrawer(),
       bottomNavigationBar: _bottomNavigationBar(),
@@ -66,7 +78,54 @@ class TeamDetailsPage extends ConsumerWidget {
     );
   }
 
-  AnalyticsBottomNavigationBar _bottomNavigationBar() {
+  Widget _searchTeamButton(BuildContext context) {
+    return IconButton(
+      icon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
+      onPressed: () => _showSearchTeamPage(context),
+    );
+  }
+
+  void _showSearchTeamPage(BuildContext context) {
+    showSearch(
+      context: context,
+      delegate: SearchPage(
+        items: TeamInfo.teams.toList(),
+        filter: (team) => [team.first, team.second.name, team.second.location],
+        searchLabel: 'Search for a team',
+        showItemsOnEmpty: true,
+        suggestion: navigationTitleText('Search for a team by team number, name or location.'),
+        failure: Center(child: navigationTitleText('No teams matching the filter.')),
+        itemStartsWith: true,
+        builder: (team) => padSymmetric(
+          vertical: 5,
+          horizontal: 10,
+          ListTile(
+            title: Row(
+              children: [
+                dataTitleText(team.first),
+                Gap(20 * AnalyticsTheme.appSizeRatio),
+                const DotDivider(),
+                Gap(20 * AnalyticsTheme.appSizeRatio),
+                dataSubtitleText(
+                  '${team.second.name}, ${team.second.location}',
+                  color: AnalyticsTheme.foreground2,
+                ),
+              ],
+            ),
+            onTap: () {
+              context.pop();
+              context.go('/team/${team.first}');
+            },
+            leading: _teamColorAvatar(team.second.color),
+          ),
+        ),
+        searchStyle: AnalyticsTheme.navigationStyle,
+        sort: (teamA, teamB) => teamA.first.compareTo(teamB.first),
+      ),
+    );
+  }
+
+  Widget _bottomNavigationBar() {
     return AnalyticsBottomNavigationBar(
       onTap: (newIndex) {
         final sectionContext = _sectionKeys[newIndex].currentContext;
