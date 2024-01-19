@@ -1,5 +1,4 @@
-import 'dart:math' as math;
-
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,6 +9,7 @@ import '/services/utilities.dart';
 import '/theme.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
+import 'select_districts_dialog.dart';
 
 class AnalyticsAppBar extends StatelessWidget implements PreferredSizeWidget {
   const AnalyticsAppBar({
@@ -35,6 +35,8 @@ class AnalyticsAppBar extends StatelessWidget implements PreferredSizeWidget {
       leadingWidth: 66 * AnalyticsTheme.appSizeRatio,
       actions: [
         ...actions,
+        Gap(10 * AnalyticsTheme.appSizeRatio),
+        _selectDistrictsButton(context),
         Gap(10 * AnalyticsTheme.appSizeRatio),
       ],
     );
@@ -68,6 +70,18 @@ class AnalyticsAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
+
+  Widget _selectDistrictsButton(BuildContext context) {
+    return IconButton(
+      icon: const FaIcon(FontAwesomeIcons.sitemap),
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) => const SelectDistrictsDialog(),
+        );
+      },
+    );
+  }
 }
 
 class AnalyticsDrawer extends StatelessWidget {
@@ -99,7 +113,7 @@ class AnalyticsDrawer extends StatelessWidget {
     );
   }
 
-  double _drawerWidth(double screenWidth) => math.max(screenWidth / 2, 300);
+  double _drawerWidth(double screenWidth) => (screenWidth / 1.5).coerceAtMost(500);
 
   Widget _pageTile(BuildContext context, String title, IconData icon, String pageUri) {
     return padSymmetric(

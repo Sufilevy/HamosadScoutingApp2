@@ -32,7 +32,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   dartx: ^1.1.0
   flutter_riverpod: ^2.2.0
   firebase_core: ^2.7.0
@@ -47,6 +46,7 @@ dependencies:
   animations: ^2.0.8
   fl_chart: ^0.66.0
   search_page: ^2.3.0
+  another_flushbar: ^1.12.30
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

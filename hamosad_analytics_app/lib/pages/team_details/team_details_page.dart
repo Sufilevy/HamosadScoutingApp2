@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 import 'package:search_page/search_page.dart';
 
 import '/models/team/stats/duration_models.dart';
-import '/services/database/analytics_database.dart';
 import '/services/providers/team_provider.dart';
 import '/theme.dart';
 import '/widgets/analytics.dart';
@@ -162,29 +161,14 @@ class TeamDetailsPage extends ConsumerWidget {
   }
 
   Widget _body(BuildContext context, WidgetRef ref) {
-    return FutureBuilder(
-      future: AnalyticsDatabase.currentDistrict(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return navigationText('An error has ocurred.\n\n${snapshot.error}');
-        }
+    final teamStream = ref.watch(teamReportsProvider(teamNumber!));
 
-        if (!snapshot.hasData) {
-          return const LoadingScreen();
-        }
-
-        final district = snapshot.data!;
-        final identifier = TeamReportsIdentifier(teamNumber!, {district});
-        final teamStream = ref.watch(teamReportsProvider(identifier));
-
-        return teamStream.when(
-          data: (team) => Column(
-            children: team.reportsIds.map(navigationText).toList(),
-          ),
-          error: (error, _) => navigationText(error.toString()),
-          loading: () => const LoadingScreen(),
-        );
-      },
+    return teamStream.when(
+      data: (team) => Column(
+        children: team.reportsIds.map(navigationText).toList(),
+      ),
+      error: (error, _) => navigationText(error.toString()),
+      loading: () => const LoadingScreen(),
     );
   }
 

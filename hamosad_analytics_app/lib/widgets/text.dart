@@ -5,6 +5,7 @@ import '/theme.dart';
 Widget navigationText(
   dynamic data, {
   TextAlign textAlign = TextAlign.center,
+  Color color = AnalyticsTheme.foreground1,
   double? fontSize,
 }) {
   return FittedBox(
@@ -14,6 +15,7 @@ Widget navigationText(
       textAlign: textAlign,
       style: AnalyticsTheme.navigationStyle.copyWith(
         fontSize: fontSize != null ? fontSize * AnalyticsTheme.appSizeRatio : null,
+        color: color,
       ),
     ),
   );
@@ -22,13 +24,16 @@ Widget navigationText(
 Widget navigationTitleText(
   dynamic data, {
   TextAlign textAlign = TextAlign.center,
+  Color color = AnalyticsTheme.foreground1,
 }) {
   return FittedBox(
     fit: BoxFit.scaleDown,
     child: Text(
       data.toString(),
       textAlign: textAlign,
-      style: AnalyticsTheme.navigationTitleStyle,
+      style: AnalyticsTheme.navigationTitleStyle.copyWith(
+        color: color,
+      ),
     ),
   );
 }

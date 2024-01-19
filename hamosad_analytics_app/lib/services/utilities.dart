@@ -12,3 +12,7 @@ extension ScreenSize on BuildContext {
 extension IsNullOrEmpty on Map? {
   bool get isNullOrEmpty => this == null || this!.isEmpty;
 }
+
+extension PushString on String {
+  String push(String other) => this + other;
+}

@@ -1,23 +1,14 @@
 import 'package:async/async.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/models/team/team_model.dart';
 import '/services/database/analytics_database.dart';
+import '/services/providers/selected_districts_provider.dart';
 
-class TeamReportsIdentifier extends Equatable {
-  const TeamReportsIdentifier(this.teamNumber, this.districts);
-
-  final String teamNumber;
-  final Set<String> districts;
-
-  @override
-  List<Object?> get props => [teamNumber, districts];
-}
-
-final teamReportsProvider = StreamProvider.autoDispose.family<Team, TeamReportsIdentifier>(
-  (_, identifier) async* {
-    final TeamReportsIdentifier(:teamNumber, :districts) = identifier;
+final teamReportsProvider = StreamProvider.autoDispose.family(
+  (ref, String teamNumber) async* {
+    final districtsAsyncValue = ref.watch(selectedDistrictsProvider);
+    final districts = districtsAsyncValue.value!;
 
     final snapshots = districts.map(
       (district) => AnalyticsDatabase.reportsStreamOfTeam(teamNumber, district),

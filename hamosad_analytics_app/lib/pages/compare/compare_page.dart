@@ -72,7 +72,7 @@ class _ComparePageState extends ConsumerState<ComparePage> {
   }
 
   Widget _charts() {
-    final identifier = TeamsWithReportsIdentifier(_selectedTeams, const {'district1-1657'});
+    final identifier = TeamsIdentifier(_selectedTeams);
     final teamStream = ref.watch(teamsWithReportsProvider(identifier));
 
     return teamStream.when(

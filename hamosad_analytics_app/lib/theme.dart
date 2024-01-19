@@ -150,6 +150,10 @@ abstract class AnalyticsTheme {
       backgroundColor: background2,
       behavior: SnackBarBehavior.floating,
     ),
+    dialogTheme: const DialogTheme(
+      backgroundColor: background1,
+      surfaceTintColor: Colors.transparent,
+    ),
   );
 
   static const defaultShadow = BoxShadow(

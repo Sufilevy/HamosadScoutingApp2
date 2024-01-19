@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '/theme.dart';
 import '/widgets/paddings.dart';
+import '/widgets/scaffold.dart';
+import '/widgets/text.dart';
 
 class AnalyticsChip extends StatelessWidget {
   const AnalyticsChip({super.key, this.child, this.avatar, this.children, this.height = 54})
@@ -83,5 +85,38 @@ class HorizontalSwitcher extends StatelessWidget {
         child: child,
       ),
     );
+  }
+}
+
+extension Builders<T> on AsyncSnapshot<T> {
+  Widget whenData(Widget Function(T) builder) {
+    if (hasError) {
+      return navigationText(error.toString());
+    }
+
+    if (!hasData) {
+      return const LoadingScreen();
+    }
+
+    return builder(data as T);
+  }
+
+  Widget when({
+    bool skipLoadingOnReload = false,
+    bool skipLoadingOnRefresh = true,
+    bool skipError = false,
+    required Widget Function(T data) data,
+    required Widget Function(Object error, StackTrace stackTrace) error,
+    required Widget Function() loading,
+  }) {
+    if (hasError) {
+      return error(this.error!, stackTrace!);
+    }
+
+    if (!hasData) {
+      return loading();
+    }
+
+    return data(data as T);
   }
 }
