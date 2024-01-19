@@ -4,13 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hamosad_analytics_app/widgets/analytics.dart';
 import 'package:search_page/search_page.dart';
 
 import '/models/team/stats/duration_models.dart';
 import '/services/database/analytics_database.dart';
 import '/services/providers/team_provider.dart';
 import '/theme.dart';
+import '/widgets/analytics.dart';
 import '/widgets/paddings.dart';
 import '/widgets/scaffold.dart';
 import '/widgets/text.dart';

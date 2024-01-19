@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/material.dart';
 
 import '/services/utilities.dart';
@@ -17,6 +18,12 @@ abstract class AnalyticsTheme {
     appSizeRatio = screenHeight / 1000;
     debug('Screen size: ${context.screenSize} | App size ratio: $appSizeRatio');
   }
+
+  static bool isDesktop = [
+    TargetPlatform.windows,
+    TargetPlatform.linux,
+    TargetPlatform.macOS,
+  ].contains(defaultTargetPlatform);
 
   static const appTitle = 'Analytics App';
 

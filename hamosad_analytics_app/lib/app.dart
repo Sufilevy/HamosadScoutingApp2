@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 import '/pages/compare/compare_page.dart';
 import '/pages/team_details/team_details_page.dart';
 import '/theme.dart';
+import '/widgets/text.dart';
 
 class AnalyticsApp extends StatelessWidget {
   AnalyticsApp({super.key});
@@ -19,6 +21,13 @@ class AnalyticsApp extends StatelessWidget {
         themeMode: ThemeMode.dark,
         darkTheme: AnalyticsTheme.darkTheme,
         routerConfig: _router,
+        builder: (context, child) {
+          AnalyticsTheme.setAppSizeRatio(context);
+          return AnalyticsTheme.isDesktop ||
+                  MediaQuery.of(context).orientation == Orientation.portrait
+              ? child!
+              : const RotatePhoneApp();
+        },
       ),
     );
   }
@@ -56,6 +65,17 @@ class RotatePhoneApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Icon(Icons.screen_rotation_rounded, size: 70),
+            const Gap(25),
+            navigationText('Please rotate the device.', fontSize: 50),
+          ],
+        ),
+      ),
+    );
   }
 }
