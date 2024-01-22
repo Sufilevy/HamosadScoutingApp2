@@ -47,6 +47,7 @@ dependencies:
   fl_chart: ^0.66.0
   search_page: ^2.3.0
   another_flushbar: ^1.12.30
+  flutter_fancy_tree_view: ^1.4.1
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

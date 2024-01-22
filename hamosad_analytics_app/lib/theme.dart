@@ -83,6 +83,10 @@ abstract class AnalyticsTheme {
         fontSize: 26 * appSizeRatioSquared,
         color: primary,
       );
+  static OutlineInputBorder get outlineInputBorder => OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(5.0 * appSizeRatio)),
+        borderSide: const BorderSide(color: background3, width: 2),
+      );
 
   static final darkTheme = ThemeData(
     useMaterial3: true,
@@ -153,6 +157,21 @@ abstract class AnalyticsTheme {
     dialogTheme: const DialogTheme(
       backgroundColor: background1,
       surfaceTintColor: Colors.transparent,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: outlineInputBorder,
+      enabledBorder: outlineInputBorder,
+      contentPadding:
+          EdgeInsets.symmetric(vertical: 8 * appSizeRatio, horizontal: 12 * appSizeRatio),
+      floatingLabelStyle: dataTitleStyle.copyWith(fontSize: 16 * appSizeRatio, color: foreground2),
+      labelStyle: dataTitleStyle.copyWith(fontSize: 18 * appSizeRatio),
+    ),
+    dropdownMenuTheme: DropdownMenuThemeData(
+      menuStyle: const MenuStyle(
+        backgroundColor: MaterialStatePropertyAll(background2),
+        surfaceTintColor: MaterialStatePropertyAll(Colors.transparent),
+      ),
+      textStyle: dataTitleStyle.copyWith(fontSize: 18 * appSizeRatio),
     ),
   );
 

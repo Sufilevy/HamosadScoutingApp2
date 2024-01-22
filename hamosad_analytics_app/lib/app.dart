@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hamosad_analytics_app/pages/reports/reports_page.dart';
 
 import '/pages/compare/compare_page.dart';
 import '/pages/team_details/team_details_page.dart';
@@ -33,7 +34,7 @@ class AnalyticsApp extends StatelessWidget {
   }
 
   final _router = GoRouter(
-    initialLocation: '/compare',
+    initialLocation: '/reports',
     routes: <GoRoute>[
       GoRoute(
         path: '/team',
@@ -54,6 +55,20 @@ class AnalyticsApp extends StatelessWidget {
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const ComparePage(),
+        ),
+      ),
+      GoRoute(
+        path: '/reports',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const ReportsPage(),
+        ),
+      ),
+      GoRoute(
+        path: '/reports/:reportId',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: ReportsPage(reportId: state.pathParameters['reportId']!),
         ),
       ),
     ],

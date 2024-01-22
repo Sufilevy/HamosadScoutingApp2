@@ -55,6 +55,42 @@ class DotDivider extends StatelessWidget {
   }
 }
 
+class SectionDivider extends StatelessWidget {
+  const SectionDivider({
+    super.key,
+    this.topPadding = 5,
+    this.bottomPadding = 15,
+    this.thickness = 2.5,
+  });
+
+  final double topPadding, bottomPadding;
+  final double thickness;
+
+  @override
+  Widget build(BuildContext context) {
+    return pad(
+      top: topPadding,
+      bottom: bottomPadding,
+      _addShadow(
+        Divider(
+          thickness: thickness,
+          indent: 0,
+          endIndent: 0,
+        ),
+      ),
+    );
+  }
+
+  Widget _addShadow(Widget child) {
+    return Container(
+      decoration: const BoxDecoration(
+        boxShadow: [AnalyticsTheme.defaultShadow],
+      ),
+      child: child,
+    );
+  }
+}
+
 class HorizontalSwitcher extends StatelessWidget {
   const HorizontalSwitcher({
     super.key,

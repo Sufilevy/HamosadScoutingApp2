@@ -41,13 +41,16 @@ Widget navigationTitleText(
 Widget dataTitleText(
   dynamic data, {
   TextAlign textAlign = TextAlign.center,
+  FontWeight fontWeight = FontWeight.normal,
 }) {
   return FittedBox(
     fit: BoxFit.scaleDown,
     child: Text(
       data.toString(),
       textAlign: textAlign,
-      style: AnalyticsTheme.dataTitleStyle,
+      style: AnalyticsTheme.dataTitleStyle.copyWith(
+        fontWeight: fontWeight,
+      ),
     ),
   );
 }

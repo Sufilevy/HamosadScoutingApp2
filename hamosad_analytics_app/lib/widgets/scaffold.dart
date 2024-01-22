@@ -108,6 +108,12 @@ class AnalyticsDrawer extends StatelessWidget {
             FontAwesomeIcons.chartLine,
             '/compare',
           ),
+          _pageTile(
+            context,
+            'Reports',
+            FontAwesomeIcons.fileLines,
+            '/reports',
+          ),
         ],
       ),
     );
