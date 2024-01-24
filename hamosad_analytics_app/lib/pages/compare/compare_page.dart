@@ -58,11 +58,11 @@ class _ComparePageState extends ConsumerState<ComparePage> {
     return teamsNumbersStream.when(
       data: (teamsNumbers) => TeamsSelect(
         teams: teamsNumbers,
-        selectedTeams: _selectedTeams,
+        selectedTeams: Set.from(_selectedTeams),
         onSelectionChange: (teamsList) {
           final teams = teamsList.toSet();
           if (_selectedTeams.isEmpty || !setEquals(_selectedTeams, teams)) {
-            setState(() => _selectedTeams = teams);
+            setState(() => _selectedTeams = Set.from(teams));
           }
         },
       ),
@@ -73,13 +73,13 @@ class _ComparePageState extends ConsumerState<ComparePage> {
 
   Widget _selectedTeamsChips(BuildContext context) {
     return SelectedTeamsChips(
-      selectedTeams: _selectedTeams,
-      onSelectionChange: (teams) => setState(() => _selectedTeams = teams),
+      selectedTeams: Set.from(_selectedTeams),
+      onSelectionChange: (teams) => setState(() => _selectedTeams = Set.from(teams)),
     );
   }
 
   Widget _charts() {
-    final identifier = TeamsIdentifier(_selectedTeams);
+    final identifier = TeamsIdentifier(Set.from(_selectedTeams));
     final teamStream = ref.watch(teamsWithReportsProvider(identifier));
 
     return teamStream.when(
