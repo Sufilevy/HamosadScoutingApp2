@@ -56,6 +56,8 @@ class _ComparePageState extends ConsumerState<ComparePage> {
     final teamsNumbersStream = ref.watch(teamsNumbersProvider);
 
     return teamsNumbersStream.when(
+      loading: () => const LoadingScreen(),
+      error: (error, _) => navigationText(error.toString()),
       data: (teamsNumbers) => TeamsSelect(
         teams: teamsNumbers,
         selectedTeams: Set.from(_selectedTeams),
@@ -66,8 +68,6 @@ class _ComparePageState extends ConsumerState<ComparePage> {
           }
         },
       ),
-      error: (error, _) => navigationText(error.toString()),
-      loading: () => const LoadingScreen(),
     );
   }
 
@@ -83,6 +83,8 @@ class _ComparePageState extends ConsumerState<ComparePage> {
     final teamStream = ref.watch(teamsWithReportsProvider(identifier));
 
     return teamStream.when(
+      loading: () => _selectedTeams.isEmpty ? _noReportsMessage() : const LoadingScreen(),
+      error: (error, _) => navigationText(error),
       data: (teamsWithReports) => _selectedTeams.isEmpty || teamsWithReports.isEmpty
           ? _noReportsMessage()
           : ListView.builder(
@@ -95,8 +97,6 @@ class _ComparePageState extends ConsumerState<ComparePage> {
                 ),
               ),
             ),
-      error: (error, _) => navigationText(error),
-      loading: () => _selectedTeams.isEmpty ? _noReportsMessage() : const LoadingScreen(),
     );
   }
 
