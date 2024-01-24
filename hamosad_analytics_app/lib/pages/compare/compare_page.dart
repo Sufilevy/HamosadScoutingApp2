@@ -41,7 +41,7 @@ class _ComparePageState extends ConsumerState<ComparePage> {
     return Column(
       children: <Widget>[
         _teamsSelect(context),
-        Gap(10 * AnalyticsTheme.appSizeRatio),
+        Gap(12 * AnalyticsTheme.appSizeRatio),
         if (_selectedTeams.isNotEmpty) _selectedTeamsChips(context).padBottom(12),
         const Divider(),
         Gap(8 * AnalyticsTheme.appSizeRatio),

@@ -114,9 +114,11 @@ class _SelectDistrictsDialogState extends ConsumerState<SelectDistrictsDialog> {
         }
       },
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(AnalyticsTheme.background1),
+        backgroundColor: MaterialStateProperty.all(AnalyticsTheme.background2),
       ),
-      child: navigationText('OK', color: AnalyticsTheme.primary)
+      child: navigationText('OK',
+              color:
+                  _selectedDistricts.isEmpty ? AnalyticsTheme.background3 : AnalyticsTheme.primary)
           .padSymmetric(horizontal: 12, vertical: 6),
     );
   }
