@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 
+typedef Districts = Set<String>;
+typedef TeamsNumbers = Set<String>;
 typedef Json = Map<String, dynamic>;
 
 class Stat {

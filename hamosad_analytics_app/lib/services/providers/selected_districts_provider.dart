@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '/models/analytics.dart';
 import '/services/database/analytics_database.dart';
-
-typedef Districts = Set<String>;
 
 final selectedDistrictsProvider = AsyncNotifierProvider<SelectedDistrictsNotifier, Districts>(
   () {
@@ -20,7 +19,7 @@ class SelectedDistrictsNotifier extends AsyncNotifier<Districts> {
     };
   }
 
-  void setDistricts(Set<String> districts) {
+  void setDistricts(Districts districts) {
     state = AsyncValue.data(districts);
   }
 }

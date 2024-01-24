@@ -34,7 +34,7 @@ abstract class AnalyticsDatabase {
   }
 
   /// Returns the existing teams of a district from `/<district>`.
-  static Future<Set<String>> teamsOfDistrict(String district) async {
+  static Future<TeamsNumbers> teamsNumbersOfDistrict(String district) async {
     if (!district.contains('-')) district += '-1657';
 
     final query = await _firestore.collection(district).get();

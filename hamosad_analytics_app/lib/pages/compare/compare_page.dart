@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:hamosad_analytics_app/services/providers/teams_numbers_provider.dart';
 
 import '/services/providers/teams_provider.dart';
 import '/theme.dart';
@@ -52,15 +53,21 @@ class _ComparePageState extends ConsumerState<ComparePage> {
   }
 
   Widget _teamsSelect(BuildContext context) {
-    return TeamsSelect(
-      teams: TeamInfo.teamsNumbers,
-      selectedTeams: _selectedTeams,
-      onSelectionChange: (teamsList) {
-        final teams = teamsList.toSet();
-        if (_selectedTeams.isEmpty || !setEquals(_selectedTeams, teams)) {
-          setState(() => _selectedTeams = teams);
-        }
-      },
+    final teamsNumbersStream = ref.watch(teamsNumbersProvider);
+
+    return teamsNumbersStream.when(
+      data: (teamsNumbers) => TeamsSelect(
+        teams: teamsNumbers,
+        selectedTeams: _selectedTeams,
+        onSelectionChange: (teamsList) {
+          final teams = teamsList.toSet();
+          if (_selectedTeams.isEmpty || !setEquals(_selectedTeams, teams)) {
+            setState(() => _selectedTeams = teams);
+          }
+        },
+      ),
+      error: (error, _) => navigationText(error.toString()),
+      loading: () => const LoadingScreen(),
     );
   }
 

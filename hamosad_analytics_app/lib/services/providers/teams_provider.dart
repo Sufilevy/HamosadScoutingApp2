@@ -9,7 +9,7 @@ import '/services/providers/selected_districts_provider.dart';
 class TeamsIdentifier extends Equatable {
   const TeamsIdentifier(this.teamsNumbers);
 
-  final Set<String> teamsNumbers;
+  final TeamsNumbers teamsNumbers;
 
   @override
   List<Object?> get props => [teamsNumbers];
@@ -33,17 +33,17 @@ final teamsWithReportsProvider = StreamProvider.autoDispose.family(
     final streamGroups = snapshots.map((s) => StreamGroup.merge(s));
     final stream = StreamGroup.merge(streamGroups);
 
-    await for (final doc in stream) {
-      final docDistrict = doc.reference.parent.id;
-      final docTeamNumber = doc.reference.id;
+    await for (final snapshot in stream) {
+      final snapshotDistrict = snapshot.reference.parent.id;
+      final snapshotTeamNumber = snapshot.reference.id;
       final teamsWithReports = <String, Json>{};
 
       for (final district in districts) {
         for (final teamNumber in teamsNumbers) {
           fromDatabase() async => await AnalyticsDatabase.reportsOfTeam(teamNumber, district);
 
-          final reports = (district == docDistrict && teamNumber == docTeamNumber)
-              ? doc.data() ?? await fromDatabase()
+          final reports = (district == snapshotDistrict && teamNumber == snapshotTeamNumber)
+              ? snapshot.data() ?? await fromDatabase()
               : await fromDatabase();
 
           if (reports.isEmpty) continue;
