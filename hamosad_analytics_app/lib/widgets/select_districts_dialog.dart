@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
+import '/models/analytics.dart';
 import '/services/database/analytics_database.dart';
 import '/services/providers/selected_districts_provider.dart';
 import '/services/utilities.dart';
@@ -113,9 +114,11 @@ class _SelectDistrictsDialogState extends ConsumerState<SelectDistrictsDialog> {
         }
       },
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(AnalyticsTheme.background1),
+        backgroundColor: MaterialStateProperty.all(AnalyticsTheme.background2),
       ),
-      child: navigationText('OK', color: AnalyticsTheme.primary)
+      child: navigationText('OK',
+              color:
+                  _selectedDistricts.isEmpty ? AnalyticsTheme.background3 : AnalyticsTheme.primary)
           .padSymmetric(horizontal: 12, vertical: 6),
     );
   }

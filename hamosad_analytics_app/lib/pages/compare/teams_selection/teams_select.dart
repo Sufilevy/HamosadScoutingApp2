@@ -2,6 +2,7 @@ import 'package:awesome_select/awesome_select.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import '/models/analytics.dart';
 import '/theme.dart';
 import '/widgets/paddings.dart';
 
@@ -13,8 +14,8 @@ class TeamsSelect extends StatelessWidget {
     this.selectedTeams,
   });
 
-  final Set<String> teams;
-  final Set<String>? selectedTeams;
+  final TeamsNumbers teams;
+  final TeamsNumbers? selectedTeams;
   final void Function(List<String> teams) onSelectionChange;
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:hamosad_analytics_app/services/providers/teams_numbers_provider.dart';
 
 import '/services/providers/teams_provider.dart';
 import '/theme.dart';
@@ -40,7 +41,7 @@ class _ComparePageState extends ConsumerState<ComparePage> {
     return Column(
       children: <Widget>[
         _teamsSelect(context),
-        Gap(10 * AnalyticsTheme.appSizeRatio),
+        Gap(12 * AnalyticsTheme.appSizeRatio),
         if (_selectedTeams.isNotEmpty) _selectedTeamsChips(context).padBottom(12),
         const Divider(),
         Gap(8 * AnalyticsTheme.appSizeRatio),
@@ -52,30 +53,38 @@ class _ComparePageState extends ConsumerState<ComparePage> {
   }
 
   Widget _teamsSelect(BuildContext context) {
-    return TeamsSelect(
-      teams: TeamInfo.teamsNumbers,
-      selectedTeams: _selectedTeams,
-      onSelectionChange: (teamsList) {
-        final teams = teamsList.toSet();
-        if (_selectedTeams.isEmpty || !setEquals(_selectedTeams, teams)) {
-          setState(() => _selectedTeams = teams);
-        }
-      },
+    final teamsNumbersStream = ref.watch(teamsNumbersProvider);
+
+    return teamsNumbersStream.when(
+      loading: () => const LoadingScreen(),
+      error: (error, _) => navigationText(error.toString()),
+      data: (teamsNumbers) => TeamsSelect(
+        teams: teamsNumbers,
+        selectedTeams: Set.from(_selectedTeams),
+        onSelectionChange: (teamsList) {
+          final teams = teamsList.toSet();
+          if (_selectedTeams.isEmpty || !setEquals(_selectedTeams, teams)) {
+            setState(() => _selectedTeams = Set.from(teams));
+          }
+        },
+      ),
     );
   }
 
   Widget _selectedTeamsChips(BuildContext context) {
     return SelectedTeamsChips(
-      selectedTeams: _selectedTeams,
-      onSelectionChange: (teams) => setState(() => _selectedTeams = teams),
+      selectedTeams: Set.from(_selectedTeams),
+      onSelectionChange: (teams) => setState(() => _selectedTeams = Set.from(teams)),
     );
   }
 
   Widget _charts() {
-    final identifier = TeamsIdentifier(_selectedTeams);
+    final identifier = TeamsIdentifier(Set.from(_selectedTeams));
     final teamStream = ref.watch(teamsWithReportsProvider(identifier));
 
     return teamStream.when(
+      loading: () => _selectedTeams.isEmpty ? _noReportsMessage() : const LoadingScreen(),
+      error: (error, _) => navigationText(error),
       data: (teamsWithReports) => _selectedTeams.isEmpty || teamsWithReports.isEmpty
           ? _noReportsMessage()
           : ListView.builder(
@@ -88,8 +97,6 @@ class _ComparePageState extends ConsumerState<ComparePage> {
                 ),
               ),
             ),
-      error: (error, _) => navigationText(error),
-      loading: () => _selectedTeams.isEmpty ? _noReportsMessage() : const LoadingScreen(),
     );
   }
 

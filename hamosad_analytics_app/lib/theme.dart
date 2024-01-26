@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/material.dart';
+import 'package:hamosad_analytics_app/models/analytics.dart';
 
 import '/services/utilities.dart';
 
@@ -190,7 +191,7 @@ class TeamInfo {
   final String name, location;
   final Color color;
 
-  static Set<String> get teamsNumbers => teams.keys.toSet();
+  static TeamsNumbers get teamsNumbers => teams.keys.toSet();
 
   /// [Color, Name, Location]
   static const teams = {

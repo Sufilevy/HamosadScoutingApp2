@@ -6,17 +6,12 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:search_page/search_page.dart';
 
-import '/models/team/stats/duration_models.dart';
 import '/services/providers/team_provider.dart';
 import '/theme.dart';
 import '/widgets/analytics.dart';
 import '/widgets/paddings.dart';
 import '/widgets/scaffold.dart';
 import '/widgets/text.dart';
-import 'chips/durations_chip.dart';
-import 'chips/four_rates_chip.dart';
-import 'chips/number_chip.dart';
-import 'chips/success_rate_chip.dart';
 import 'chips/team_info_chip.dart';
 import 'layout/chip_row.dart';
 import 'layout/section_title.dart';
@@ -32,7 +27,7 @@ class TeamDetailsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return teamNumber == null ? _selectTeamPage(context) : _teamDetailsPage(context);
+    return teamNumber == null ? _selectTeamPage(context) : _teamDetailsPage(context, ref);
   }
 
   Widget _selectTeamPage(BuildContext context) {
@@ -56,7 +51,7 @@ class TeamDetailsPage extends ConsumerWidget {
     return body;
   }
 
-  Widget _teamDetailsPage(BuildContext context) {
+  Widget _teamDetailsPage(BuildContext context, WidgetRef ref) {
     final teamInfo = TeamInfo.fromNumber(teamNumber!);
 
     return Scaffold(
@@ -72,7 +67,7 @@ class TeamDetailsPage extends ConsumerWidget {
       body: padSymmetric(
         horizontal: 12,
         vertical: 12,
-        _detailsView(teamInfo),
+        _detailsView(teamInfo, ref),
       ),
     );
   }
@@ -160,89 +155,28 @@ class TeamDetailsPage extends ConsumerWidget {
     );
   }
 
-  Widget _body(BuildContext context, WidgetRef ref) {
+  Widget _detailsView(TeamInfo teamInfo, WidgetRef ref) {
     final teamStream = ref.watch(teamReportsProvider(teamNumber!));
 
     return teamStream.when(
-      data: (team) => Column(
-        children: team.reportsIds.map(navigationText).toList(),
-      ),
-      error: (error, _) => navigationText(error.toString()),
       loading: () => const LoadingScreen(),
-    );
-  }
-
-  Widget _detailsView(TeamInfo teamInfo) {
-    final durations = ActionDurationsStat.defaults();
-    durations.updateWithDuration(ActionDuration.zeroToTwo);
-    durations.updateWithDuration(ActionDuration.twoToFive);
-    durations.updateWithDuration(ActionDuration.twoToFive);
-    durations.updateWithDuration(ActionDuration.twoToFive);
-    durations.updateWithDuration(ActionDuration.fivePlus);
-    durations.updateWithDuration(ActionDuration.fivePlus);
-
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          ChipRow(
-            children: <Widget>[
-              TeamInfoChip(teamInfo.name, icon: FontAwesomeIcons.users),
-              TeamInfoChip(teamInfo.location, icon: FontAwesomeIcons.city),
-            ],
-          ),
-          const SectionDivider(),
-          const ChipRow(
-            children: <Widget>[
-              NumberChip('Average Score', data: 64.15),
-              NumberChip('Average RP', data: 2.3),
-            ],
-          ),
-          SectionTitle(key: _sectionKeys[0], icon: FontAwesomeIcons.code, title: 'Auto'),
-          const ChipRow(
-            smallChips: true,
-            children: <Widget>[
-              NumberChip('Top Row', data: 12.3, small: true),
-              NumberChip('Middle Row', data: 42.3, small: true),
-              NumberChip('Bottom Row', data: 5.13, small: true),
-            ],
-          ),
-          SectionTitle(key: _sectionKeys[1], icon: FontAwesomeIcons.solidUser, title: 'Teleop'),
-          const ChipRow(
-            smallChips: true,
-            children: <Widget>[
-              NumberChip('Top Row', data: 12.3, small: true),
-              NumberChip('Middle Row', data: 42.3, small: true),
-              NumberChip('Bottom Row', data: 5.13, small: true),
-            ],
-          ),
-          ChipRow(
-            children: <Widget>[
-              DurationsChip(
-                title: 'Dropoffs',
-                durations: durations,
-              ),
-            ],
-          ),
-          ChipRow(
-            children: <Widget>[
-              RatesChip(
-                titles: const ['No Attempt', 'Failed', 'Docked', 'Engaged'],
-                rates: const [0.3, 0.25, 0.1, 0.35],
-              ),
-            ],
-          ),
-          const ChipRow(
-            flexes: [2, 1],
-            children: <Widget>[
-              SuccessRateChip(
-                title: 'Docked',
-                successRate: 0.7,
-                failRate: 0.3,
-              ),
-              NumberChip('Bottom Row', data: 5.13, small: true),
-            ],
-          ),
-        ],
+      error: (error, _) => navigationText(error.toString()),
+      data: (team) => SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            ChipRow(
+              children: <Widget>[
+                TeamInfoChip(teamInfo.name, icon: FontAwesomeIcons.users),
+                TeamInfoChip(teamInfo.location, icon: FontAwesomeIcons.city),
+              ],
+            ),
+            const SectionDivider(),
+            navigationText(team.teamNumber),
+            Column(
+              children: team.reportsIds.map(dataSubtitleText).toList(),
+            )
+          ],
+        ),
       ),
     );
   }

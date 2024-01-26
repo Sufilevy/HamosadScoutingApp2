@@ -16,13 +16,13 @@ final teamReportsProvider = StreamProvider.autoDispose.family(
 
     final stream = StreamGroup.merge(snapshots);
 
-    await for (final doc in stream) {
-      final docDistrict = doc.reference.parent.id;
+    await for (final snapshot in stream) {
+      final snapshotDistrict = snapshot.reference.parent.id;
       final team = Team(teamNumber);
 
       for (final district in districts) {
-        final reports = (district == docDistrict)
-            ? doc.data()
+        final reports = (district == snapshotDistrict)
+            ? snapshot.data()
             : await AnalyticsDatabase.reportsOfTeam(teamNumber, district);
 
         team.updateWithReports(reports);
