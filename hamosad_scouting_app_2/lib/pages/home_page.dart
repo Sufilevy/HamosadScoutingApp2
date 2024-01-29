@@ -67,6 +67,8 @@ class HomePage extends ConsumerWidget {
             ScoutingIconButton(
               icon: FontAwesomeIcons.squarePlus,
               iconSize: 250 * ScoutingTheme.appSizeRatio,
+              constraints:
+                  const BoxConstraints.expand(width: 325, height: 325) * ScoutingTheme.appSizeRatio,
               tooltip: 'Create a new report',
               onPressed: () => _createReport(context, report),
             ),

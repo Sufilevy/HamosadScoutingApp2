@@ -11,6 +11,7 @@ class ScoutingIconButton extends StatelessWidget {
     this.tooltip,
     this.color,
     this.disabledColor,
+    this.constraints,
     this.iconSize = 24,
     this.isEnabled = true,
   }) : assert(icon == null || iconWidget == null);
@@ -21,6 +22,7 @@ class ScoutingIconButton extends StatelessWidget {
   final double iconSize;
   final VoidCallback onPressed;
   final String? tooltip;
+  final BoxConstraints? constraints;
   final bool isEnabled;
 
   @override
@@ -33,6 +35,7 @@ class ScoutingIconButton extends StatelessWidget {
         color: color ?? ScoutingTheme.primary,
         disabledColor: disabledColor ?? ScoutingTheme.foreground2,
         tooltip: tooltip,
+        constraints: constraints,
         icon: iconWidget ?? Icon(icon),
       ),
     );

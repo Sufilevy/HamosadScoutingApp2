@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 
@@ -29,7 +30,6 @@ class ScoutingTextField extends StatefulWidget {
 class _ScoutingTextFieldState extends State<ScoutingTextField> {
   final _focusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
-  final _namesValidator = RegExp(r'^[a-zA-Z -]+');
   var _hasErrors = false;
 
   @override
@@ -51,15 +51,19 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
     }
 
     if (widget.onlyNumbers) {
-      if (int.tryParse(value) == null) return 'Only numbers are allowed.';
+      final asInt = int.tryParse(value);
+      if (asInt == null || asInt.isNegative) return 'Only numbers are allowed.';
     }
 
     if (widget.onlyNames) {
-      if (!_namesValidator.hasMatch(value)) {
-        return 'Names should only contain English letters.';
+      if (!value.characters.all((c) => c.isLowerCase || c.isUpperCase || c == ' ' || c == '-')) {
+        return "Names should only contain English letters, '-' or ' '.";
       }
       if (value.length > 30) {
         return 'Name should be shorter than 30 characters.';
+      }
+      if (value.isBlank) {
+        return 'Names should not be blank.';
       }
     }
 
