@@ -50,13 +50,15 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        ScoutingText.title('Match:').padRight(50),
+        ScoutingText.title('Match:').padRight(35),
         DropdownButton<String>(
           value: _match,
           borderRadius: BorderRadius.circular(5 * ScoutingTheme.appSizeRatio),
           dropdownColor: ScoutingTheme.background2,
-          style: ScoutingTheme.bodyStyle,
+          underline: Container(color: ScoutingTheme.foreground2, height: 1),
+          style: ScoutingTheme.bodyStyle.copyWith(fontSize: 26 * ScoutingTheme.appSizeRatio),
           alignment: Alignment.center,
+          padding: const EdgeInsets.all(8) * ScoutingTheme.appSizeRatio,
           items: [
             'Eliminations (Round 1)',
             'Eliminations (Round 2)',
@@ -69,12 +71,7 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
               .map(
                 (match) => DropdownMenuItem<String>(
                   value: match,
-                  child: Center(
-                    child: ScoutingText.body(
-                      match,
-                      fontSize: 20 * ScoutingTheme.appSizeRatio,
-                    ).padAll(8),
-                  ),
+                  child: Text(match).padAll(4),
                 ),
               )
               .toList(),
