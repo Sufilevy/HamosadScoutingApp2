@@ -10,10 +10,12 @@ class ScoutingToggleButton extends StatefulWidget {
     super.key,
     required this.cubit,
     required this.title,
+    this.onPressed,
   });
 
   final Cubit<bool> cubit;
   final String title;
+  final VoidCallback? onPressed;
 
   @override
   State<ScoutingToggleButton> createState() => _ScoutingToggleButtonState();
@@ -27,6 +29,7 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
       TextButton.icon(
         onPressed: () => setState(() {
           widget.cubit.data = !widget.cubit.data;
+          widget.onPressed?.call();
         }),
         label: ScoutingText.title(widget.title, fontWeight: FontWeight.w400).padRight(8),
         icon: Transform.scale(
@@ -40,6 +43,7 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
             value: widget.cubit.data,
             onChanged: (value) => setState(() {
               widget.cubit.data = value ?? !widget.cubit.data;
+              widget.onPressed?.call();
             }),
           ),
         ),

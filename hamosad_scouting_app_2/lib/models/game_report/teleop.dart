@@ -7,7 +7,8 @@ class GameReportTeleop {
   final climb = Cubit(false), harmony = Cubit(false);
 
   /// This field is `null` if the human player is not from the scouted team.
-  final micScores = Cubit<int?>(null);
+  final micScores = Cubit(0);
+  final isHumanPlayerFromTeam = Cubit(false);
   final notes = Cubit('');
 
   Json get data {
@@ -26,7 +27,7 @@ class GameReportTeleop {
       },
       'climb': climb.data,
       'harmony': harmony.data,
-      'micScores': micScores.data,
+      'micScores': isHumanPlayerFromTeam.data ? micScores.data : null,
       'notes': notes.data,
     };
   }
@@ -40,7 +41,8 @@ class GameReportTeleop {
     trapFromFloor.data = false;
     climb.data = false;
     harmony.data = false;
-    micScores.data = null;
+    micScores.data = 0;
+    isHumanPlayerFromTeam.data = false;
     notes.data = '';
   }
 }

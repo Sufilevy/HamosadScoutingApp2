@@ -1,6 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hamosad_scouting_app_2/pages/reports/widgets/scouting/crescendo/climb.dart';
 
 import '/models/game_report/game_report.dart';
 import '/models/game_report/summary.dart';
@@ -82,11 +83,11 @@ class GameReportPage extends ConsumerWidget {
                 title: 'Robot scores TRAP from the floor',
               ),
             ]),
-            column([
-              ScoutingToggleButton(cubit: report.teleop.climb, title: 'Robot climbed'),
-              ScoutingToggleButton(cubit: report.teleop.climb, title: 'Robot achieved HARMONY'),
-            ]),
-            ScoutingMicScores(cubit: report.teleop.micScores),
+            ScoutingClimb(cubit: report.teleop.climb, harmonyCubit: report.teleop.harmony),
+            ScoutingMicScores(
+              cubit: report.teleop.micScores,
+              humanPlayerCubit: report.teleop.isHumanPlayerFromTeam,
+            ),
             ScoutingNotes(cubit: report.teleop.notes),
           ],
         ),
@@ -97,7 +98,7 @@ class GameReportPage extends ConsumerWidget {
               ScoutingToggleButton(cubit: report.summary.won, title: "Robot's alliance won"),
               ScoutingText.subtitle('How much did the robot focus on defense?').padTop(12),
               ScoutingSwitch(
-                items: const ['None', 'Half', 'Almost only'],
+                items: const ['None', 'Half', 'Almost Only'],
                 customWidths: [
                   200 * ScoutingTheme.appSizeRatio,
                   200 * ScoutingTheme.appSizeRatio,

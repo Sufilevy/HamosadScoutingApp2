@@ -1,35 +1,37 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 
-import '../number/counter.dart';
 import '../toggle/toggle_button.dart';
 import '/models/cubit.dart';
 import '/widgets/paddings.dart';
 
-class ScoutingMicScores extends StatefulWidget {
-  const ScoutingMicScores({
+class ScoutingClimb extends StatefulWidget {
+  const ScoutingClimb({
     super.key,
     required this.cubit,
-    required this.humanPlayerCubit,
+    required this.harmonyCubit,
   });
 
-  final Cubit<int> cubit;
-  final Cubit<bool> humanPlayerCubit;
+  final Cubit<bool> cubit, harmonyCubit;
 
   @override
-  State<ScoutingMicScores> createState() => _ScoutingMicScoresState();
+  State<ScoutingClimb> createState() => _ScoutingClimbState();
 }
 
-class _ScoutingMicScoresState extends State<ScoutingMicScores> {
+class _ScoutingClimbState extends State<ScoutingClimb> {
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ScoutingToggleButton(
-          cubit: widget.humanPlayerCubit,
-          title: 'Human player is from this team',
-          onPressed: () => setState(() {}),
+          cubit: widget.cubit,
+          title: 'Robot climbed',
+          onPressed: () => setState(() {
+            if (!widget.cubit.data) {
+              widget.harmonyCubit.data = false;
+            }
+          }),
         ),
         AnimatedSwitcher(
           duration: 200.milliseconds,
@@ -40,8 +42,9 @@ class _ScoutingMicScoresState extends State<ScoutingMicScores> {
             alignment: Alignment.topCenter,
             child: child,
           ),
-          child: widget.humanPlayerCubit.data
-              ? ScoutingCounter(cubit: widget.cubit, title: 'Mic Scores', max: 3).padTop(24)
+          child: widget.cubit.data
+              ? ScoutingToggleButton(cubit: widget.harmonyCubit, title: 'Robot achieved HARMONY')
+                  .padTop(24)
               : const SizedBox.shrink(),
         ),
       ],
