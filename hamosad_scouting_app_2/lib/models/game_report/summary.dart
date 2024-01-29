@@ -1,35 +1,41 @@
 import '/models/cubit.dart';
 
 class GameReportSummary {
-  final defenseFocus = Cubit<DefenseFocus?>(null);
-  final defenseNotes = Cubit('');
-  final fouls = Cubit('');
-  final notes = Cubit('');
   final won = Cubit(false);
+  final defenseFocus = Cubit(DefenseFocus.defaultValue);
+  final canIntakeFromFloor = Cubit(false);
+
+  /// If the robot can only score in the SPEAKER from a single location, this is the description
+  /// of that location. <br> If it can shoot from multiple locations, this is empty.
+  final pinnedShooterLocation = Cubit<String>('');
+  final notes = Cubit('');
 
   Json get data {
     return {
       'won': won.data,
-      'defenseRobotIndex': defenseFocus.data.toString(),
-      'fouls': fouls.data,
+      'defenseFocus': defenseFocus.data,
+      'canIntakeFromFloor': canIntakeFromFloor.data,
+      'pinnedShooterLocation':
+          pinnedShooterLocation.data.isEmpty ? null : pinnedShooterLocation.data,
       'notes': notes.data,
-      'defenseNotes': defenseNotes.data,
     };
   }
 
   void clear() {
-    defenseFocus.data = null;
-    defenseNotes.data = '';
-    fouls.data = '';
-    notes.data = '';
     won.data = false;
+    canIntakeFromFloor.data = false;
+    pinnedShooterLocation.data = '';
+    defenseFocus.data = DefenseFocus.defaultValue;
+    notes.data = '';
   }
 }
 
 enum DefenseFocus {
   none,
   half,
-  almostAll;
+  almostOnly;
+
+  static DefenseFocus get defaultValue => none;
 
   @override
   String toString() {
@@ -38,8 +44,8 @@ enum DefenseFocus {
         return 'none';
       case DefenseFocus.half:
         return 'half';
-      case DefenseFocus.almostAll:
-        return 'almostAll';
+      case DefenseFocus.almostOnly:
+        return 'almostOnly';
     }
   }
 }

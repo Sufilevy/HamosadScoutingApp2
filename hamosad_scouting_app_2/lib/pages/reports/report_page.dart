@@ -43,6 +43,7 @@ class ReportPage extends ConsumerWidget {
             centerTitle: true,
             bottom: TabBar(
               isScrollable: true,
+              tabAlignment: TabAlignment.center,
               indicatorWeight: 2.5 * ScoutingTheme.appSizeRatio,
               indicatorColor: ScoutingTheme.primary,
               labelPadding: EdgeInsets.symmetric(horizontal: 24 * ScoutingTheme.appSizeRatio),
@@ -60,7 +61,7 @@ class ReportPage extends ConsumerWidget {
           ),
           body: TabBarView(
             children: tabs,
-          ).padSymmetric(vertical: 16),
+          ),
         ),
       ),
     );
@@ -78,8 +79,6 @@ class ReportPage extends ConsumerWidget {
 
               if (report.match.data.isNullOrEmpty || report.teamNumber.data.isNullOrEmpty) {
                 content = 'Please fill the match and team number.';
-              } else if (report.summary.defenseFocus.data == null) {
-                content = 'Please fill the defense focus.';
               }
 
               if (content == null) {

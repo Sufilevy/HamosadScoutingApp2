@@ -12,6 +12,7 @@ class ScoutingTextField extends StatefulWidget {
     required this.cubit,
     this.hint = '',
     this.title = '',
+    this.canBeEmpty = false,
     this.onlyNumbers = false,
     this.onlyNames = false,
     this.errorHint,
@@ -20,7 +21,7 @@ class ScoutingTextField extends StatefulWidget {
   final Cubit<String?> cubit;
   final String? errorHint;
   final String hint;
-  final bool onlyNumbers, onlyNames;
+  final bool canBeEmpty, onlyNumbers, onlyNames;
   final String title;
 
   @override
@@ -42,6 +43,10 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
 
   String? _validateInput(String? value) {
     if (value == null || value.isEmpty) {
+      if (widget.canBeEmpty) {
+        return null;
+      }
+
       String hint = widget.hint.isNotEmpty
           ? (widget.hint.endsWith('...')
               ? widget.hint.toLowerCase().substring(0, widget.hint.length - 3)
@@ -73,7 +78,7 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
   @override
   Widget build(BuildContext context) {
     return padSymmetric(
-      horizontal: 32,
+      horizontal: 60,
       Form(
         key: _formKey,
         child: TextFormField(
@@ -92,10 +97,10 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
                   : TextDirection.ltr,
           decoration: InputDecoration(
             hintText: widget.hint,
+            labelText: widget.title,
             hintStyle: ScoutingTheme.bodyStyle.copyWith(
               color: ScoutingTheme.foreground2,
             ),
-            labelText: widget.title,
             labelStyle: ScoutingTheme.bodyStyle.copyWith(
               color: _focusNode.hasFocus
                   ? (_hasErrors ? ScoutingTheme.error : ScoutingTheme.primary)

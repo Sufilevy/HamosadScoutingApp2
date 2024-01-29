@@ -5,7 +5,7 @@ import '/widgets/paddings.dart';
 
 class ReportTab extends StatelessWidget {
   final String title;
-  final List children;
+  final List<Widget> children;
 
   final double seperation;
   final bool seperated;
@@ -14,7 +14,7 @@ class ReportTab extends StatelessWidget {
     super.key,
     required this.title,
     required children,
-    this.seperation = 30,
+    this.seperation = 48,
     this.seperated = true,
   }) : children = [...children, Container()] {
     assert(children.isNotEmpty);
@@ -23,11 +23,9 @@ class ReportTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      separatorBuilder: (context, index) => padLTRB(
-        40,
-        30,
-        40,
-        0,
+      separatorBuilder: (context, index) => padSymmetric(
+        horizontal: 64 * ScoutingTheme.appSizeRatio,
+        vertical: seperation * ScoutingTheme.appSizeRatio,
         Container(
           height: 1.5,
           decoration: BoxDecoration(
@@ -38,7 +36,9 @@ class ReportTab extends StatelessWidget {
           ),
         ),
       ),
-      itemBuilder: (context, index) => Center(child: children[index]).padTop(seperation),
+      itemBuilder: (context, index) => Center(
+        child: index == 0 ? children[index].padTop(32) : children[index],
+      ),
       itemCount: children.length,
     );
   }

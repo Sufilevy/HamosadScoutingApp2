@@ -24,31 +24,36 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
   Widget build(BuildContext context) {
     return padSymmetric(
       horizontal: 54,
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Transform.scale(
-            scale: 1.75 * ScoutingTheme.appSizeRatio,
-            child: Checkbox(
-              activeColor: ScoutingTheme.primary,
-              checkColor: ScoutingTheme.background1,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
-              side: const BorderSide(color: ScoutingTheme.foreground2, width: 2),
-              value: widget.cubit.data,
-              onChanged: (value) => setState(() {
-                widget.cubit.data = value ?? !widget.cubit.data;
-              }),
-            ),
+      TextButton.icon(
+        onPressed: () => setState(() {
+          widget.cubit.data = !widget.cubit.data;
+        }),
+        label: ScoutingText.title(widget.title, fontWeight: FontWeight.w400).padRight(8),
+        icon: Transform.scale(
+          scale: 1.5 * ScoutingTheme.appSizeRatio,
+          child: Checkbox(
+            activeColor: ScoutingTheme.primary,
+            checkColor: ScoutingTheme.background1,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
+            side: BorderSide(color: ScoutingTheme.foreground2.withOpacity(0.8), width: 2),
+            splashRadius: 0,
+            value: widget.cubit.data,
+            onChanged: (value) => setState(() {
+              widget.cubit.data = value ?? !widget.cubit.data;
+            }),
           ),
-          Flexible(
-            child: TextButton(
-              onPressed: () => setState(() {
-                widget.cubit.data = !widget.cubit.data;
-              }),
-              child: ScoutingText.subtitle(widget.title).padSymmetric(horizontal: 2, vertical: 10),
-            ),
+        ),
+        style: ButtonStyle(
+          padding: MaterialStatePropertyAll(
+            const EdgeInsets.symmetric(vertical: 24, horizontal: 24) * ScoutingTheme.appSizeRatio,
           ),
-        ],
+          backgroundColor: MaterialStatePropertyAll(
+            ScoutingTheme.background2.withOpacity(0.75),
+          ),
+          shape: MaterialStatePropertyAll(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
+        ),
       ),
     );
   }

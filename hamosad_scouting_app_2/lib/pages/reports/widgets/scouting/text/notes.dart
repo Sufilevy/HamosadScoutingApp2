@@ -50,7 +50,7 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
         onChanged: (String value) => setState(() {
           widget.cubit.data = value;
         }),
-        minLines: 1,
+        minLines: 3,
         maxLines: null,
         style: ScoutingTheme.bodyStyle,
         textDirection:
@@ -60,6 +60,7 @@ class _ScoutingNotesState extends State<ScoutingNotes> {
         decoration: InputDecoration(
           hintText: widget.hint,
           labelText: widget.title,
+          alignLabelWithHint: true,
           labelStyle: ScoutingTheme.bodyStyle.copyWith(color: ScoutingTheme.foreground2),
           hintStyle: ScoutingTheme.bodyStyle.copyWith(color: ScoutingTheme.foreground2),
           errorStyle: ScoutingTheme.bodyStyle.copyWith(

@@ -11,20 +11,20 @@ class ScoutingCounter extends StatefulWidget {
   const ScoutingCounter({
     super.key,
     required this.cubit,
-    required this.min,
-    required this.max,
+    required this.title,
+    this.min = 0,
+    this.max = 999,
     this.step = 1,
-    this.title = '',
-    this.initial,
+    this.initial = 0,
   })  : assert(min >= -99),
         assert(max <= 999),
         assert(step > 0),
         assert(max > min + step);
 
   final Cubit<int> cubit;
-  final int min, max, step;
   final String title;
-  final int? initial;
+  final int min, max, step;
+  final int initial;
 
   @override
   State<ScoutingCounter> createState() => _ScoutingCounterState();
@@ -33,7 +33,7 @@ class ScoutingCounter extends StatefulWidget {
 class _ScoutingCounterState extends State<ScoutingCounter> {
   @override
   void initState() {
-    widget.cubit.data = widget.initial ?? 0;
+    widget.cubit.data = widget.initial;
     super.initState();
   }
 
@@ -41,17 +41,22 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
   Widget build(BuildContext context) {
     if (widget.title.isNotEmpty) {
       return padSymmetric(
-        horizontal: 32,
+        horizontal: 48,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Flexible(
-              child: ScoutingText.subtitle(
+            const Expanded(flex: 1, child: SizedBox.shrink()),
+            Expanded(
+              flex: 10,
+              child: ScoutingText.title(
                 widget.title,
                 textAlign: TextAlign.center,
               ).padSymmetric(horizontal: 12),
             ),
-            _buildCounter(),
+            Expanded(
+              flex: 10,
+              child: _buildCounter(),
+            ),
           ],
         ),
       );
@@ -103,7 +108,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
             },
             child: Container(
               key: ValueKey<String>(widget.cubit.data.toString()),
-              child: ScoutingText.subtitle(widget.cubit.data.toString()),
+              child: ScoutingText.title(widget.cubit.data.toString()),
             ),
           ),
         ),
