@@ -18,6 +18,8 @@ abstract class ScoutingTheme {
   static const error = Color(0xFFD4353A);
   static const blueAlliance = Color(0xFF1E88E5);
   static const redAlliance = Color(0xFFC62828);
+  static const fieldCarpet = Color(0xFF373737);
+  static const note = Color(0xFFd39345);
   static const hamosad = Color(0xFF165700);
 
   static TextStyle get navigationStyle => TextStyle(

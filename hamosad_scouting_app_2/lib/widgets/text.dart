@@ -68,4 +68,43 @@ abstract class ScoutingText {
       textAlign: textAlign,
     );
   }
+
+  static Widget titleStroke(
+    String data, {
+    double? fontSize,
+    Color? color,
+    FontWeight? fontWeight,
+    double? height,
+    double strokeWidth = 2,
+    Color strokeColor = Colors.black,
+    TextAlign textAlign = TextAlign.center,
+  }) {
+    return Stack(
+      children: [
+        Text(
+          data,
+          textAlign: textAlign,
+          style: ScoutingTheme.titleStyle.copyWith(
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            height: height,
+            foreground: Paint()
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = strokeWidth
+              ..color = strokeColor,
+          ),
+        ),
+        Text(
+          data,
+          textAlign: textAlign,
+          style: ScoutingTheme.titleStyle.copyWith(
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            height: height,
+            color: color,
+          ),
+        ),
+      ],
+    );
+  }
 }
