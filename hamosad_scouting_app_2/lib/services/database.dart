@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartx/dartx.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '/models/cubit.dart';
@@ -19,6 +20,7 @@ abstract class ScoutingDatabase {
     _districtName = informationDoc.get('current');
 
     await _getMatches();
+    debugPrint('Finished database initialization.');
   }
 
   static Future<void> finalize() async {
@@ -27,44 +29,55 @@ abstract class ScoutingDatabase {
 
   static Future<void> sendReport(
     Json report, {
+    required bool isRematch,
     String? lastId,
   }) async {
     final datetime = _getDatetime();
-    report.addAll({'datetime': datetime});
+    report.addAll({'time': datetime});
 
-    final scouterTeamNumber = report['info']['scouterTeamNumber'];
+    final scouterTeamNumber = report['0-info']['scouterTeamNumber'];
     final collectionName = '$_districtName-$scouterTeamNumber';
     final districtReports = _db.collection(collectionName);
 
-    final teamReports = districtReports.doc(report['info']['teamNumber']);
-    final id = lastId ?? _generateReportId(report['info'], datetime);
+    var teamReports = districtReports.doc(report['0-info']['teamNumber']);
+    final currentReports = (await teamReports.get()).data();
+    if (currentReports == null || currentReports.isEmpty) {
+      teamReports.set({});
+      teamReports = districtReports.doc(report['0-info']['teamNumber']);
+    }
 
-    await teamReports.update({id: report});
+    final match = report['0-info']['match']
+        .toString()
+        .replaceAll('Eliminations ', 'elims')
+        .replaceAll('(Round ', '')
+        .replaceAll(')', '')
+        .replaceAll('(Finals)', '-finals');
+    final scouter =
+        report['0-info']['scouter'].toString().trim().replaceAll(' ', '_').toLowerCase();
+
+    final reportId = '$match-$scouter-$datetime';
+
+    if (isRematch) {
+      final currentSnapshot = await teamReports.get();
+      final currentReports = currentSnapshot.data() ?? {};
+
+      currentReports.removeWhere((id, _) => id.contains('$match-$scouter'));
+      currentReports[reportId] = report;
+
+      teamReports.set(currentReports);
+    } else {
+      await teamReports.update({reportId: report});
+    }
+
     await _db.waitForPendingWrites();
   }
 
-  static String _generateReportId(Json reportInfo, Json datetime) {
-    final match = reportInfo['match'].toString();
-    final scouter = reportInfo['scouter'].toString().trim().replaceAll(' ', '_').toLowerCase();
-
-    return '${match == 'Eliminations' ? 'elims' : match}'
-        '-$scouter'
-        '-${datetime['time']}';
-  }
-
-  static Json _getDatetime() {
-    final now = DateTime.now();
-
-    return {
-      'day': now.day,
-      'month': now.month,
-      'year': now.year,
-      'time': DateFormat('HH:mm:ss-dd/MM ').format(now),
-    };
+  static String _getDatetime() {
+    return DateFormat('HH:mm:ss-dd_MM_yy').format(DateTime.now());
   }
 
   static Future<void> _getMatches() async {
-    final matchesJson = await _db.collection('district').doc('matches').get();
+    final matchesJson = await _db.collection('information').doc('matches').get();
 
     matches = matchesJson.data()?.mapValues((match) => (match.value as List).mapToStrings()) ?? {};
   }

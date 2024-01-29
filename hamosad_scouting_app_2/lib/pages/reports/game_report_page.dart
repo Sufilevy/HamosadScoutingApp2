@@ -26,9 +26,10 @@ class GameReportPage extends ConsumerWidget {
           title: 'Info',
           children: <Widget>[
             ScoutingMatchAndTeam(
-              matches: ScoutingDatabase.matches,
               match: report.match,
               team: report.teamNumber,
+              isRematch: report.isRematch,
+              matches: ScoutingDatabase.matches,
             ),
           ],
         ),

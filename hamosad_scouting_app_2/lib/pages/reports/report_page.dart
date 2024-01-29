@@ -1,7 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '/models/game_report/game_report.dart';
 import '/services/database.dart';
@@ -151,10 +151,7 @@ class ReportPage extends ConsumerWidget {
           8,
           TextButton(
             onPressed: () {
-              Navigator.popUntil(
-                context,
-                (route) => route.isFirst,
-              );
+              context.go('/');
             },
             child: ScoutingText.body(
               'Delete',
@@ -177,17 +174,19 @@ class ReportPage extends ConsumerWidget {
   }
 
   void _sendReport(BuildContext context, GameReport report) async {
-    Navigator.popUntil(context, (route) => route.isFirst);
-
     try {
-      ScoutingDatabase.sendReport(report.data).then(
+      ScoutingDatabase.sendReport(
+        report.data,
+        isRematch: report.isRematch.data,
+      ).then(
         (_) {
           report.clear();
-          Phoenix.rebirth(context);
+          context.go('/');
         },
       );
     } catch (e) {
-      showWarningSnackBar(context, 'Failed to send report.');
+      context.go('/');
+      showWarningSnackBar(context, 'Failed to send report. ($e)');
     }
   }
 }

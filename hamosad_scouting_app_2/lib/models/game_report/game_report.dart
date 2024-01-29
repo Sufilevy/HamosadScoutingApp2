@@ -12,6 +12,7 @@ class GameReport {
   final scouter = Cubit('');
   final scouterTeamNumber = Cubit('');
   final teamNumber = Cubit<String?>(null);
+  final isRematch = Cubit<bool>(false);
 
   final auto = GameReportAuto();
   final endgame = GameReportEndgame();
@@ -20,17 +21,17 @@ class GameReport {
 
   Json get data {
     return {
-      'info': {
+      '0-info': {
         'scouter': scouter.data,
         'scouterTeamNumber': scouterTeamNumber.data,
         'teamNumber': teamNumber.data,
-        'time': DateFormat('dd/MM HH:mm:ss').format(DateTime.now()),
+        'time': DateFormat('HH:mm:ss dd_MM_yy').format(DateTime.now()),
         'match': match.data,
       },
-      'auto': auto.data,
-      'teleop': teleop.data,
-      'endgame': endgame.data,
-      'summary': summary.data,
+      '1-auto': auto.data,
+      '2-teleop': teleop.data,
+      '3-endgame': endgame.data,
+      '4-summary': summary.data,
     };
   }
 
@@ -42,6 +43,7 @@ class GameReport {
 
     teamNumber.data = null;
     match.data = null;
+    isRematch.data = false;
   }
 }
 

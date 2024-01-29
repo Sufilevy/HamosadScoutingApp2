@@ -1,5 +1,6 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:hamosad_scouting_app_2/pages/reports/widgets/scouting/toggle/toggle_button.dart';
 
 import '/models/cubit.dart';
 import '/theme.dart';
@@ -10,12 +11,14 @@ import 'text/text_field.dart';
 class ScoutingMatchAndTeam extends StatefulWidget {
   const ScoutingMatchAndTeam({
     super.key,
-    required this.matches,
     required this.team,
     required this.match,
+    required this.isRematch,
+    required this.matches,
   });
 
   final Cubit<String?> team, match;
+  final Cubit<bool> isRematch;
   final Map<String, List<String>> matches;
 
   @override
@@ -35,8 +38,9 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        _buildSelectMatch(),
-        SizedBox(height: 25 * ScoutingTheme.appSizeRatio),
+        _buildSelectMatch().padBottom(25),
+        if (_match != null)
+          ScoutingToggleButton(cubit: widget.isRematch, title: 'Is Rematch?').padBottom(25),
         if (_match != null) _buildSelectTeam(),
       ],
     );
@@ -46,16 +50,22 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        ScoutingText.title('Match:'),
-        SizedBox(width: 50 * ScoutingTheme.appSizeRatio),
+        ScoutingText.title('Match:').padRight(50),
         DropdownButton<String>(
           value: _match,
           borderRadius: BorderRadius.circular(5 * ScoutingTheme.appSizeRatio),
           dropdownColor: ScoutingTheme.background2,
           style: ScoutingTheme.bodyStyle,
           alignment: Alignment.center,
-          items: widget.matches.keys
-              .prependElement('Eliminations')
+          items: [
+            'Eliminations (Round 1)',
+            'Eliminations (Round 2)',
+            'Eliminations (Round 3)',
+            'Eliminations (Round 4)',
+            'Eliminations (Round 5)',
+            'Eliminations (Finals)',
+            ...widget.matches.keys,
+          ]
               .map(
                 (match) => DropdownMenuItem<String>(
                   value: match,
@@ -80,7 +90,7 @@ class _ScoutingMatchAndTeamState extends State<ScoutingMatchAndTeam> {
   }
 
   Widget _buildSelectTeam() {
-    return _match == 'Eliminations'
+    return _match!.contains('Eliminations')
         ? ScoutingTextField(
             cubit: widget.team,
             onlyNumbers: true,

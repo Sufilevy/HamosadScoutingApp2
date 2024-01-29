@@ -1,5 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,7 +9,7 @@ import '/services/database.dart';
 import '/services/firebase_options.dart';
 
 void main() async {
-  if (defaultTargetPlatform == TargetPlatform.windows) {
+  if (defaultTargetPlatform == TargetPlatform.windows && !kIsWeb) {
     runApp(const ScoutingApp());
     return;
   }

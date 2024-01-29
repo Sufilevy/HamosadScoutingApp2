@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 import '/models/game_report/game_report.dart';
 import '/theme.dart';
@@ -66,7 +67,6 @@ class HomePage extends ConsumerWidget {
             ScoutingIconButton(
               icon: FontAwesomeIcons.squarePlus,
               iconSize: 250 * ScoutingTheme.appSizeRatio,
-              splashRadius: 160 * ScoutingTheme.appSizeRatio,
               tooltip: 'Create a new report',
               onPressed: () => _createReport(context, report),
             ),
@@ -124,7 +124,7 @@ class HomePage extends ConsumerWidget {
         ),
       );
     } else {
-      Navigator.pushNamed(context, '/game-report');
+      context.go('/game-report');
     }
   }
 }
