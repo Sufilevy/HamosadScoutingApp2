@@ -20,11 +20,11 @@ abstract class AnalyticsTheme {
     debug('Screen size: ${context.screenSize} | App size ratio: $appSizeRatio');
   }
 
-  static bool isDesktop = [
-    TargetPlatform.windows,
-    TargetPlatform.linux,
-    TargetPlatform.macOS,
-  ].contains(defaultTargetPlatform);
+  static bool get isDesktop => [
+        TargetPlatform.windows,
+        TargetPlatform.linux,
+        TargetPlatform.macOS,
+      ].contains(defaultTargetPlatform);
 
   static const appTitle = 'Analytics App';
 

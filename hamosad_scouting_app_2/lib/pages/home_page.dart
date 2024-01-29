@@ -12,10 +12,10 @@ import '/widgets/text.dart';
 import 'reports/widgets/report_tab.dart';
 import 'reports/widgets/scouting/text/text_field.dart';
 
-class ScoutingHomePage extends ConsumerWidget {
+class HomePage extends ConsumerWidget {
   static final _allowedTeams = ['1657'];
 
-  const ScoutingHomePage({super.key});
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

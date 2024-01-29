@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/material.dart';
 
 abstract class ScoutingTheme {
@@ -46,4 +47,10 @@ abstract class ScoutingTheme {
         fontSize: 23 * appSizeRatio,
         color: foreground1,
       );
+
+  static bool get isDesktop => [
+        TargetPlatform.windows,
+        TargetPlatform.linux,
+        TargetPlatform.macOS,
+      ].contains(defaultTargetPlatform);
 }
