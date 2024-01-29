@@ -3,7 +3,7 @@ import '/models/cubit.dart';
 class GameReportAuto {
   final speakerScores = Cubit(0), speakerMisses = Cubit(0);
   final ampScores = Cubit(0), ampMisses = Cubit(0);
-  final middlePickups = Cubit(<int>[]);
+  final centerLinePickups = Cubit(<int>[]);
   final notes = Cubit('');
 
   Json get data {
@@ -16,7 +16,7 @@ class GameReportAuto {
         'scores': ampScores.data,
         'misses': ampMisses.data,
       },
-      'middlePickups': middlePickups.data,
+      'centerLinePickups': centerLinePickups.data,
       'notes': notes.data,
     };
   }
@@ -26,7 +26,7 @@ class GameReportAuto {
     speakerMisses.data = 0;
     ampScores.data = 0;
     ampMisses.data = 0;
-    middlePickups.data.clear();
+    centerLinePickups.data.clear();
     notes.data = '';
   }
 }

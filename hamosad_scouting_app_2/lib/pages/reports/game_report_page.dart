@@ -1,18 +1,18 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hamosad_scouting_app_2/pages/reports/widgets/scouting/crescendo/climb.dart';
 
 import '/models/game_report/game_report.dart';
 import '/models/game_report/summary.dart';
+import '/pages/reports/widgets/scouting/crescendo/climb.dart';
 import '/services/database.dart';
 import '/theme.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 import 'report_page.dart';
 import 'widgets/report_tab.dart';
+import 'widgets/scouting/crescendo/center_line_pickups.dart';
 import 'widgets/scouting/crescendo/mic_scores.dart';
-import 'widgets/scouting/crescendo/middle_pickups.dart';
 import 'widgets/scouting/number/counter.dart';
 import 'widgets/scouting/scouting_match_and_team.dart';
 import 'widgets/scouting/text/notes.dart';
@@ -61,7 +61,7 @@ class GameReportPage extends ConsumerWidget {
               ScoutingCounter(cubit: report.auto.ampScores, title: 'Amp Scores'),
               ScoutingCounter(cubit: report.auto.ampMisses, title: 'Amp Misses'),
             ]),
-            ScoutingMiddlePickups(cubit: report.auto.middlePickups),
+            ScoutingCenterLinePickups(cubit: report.auto.centerLinePickups),
             ScoutingNotes(cubit: report.auto.notes),
           ],
         ),
