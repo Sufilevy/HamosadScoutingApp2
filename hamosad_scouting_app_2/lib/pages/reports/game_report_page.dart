@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hamosad_scouting_app_2/widgets/paddings.dart';
+import 'package:hamosad_scouting_app_2/widgets/text.dart';
 
 import '/models/game_report/game_report.dart';
 import '/models/game_report/summary.dart';
@@ -64,15 +66,20 @@ class GameReportPage extends ConsumerWidget {
               cubit: report.summary.won,
               title: "Did the robot's alliance win?",
             ),
-            ScoutingSwitch(
-              items: const ['Almost only', 'Half', 'None'],
-              customWidths: [
-                200 * ScoutingTheme.appSizeRatio,
-                150 * ScoutingTheme.appSizeRatio,
-                150 * ScoutingTheme.appSizeRatio,
+            Column(
+              children: [
+                ScoutingText.subtitle('How much did the robot focus on defense?').padBottom(16),
+                ScoutingSwitch(
+                  items: const ['None', 'Half', 'Almost only'],
+                  customWidths: [
+                    200 * ScoutingTheme.appSizeRatio,
+                    200 * ScoutingTheme.appSizeRatio,
+                    350 * ScoutingTheme.appSizeRatio,
+                  ],
+                  onChanged: (index) => report.summary.defenseFocus.data =
+                      index == null ? null : DefenseFocus.values[index],
+                ),
               ],
-              onChanged: (index) => report.summary.defenseFocus.data =
-                  index == null ? null : DefenseFocus.values[index],
             ),
             ScoutingNotes(
               cubit: report.summary.notes,

@@ -27,19 +27,19 @@ class GameReportSummary {
 }
 
 enum DefenseFocus {
-  almostAll,
+  none,
   half,
-  none;
+  almostAll;
 
   @override
   String toString() {
     switch (this) {
-      case DefenseFocus.almostAll:
-        return 'almostAll';
-      case DefenseFocus.half:
-        return 'half';
       case DefenseFocus.none:
         return 'none';
+      case DefenseFocus.half:
+        return 'half';
+      case DefenseFocus.almostAll:
+        return 'almostAll';
     }
   }
 }
