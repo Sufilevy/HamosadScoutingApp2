@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import '/models/game_report/game_report.dart';
 import '/theme.dart';
 import '/widgets/alerts.dart';
-import '/widgets/icon_button.dart';
+import '/widgets/buttons.dart';
 import '/widgets/image.dart';
 import '/widgets/paddings.dart';
 import '/widgets/reports/report_tab.dart';
@@ -31,14 +31,11 @@ class HomePage extends ConsumerWidget {
           centerTitle: true,
           title: ScoutingText.navigation(ScoutingTheme.appTitle),
           leading: Builder(
-            builder: (context) => IconButton(
-              icon: Icon(
-                FontAwesomeIcons.circleInfo,
-                size: 32 * ScoutingTheme.appSizeRatio,
-                color: ScoutingTheme.primaryVariant,
-              ),
+            builder: (context) => ScoutingIconButton(
+              icon: FontAwesomeIcons.circleInfo,
+              iconSize: 32 * ScoutingTheme.appSizeRatio,
+              color: ScoutingTheme.hamosad,
               onPressed: () => Scaffold.of(context).openDrawer(),
-              splashRadius: 25 * ScoutingTheme.appSizeRatio,
               tooltip: 'About',
             ),
           ),

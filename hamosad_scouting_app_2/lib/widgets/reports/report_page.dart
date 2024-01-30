@@ -7,7 +7,7 @@ import '/models/game_report/game_report.dart';
 import '/services/database.dart';
 import '/theme.dart';
 import '/widgets/alerts.dart';
-import '/widgets/icon_button.dart';
+import '/widgets/buttons.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 import 'report_tab.dart';

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '/models/cubit.dart';
 import '/theme.dart';
+import '/widgets/buttons.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
 
@@ -65,13 +66,11 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
     return CircleAvatar(
       backgroundColor: ScoutingTheme.primary,
       radius: 32 * ScoutingTheme.appSizeRatio,
-      child: IconButton(
+      child: ScoutingIconButton(
         onPressed: onPressed,
-        padding: EdgeInsets.zero,
-        icon: Icon(icon),
+        icon: icon,
         color: ScoutingTheme.background1,
         iconSize: 32 * ScoutingTheme.appSizeRatio,
-        splashRadius: 42 * ScoutingTheme.appSizeRatio,
       ),
     );
   }
