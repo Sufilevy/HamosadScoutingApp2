@@ -4,21 +4,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/models/game_report/game_report.dart';
 import '/models/game_report/summary.dart';
-import '/pages/reports/widgets/scouting/crescendo/climb.dart';
 import '/services/database.dart';
 import '/theme.dart';
 import '/widgets/paddings.dart';
+import '/widgets/reports/report_page.dart';
+import '/widgets/reports/report_tab.dart';
+import '/widgets/scouting/crescendo/center_line_pickups.dart';
+import '/widgets/scouting/crescendo/climb.dart';
+import '/widgets/scouting/crescendo/mic_scores.dart';
+import '/widgets/scouting/number/counter.dart';
+import '/widgets/scouting/scouting_match_and_team.dart';
+import '/widgets/scouting/text/notes.dart';
+import '/widgets/scouting/text/text_field.dart';
+import '/widgets/scouting/toggle/switch.dart';
+import '/widgets/scouting/toggle/toggle_button.dart';
 import '/widgets/text.dart';
-import 'report_page.dart';
-import 'widgets/report_tab.dart';
-import 'widgets/scouting/crescendo/center_line_pickups.dart';
-import 'widgets/scouting/crescendo/mic_scores.dart';
-import 'widgets/scouting/number/counter.dart';
-import 'widgets/scouting/scouting_match_and_team.dart';
-import 'widgets/scouting/text/notes.dart';
-import 'widgets/scouting/text/text_field.dart';
-import 'widgets/scouting/toggle/switch.dart';
-import 'widgets/scouting/toggle/toggle_button.dart';
 
 class GameReportPage extends ConsumerWidget {
   const GameReportPage({super.key});

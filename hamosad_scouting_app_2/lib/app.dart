@@ -3,10 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '/pages/home_page.dart';
-import '/pages/reports/game_report_page.dart';
 import '/theme.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
+import 'pages/game_report_page.dart';
 
 class ScoutingApp extends StatefulWidget {
   const ScoutingApp({super.key});

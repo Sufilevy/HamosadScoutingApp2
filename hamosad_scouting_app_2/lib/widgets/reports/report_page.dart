@@ -10,7 +10,7 @@ import '/widgets/alerts.dart';
 import '/widgets/icon_button.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
-import 'widgets/report_tab.dart';
+import 'report_tab.dart';
 
 class ReportPage extends ConsumerWidget {
   final String title;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/models/cubit.dart';
-import '/pages/reports/widgets/scouting/text/text_field.dart';
+import 'text_field.dart';
 
 class ScoutingNotes extends StatelessWidget {
   const ScoutingNotes({super.key, required this.cubit});

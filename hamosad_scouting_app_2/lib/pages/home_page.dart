@@ -9,9 +9,9 @@ import '/widgets/alerts.dart';
 import '/widgets/icon_button.dart';
 import '/widgets/image.dart';
 import '/widgets/paddings.dart';
+import '/widgets/reports/report_tab.dart';
+import '/widgets/scouting/text/text_field.dart';
 import '/widgets/text.dart';
-import 'reports/widgets/report_tab.dart';
-import 'reports/widgets/scouting/text/text_field.dart';
 
 class HomePage extends ConsumerWidget {
   static final _allowedTeams = ['1657'];

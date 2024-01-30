@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '/theme.dart';
 import '/widgets/paddings.dart';
 
-class ReportTab extends StatelessWidget {
+class ReportTab extends StatefulWidget {
   final String title;
   final List<Widget> children;
 
@@ -21,15 +21,24 @@ class ReportTab extends StatelessWidget {
   }
 
   @override
+  State<ReportTab> createState() => _ReportTabState();
+}
+
+class _ReportTabState extends State<ReportTab> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ListView.separated(
       separatorBuilder: (context, index) => padSymmetric(
         horizontal: 64 * ScoutingTheme.appSizeRatio,
-        vertical: seperation * ScoutingTheme.appSizeRatio,
+        vertical: widget.seperation * ScoutingTheme.appSizeRatio,
         Container(
           height: 1.5,
           decoration: BoxDecoration(
-            color: (seperated && index < children.length - 2)
+            color: (widget.seperated && index < widget.children.length - 2)
                 ? ScoutingTheme.background3
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(1),
@@ -37,9 +46,9 @@ class ReportTab extends StatelessWidget {
         ),
       ),
       itemBuilder: (context, index) => Center(
-        child: index == 0 ? children[index].padTop(32) : children[index],
+        child: index == 0 ? widget.children[index].padTop(32) : widget.children[index],
       ),
-      itemCount: children.length,
+      itemCount: widget.children.length,
     );
   }
 }

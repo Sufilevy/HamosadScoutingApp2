@@ -1,10 +1,10 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:hamosad_scouting_app_2/pages/reports/widgets/scouting/toggle/toggle_button.dart';
 
 import '/models/cubit.dart';
 import '/theme.dart';
 import '/widgets/paddings.dart';
+import '/widgets/scouting/toggle/toggle_button.dart';
 import '/widgets/text.dart';
 import 'text/text_field.dart';
 
