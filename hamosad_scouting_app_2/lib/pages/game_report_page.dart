@@ -64,11 +64,9 @@ class GameReportPage extends ConsumerWidget {
             ]),
             column([
               InfoButton(
-                widgetName: 'Center Line Auto Pickups',
-                description:
-                    'This widget marks which NOTES this robot picked up from the center-line during auto.\n\n'
-                    'Press on every circle that matches a location of a NOTE that this robot picked up.\n\n'
-                    'The NOTES are ordered with the Red Alliance Station on the left, and the Blue one on the right.',
+                widgetName: 'איסוף מקו האמצע באוטונומי',
+                description: "תסמנו אילו חלקי משחק הרובוט אסף מקו האמצע במהלך האוטונומי.\n\n"
+                    "חלקי המשחק מסודרים בהנחה שהברית האדומה משמאל והכחולה מימין.",
                 child: ScoutingText.title('Center Line Auto Pickups'),
               ),
               ScoutingCenterLinePickups(cubit: report.auto.centerLinePickups),
@@ -88,10 +86,15 @@ class GameReportPage extends ConsumerWidget {
               ScoutingCounter(cubit: report.teleop.ampMisses, title: 'Amp Misses'),
             ]),
             column([
-              ScoutingCounter(cubit: report.teleop.trapScores, title: 'Trap Scores'),
-              ScoutingToggleButton(
-                cubit: report.teleop.trapFromFloor,
-                title: 'Robot scores TRAP from the floor',
+              ScoutingCounter(cubit: report.teleop.trapScores, title: 'Trap Scores', max: 3),
+              InfoButton(
+                widgetName: 'טראפ מהרצפה',
+                description: "האם הרובוט יכול לקלוע לטראפ מהרצפה (בלי לטפס).\n\n"
+                    "אם הרובוט עושה את זה בלי לירות את החלק משחק, תכתבו בהערות איך הוא עושה את זה.",
+                child: ScoutingToggleButton(
+                  cubit: report.teleop.trapFromFloor,
+                  title: 'Robot scores TRAP from the floor',
+                ),
               ),
             ]),
             ScoutingClimb(cubit: report.teleop.climb, harmonyCubit: report.teleop.harmony),
@@ -106,7 +109,7 @@ class GameReportPage extends ConsumerWidget {
           title: 'Summary',
           children: <Widget>[
             column([
-              ScoutingToggleButton(cubit: report.summary.won, title: "Robot's alliance won"),
+              ScoutingToggleButton(cubit: report.summary.won, title: "Robot's ALLIANCE won"),
               ScoutingText.subtitle('How much did the robot focus on defense?').padTop(12),
               ScoutingSwitch(
                 items: const ['None', 'Half', 'Almost Only'],
@@ -122,12 +125,26 @@ class GameReportPage extends ConsumerWidget {
               ),
             ]),
             column([
-              ScoutingToggleButton(
-                cubit: report.summary.canIntakeFromFloor,
-                title: 'Robot can intake from floor',
+              InfoButton(
+                widgetName: 'איסוף מהרצפה',
+                description: "האם הרובוט יכול לאסוף חלקי משחק מהרצפה.\n\n"
+                    "לא משנה אם הוא יכול לאסוף מהפידר או לא.",
+                child: ScoutingToggleButton(
+                  cubit: report.summary.canIntakeFromFloor,
+                  title: 'Robot can intake from floor',
+                ),
               ),
-              ScoutingText.body('If the robot can only shoot from one location, describe it here.')
-                  .padTop(12),
+              InfoButton(
+                widgetName: 'ירי ממיקום ספציפי',
+                description: "אם הרובוט צריך להיות במקום ספציפי כדי לקלוע לספיקר, "
+                    "תתארו אותו פה הכי טוב שאתם יכולים.\n\n"
+                    "לדוגמה, אם הרובוט צריך להיות צמוד לקיר בדיוק מתחת לספיקר, "
+                    "תכתבו 'מתחת לספיקר'.",
+                topPadding: 12,
+                child: ScoutingText.subtitle(
+                  'If the robot can only shoot\nfrom one location, describe it here.',
+                ).pad(top: 12),
+              ),
               ScoutingTextField(
                 cubit: report.summary.pinnedShooterLocation,
                 hint: 'Describe the location...',

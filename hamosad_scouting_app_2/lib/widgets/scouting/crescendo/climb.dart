@@ -1,9 +1,10 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 
-import '../toggle/toggle_button.dart';
 import '/models/cubit.dart';
+import '/widgets/buttons.dart';
 import '/widgets/paddings.dart';
+import '/widgets/scouting/toggle/toggle_button.dart';
 
 class ScoutingClimb extends StatefulWidget {
   const ScoutingClimb({
@@ -42,12 +43,19 @@ class _ScoutingClimbState extends State<ScoutingClimb> {
             alignment: Alignment.topCenter,
             child: child,
           ),
-          child: widget.cubit.data
-              ? ScoutingToggleButton(cubit: widget.harmonyCubit, title: 'Robot achieved HARMONY')
-                  .padTop(24)
-              : const SizedBox.shrink(),
+          child: widget.cubit.data ? _buildHarmonyToggle() : const SizedBox.shrink(),
         ),
       ],
+    );
+  }
+
+  Widget _buildHarmonyToggle() {
+    return InfoButton(
+      widgetName: 'הרמוניה',
+      description: "האם הרובוט טיפס יחד עם עוד רובוט (או שניים) על אותה שרשרת.",
+      topPadding: 24,
+      child: ScoutingToggleButton(cubit: widget.harmonyCubit, title: 'Robot achieved HARMONY')
+          .padTop(24),
     );
   }
 }

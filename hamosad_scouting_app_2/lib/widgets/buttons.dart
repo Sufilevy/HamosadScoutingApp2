@@ -47,14 +47,15 @@ class InfoButton extends StatelessWidget {
     required this.widgetName,
     required this.description,
     required this.child,
-    this.buttonPadding,
+    this.topPadding = 0,
+    this.rightPadding = 64,
     this.buttonAlignment = Alignment.centerRight,
   });
 
   final String widgetName, description;
   final Widget child;
   final Alignment buttonAlignment;
-  final EdgeInsets? buttonPadding;
+  final double topPadding, rightPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +66,8 @@ class InfoButton extends StatelessWidget {
         Align(
           alignment: buttonAlignment,
           child: Padding(
-            padding: buttonPadding ?? const EdgeInsets.only(right: 64) * ScoutingTheme.appSizeRatio,
+            padding:
+                EdgeInsets.only(top: topPadding, right: rightPadding) * ScoutingTheme.appSizeRatio,
             child: _buildInfoButton(context),
           ),
         ),
@@ -94,6 +96,7 @@ class InfoButton extends StatelessWidget {
       iconSize: 40,
       titleWidget: Text(
         widgetName,
+        textDirection: TextDirection.rtl,
         style: ScoutingTheme.titleStyle.copyWith(
           color: Colors.transparent,
           decorationColor: ScoutingTheme.primary,

@@ -1,5 +1,6 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' show Bidi;
 
 import '/theme.dart';
 import '/widgets/paddings.dart';
@@ -53,10 +54,13 @@ class ScoutingDialog extends StatelessWidget {
           ],
         ],
       ),
-      content: ScoutingText.subtitle(
+      content: Text(
         content,
-        height: 2.35 * ScoutingTheme.appSizeRatio,
+        textDirection: Bidi.detectRtlDirectionality(content) ? TextDirection.rtl : null,
         textAlign: TextAlign.center,
+        style: ScoutingTheme.subtitleStyle.copyWith(
+          height: 2.35 * ScoutingTheme.appSizeRatio,
+        ),
       ),
       contentPadding: EdgeInsets.all(32 * ScoutingTheme.appSizeRatio),
       actionsAlignment: MainAxisAlignment.center,

@@ -3,74 +3,86 @@ import 'package:flutter/material.dart';
 import '/theme.dart';
 
 abstract class ScoutingText {
-  static Text navigation(
+  static Widget navigation(
     String data, {
     double? fontSize,
     FontWeight? fontWeight,
     TextAlign textAlign = TextAlign.center,
   }) {
-    return Text(
-      data,
-      textAlign: textAlign,
-      style: ScoutingTheme.navigationStyle.copyWith(
-        fontSize: fontSize,
-        fontWeight: fontWeight,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        data,
+        textAlign: textAlign,
+        style: ScoutingTheme.navigationStyle.copyWith(
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+        ),
       ),
     );
   }
 
-  static Text title(
+  static Widget title(
     String data, {
     double? fontSize,
     Color? color,
     FontWeight? fontWeight,
     TextAlign textAlign = TextAlign.center,
   }) {
-    return Text(
-      data,
-      textAlign: textAlign,
-      style: ScoutingTheme.titleStyle.copyWith(
-        fontSize: fontSize,
-        color: color,
-        fontWeight: fontWeight,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        data,
+        textAlign: textAlign,
+        style: ScoutingTheme.titleStyle.copyWith(
+          fontSize: fontSize,
+          color: color,
+          fontWeight: fontWeight,
+        ),
       ),
     );
   }
 
-  static Text subtitle(
+  static Widget subtitle(
     String data, {
-    Color? color,
-    FontWeight? fontWeight,
-    double? height,
-    TextAlign textAlign = TextAlign.center,
-  }) {
-    return Text(
-      data,
-      textAlign: textAlign,
-      style: ScoutingTheme.subtitleStyle.copyWith(
-        color: color,
-        fontWeight: fontWeight,
-        height: height,
-      ),
-    );
-  }
-
-  static Text body(
-    String data, {
-    double? fontSize,
     Color? color,
     FontWeight? fontWeight,
     double? height,
     TextAlign textAlign = TextAlign.center,
   }) {
-    return Text(
-      data,
-      textAlign: textAlign,
-      style: ScoutingTheme.bodyStyle.copyWith(
-        color: color,
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        height: height,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        data,
+        textAlign: textAlign,
+        style: ScoutingTheme.subtitleStyle.copyWith(
+          color: color,
+          fontWeight: fontWeight,
+          height: height,
+        ),
+      ),
+    );
+  }
+
+  static Widget body(
+    String data, {
+    double? fontSize,
+    Color? color,
+    FontWeight? fontWeight,
+    double? height,
+    TextAlign textAlign = TextAlign.center,
+  }) {
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        data,
+        textAlign: textAlign,
+        style: ScoutingTheme.bodyStyle.copyWith(
+          color: color,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          height: height,
+        ),
       ),
     );
   }
@@ -87,29 +99,35 @@ abstract class ScoutingText {
   }) {
     return Stack(
       children: [
-        Text(
-          data,
-          textAlign: textAlign,
-          style: ScoutingTheme.titleStyle.copyWith(
-            fontSize: fontSize,
-            fontWeight: fontWeight,
-            height: height,
-            foreground: Paint()
-              ..style = PaintingStyle.stroke
-              ..strokeWidth = strokeWidth
-              ..color = strokeColor,
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            data,
+            textAlign: textAlign,
+            style: ScoutingTheme.titleStyle.copyWith(
+              fontSize: fontSize,
+              fontWeight: fontWeight,
+              height: height,
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = strokeWidth
+                ..color = strokeColor,
+            ),
           ),
         ),
-        Text(
-          data,
-          textAlign: textAlign,
-          style: ScoutingTheme.titleStyle.copyWith(
-            fontSize: fontSize,
-            fontWeight: fontWeight,
-            height: height,
-            color: color,
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            data,
+            textAlign: textAlign,
+            style: ScoutingTheme.titleStyle.copyWith(
+              fontSize: fontSize,
+              fontWeight: fontWeight,
+              height: height,
+              color: color,
+            ),
           ),
-        ),
+        )
       ],
     );
   }

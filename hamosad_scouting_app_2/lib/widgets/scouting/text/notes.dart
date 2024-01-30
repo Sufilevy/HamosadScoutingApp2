@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/models/cubit.dart';
+import '/widgets/buttons.dart';
 import 'text_field.dart';
 
 class ScoutingNotes extends StatelessWidget {
@@ -10,12 +11,19 @@ class ScoutingNotes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScoutingTextField(
-      cubit: cubit,
-      title: 'Notes',
-      hint: 'Enter your notes...',
-      canBeEmpty: true,
-      lines: 3,
+    return InfoButton(
+      widgetName: 'הערות',
+      description: "פה תכתבו כל דבר מיוחד שקרה שרלוונטי לחלק הזה של המשחק.\n\n"
+          "לדוגמה:\n"
+          "חלק מהרובוט נשבר, הרובוט לא זז, הרובוט נוסע לאט/קטוע, "
+          "הרובוט נתקע בהכל, הרובוט משחק ממש טוב/ממש רע...",
+      child: ScoutingTextField(
+        cubit: cubit,
+        title: 'Notes',
+        hint: 'Enter your notes...',
+        canBeEmpty: true,
+        lines: 3,
+      ),
     );
   }
 }

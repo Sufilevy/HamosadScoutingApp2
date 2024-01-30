@@ -1,10 +1,11 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 
-import '../number/counter.dart';
-import '../toggle/toggle_button.dart';
 import '/models/cubit.dart';
+import '/widgets/buttons.dart';
 import '/widgets/paddings.dart';
+import '/widgets/scouting/number/counter.dart';
+import '/widgets/scouting/toggle/toggle_button.dart';
 
 class ScoutingMicScores extends StatefulWidget {
   const ScoutingMicScores({
@@ -26,10 +27,16 @@ class _ScoutingMicScoresState extends State<ScoutingMicScores> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ScoutingToggleButton(
-          cubit: widget.humanPlayerCubit,
-          title: 'Human player is from this team',
-          onPressed: () => setState(() {}),
+        InfoButton(
+          widgetName: 'שחקן אנושי',
+          description:
+              "האם השחקן האנושי שקולע את חלקי המשחק למיקרופונים הוא מהקבוצה שעליה אתם עושים את הדוח.\n\n"
+              "אם כן, תסמנו כמה חלקי משחק הוא קלע (אחרי שתסמנו את התיבה הזאת).",
+          child: ScoutingToggleButton(
+            cubit: widget.humanPlayerCubit,
+            title: 'Human Player is from this team',
+            onPressed: () => setState(() {}),
+          ),
         ),
         AnimatedSwitcher(
           duration: 200.milliseconds,

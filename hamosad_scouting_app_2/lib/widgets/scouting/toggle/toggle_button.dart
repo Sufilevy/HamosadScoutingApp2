@@ -31,7 +31,7 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
           widget.cubit.data = !widget.cubit.data;
           widget.onPressed?.call();
         }),
-        label: ScoutingText.title(widget.title, fontWeight: FontWeight.w400).padRight(8),
+        label: ScoutingText.subtitle(widget.title, fontWeight: FontWeight.w400).padRight(8),
         icon: Transform.scale(
           scale: 1.5 * ScoutingTheme.appSizeRatio,
           child: Checkbox(
@@ -49,7 +49,7 @@ class _ScoutingToggleButtonState extends State<ScoutingToggleButton> {
         ),
         style: ButtonStyle(
           padding: MaterialStatePropertyAll(
-            const EdgeInsets.symmetric(vertical: 24, horizontal: 24) * ScoutingTheme.appSizeRatio,
+            const EdgeInsets.fromLTRB(16, 24, 24, 24) * ScoutingTheme.appSizeRatio,
           ),
           backgroundColor: MaterialStatePropertyAll(
             ScoutingTheme.background2.withOpacity(0.75),
