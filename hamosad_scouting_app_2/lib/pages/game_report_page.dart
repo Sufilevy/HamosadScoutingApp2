@@ -6,6 +6,7 @@ import '/models/game_report/game_report.dart';
 import '/models/game_report/summary.dart';
 import '/services/database.dart';
 import '/theme.dart';
+import '/widgets/buttons.dart';
 import '/widgets/paddings.dart';
 import '/widgets/reports/report_page.dart';
 import '/widgets/reports/report_tab.dart';
@@ -61,7 +62,17 @@ class GameReportPage extends ConsumerWidget {
               ScoutingCounter(cubit: report.auto.ampScores, title: 'Amp Scores'),
               ScoutingCounter(cubit: report.auto.ampMisses, title: 'Amp Misses'),
             ]),
-            ScoutingCenterLinePickups(cubit: report.auto.centerLinePickups),
+            column([
+              InfoButton(
+                widgetName: 'Center Line Auto Pickups',
+                description:
+                    'This widget marks which NOTES this robot picked up from the center-line during auto.\n\n'
+                    'Press on every circle that matches a location of a NOTE that this robot picked up.\n\n'
+                    'The NOTES are ordered with the Red Alliance Station on the left, and the Blue one on the right.',
+                child: ScoutingText.title('Center Line Auto Pickups'),
+              ),
+              ScoutingCenterLinePickups(cubit: report.auto.centerLinePickups),
+            ]),
             ScoutingNotes(cubit: report.auto.notes),
           ],
         ),

@@ -25,28 +25,28 @@ abstract class ScoutingTheme {
   static TextStyle get navigationStyle => TextStyle(
         fontFamily: 'Varela Round',
         fontWeight: FontWeight.normal,
-        fontSize: 27 * appSizeRatio,
+        fontSize: 28 * appSizeRatio,
         color: foreground1,
       );
 
   static TextStyle get titleStyle => TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.w600,
-        fontSize: 27 * appSizeRatio,
+        fontSize: 28 * appSizeRatio,
         color: foreground1,
       );
 
   static TextStyle get subtitleStyle => TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.normal,
-        fontSize: 25 * appSizeRatio,
+        fontSize: 26 * appSizeRatio,
         color: foreground1,
       );
 
   static TextStyle get bodyStyle => TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.w400,
-        fontSize: 23 * appSizeRatio,
+        fontSize: 24 * appSizeRatio,
         color: foreground1,
       );
 

@@ -28,16 +28,23 @@ class HomePage extends ConsumerWidget {
         backgroundColor: ScoutingTheme.background1,
         appBar: AppBar(
           backgroundColor: ScoutingTheme.background2,
-          centerTitle: true,
-          title: ScoutingText.navigation(ScoutingTheme.appTitle),
-          leading: Builder(
-            builder: (context) => ScoutingIconButton(
-              icon: FontAwesomeIcons.circleInfo,
-              iconSize: 32 * ScoutingTheme.appSizeRatio,
-              color: ScoutingTheme.hamosad,
-              onPressed: () => Scaffold.of(context).openDrawer(),
-              tooltip: 'About',
-            ),
+          automaticallyImplyLeading: false,
+          title: Stack(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: _buildAboutButton(context).padLeft(8),
+              ),
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: ScoutingText.navigation(
+                    ScoutingTheme.appTitle,
+                    fontSize: 36 * ScoutingTheme.appSizeRatio,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         drawer: _buildDrawer(),
@@ -63,9 +70,8 @@ class HomePage extends ConsumerWidget {
             ),
             ScoutingIconButton(
               icon: FontAwesomeIcons.squarePlus,
-              iconSize: 250 * ScoutingTheme.appSizeRatio,
-              constraints:
-                  const BoxConstraints.expand(width: 325, height: 325) * ScoutingTheme.appSizeRatio,
+              iconSize: 250,
+              constraints: BoxConstraints.tight(const Size(325, 325) * ScoutingTheme.appSizeRatio),
               tooltip: 'Create a new report',
               onPressed: () => _createReport(context, report),
             ),
@@ -75,9 +81,24 @@ class HomePage extends ConsumerWidget {
     );
   }
 
+  Widget _buildAboutButton(BuildContext context) {
+    return Builder(
+      builder: (context) {
+        return ScoutingIconButton(
+          icon: FontAwesomeIcons.circleInfo,
+          iconSize: 40,
+          color: ScoutingTheme.foreground2,
+          onPressed: () => Scaffold.of(context).openDrawer(),
+          tooltip: 'About',
+        );
+      },
+    );
+  }
+
   Widget _buildDrawer() {
     return Drawer(
       backgroundColor: ScoutingTheme.background2,
+      surfaceTintColor: Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[

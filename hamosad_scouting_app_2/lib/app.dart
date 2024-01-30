@@ -22,6 +22,7 @@ class _ScoutingAppState extends State<ScoutingApp> {
       child: MaterialApp.router(
         title: 'Scouting App',
         themeMode: ThemeMode.dark,
+        darkTheme: ThemeData.dark(useMaterial3: true),
         routerConfig: _router,
         builder: (context, child) {
           final screenSize = MediaQueryData.fromView(View.of(context)).size;

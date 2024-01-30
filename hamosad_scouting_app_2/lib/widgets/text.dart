@@ -7,9 +7,11 @@ abstract class ScoutingText {
     String data, {
     double? fontSize,
     FontWeight? fontWeight,
+    TextAlign textAlign = TextAlign.center,
   }) {
     return Text(
       data,
+      textAlign: textAlign,
       style: ScoutingTheme.navigationStyle.copyWith(
         fontSize: fontSize,
         fontWeight: fontWeight,
@@ -19,17 +21,19 @@ abstract class ScoutingText {
 
   static Text title(
     String data, {
+    double? fontSize,
     Color? color,
     FontWeight? fontWeight,
-    TextAlign? textAlign,
+    TextAlign textAlign = TextAlign.center,
   }) {
     return Text(
       data,
+      textAlign: textAlign,
       style: ScoutingTheme.titleStyle.copyWith(
+        fontSize: fontSize,
         color: color,
         fontWeight: fontWeight,
       ),
-      textAlign: textAlign,
     );
   }
 
@@ -37,15 +41,17 @@ abstract class ScoutingText {
     String data, {
     Color? color,
     FontWeight? fontWeight,
-    TextAlign? textAlign,
+    double? height,
+    TextAlign textAlign = TextAlign.center,
   }) {
     return Text(
       data,
+      textAlign: textAlign,
       style: ScoutingTheme.subtitleStyle.copyWith(
         color: color,
         fontWeight: fontWeight,
+        height: height,
       ),
-      textAlign: textAlign,
     );
   }
 
@@ -59,13 +65,13 @@ abstract class ScoutingText {
   }) {
     return Text(
       data,
+      textAlign: textAlign,
       style: ScoutingTheme.bodyStyle.copyWith(
         color: color,
         fontSize: fontSize,
         fontWeight: fontWeight,
         height: height,
       ),
-      textAlign: textAlign,
     );
   }
 

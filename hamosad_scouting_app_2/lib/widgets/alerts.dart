@@ -12,8 +12,10 @@ class ScoutingDialog extends StatelessWidget {
     this.title = '',
     this.okButton = true,
     this.actions = const [],
-    this.titleIcon,
+    this.iconSize = 54,
+    this.titleWidget,
     this.iconColor,
+    this.titleIcon,
   });
 
   final List actions;
@@ -21,21 +23,29 @@ class ScoutingDialog extends StatelessWidget {
   final bool okButton;
   final String content, title;
   final IconData? titleIcon;
+  final double iconSize;
+  final Widget? titleWidget;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: ScoutingTheme.background2,
+      surfaceTintColor: Colors.transparent,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          if (title.isNotEmpty) const Spacer(flex: 8),
+          if (title.isNotEmpty || titleWidget != null) const Spacer(flex: 8),
           if (titleIcon != null)
             Icon(
               titleIcon!,
-              size: 54 * ScoutingTheme.appSizeRatio,
+              size: iconSize * ScoutingTheme.appSizeRatio,
               color: iconColor ?? ScoutingTheme.primary,
             ),
+          if (titleWidget != null) ...[
+            const Spacer(flex: 1),
+            titleWidget!,
+            const Spacer(flex: 10),
+          ],
           if (title.isNotEmpty) ...[
             const Spacer(flex: 1),
             ScoutingText.title(title),
@@ -43,22 +53,18 @@ class ScoutingDialog extends StatelessWidget {
           ],
         ],
       ),
-      content: ScoutingText.body(
+      content: ScoutingText.subtitle(
         content,
         height: 2.35 * ScoutingTheme.appSizeRatio,
+        textAlign: TextAlign.center,
       ),
-      contentPadding: EdgeInsets.fromLTRB(
-        32 * ScoutingTheme.appSizeRatio,
-        8 * ScoutingTheme.appSizeRatio,
-        32 * ScoutingTheme.appSizeRatio,
-        0,
-      ),
+      contentPadding: EdgeInsets.all(32 * ScoutingTheme.appSizeRatio),
       actionsAlignment: MainAxisAlignment.center,
       actions: [
         ...actions,
         if (okButton)
           TextButton(
-            child: ScoutingText.subtitle(
+            child: ScoutingText.title(
               'OK',
               color: ScoutingTheme.primary,
               fontWeight: FontWeight.w600,

@@ -35,12 +35,28 @@ class ReportPage extends ConsumerWidget {
           appBar: AppBar(
             toolbarHeight: 80 * ScoutingTheme.appSizeRatio,
             backgroundColor: ScoutingTheme.background2,
-            actions: [
-              _buildSendButton(context, report),
-            ],
-            leading: _buildCloseButton(context, report),
-            title: ScoutingText.navigation(title, fontSize: 32 * ScoutingTheme.appSizeRatio),
-            centerTitle: true,
+            title: pad(
+              top: 16,
+              Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: _buildCloseButton(context, report).padLeft(8),
+                  ),
+                  Positioned.fill(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child:
+                          ScoutingText.navigation(title, fontSize: 32 * ScoutingTheme.appSizeRatio),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: _buildSendButton(context, report).padRight(8),
+                  ),
+                ],
+              ),
+            ),
             bottom: TabBar(
               isScrollable: true,
               tabAlignment: TabAlignment.center,
@@ -70,28 +86,30 @@ class ReportPage extends ConsumerWidget {
   Widget _buildSendButton(BuildContext context, GameReport report) {
     return ScoutingIconButton(
       icon: Icons.send_rounded,
+      iconSize: 36,
       color: ScoutingTheme.blueAlliance,
       onPressed: () {
         showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              String? content;
+          context: context,
+          builder: (BuildContext context) {
+            String? content;
 
-              if (report.match.data.isNullOrEmpty || report.teamNumber.data.isNullOrEmpty) {
-                content = 'Please fill the match and team number.';
-              }
+            if (report.match.data.isNullOrEmpty || report.teamNumber.data.isNullOrEmpty) {
+              content = 'Please fill the match and team number.';
+            }
 
-              if (content == null) {
-                return _buildSendReportDialog(context, report);
-              } else {
-                return ScoutingDialog(
-                  content: content,
-                  title: 'Incomplete report',
-                  iconColor: ScoutingTheme.warning,
-                  titleIcon: Icons.warning_rounded,
-                );
-              }
-            });
+            if (content == null) {
+              return _buildSendReportDialog(context, report);
+            } else {
+              return ScoutingDialog(
+                content: content,
+                title: 'Incomplete report',
+                iconColor: ScoutingTheme.warning,
+                titleIcon: Icons.warning_rounded,
+              );
+            }
+          },
+        );
       },
     );
   }
@@ -109,14 +127,14 @@ class ReportPage extends ConsumerWidget {
           8,
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: ScoutingText.body('Cancel', color: ScoutingTheme.primary).padAll(4),
+            child: ScoutingText.title('Cancel', color: ScoutingTheme.primary).padAll(4),
           ),
         ),
         padAll(
           8,
           TextButton(
             onPressed: () => _sendReport(context, report),
-            child: ScoutingText.body(
+            child: ScoutingText.title(
               'Send',
               color: ScoutingTheme.blueAlliance,
               fontWeight: FontWeight.bold,
@@ -130,11 +148,13 @@ class ReportPage extends ConsumerWidget {
   Widget _buildCloseButton(BuildContext context, GameReport report) {
     return ScoutingIconButton(
       icon: Icons.close_rounded,
-      iconSize: 26,
+      iconSize: 44,
       color: ScoutingTheme.foreground2,
       onPressed: () async {
         showDialog(
-            context: context, builder: (context) => _buildCloseReportDialog(context, report));
+          context: context,
+          builder: (context) => _buildCloseReportDialog(context, report),
+        );
       },
     );
   }
@@ -154,7 +174,7 @@ class ReportPage extends ConsumerWidget {
               report.clear();
               context.go('/');
             },
-            child: ScoutingText.body(
+            child: ScoutingText.title(
               'Delete',
               color: ScoutingTheme.error,
               fontWeight: FontWeight.bold,
@@ -167,7 +187,7 @@ class ReportPage extends ConsumerWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: ScoutingText.body('Cancel', color: ScoutingTheme.primary).padAll(4),
+            child: ScoutingText.title('Cancel', color: ScoutingTheme.primary).padAll(4),
           ),
         ),
       ],

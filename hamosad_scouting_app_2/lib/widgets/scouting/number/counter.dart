@@ -69,7 +69,7 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
         onPressed: onPressed,
         icon: icon,
         color: ScoutingTheme.background1,
-        iconSize: 32 * ScoutingTheme.appSizeRatio,
+        iconSize: 32,
       ),
     );
   }
