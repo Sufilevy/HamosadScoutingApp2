@@ -38,16 +38,15 @@ class _ScoutingCounterState extends State<ScoutingCounter> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            const Expanded(flex: 1, child: SizedBox.shrink()),
             Expanded(
-              flex: 10,
+              flex: 1,
               child: ScoutingText.title(
                 widget.title,
                 textAlign: TextAlign.center,
               ).padSymmetric(horizontal: 12),
             ),
             Expanded(
-              flex: 10,
+              flex: 1,
               child: _buildCounter(),
             ),
           ],
