@@ -38,7 +38,7 @@ class ReportPage extends ConsumerWidget {
             actions: [
               _buildSendButton(context, report),
             ],
-            leading: _buildCloseButton(context),
+            leading: _buildCloseButton(context, report),
             title: ScoutingText.navigation(title, fontSize: 32 * ScoutingTheme.appSizeRatio),
             centerTitle: true,
             bottom: TabBar(
@@ -127,18 +127,19 @@ class ReportPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildCloseButton(BuildContext context) {
+  Widget _buildCloseButton(BuildContext context, GameReport report) {
     return ScoutingIconButton(
       icon: Icons.close_rounded,
       iconSize: 26,
       color: ScoutingTheme.foreground2,
       onPressed: () async {
-        showDialog(context: context, builder: _buildCloseReportDialog);
+        showDialog(
+            context: context, builder: (context) => _buildCloseReportDialog(context, report));
       },
     );
   }
 
-  Widget _buildCloseReportDialog(BuildContext context) {
+  Widget _buildCloseReportDialog(BuildContext context, GameReport report) {
     return ScoutingDialog(
       content: 'Closing the report will delete all of the information entered.',
       title: 'Warning!',
@@ -150,6 +151,7 @@ class ReportPage extends ConsumerWidget {
           8,
           TextButton(
             onPressed: () {
+              report.clear();
               context.go('/');
             },
             child: ScoutingText.body(

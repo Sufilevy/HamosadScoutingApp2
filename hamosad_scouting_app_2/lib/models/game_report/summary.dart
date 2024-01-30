@@ -13,7 +13,7 @@ class GameReportSummary {
   Json get data {
     return {
       'won': won.data,
-      'defenseFocus': defenseFocus.data,
+      'defenseFocus': defenseFocus.data.toString(),
       'canIntakeFromFloor': canIntakeFromFloor.data,
       'pinnedShooterLocation':
           pinnedShooterLocation.data.isEmpty ? null : pinnedShooterLocation.data,

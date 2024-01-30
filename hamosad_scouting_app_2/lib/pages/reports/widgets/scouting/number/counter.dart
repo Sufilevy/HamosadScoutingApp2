@@ -15,7 +15,6 @@ class ScoutingCounter extends StatefulWidget {
     this.min = 0,
     this.max = 999,
     this.step = 1,
-    this.initial = 0,
   })  : assert(min >= -99),
         assert(max <= 999),
         assert(step > 0),
@@ -24,19 +23,12 @@ class ScoutingCounter extends StatefulWidget {
   final Cubit<int> cubit;
   final String title;
   final int min, max, step;
-  final int initial;
 
   @override
   State<ScoutingCounter> createState() => _ScoutingCounterState();
 }
 
 class _ScoutingCounterState extends State<ScoutingCounter> {
-  @override
-  void initState() {
-    widget.cubit.data = widget.initial;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     if (widget.title.isNotEmpty) {

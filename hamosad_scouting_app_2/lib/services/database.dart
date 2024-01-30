@@ -33,7 +33,6 @@ abstract class ScoutingDatabase {
     String? lastId,
   }) async {
     final datetime = _getDatetime();
-    report.addAll({'time': datetime});
 
     final scouterTeamNumber = report['0-info']['scouterTeamNumber'];
     final collectionName = '$_districtName-$scouterTeamNumber';
