@@ -4,21 +4,19 @@ import '/theme.dart';
 import '/widgets/paddings.dart';
 
 class ReportTab extends StatefulWidget {
-  final String title;
-  final List<Widget> children;
-
-  final double seperation;
-  final bool seperated;
-
   ReportTab({
     super.key,
     required this.title,
     required children,
-    this.seperation = 48,
     this.seperated = true,
   }) : children = [...children, Container()] {
     assert(children.isNotEmpty);
   }
+
+  final String title;
+  final List<Widget> children;
+
+  final bool seperated;
 
   @override
   State<ReportTab> createState() => _ReportTabState();
@@ -33,8 +31,8 @@ class _ReportTabState extends State<ReportTab> with AutomaticKeepAliveClientMixi
     super.build(context);
     return ListView.separated(
       separatorBuilder: (context, index) => padSymmetric(
-        horizontal: 64 * ScoutingTheme.appSizeRatio,
-        vertical: widget.seperation * ScoutingTheme.appSizeRatio,
+        horizontal: 64,
+        vertical: 32,
         Container(
           height: 1.5,
           decoration: BoxDecoration(

@@ -15,7 +15,8 @@ class ScoutingTextField extends StatefulWidget {
     this.canBeEmpty = false,
     this.onlyNumbers = false,
     this.onlyNames = false,
-    this.lines = 1,
+    this.minLines = 1,
+    this.maxLines = 1,
     this.errorHint,
   });
 
@@ -23,7 +24,7 @@ class ScoutingTextField extends StatefulWidget {
   final String hint;
   final bool canBeEmpty, onlyNumbers, onlyNames;
   final String title;
-  final int lines;
+  final int minLines, maxLines;
   final String? errorHint;
 
   @override
@@ -85,15 +86,18 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
         key: _formKey,
         child: TextFormField(
           focusNode: _focusNode,
-          keyboardType: widget.onlyNumbers ? TextInputType.number : TextInputType.text,
+          textInputAction: widget.minLines > 1 ? TextInputAction.newline : TextInputAction.done,
+          keyboardType: widget.onlyNumbers
+              ? TextInputType.number
+              : (widget.minLines > 1 ? TextInputType.multiline : TextInputType.text),
           validator: _validateInput,
           initialValue: widget.cubit.data,
           onChanged: (value) => setState(() {
             _hasErrors = !_formKey.currentState!.validate();
             widget.cubit.data = value;
           }),
-          minLines: widget.lines,
-          maxLines: widget.lines,
+          minLines: widget.minLines,
+          maxLines: widget.minLines,
           style: ScoutingTheme.bodyStyle,
           textDirection:
               intl.Bidi.estimateDirectionOfText(widget.cubit.data ?? '') == intl.TextDirection.RTL

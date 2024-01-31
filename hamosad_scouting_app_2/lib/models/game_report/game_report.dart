@@ -17,7 +17,7 @@ class GameReport {
   final teleop = GameReportTeleop();
   final summary = GameReportSummary();
 
-  Json get data {
+  Json toJson() {
     return {
       '0-info': {
         'match': match.data,

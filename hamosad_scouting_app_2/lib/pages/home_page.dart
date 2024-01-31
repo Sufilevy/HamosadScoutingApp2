@@ -3,25 +3,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
+import '/models/cubit.dart';
 import '/models/game_report/game_report.dart';
+import '/models/pit_report.dart';
 import '/theme.dart';
 import '/widgets/alerts.dart';
 import '/widgets/buttons.dart';
 import '/widgets/image.dart';
 import '/widgets/paddings.dart';
-import '/widgets/reports/report_tab.dart';
+import '/widgets/scouting/report_tab.dart';
 import '/widgets/scouting/text/text_field.dart';
 import '/widgets/text.dart';
 
 class HomePage extends ConsumerWidget {
   static final _allowedTeams = ['1657'];
+  static final _scouterCubit = Cubit('');
+  static final _scouterTeamNumberCubit = Cubit('');
 
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final report = ref.read(gameReportProvider);
-
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -55,25 +57,40 @@ class HomePage extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 ScoutingTextField(
-                  cubit: report.scouter,
+                  cubit: _scouterCubit,
                   hint: 'Enter your name...',
                   title: 'Name',
                   onlyNames: true,
                 ),
                 ScoutingTextField(
-                  cubit: report.scouterTeamNumber,
+                  cubit: _scouterTeamNumberCubit,
                   hint: 'Enter your team number...',
                   title: 'Team Number',
                   onlyNumbers: true,
                 ).padSymmetric(vertical: 20),
               ],
             ),
-            ScoutingIconButton(
-              icon: FontAwesomeIcons.squarePlus,
-              iconSize: 250,
-              constraints: BoxConstraints.tight(const Size(325, 325) * ScoutingTheme.appSizeRatio),
-              tooltip: 'Create a new report',
-              onPressed: () => _createReport(context, report),
+            Column(
+              children: [
+                ScoutingText.subtitle('Game Report', fontSize: 34 * ScoutingTheme.appSizeRatio),
+                ScoutingIconButton(
+                  icon: Icons.add_circle_outline_rounded,
+                  iconSize: 250,
+                  tooltip: 'Create a new game report',
+                  onPressed: () => _createReport(context, ref),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                ScoutingText.subtitle('Pit Report', fontSize: 30 * ScoutingTheme.appSizeRatio),
+                ScoutingIconButton(
+                  icon: Icons.add_home_rounded,
+                  iconSize: 180,
+                  tooltip: 'Create a new pit report',
+                  onPressed: () => _createReport(context, ref, isPitReport: true),
+                ),
+              ],
             ),
           ],
         ),
@@ -130,10 +147,10 @@ class HomePage extends ConsumerWidget {
     );
   }
 
-  void _createReport(BuildContext context, GameReport report) {
-    if (report.scouter.data.isEmpty ||
-        report.scouterTeamNumber.data.isEmpty ||
-        !_allowedTeams.contains(report.scouterTeamNumber.data)) {
+  void _createReport(BuildContext context, WidgetRef ref, {bool isPitReport = false}) {
+    if (_scouterCubit.data.isEmpty ||
+        _scouterTeamNumberCubit.data.isEmpty ||
+        !_allowedTeams.contains(_scouterTeamNumberCubit.data)) {
       showDialog(
         context: context,
         builder: (context) => ScoutingDialog(
@@ -144,7 +161,17 @@ class HomePage extends ConsumerWidget {
         ),
       );
     } else {
-      context.go('/game-report');
+      if (isPitReport) {
+        final pitReport = ref.read(pitReportProvider);
+        pitReport.scouter.data = _scouterCubit.data;
+        pitReport.scouterTeamNumber.data = _scouterTeamNumberCubit.data;
+        context.go('/pit-report');
+      } else {
+        final gameReport = ref.read(gameReportProvider);
+        gameReport.scouter.data = _scouterCubit.data;
+        gameReport.scouterTeamNumber.data = _scouterTeamNumberCubit.data;
+        context.go('/game-report');
+      }
     }
   }
 }

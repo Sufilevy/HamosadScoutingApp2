@@ -3,87 +3,113 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '/models/game_report/game_report.dart';
+import '/models/pit_report.dart';
 import '/services/database.dart';
 import '/theme.dart';
 import '/widgets/alerts.dart';
 import '/widgets/buttons.dart';
 import '/widgets/paddings.dart';
+import '/widgets/scouting/text/text_field.dart';
 import '/widgets/text.dart';
-import 'report_tab.dart';
 
-class ReportPage extends ConsumerWidget {
-  final String title;
-  final List<ReportTab> tabs;
-
-  const ReportPage({
-    super.key,
-    required this.title,
-    required this.tabs,
-  });
+class PitReportPage extends ConsumerWidget {
+  const PitReportPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final report = ref.read(gameReportProvider);
+    final report = ref.read(pitReportProvider);
 
-    return DefaultTabController(
-      length: tabs.length,
-      child: GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        child: Scaffold(
-          backgroundColor: ScoutingTheme.background1,
-          appBar: AppBar(
-            toolbarHeight: 80 * ScoutingTheme.appSizeRatio,
-            backgroundColor: ScoutingTheme.background2,
-            title: pad(
-              top: 16,
-              Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: _buildCloseButton(context, report).padLeft(8),
-                  ),
-                  Positioned.fill(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child:
-                          ScoutingText.navigation(title, fontSize: 32 * ScoutingTheme.appSizeRatio),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: _buildSendButton(context, report).padRight(8),
-                  ),
-                ],
-              ),
+    return PitReportScaffold(
+      report: report,
+      body: padSymmetric(
+        horizontal: 64,
+        vertical: 32,
+        ListView(
+          children: [
+            ScoutingTextField(
+              cubit: report.teamNumber,
+              title: 'Team Number',
+              onlyNumbers: true,
+            ).padBottom(32),
+            _buildSeparator().padBottom(32),
+            ScoutingText.subtitle(
+              'Enter general info about the robot.\n'
+              'This should include stuff like strengths,\n'
+              'flaws, scoring capabilities, general structure...',
+            ).padBottom(32),
+            ScoutingTextField(
+              cubit: report.data,
+              title: 'Info',
+              minLines: 10,
+              maxLines: 20,
             ),
-            bottom: TabBar(
-              isScrollable: true,
-              tabAlignment: TabAlignment.center,
-              indicatorWeight: 2.5 * ScoutingTheme.appSizeRatio,
-              indicatorColor: ScoutingTheme.primary,
-              labelPadding: EdgeInsets.symmetric(horizontal: 24 * ScoutingTheme.appSizeRatio),
-              labelColor: ScoutingTheme.foreground1,
-              unselectedLabelColor: ScoutingTheme.foreground2,
-              labelStyle: ScoutingTheme.navigationStyle.copyWith(fontSize: 16),
-              tabs: [
-                for (final tab in tabs)
-                  Tab(
-                    text: tab.title,
-                    height: 52 * ScoutingTheme.appSizeRatio,
-                  ),
-              ],
-            ),
-          ),
-          body: TabBarView(
-            children: tabs,
-          ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildSendButton(BuildContext context, GameReport report) {
+  Widget _buildSeparator() {
+    return Container(
+      height: 1.5,
+      decoration: BoxDecoration(
+        color: ScoutingTheme.background3,
+        borderRadius: BorderRadius.circular(1),
+      ),
+    );
+  }
+}
+
+class PitReportScaffold extends ConsumerWidget {
+  const PitReportScaffold({
+    super.key,
+    required this.body,
+    required this.report,
+  });
+
+  final Widget body;
+  final PitReport report;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        backgroundColor: ScoutingTheme.background1,
+        appBar: AppBar(
+          toolbarHeight: 100 * ScoutingTheme.appSizeRatio,
+          backgroundColor: ScoutingTheme.background2,
+          title: pad(
+            top: 16,
+            Stack(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: _buildCloseButton(context, report).padLeft(8),
+                ),
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: ScoutingText.navigation(
+                      'Pit Report',
+                      fontSize: 32 * ScoutingTheme.appSizeRatio,
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: _buildSendButton(context, report).padRight(8),
+                ),
+              ],
+            ),
+          ),
+        ),
+        body: body,
+      ),
+    );
+  }
+
+  Widget _buildSendButton(BuildContext context, PitReport report) {
     return ScoutingIconButton(
       icon: Icons.send_rounded,
       iconSize: 36,
@@ -94,7 +120,7 @@ class ReportPage extends ConsumerWidget {
           builder: (BuildContext context) {
             String? content;
 
-            if (report.match.data.isNullOrEmpty || report.teamNumber.data.isNullOrEmpty) {
+            if (report.teamNumber.data.isNullOrEmpty) {
               content = 'Please fill the match and team number.';
             }
 
@@ -114,7 +140,7 @@ class ReportPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildSendReportDialog(BuildContext context, report) {
+  Widget _buildSendReportDialog(BuildContext context, PitReport report) {
     return ScoutingDialog(
       content:
           'Sending the report will upload it to the database and bring you back to the home screen.',
@@ -145,7 +171,7 @@ class ReportPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildCloseButton(BuildContext context, GameReport report) {
+  Widget _buildCloseButton(BuildContext context, PitReport report) {
     return ScoutingIconButton(
       icon: Icons.close_rounded,
       iconSize: 44,
@@ -159,7 +185,7 @@ class ReportPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildCloseReportDialog(BuildContext context, GameReport report) {
+  Widget _buildCloseReportDialog(BuildContext context, PitReport report) {
     return ScoutingDialog(
       content: 'Closing the report will delete all of the information entered.',
       title: 'Warning!',
@@ -194,12 +220,9 @@ class ReportPage extends ConsumerWidget {
     );
   }
 
-  void _sendReport(BuildContext context, GameReport report) async {
+  void _sendReport(BuildContext context, PitReport report) async {
     try {
-      ScoutingDatabase.sendReport(
-        report.data,
-        isRematch: report.isRematch.data,
-      ).then(
+      ScoutingDatabase.sendPitReport(report).then(
         (_) {
           report.clear();
           context.go('/');

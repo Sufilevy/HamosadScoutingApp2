@@ -22,7 +22,8 @@ class ScoutingNotes extends StatelessWidget {
         title: 'Notes',
         hint: 'Enter your notes...',
         canBeEmpty: true,
-        lines: 3,
+        minLines: 3,
+        maxLines: 5,
       ),
     );
   }

@@ -45,6 +45,7 @@ abstract class ScoutingText {
 
   static Widget subtitle(
     String data, {
+    double? fontSize,
     Color? color,
     FontWeight? fontWeight,
     double? height,
@@ -56,6 +57,7 @@ abstract class ScoutingText {
         data,
         textAlign: textAlign,
         style: ScoutingTheme.subtitleStyle.copyWith(
+          fontSize: fontSize,
           color: color,
           fontWeight: fontWeight,
           height: height,

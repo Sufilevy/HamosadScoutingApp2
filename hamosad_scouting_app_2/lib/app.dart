@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '/pages/home_page.dart';
+import '/pages/pit_report_page.dart';
 import '/theme.dart';
 import '/widgets/paddings.dart';
 import '/widgets/text.dart';
@@ -52,6 +53,13 @@ class _ScoutingAppState extends State<ScoutingApp> {
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const GameReportPage(),
+        ),
+      ),
+      GoRoute(
+        path: '/pit-report',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const PitReportPage(),
         ),
       ),
     ],

@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartx/dartx.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '/models/cubit.dart';
+import '/models/game_report/game_report.dart';
+import '/models/pit_report.dart';
 import '/services/utilities.dart';
 
 abstract class ScoutingDatabase {
@@ -20,7 +20,6 @@ abstract class ScoutingDatabase {
     _districtName = informationDoc.get('current');
 
     await _getMatches();
-    debugPrint('Finished database initialization.');
   }
 
   static Future<void> finalize() async {
@@ -28,33 +27,29 @@ abstract class ScoutingDatabase {
   }
 
   static Future<void> sendReport(
-    Json report, {
+    GameReport report, {
     required bool isRematch,
     String? lastId,
   }) async {
-    final datetime = _getDatetime();
-
-    final scouterTeamNumber = report['0-info']['scouterTeamNumber'];
+    final scouterTeamNumber = report.scouterTeamNumber.data;
     final collectionName = '$_districtName-$scouterTeamNumber';
     final districtReports = _db.collection(collectionName);
 
-    var teamReports = districtReports.doc(report['0-info']['teamNumber']);
-    final currentReports = (await teamReports.get()).data();
-    if (currentReports == null || currentReports.isEmpty) {
+    var docName = report.teamNumber.data!;
+    var teamReports = districtReports.doc(docName);
+    if (!(await teamReports.get()).exists) {
       teamReports.set({});
-      teamReports = districtReports.doc(report['0-info']['teamNumber']);
+      teamReports = districtReports.doc(docName);
     }
 
-    final match = report['0-info']['match']
-        .toString()
+    final match = report.match.data!
         .replaceAll('Eliminations ', 'elims')
         .replaceAll('(Round ', '')
         .replaceAll(')', '')
         .replaceAll('(Finals)', '-finals');
-    final scouter =
-        report['0-info']['scouter'].toString().trim().replaceAll(' ', '_').toLowerCase();
-
-    final reportId = '$match-$scouter-$datetime';
+    final scouter = report.scouter.data.trim().replaceAll(' ', '_').toLowerCase();
+    final datetime = _getDatetime();
+    final reportId = lastId ?? '$match-$scouter-$datetime';
 
     if (isRematch) {
       final currentSnapshot = await teamReports.get();
@@ -65,9 +60,32 @@ abstract class ScoutingDatabase {
 
       teamReports.set(currentReports);
     } else {
-      await teamReports.update({reportId: report});
+      await teamReports.update({reportId: report.toJson()});
     }
 
+    await _db.waitForPendingWrites();
+  }
+
+  static Future<void> sendPitReport(
+    PitReport report, {
+    String? lastId,
+  }) async {
+    final scouterTeamNumber = report.scouterTeamNumber.data;
+    final collectionName = '$_districtName-$scouterTeamNumber';
+    final districtReports = _db.collection(collectionName);
+
+    final docName = '${report.teamNumber.data!}-pit';
+    var teamPitReports = districtReports.doc(docName);
+    if (!(await teamPitReports.get()).exists) {
+      teamPitReports.set({});
+      teamPitReports = districtReports.doc(docName);
+    }
+
+    final scouter = report.scouter.data.trim().replaceAll(' ', '_').toLowerCase();
+    final datetime = _getDatetime();
+    final reportId = lastId ?? '$scouter-$datetime';
+
+    await teamPitReports.update({reportId: report.toJson()});
     await _db.waitForPendingWrites();
   }
 
