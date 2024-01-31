@@ -148,8 +148,8 @@ class GameReportPage extends ConsumerWidget {
               ),
               ScoutingTextField(
                 cubit: report.summary.pinnedShooterLocation,
-                hint: 'Describe the location...',
-                title: 'Location',
+                hint: 'תארו את המיקום...',
+                textDirection: TextDirection.rtl,
                 canBeEmpty: true,
               ),
             ]),

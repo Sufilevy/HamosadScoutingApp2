@@ -17,6 +17,7 @@ class ScoutingTextField extends StatefulWidget {
     this.onlyNames = false,
     this.minLines = 1,
     this.maxLines = 1,
+    this.textDirection,
     this.errorHint,
   });
 
@@ -26,6 +27,7 @@ class ScoutingTextField extends StatefulWidget {
   final String title;
   final int minLines, maxLines;
   final String? errorHint;
+  final TextDirection? textDirection;
 
   @override
   State<ScoutingTextField> createState() => _ScoutingTextFieldState();
@@ -42,40 +44,6 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
       setState(() {});
     });
     super.initState();
-  }
-
-  String? _validateInput(String? value) {
-    if (value == null || value.isEmpty) {
-      if (widget.canBeEmpty) {
-        return null;
-      }
-
-      String hint = widget.hint.isNotEmpty
-          ? (widget.hint.endsWith('...')
-              ? widget.hint.toLowerCase().substring(0, widget.hint.length - 3)
-              : widget.hint.toLowerCase())
-          : 'enter some text';
-      return widget.errorHint ?? 'Please $hint.';
-    }
-
-    if (widget.onlyNumbers) {
-      final asInt = int.tryParse(value);
-      if (asInt == null || asInt.isNegative) return 'Only numbers are allowed.';
-    }
-
-    if (widget.onlyNames) {
-      if (!value.characters.all((c) => c.isLowerCase || c.isUpperCase || c == ' ' || c == '-')) {
-        return "Names should only contain English letters, '-' or ' '.";
-      }
-      if (value.length > 30) {
-        return 'Name should be shorter than 30 characters.';
-      }
-      if (value.isBlank) {
-        return 'Names should not be blank.';
-      }
-    }
-
-    return null;
   }
 
   @override
@@ -99,13 +67,18 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
           minLines: widget.minLines,
           maxLines: widget.minLines,
           style: ScoutingTheme.bodyStyle,
-          textDirection:
-              intl.Bidi.estimateDirectionOfText(widget.cubit.data ?? '') == intl.TextDirection.RTL
+          textDirection: widget.textDirection ??
+              (intl.Bidi.estimateDirectionOfText(widget.cubit.data ?? '') == intl.TextDirection.RTL
                   ? TextDirection.rtl
-                  : TextDirection.ltr,
+                  : TextDirection.ltr),
           decoration: InputDecoration(
             hintText: widget.hint,
             labelText: widget.title,
+            floatingLabelAlignment:
+                widget.textDirection == TextDirection.rtl ? FloatingLabelAlignment.center : null,
+            floatingLabelBehavior:
+                widget.textDirection == TextDirection.rtl ? FloatingLabelBehavior.always : null,
+            hintTextDirection: widget.textDirection,
             alignLabelWithHint: true,
             hintStyle: ScoutingTheme.bodyStyle.copyWith(
               color: ScoutingTheme.foreground2,
@@ -153,5 +126,39 @@ class _ScoutingTextFieldState extends State<ScoutingTextField> {
         ),
       ),
     );
+  }
+
+  String? _validateInput(String? value) {
+    if (value == null || value.isEmpty) {
+      if (widget.canBeEmpty) {
+        return null;
+      }
+
+      String hint = widget.hint.isNotEmpty
+          ? (widget.hint.endsWith('...')
+              ? widget.hint.toLowerCase().substring(0, widget.hint.length - 3)
+              : widget.hint.toLowerCase())
+          : 'enter some text';
+      return widget.errorHint ?? 'Please $hint.';
+    }
+
+    if (widget.onlyNumbers) {
+      final asInt = int.tryParse(value);
+      if (asInt == null || asInt.isNegative) return 'Only numbers are allowed.';
+    }
+
+    if (widget.onlyNames) {
+      if (!value.characters.all((c) => c.isLowerCase || c.isUpperCase || c == ' ' || c == '-')) {
+        return "Names should only contain English letters, '-' or ' '.";
+      }
+      if (value.length > 30) {
+        return 'Name should be shorter than 30 characters.';
+      }
+      if (value.isBlank) {
+        return 'Names should not be blank.';
+      }
+    }
+
+    return null;
   }
 }

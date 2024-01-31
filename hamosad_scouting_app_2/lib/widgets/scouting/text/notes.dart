@@ -17,10 +17,11 @@ class ScoutingNotes extends StatelessWidget {
           "לדוגמה:\n"
           "חלק מהרובוט נשבר, הרובוט לא זז, הרובוט נוסע לאט/קטוע, "
           "הרובוט נתקע בהכל, הרובוט משחק ממש טוב/ממש רע...",
+      buttonAlignment: Alignment.centerLeft,
       child: ScoutingTextField(
         cubit: cubit,
-        title: 'Notes',
-        hint: 'Enter your notes...',
+        hint: 'הערות...',
+        textDirection: TextDirection.rtl,
         canBeEmpty: true,
         minLines: 3,
         maxLines: 5,
